@@ -6,7 +6,7 @@
 
 在`orchestration`的世界里，葫芦娃的排序过程由爷爷指挥，那么就需要设计两个类葫芦娃类`Huluwa`和爷爷类`GrandFather`
 
-![orchestration](D:\Typora\images\orchestration.svg)
+![](http://47.103.197.224/img/orchestration.png)
 
 `GrandFather`对葫芦娃的排序中的比较通过一个类型为`Comparator<Huluwa>`的静态成员变量`observer`实现，爷爷通过`observer`来比较葫芦娃的年龄大小
 
@@ -40,7 +40,7 @@ class GrandFather{
 }
 ```
 
-因此在==替换排序算法的时候==，仅需要实现一个`sort(Huluwa[],Comparator<Huluwa>)`的方法，并在`sortHuluwa`中替换即可
+因此在**替换排序算法的时候**，仅需要实现一个`sort(Huluwa[],Comparator<Huluwa>)`的方法，并在`sortHuluwa`中替换即可
 
 如此设计后，在主要逻辑中就能做到全部过程由爷爷来控制了：
 
@@ -64,7 +64,7 @@ class OrchestrationWorld{
 
 ### choreography
 
-在choreography的世界里七个葫芦娃相互协作完成排序过程，为了完成这个过程，==葫芦娃需要一个能够比较自己与其他葫芦娃大小的方法==，因此在上面实现的葫芦娃类`Huluwa`中引入`java.lang.Comparable`接口，并实现`compareTo`方法
+在choreography的世界里七个葫芦娃相互协作完成排序过程，为了完成这个过程，**葫芦娃需要一个能够比较自己与其他葫芦娃大小的方法**，因此在上面实现的葫芦娃类`Huluwa`中引入`java.lang.Comparable`接口，并实现`compareTo`方法
 
 ```java
 class Huluwa implements Comparable<Huluwas>{
