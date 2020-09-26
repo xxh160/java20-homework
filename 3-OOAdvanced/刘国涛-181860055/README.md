@@ -1,8 +1,9 @@
 # 优雅的葫芦娃排序
 
 ## 代码结构
+![uml](http://47.103.197.224/img/frame.png)
 
-![uml](README.assets/frame.png)
+或查看[uml图](README.assets/frame.png)
 
 
 
