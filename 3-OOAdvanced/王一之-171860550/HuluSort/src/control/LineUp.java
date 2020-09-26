@@ -2,10 +2,6 @@ package control;
 
 import characters.Ground;
 import characters.HuLuWa;
-import characters.Tile;
-import characters.Unit;
-
-import java.util.Random;
 
 public class LineUp {
     static int huluNum;
