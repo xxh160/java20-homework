@@ -1,4 +1,0 @@
-@startuml
-class Example <|-- class B
-
-@enduml
