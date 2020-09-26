@@ -17,6 +17,10 @@
 
 为了实现排序，我们让`Hulu`实现了接口`Comparable<Hulu>`，这样我们可以用`compareTo()`方法为两个`Hulu`的对象比较大小。基于此我们实现了`HuluComparator`，这样就可以调用存放`Hulu`的容器的`sort`函数，或者任何自己写好的排序算法完成排序，其中比较的工作可以直接调用`HuluComparator.compare()`来完成，排序算法不需要知道相关的任何细节。最终，我们用一个`HuluOrchestrationSorter`类表征中心化的排序服务，用一个`ArrayList<Hulu>`存储葫芦们，并且给出`add()`、`sort()`和`print()`方法供调用。
 
+### 类图
+
+![OrchestrationClassDiagram](http://www.plantuml.com/plantuml/png/VP11ImGn38Nl_HLXJYgiu5KMML711T73UF0QPkBkG9iCQGekud-t6mko0tff-vhtlYRTP4Erac8WBWcsp_SFR_0Pla8O8kOCZoMMgW6WrIOUwSFr86b6fLSvEtTjqfjElAlo9FwYmvwoATeat8iQQIFUgkBXQSgsFlfkO5zNl_CgZcCZpnLhxPmhOFd2dNU29Wx-RQr5TcHRpeOyq4-InGXCPf3tPVuQ-Zf291E-3C6dxwuwk5YjVFS_27zCvGuvEXFoeNFqlzvrevxs43R4Oqdn6m00)
+
 ## Choreography
 
 ### `Position.java`
@@ -34,3 +38,7 @@
 ### `HuluChoreographySorter.java`
 
 最后，我们用一个`TreeMap`实现了`IPositionToHuluMapper`接口，用一个数组作为物理上的容器（并且出于简化问题考虑，我们不打算真的在数组里移动`Hulu`），这样我们就可以进行去中心化的排序了。
+
+### 类图
+
+![ChoreographyClassDiagram](http://www.plantuml.com/plantuml/png/TLBBRi8m4BpdAto4gla3X91efN808O7KNjsmJImbQskzQK70lzUE7TGcpYcUcNtChBAoB8dRfiu0sqPiTY-l7-AQtREigAMrugsjMuU5455JU89pXmlT64bmrBDvXraVc1IM3ZxQzzegLXhZ28KiZACwK0BkuCokn5Uuha1o9DL_Ta_mFMQt2XEaF0_8XzNWJI43VSa2nAOlF6gVT2kD0Ofch_BJCic2xy9Ui5XN4akOpGUQN-XR_wRs-5rnDKZ_W2O-mYZBabLnd_3IT9zmOBeSVgI95YnmA4dSEuuu4e2hYUlTQz7hpoEFIx_9rut2JYLSLvf0boHDTJbeulvm4oPCWWqB3IdaCDrBuYdFmy-MZGwvk3dDisF9T_KWgQOFdANTvlbjET6GpXxtfpAk04zjK_y2)
