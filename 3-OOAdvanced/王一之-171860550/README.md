@@ -1,5 +1,5 @@
-#3-OOAdvanced
-本次是对2-OOFoundation作业程序的改进。 
+# 3-OOAdvanced
+本次作业是对2-OOFoundation作业程序的改进。 
    
 程序分为两个package：
 >characters
@@ -48,3 +48,6 @@ public void printTile()
 LineUp为列队，是控制类  
 含有静态成员变量 huluNum，在开始的静态块中初始化为7并打印。   
 main函数中，首先，在一个HuLuWa数组中生成7个葫芦娃；之后生成ground，调用randomInit将葫芦娃随机分配到ground中，之后排序并打印，为了区分两个排序方法，第一次降序，第二次升序。
+
+UML图如下
+![](http://www.plantuml.com/plantuml/png/TLFRQXj137tVhn3EomPVlg2KW2bjmKqBQUX3wOEyLjTBPaQBPYR5kEwtLtDPxBYD3JihwHpfIAEzym4bH6kQ4Ridx0bctHu5kq3YPt3J2v4xDeDJ-oTs10zuE3QWloDkVKZ0q_mXoE1wy7YuHqljRNDgrWQzXqSt12ZmFve2HlRPc2UZf_25lQAp1xRCXj11ntP4eJPpupdNXxY9tx0aMoQ-e7igLWgjUSEYPCDI4XPyEo4N1MGcK2txIjKSVBslhuEXgYGJBDajIUapPtGm-7Ts38V_z9x8RVOieB1lhmFLaQCgxvdQAxcKxgDzmLOZp_HJrd9Dg7Ag--W3Xg4xpPzvs87_XMERYaEF2oWlstEpxuMZszLsK_Jx3mXwr7PAEEjsiOefUGNTZkr7rPMLAYtguIyXeoWlzttfzIpXitHxya5K9xj_ekiz2t4lEEuFK_9zD6bTzAyx2cz-hrPvl4rwgBbSrXLgYc9WzQJI5J1Pv--0NH0sCu0R5dIztdYN1x8P73sEkjVJ6DFzvlBtqKBpShWM1mTjsIGLYTBx8h9cMQtU5ZqNZYpxZjmkMlCN)

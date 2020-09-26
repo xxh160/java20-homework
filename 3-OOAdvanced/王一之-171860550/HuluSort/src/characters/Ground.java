@@ -3,7 +3,7 @@ package characters;
 import java.util.Random;
 
 public class Ground {
-    Tile []tiles;
+    private Tile []tiles;
     public Ground(int num){
         tiles=new Tile[num];
     }
