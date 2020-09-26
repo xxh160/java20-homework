@@ -11,16 +11,16 @@ class HuluOrchestrationSorter {
             return a.compareTo(b);
         }
 
-        private static HuluComparator instance = null;
+        private static HuluComparator instance;
+        static {
+            instance = new HuluComparator();
+        }
 
         private HuluComparator() {
             super();
         }
 
         public static HuluComparator getInstance() {
-            if (instance == null) {
-                instance = new HuluComparator();
-            }
             return instance;
         }
     }
