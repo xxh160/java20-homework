@@ -1,3 +1,5 @@
+package characters;
+
 public class Tile {//可容纳一个葫芦娃的位置
     private Unit member;
     boolean isEmpty;
@@ -37,6 +39,10 @@ public class Tile {//可容纳一个葫芦娃的位置
         if (isEmpty)
             return null;
         return member;
+    }
+
+    public boolean isEmpty() {
+        return isEmpty;
     }
 
     public static void swap(Tile ga, Tile gb) {
