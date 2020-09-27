@@ -6,6 +6,7 @@ import calabash.*;
 import sortset.*;
 
 public class Grandpa implements Sortset {
+    public Grandpa(){}  //default
 
     public Calabash[] createCalabash() {
         Calabash[] grandsons = new Calabash[] {
@@ -20,25 +21,14 @@ public class Grandpa implements Sortset {
         return grandsons;
     }
 
- 
-
-
-    public void report(Calabash[] grandsons) {
-        for (Calabash huluwa : grandsons) {
-            huluwa.sayName();
-        }
-        System.out.println();
-    }
-
-    public void newSort(Calabash[] grandsons) {
-        int len = grandsons.length;
-        for (int i = 0; i < len; i++) {
-            for (int j = i + 1; j < len; j++) {
-                if (grandsons[i].getAge() < grandsons[j].getAge()) {
-                    swap(grandsons, i, j);
-                }
-            }
-        }
+    public void sortHulu(){
+        Calabash grandsons[] = createCalabash();
+        randLine(grandsons);
+        System.out.println("排序前  ");
+        report(grandsons);
+        newSort(grandsons);
+        System.out.println("排序后  ");
+        report(grandsons);
     }
 
 };

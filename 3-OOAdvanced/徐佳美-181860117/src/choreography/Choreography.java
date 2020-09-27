@@ -3,23 +3,25 @@ package choreography;
 
 
 import calabash.*;
-// import sortset.*;
+import sortset.*;
 import grandpa.*;
 
-public class Choreography {
-    public static void main(String[] args) {
+public class Choreography implements Sortset {
+    public Choreography(){} //default
+
+    public  void run(String[] args) {
         Grandpa grandpa = new Grandpa();
         Calabash grandsons[] = grandpa.createCalabash();
         System.out.println("Choreography");
-        grandpa.randLine(grandsons);
+        randLine(grandsons);
         System.out.println("排序前  ");
-        grandpa.report(grandsons);
+        report(grandsons);
         newSort(grandsons);
         System.out.println("排序后  ");
-        grandpa.report(grandsons);
+        report(grandsons);
     }
 
-    static void newSort(Calabash grandsons[]) {
+    public void newSort(Calabash grandsons[]) {
         int len = grandsons.length;
         for (int i = 0; i < len; i++) {
             for (int j = i + 1; j < len; j++) {

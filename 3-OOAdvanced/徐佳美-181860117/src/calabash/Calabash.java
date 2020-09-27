@@ -5,13 +5,19 @@ public class Calabash {
 
     private String name;
     private int age;
-
+    static int objCount;
+    static{
+       objCount = 0;
+    }
+    
     public Calabash() {    //default constructor
+        Calabash.objCount++;
         name = "";
         age = 0;
     }
 
     public Calabash(String inName, int inAge) {    //overloading
+        Calabash.objCount++;
         this.name = inName;
         this.age = inAge;
     }
