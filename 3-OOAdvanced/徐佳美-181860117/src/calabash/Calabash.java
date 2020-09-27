@@ -1,15 +1,34 @@
 
 package calabash;
 
-public class Calabash {
+class Object{
+    protected String name;
+    protected int age;
+    Object(){
+        name = "";
+        age = 0;
+    }
+    public String getName() {
+        return this.name;
+    }
 
-    private String name;
-    private int age;
+    public int getAge() {
+        return this.age;
+    }
+
+    public void sayName() {
+        System.out.print(this.name + "  ");
+    }
+};
+
+public class Calabash extends Object{
+
+ 
     static int objCount;
     static{
        objCount = 0;
     }
-    
+
     public Calabash() {    //default constructor
         Calabash.objCount++;
         name = "";
@@ -22,17 +41,7 @@ public class Calabash {
         this.age = inAge;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public int getAge() {
-        return this.age;
-    }
-
-    public void sayName() {
-        System.out.print(this.name + "  ");
-    }
+ 
 
     public boolean compare(Calabash b) {
         return this.age < b.getAge();

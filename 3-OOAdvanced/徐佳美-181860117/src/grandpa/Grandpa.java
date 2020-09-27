@@ -5,7 +5,7 @@ import calabash.*;
 // import java.util.Random;
 import sortset.*;
 
-public class Grandpa implements Sortset {
+public class Grandpa extends Object implements Sortset {
     public Grandpa(){}  //default
 
     public Calabash[] createCalabash() {
