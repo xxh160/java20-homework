@@ -6,9 +6,11 @@
 
 
 
-[类图url]: http://www.plantuml.com/plantuml/umla/XPBFRjGm4CRlVefHkMmfwGkmMXLL0Wu83ZrmgAhLn1coXiIERAUhQkcxCnElbNK2uh3Qp1__vflFlWiHVHpxJWseVs5BSENgdwJZ5Mot7ptsjDi1d9JI7OO0twRQIUttC8nrPpJiz-e67g8tjeMMubS-iRa6pXaR9V6XvPZ3PsSQ2FWoDoGM5mNcNUI06k6zoJpBlUyv51Is_AbUbSfIxh736iC1LcfoXT4NGM8oInIy4oR_M9qqrSvrX1QqwmVqbuAFE6I5vXaZoOGAJknQDFfreh1VzswqaTLbRPyyscR0fRASd_ZQ4_CAhS7v-7diHWw41MUBOFkxgkPzotncmdHalaLX1LfT8mic_mCrmKDgM6ZCYmlqYx6qoMCVdw2LP70sYDRKPkaedFzqUHh-sGHguQwgPkl_UYJT7QQ_MW3YLTw7JRczdKsHweKhH-UxPk49d9-srmSAqMCqpd8Me326uvkoPtCjoUpNQCylZAMYRsKnAK_IpW_su3mvNcCul31_ZIyw5hJKK4oPywjhcCrwV18XXOxlui7gQUOddTRfqQmcYPEbpOLW1QKzK5MxYtj8O-5jLHMdYae9u75tP9knx_u0
+[类图url]: http://www.plantuml.com/plantuml/umla/XPBFRjGm4CRlVefHkMmfwGkmMXLL0Wu83ZrmgAhLn1coXiIERAUhQkcxCnElbNK2uh3Qp1__vflFlWiHVHpxJWseVs5BSENgdwJZ5Mot7ptsjDi1d9JI7OO0twRQIUttC8nrPpJiz-e67g8tjeMMubS-iRa6pXaR9V6XvPZ3PsSQ2FWoDoGM5mNcNUI06k6zoJpBlUyv51Is_AbUbSfIxh736iC1LcfoXT4NGM8oInIy4oR_M9qqrSvrX1QqwmVqbuAFE6I5vXaZoOGAJknQDFfreh1VzswqaTLbRPyyscR0fRASd_ZQ4_CAhS7v-7diHWw41MUBOFkxgkPzotncmdHalaLX1LfT8mic_mCrmKDgM6ZCYmlqYx6qoMCVdw2LP70sYDRKPkaedFzqUHh-sGHguQwgPkl_UYJT7QQ_MW3YLTw7JRczdKsHweKhH-UxPk49d9-srmSAqMCqpd8Me326uvkoPtCjoUpNQCylZAMYRsKnAK_IpW_su3mvNcCul31_ZIyw5hJKK4oPywjhcCrwV18XXOxlui7gQUOddTRfqQmcYPEbpOLW1QKzK5MxYtj8O-5jLHMdYae9u75tP9knx_u0	"类图URL"
 
-![](D:\学习资料\大三上课程\Java程序设计\java2020_fall\HW\3\类图.png)
+
+
+![](https://i.loli.net/2020/09/28/sFurlajULVkXy2M.png)
 
 
 
@@ -46,11 +48,8 @@ object包，包含这个世界的一些对象
 
 ```java
 static int objCount;
-
 ​    static{
-
 ​       objCount = 0;
-
 ​    }
 ```
 
@@ -62,7 +61,7 @@ static int objCount;
 
 运行结果示例
 
-![image-20200928010818310](C:\Users\MS\AppData\Roaming\Typora\typora-user-images\image-20200928010818310.png)
+![image-20200928010818310](https://i.loli.net/2020/09/28/wkreUjHg3AE7bxW.png)
 
 
 
