@@ -1,8 +1,5 @@
 package world;
 
-// import choreography.*;
-// import orchestration.*;
-
 public class World{
    
     public static void main(String[] args) {

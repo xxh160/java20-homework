@@ -2,9 +2,8 @@
 package world;
 
 
-import calabash.*;
+import object.*;
 import sortset.*;
-import grandpa.*;
 
 public class Choreography implements Sortset {
     public Choreography(){} //default

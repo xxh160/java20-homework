@@ -1,8 +1,6 @@
 
 
-package grandpa;
-import calabash.*;
-// import java.util.Random;
+package object;
 import sortset.*;
 
 public class Grandpa extends Object implements Sortset {

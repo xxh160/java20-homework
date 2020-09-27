@@ -1,7 +1,8 @@
 # compile
-javac calabash/Calabash.java
+javac object/Object.java
+javac object/Calabash.java
 javac sortset/Sortset.java
-javac grandpa/Grandpa.java
+javac object/Grandpa.java
 javac world/Orchestration.java
 javac world/Choreography.java
 javac world/World.java

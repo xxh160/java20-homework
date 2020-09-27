@@ -1,6 +1,6 @@
 package sortset;
 import java.util.Random;
-import calabash.*;
+import object.Calabash;
 
 public interface Sortset{
     public default  void randLine(Calabash[] grandsons) {

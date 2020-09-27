@@ -1,6 +1,6 @@
 package world;
 
-import grandpa.*;
+import object.*;
 
 public class Orchestration {
     private Grandpa grandpa;    
