@@ -106,7 +106,21 @@ java cn/edu/nju/zq/homework3/Control
 
 输出结果：
 
-![image-20200927205055959](C:\Users\Infin\AppData\Roaming\Typora\typora-user-images\image-20200927205055959.png)
+```
+----------orchestration----------
+Original queue:
+老四 老三 老七 老大 老五 老二 老六
+After sorting:
+老大 老二 老三 老四 老五 老六 老七
+
+----------choreography----------
+Original queue:
+老五 老七 老四 老二 老六 老大 老三
+After sorting:
+老大 老二 老三 老四 老五 老六 老七
+```
+
+
 
 
 
