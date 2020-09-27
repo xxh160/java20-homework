@@ -1,5 +1,5 @@
 
-package choreography;
+package world;
 
 
 import calabash.*;
