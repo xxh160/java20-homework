@@ -5,10 +5,11 @@
 
 
 ### 面向对象
-代码分为三个部分：*CalabashBrothers* 、*Sort*、和 *Homework3.java*。  
-*CalabashBrothers*中存放定义葫芦娃的类，每个葫芦娃都有一个判断大小的值id和名字name。
 
-*Sort*中存放排序的类和方法。
+代码分为三个部分：*CalabashBrothers* 、*Sort*、和 *Homework3.java*。  
+*CalabashBrothers*包中存放定义葫芦娃的类，每个葫芦娃都有一个判断大小的值id和名字name。
+
+*Sort*包中存放排序的类和方法。
 
 *Homework3.java*中存放main函数入口。
 
@@ -25,7 +26,25 @@
     Ssort s=new Orchestration();
     s.sort();
 
-###  静态方法
+###  静态
+*CalabashBoy*类中定义了两个静态方法：*comapre*和*swap*，*comapre*用于两个葫芦娃对象的年龄比较，*swap*用于交换两个葫芦娃对象的位置。
+
+在*Homework3.java*中，有两个静态变量：葫芦娃组成的数组和葫芦娃的数量，它们都在静态块中初始化。
+
+## 执行流程
+在main函数中，首先随机生成葫芦娃对象的序列，然后调用sort方法对葫芦娃进行排序.
+某次运行结果如下图：
+
+    老二 老大 老七 老四 老六 老五 老三
+    Choreography:
+    老大 老二 老三 老四 老五 老六 老七
+
+    老四 老五 老七 老二 老大 老六 老三
+    Orchestration:
+    老大 老二 老三 老四 老五 老六 老七
+
+两次排序中，第一行为随机生成的队列，第二行为排序方法，第三行为排序之后的队列。
+
 
 
 
