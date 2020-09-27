@@ -4,7 +4,7 @@ package calabash;
 class Object{
     protected String name;
     protected int age;
-    Object(){
+    public Object(){
         name = "";
         age = 0;
     }
