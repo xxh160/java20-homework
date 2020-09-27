@@ -1,3 +1,5 @@
+package cn.edu.nju.zq.homework3;
+
 import java.util.List;
 
 interface Sort {
@@ -5,7 +7,7 @@ interface Sort {
   void choreography(List<HuLuWa> queue);
 }
 
-class BubbleSort implements Sort {
+public class BubbleSort implements Sort {
 
   public void orchestration(Grandpa grandpa, List<HuLuWa> queue) {
     for (int i = 1; i < queue.size(); i++) {

@@ -1,10 +1,9 @@
-//package homework3;
+package cn.edu.nju.zq.homework3;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
 
 public class Control {
 
