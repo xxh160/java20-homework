@@ -20,7 +20,12 @@
 
 ### 实现情况
 
-- 封装, 继承, 多态: 我们在 creature 和 environment 两个 package 下分别实现了抽象的 Creature 和 EnvComponent 类, 
+- 封装, 继承, 多态: 我们在 creature 和 environment 两个 package 下分别实现了 Creature 和 EnvComponent 类, 并让场景中使用到的各个类继承自这两个类, 将类的内部属性设为`private`, 以达到封装, 继承, 多态的目的.
+- 接口: 实现了`Sortable`接口, 其中`HuluBaby`类实现了这个接口, 使得其可以自协同地进行排序.
+- 构造器: 如`HuluBaby`类需要根据每个葫芦娃的位次和名字进行构造.
+- 静态变量和静态块: 如`Creature`和`EnvComponent`类分别拥有一个静态的计数器属性, 为每个创建出的生物和环境组件赋予`ID`. 在本次实现中, 静态块由于可以直接写在静态属性的赋值中, 以减少代码量和提高代码可读性, 因此被省略.
+- 包: 初步使用了 creature, environment 和 utils 三个包囊括不同的类的实现.
+- 修饰符: 包括 static, private, public 等等, 上文已有介绍.
 
 ### 排序算法
 在`ArraySorter`类中, 在`ORCHESTRATION`方法下提供了多种排序算法, 算法名作为`AbstractSorter`类的一种方法提供. 已经实现的算法包括：
