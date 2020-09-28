@@ -129,11 +129,24 @@ package cn.edu.nju.java;
 
 ### 三：类图
 
-![](C:\Users\admin\Desktop\PK8YTLCD.png)
+![](http://www.plantuml.com/plantuml/png/XLDDRy8m3BtdL-HO9hL_80WnaBOB9tRWM8KsjD6QfdB24Dhuxyj7AOOmZGCnVdxlsKvO6il17bL7P6y577Wbw4wQMYloJRwqhEc71bkUGYgRCN8XfEguCI6_rahnlhwMLgq6eHlWGtlEYg9mvJG06gfM60lSIjsFo0Nfb7S5JeucrYE9OXRs-vCq6Rs3Q_MDsrQ0AquLg0aPtl4zDoqZcE0ddzJlPNSQEh-1Lm1-taXZv-jHOWNQSys2xiU84QH96nyVGim8MYUjuid8rdrhHI4SZ0IhgPK1t9MLdNFCPcGuxZjPqG14rYO0x8eOo-srG77PP-WALaBsJTY91HVHdYl1I4pxkXYCeBIcz0M8_pYmbt8Vrvvl_PE5N-azXuKxoO0d8jwOuh6S01x8gpV2Rft1j19puaCS32zw_fFdSSH7ZnkIleOyrtTF9ktVbwIpa_ZtyT8f1O7f2uxtIr_o7FjEIVH2Rid47bNHebZyXsEdT0bF5H3b6RmKVNrKtIy0)
 
 ### 四：结果
 
-![](C:\Users\admin\Desktop\result.png)
+`count=1
+count=2
+count=3
+count=4
+count=5
+count=6
+`count=7`
+`Before` orchestration:
+老七 老五 老大 老六 老四 老三 老二 
+After orchestration:
+老大 老二 老三 老四 老五 老六 老七 
+Before choreography:
+老大 老四 老五 老三 老七 老六 老二 
+After choreography:
+老大 老二 老三 老四 老五 老六 老七 `
 
-<u>**注：问题的解决思路与类的设计还存在很多不足之处，希望老师能提出宝贵意见**</u>
-
+`Process finished with exit code 0`
