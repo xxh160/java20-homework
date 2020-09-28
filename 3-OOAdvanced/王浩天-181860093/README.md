@@ -25,7 +25,7 @@
   void countoff() ；//爷爷让葫芦娃们从队列开始依次报出自己的value和name  
 
 ## 接口的实现  
-//Orchestration和Choreography继承了Sort_method接口，重写了sort()函数以实现两种排序方法  
+//Orchestration和Choreography继承了Sort_method接口，重写了sort()函数以实现两种排序方法，体现出多态的特性  
 //可通过重写sort()的方式实现排序算法的可替换  
 ### public abstract interface Sort_method；  
   void sort(ArrayList<Calabash_Brothers> lis);  
