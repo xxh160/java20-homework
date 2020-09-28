@@ -6,7 +6,4 @@ public class Creature {
     Creature() {
         id = numCreature++;
     }
-    public String getToken() {
-        return "Creature#" + id;
-    }
 }

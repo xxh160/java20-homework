@@ -8,7 +8,7 @@ public class ArraySorter {
     static public  <E extends Sortable<E>> void sortByChoreography(E[]arr) {
         E[] tmpArray = Arrays.copyOf(arr, arr.length);
         for (int i = 0; i < arr.length; i++) {
-            int pos = arr[i].swapTo(arr, i);
+            int pos = arr[i].moveTo(arr, i);
             tmpArray[pos] = arr[i];
         }
         for (int i = 0; i < arr.length; i++) {

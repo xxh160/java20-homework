@@ -1,35 +1,93 @@
-# 作业 2 提交说明 by 张福翔-171840514
+# 作业 3 提交说明 by 张福翔-171840514
 ### 设计思路
-我们设计了`HuluBaby`,`AbstractSorter`, `PlayGround`三个主要的类，以及一个调用程序的主函数类`Main`作为本作业中使用的类。其中各个类的作用为：
+在本次提交中, 我们引入`package`的概念, 将项目中所有的类划分到了 creature, environment, utils 三个 package 中, 以便于进行项目管理与分别实现. 其中 creature 目录包含项目中的所有生物信息 (目前包括`HuluBaby`, `Grandpa`), 这些生物继承自`Creature`类; environment 目录包含项目中存在的环境组件 (目前仅包括`PlayGround`类), 这些环境组件继承自`EnvComponent`类; utils 目录包含了一些用到的辅助工具, 如我们本次作业用到的`ArraySorter`类. 
 
-- `HuluBaby`：定义葫芦娃的类，每个葫芦娃的身份以一个枚举对象`HuluName`来表示，实现了一系列方法如比较函数`compareTo`，赋值函数`huluAssign`
-和交换位置函数`huluSwap`。
-- `AbstractSorter`：定义了排序的方法。排序的方式包含`ORCHESTRATION`和`CHOREOGRAPHY`两种，
-并实现了排序过程中赋值`assign`和交换`swap`方法在两种不同模式下的实现，
-在`ORCHESTRATION`模式下直接通过`AbstractSorter`类对`HuluBaby`进行操作，
-在`CHOREOGRAPHY`模式下通过调用`HuluBaby`类自身的相应方法完成操作。
+我们使用 PlantUML 生成的类图如下所示.
 
-    - 在使用`ORCHESTRATION`模式时，`AbstractSorter`相当于起到了爷爷的作用，调整每个葫芦娃的顺序；
-    - 在使用`CHOREOGRAPHY`模式时，`AbstractSorter`驱动每个`HuluBaby`自身与其他葫芦娃进行比较和位置交换。
-- `PlayGround`：定义了`HuluBaby`类型的数组，描述葫芦娃存在的空间。
-并提供`shuffleHuluBaby`方法，用于打乱葫芦娃的顺序。
-此外，通过`hulusGreeting`方法，让每个葫芦娃进行报数。
+![UMLPicture](http://www.plantuml.com/plantuml/png/bLB1Rgim4Bpp5JwIzyGVH56Q52KzfMfwYwB8m0QimfgkxQY8vjzhGp6aoYKdnCxCpknwbqfpqgOgWxJaIh4r0TU6WBK1Or5hKItIAnEe6PfgG1tcIY8Bhi6lScjAi-99qod_WsLtfVUcxkXxJG9pXhpgVYD7kaYHiPm0T3WR6ss8OrPprdgAagHtb1QWDDay4aFNER5cXsFHsmfGNGkVOluTHSpd7NhUL0V362zhMTKI0VNzkQUCUxE_bhpPa3IOzVeXnU78ndmE67Ba_TUMJYS_fgFk9Ubdg6Guy-NKnOMjx_E2Eyg09WnLcFEvd50csEY_SOiMc4zt_KJ46-S9n5gVPXup-DA0cM8Euqa9ytYnOFunLiswa0JIZb4NJHWVZfnezaVgDiRfLlnfHFhXUZwWgO1oU52JcCJ-JqLkvl6P-aEOFkjuEVyiCZA7JRqPHBUauNZxQ5nWs5-sSycx6rm2PgOgVm00)
+
+此外,我们也通过 IntelliJ 导出了一张类图, 其显示了更为详尽的信息.
+
+<img src="assets/diagram.png" alt="diagram" style="zoom: 50%;" />
 
 ### 调用说明
-我们在主函数中的程序执行过程如下。
 
-1. 创建一个包含7个葫芦娃的`PlayGround`，并将葫芦娃随机打乱，让葫芦娃进行报数。
-2. 将葫芦娃在`ORCHESTRATION`模式下进行排序，排序后让葫芦娃进行报数。
+作业中通过`Runner`类的主函数, 调用`PlayGround`中的`huluSortDemo`函数, 调用本次作业的执行流程.
+
+1. 在`PlayGround`中创建包含7个葫芦娃的数组以及爷爷`Grandpa`对象，并将葫芦娃随机打乱，让葫芦娃进行报数。
+2. 将葫芦娃在`ORCHESTRATION`模式下，通过爷爷为葫芦娃们进行排序，排序后让葫芦娃进行报数。
 3. 打乱葫芦娃的顺序，并在`CHOREOGRAPHY`模式下重新排序，排序前后让葫芦娃进行报数。
 
-### 排序算法修改
-在`AbstractSorter`函数中提供了多种排序算法，算法名作为`AbstractSorter`类的一种方法提供，
-已经实现的算法包括：
+### 实现情况
+
+- 封装, 继承, 多态: 我们在 creature 和 environment 两个 package 下分别实现了抽象的 Creature 和 EnvComponent 类, 
+
+### 排序算法
+在`ArraySorter`类中, 在`ORCHESTRATION`方法下提供了多种排序算法, 算法名作为`AbstractSorter`类的一种方法提供. 已经实现的算法包括：
 
 - 快速排序算法`quickSort`
 - 归并排序算法`mergeSort`
 - 冒泡排序算法`bubbleSort`
 
-如果想要替换排序算法，我们只需在主函数中对应的排序代码里进行修改，替换对应的方法名即可。
+如果想要替换排序算法，我们只需在主函数中对应的排序代码里进行修改，替换对应的方法名即可. 如果想要自定义新的排序算法，仅需在`AbstractSorter`类中添加新的方法即可.
 
-如果想要自定义新的排序算法，仅需在`AbstractSorter`类中添加新的方法，注意使用提供的`assign`函数和`swap`函数进行数组元素的赋值和交换即可。
+对于`CHOREOGRAPHY`方法的排序, 要求排序的数组元素类型实现`Sortable`接口, `Sortable`接口需要实现`moveTo`功能, 即让每个数组元素判断, 在一个给定的数组中, 自己需要站在哪个位置, 并根据获取到的位置进行移动. 
+
+### 附录
+
+生成 PlantUML 中的类图的代码 (可见作业目录下的`diagram.uml`文件中: 
+
+```
+@startuml
+class Creature {
+  -{static} int numCreature
+  -int id
+}
+
+class HuluBaby {
+  +enum HuluType
+  -String name
+  --
+  +void greet()
+}
+
+class Grandpa {
+  +void sortOrchestration(Hulubaby[]huluBabies)
+}
+
+HuluBaby <|-- Creature
+Grandpa <|-- Creature
+
+class EnvComponent {
+  -{static} int numEnvComponent
+  -int id
+}
+
+class PlayGround {
+  -HuluBaby[] huluBabies
+  -Grandpa grandpa
+  __
+  +void huluSortDemo()
+  +void createHuluBabiesInOrder()
+  +void shuffleHuluBabies()
+  +void huluBabiesGreeting()
+}
+
+class ArraySorter {
+  __
+  +<E extends Sortable<E>> void sortByChoreography(E[]arr)
+  +<E extends Comparable<E>> void quickSort(E[]arr)
+  +<E extends Comparable<E>> void mergeSort(E[]arr)
+  +<E extends Comparable<E>> void bubbleSort(E[]arr)
+}
+
+PlayGround <|-- EnvComponent
+HuluBaby *-- PlayGround
+
+class Runner {
+  --
+  void main(String[]args)
+}
+@enduml
+```
+

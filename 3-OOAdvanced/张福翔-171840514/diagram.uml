@@ -2,16 +2,89 @@
 <Diagram>
   <ID>JAVA</ID>
   <OriginalElement />
-  <nodes />
+  <nodes>
+    <node x="390.64285714285717" y="894.0">Runner</node>
+    <node x="259.75" y="0.0">creature.Creature</node>
+    <node x="511.3521062271062" y="475.0">environment.EnvComponent</node>
+    <node x="465.25" y="22.5">utils.Sortable</node>
+    <node x="349.64285714285717" y="634.0">environment.PlayGround</node>
+    <node x="0.0" y="183.0">utils.ArraySorter</node>
+    <node x="127.5" y="486.0">creature.Grandpa</node>
+    <node x="308.0" y="149.0">creature.HuluBaby</node>
+  </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="0.0" />
-  <SelectedNodes />
+  <edges>
+    <edge source="environment.PlayGround" target="environment.EnvComponent">
+      <point x="106.71428571428567" y="-105.0" />
+      <point x="580.8571428571429" y="614.0" />
+      <point x="607.8521062271062" y="614.0" />
+      <point x="0.0" y="49.5" />
+    </edge>
+    <edge source="environment.PlayGround" target="creature.HuluBaby">
+      <point x="0.0" y="-105.0" />
+      <point x="474.14285714285717" y="614.0" />
+      <point x="478.8521062271062" y="614.0" />
+      <point x="478.8521062271062" y="455.0" />
+      <point x="428.375" y="455.0" />
+      <point x="-40.125" y="138.0" />
+    </edge>
+    <edge source="creature.Grandpa" target="creature.Creature">
+      <point x="34.0" y="-38.5" />
+      <point x="-37.75" y="49.5" />
+    </edge>
+    <edge source="creature.Grandpa" target="creature.HuluBaby">
+      <point x="102.0" y="-38.5" />
+      <point x="365.5" y="455.0" />
+      <point x="348.125" y="455.0" />
+      <point x="-120.375" y="138.0" />
+    </edge>
+    <edge source="creature.HuluBaby" target="creature.Creature">
+      <point x="-80.25" y="-138.0" />
+      <point x="388.25" y="124.0" />
+      <point x="373.0" y="124.0" />
+      <point x="37.75" y="49.5" />
+    </edge>
+    <edge source="Runner" target="environment.PlayGround">
+      <point x="-41.75" y="-27.0" />
+      <point x="432.39285714285717" y="869.0" />
+      <point x="411.89285714285717" y="869.0" />
+      <point x="-62.25" y="105.0" />
+    </edge>
+    <edge source="environment.PlayGround" target="creature.Grandpa">
+      <point x="-71.14285714285722" y="-105.0" />
+      <point x="402.99999999999994" y="604.0" />
+      <point x="195.5" y="604.0" />
+      <point x="-68.0" y="38.5" />
+    </edge>
+    <edge source="creature.Grandpa" target="utils.ArraySorter">
+      <point x="-102.0" y="-38.5" />
+      <point x="161.5" y="455.0" />
+      <point x="143.5" y="455.0" />
+      <point x="0.0" y="104.0" />
+    </edge>
+    <edge source="environment.PlayGround" target="utils.ArraySorter">
+      <point x="-106.71428571428578" y="-105.0" />
+      <point x="367.4285714285714" y="614.0" />
+      <point x="82.41666666666669" y="614.0" />
+      <point x="82.41666666666669" y="455.0" />
+      <point x="47.833333333333314" y="455.0" />
+      <point x="-95.66666666666669" y="104.0" />
+    </edge>
+    <edge source="creature.HuluBaby" target="utils.Sortable">
+      <point x="80.25" y="-138.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7576766555678875" x="406.5" y="122.0" />
+  <SelectedNodes>
+    <node>environment.EnvComponent</node>
+  </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
     <Category>Constructors</Category>
     <Category>Methods</Category>
   </Categories>
   <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
 </Diagram>
 

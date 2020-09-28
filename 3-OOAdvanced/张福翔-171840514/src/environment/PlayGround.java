@@ -11,7 +11,7 @@ public class PlayGround extends EnvComponent {
     HuluBaby[] huluBabies = new HuluBaby[HuluBaby.HuluType.values().length];
     Grandpa grandpa = new Grandpa();
 
-    PlayGround() {
+    public PlayGround() {
     }
 
     public void huluSortDemo() {
@@ -21,7 +21,7 @@ public class PlayGround extends EnvComponent {
         huluBabiesGreeting();
         System.out.println("Initialization finished");
         System.out.println("Sort By Grandpa now (orchestration)");
-        grandpa.sortHuluBrothers(huluBabies);
+        grandpa.sortOrchestration(huluBabies);
         huluBabiesGreeting();
         System.out.println("Random shuffle again...");
         shuffleHuluBabies();
@@ -31,9 +31,6 @@ public class PlayGround extends EnvComponent {
         huluBabiesGreeting();
     }
 
-    public HuluBaby[] getHuluBabies() {
-        return huluBabies;
-    }
     public void createHuluBabiesInOrder() {
         String[] huluNames = {"老大", "老二", "老三", "老四", "老五", "老六", "老七"};
         for (int i = 0; i < huluBabies.length; i++) {

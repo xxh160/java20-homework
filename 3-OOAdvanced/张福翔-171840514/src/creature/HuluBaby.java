@@ -14,24 +14,6 @@ public class HuluBaby extends Creature implements Comparable<HuluBaby>, Sortable
         this.name = name;
     }
 
-    public void setType(HuluType type) {
-        this.type = type;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void huluAssign(HuluBaby[]arr, int myPos, HuluBaby anotherOne) {
-        arr[myPos] = anotherOne;
-    }
-
-    public void huluSwap(HuluBaby[] arr, int myPos, int hisPos) {
-        HuluBaby tmp = arr[hisPos];
-        arr[hisPos] = arr[myPos];
-        arr[myPos] = tmp;
-    }
-
     @Override
     public int compareTo(HuluBaby o) {
         // small number first
@@ -44,7 +26,7 @@ public class HuluBaby extends Creature implements Comparable<HuluBaby>, Sortable
     }
 
     @Override
-    public int swapTo(HuluBaby[] arr, int myIndex) {
+    public int moveTo(HuluBaby[] arr, int myIndex) {
         int idx = 0;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i].compareTo(this) <= 0 && i < myIndex)
