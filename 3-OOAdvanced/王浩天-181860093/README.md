@@ -25,12 +25,13 @@
   void countoff() ；//爷爷让葫芦娃们从队列开始依次报出自己的value和name  
 
 ## 接口的实现  
-//Orchestration和Choreography继承了Sort_method接口，重写了sort()函数以实现不同的排序方法  
+//Orchestration和Choreography继承了Sort_method接口，重写了sort()函数以实现两种排序方法  
+//可通过重写sort()的方式实现排序算法的可替换  
 ### public abstract interface Sort_method；  
   void sort(ArrayList<Calabash_Brothers> lis);  
   
 ### class Orchestration implements Sort_method；  
-  void sort(ArrayList<Calabash_Brothers> lis); //在爷爷的指挥下，葫芦娃完成排队 
+  void sort(ArrayList<Calabash_Brothers> lis); //在爷爷的指挥下，葫芦娃完成排队  
 爷爷会从头开始遍历队列，当发现当前位置与葫芦娃不匹配时，会直接将该葫芦娃与他应该去的位置上的葫芦娃交换位置；  
 再观察刚刚被交换的葫芦娃是否处于正确位置，如果不是，则继续交换到正确位置，一直递归下去；如果是，则再从头开始查找不处于正确位置的葫芦娃进行交换；  
 当交换次数等于葫芦兄弟的次数时，说明已经完成排序；  
