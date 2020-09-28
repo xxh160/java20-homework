@@ -1,6 +1,6 @@
 # 作业 3 提交说明 by 张福翔-171840514
 ### 设计思路
-在本次提交中, 我们引入`package`的概念, 将项目中所有的类划分到了 creature, environment, utils 三个 package 中, 以便于进行项目管理与分别实现. 其中 creature 目录包含项目中的所有生物信息 (目前包括`HuluBaby`, `Grandpa`), 这些生物继承自`Creature`类; environment 目录包含项目中存在的环境组件 (目前仅包括`PlayGround`类), 这些环境组件继承自`EnvComponent`类; utils 目录包含了一些用到的辅助工具, 如我们本次作业用到的`ArraySorter`类. 
+在本次提交中, 我们引入`package`的概念, 将项目中所有的类划分到了 creature, environment, utils 三个 package 中, 以便于进行项目管理与分别实现. 其中 creature 目录包含项目中的所有生物信息 (目前包括`HuluBaby`, `Grandpa`), 这些生物继承自`Creature`类; environment 目录包含项目中存在的环境组件 (目前仅包括`PlayGround`类), 这些环境组件继承自`EnvComponent`类; utils 目录包含了一些用到的辅助工具, 如我们本次作业用到的`ArraySorter`类. 此外还有一个包含`main`函数的独立的`Runner`类.
 
 我们使用 PlantUML 生成的类图如下所示.
 
