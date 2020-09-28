@@ -133,20 +133,23 @@ package cn.edu.nju.java;
 
 ### 四：结果
 
-`count=1
+```
+count=1
 count=2
 count=3
 count=4
 count=5
 count=6
-`count=7`
-`Before` orchestration:
+count=7
+Before orchestration:
 老七 老五 老大 老六 老四 老三 老二 
 After orchestration:
 老大 老二 老三 老四 老五 老六 老七 
 Before choreography:
 老大 老四 老五 老三 老七 老六 老二 
 After choreography:
-老大 老二 老三 老四 老五 老六 老七 `
+老大 老二 老三 老四 老五 老六 老七 
 
-`Process finished with exit code 0`
+Process finished with exit code 0
+```
+
