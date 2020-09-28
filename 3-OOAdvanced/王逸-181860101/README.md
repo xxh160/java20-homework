@@ -2,21 +2,21 @@
 
 ## 封装：
 
-![2](.\picture\2.png)
+![2](picture\2.png)
 
 用Huluwa类将其名字、优先级、当前位置设置为私有类型进行了封装。
 
-![3](.\picture\3.png)
+![3](picture\3.png)
 
 使用以上三个函数作为类与外界的接口，使其能够提供自己的数据，但又不保证其不被修改。
 
 ## 继承：
 
-![4](.\picture\4.png)
+![4](picture\4.png)
 
 用huluwaSort作为Huluwa的子类，提供了排序、比较等方法，以此来执行让葫芦娃自己排序的操作。
 
-![5](.\picture\5.png)
+![5](picture\5.png)
 
 同时，grandFather作为Huluwa的另一个子类，提供了一种全新的排序方法，以此让爷爷来帮助葫芦娃排队。
 
