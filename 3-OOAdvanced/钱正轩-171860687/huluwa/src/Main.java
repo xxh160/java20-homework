@@ -1,3 +1,5 @@
+package cn.edu.nju.hulusort;
+
 import cn.edu.nju.hulu.HuLuBrothers;
 import cn.edu.nju.hulu.InsertSorter;
 import cn.edu.nju.hulu.QuickSorter;
