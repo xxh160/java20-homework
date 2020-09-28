@@ -17,7 +17,7 @@
 
 `SortChoreography`: 实现SortHuluwaList接口的排序器，完成Orchestration排序
 
-以上类的设计体现了**封装***和**继承**，同时以父类`SortHuluwaList`引用指向三个子类`SortByAlgo`,`Grandpa`,`SortChoreography`，调用sort()方法在运行时刻会重定向到子类的实现，体现了**多态**机制；
+以上类的设计体现了**封装**和**继承**，同时以父类`SortHuluwaList`引用指向三个子类`SortByAlgo`,`Grandpa`,`SortChoreography`，调用sort()方法在运行时刻会重定向到子类的实现，体现了**多态**机制；
 
 **接口、构造器、静态变量、静态块、包、修饰符等**语言机制均有体现：
 
