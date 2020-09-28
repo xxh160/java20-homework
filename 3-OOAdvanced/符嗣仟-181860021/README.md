@@ -63,7 +63,7 @@ choreography world:
 
 ### 面向对象编程思想
 
-*  **继承：**`Orchestration` , `Choreography`分别继承`World`基类，这样操作的原因是两个世界均是对葫芦娃进行操作，不同点仅在于排序的不同，数据类型以及产生，乱序方法均相同，故放在`World`基类中。
+*  **继承:** `Orchestration` , `Choreography`分别继承`World`基类，这样操作的原因是两个世界均是对葫芦娃进行操作，不同点仅在于排序的不同，数据类型以及产生，乱序方法均相同，故放在`World`基类中。
 *  **封装**：例如对于`Grandpa`类操控葫芦娃进行排序等过程进行封装，在`Orchestration`类仅需调用相关接口，而隐藏具体的实现细节。
 
 *  **多态:** 对于Sort函数而言，`World`基类中存放的是其抽象函数，而在`Orchestration` , `Choreography`中分别进行Override。
@@ -73,10 +73,11 @@ choreography world:
   `public void Sort(){....};  //--Choreography`
 
   `public void Sort(Calabash[]huluwas){....}; //--Orchestration`
+  
 
-*  **接口：**同封装操作。
+*  **接口:** 同封装操作。
 
-*  **构造器：**World基类中含有构造器，而在其继承类中，采用默认构造器方式；Calabsh中显示定义含参构造器，**此时若未定义不含参构造器，则无法使用**
+*  **构造器:** World基类中含有构造器，而在其继承类中，采用默认构造器方式；Calabsh中显示定义含参构造器，**此时若未定义不含参构造器，则无法使用**
 
 ```java
     Calabash(String n,int p){
@@ -89,9 +90,10 @@ choreography world:
     }
 ```
 
-* **静态变量：**在`Orchestration`类中定义静态变量Grandpa.
 
-  **静态块：**利用静态块进行初始化
+* **静态变量:** 在`Orchestration`类中定义静态变量Grandpa.
+
+  **静态块:** 利用静态块进行初始化
 
   ```java
   static Grandpa papa;
@@ -100,7 +102,8 @@ choreography world:
   }
   ```
 
-* **包：** `package com.company;`
+
+* **包:**  `package com.company;`
 
 * **修饰符:** 公共函数与变量使用public修饰，私有函数，变量使用private修饰；由于其中有继承关系，`World`基类中部分数据使用protected修饰
 
