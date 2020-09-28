@@ -15,10 +15,10 @@
   
 ### Grandpa类 extends Human：//继承自Human类 
   private static final int num_of_brothers;//葫芦兄弟的个数  
-	static {  
-		num_of_brothers=7;  	
-	}  
-	ArrayList<Calabash_Brothers> lis=new ArrayList<>();//爷爷管理着一个葫芦娃队列  
+  static {  
+    num_of_brothers=7;  
+  }  
+  ArrayList<Calabash_Brothers> lis=new ArrayList<>();//爷爷管理着一个葫芦娃队列  
   boolean compare(Calabash_Brothers a,Calabash_Brothers b)；//爷爷可以比较两个葫芦娃的value值  
   void swap(Calabash_Brothers a,Calabash_Brothers b)；//交换两个葫芦娃的位置  
   void queue(int num,int now)；//爷爷根据自己的观察给葫芦娃调换顺序  
