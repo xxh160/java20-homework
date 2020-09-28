@@ -6,7 +6,7 @@
 
 
 
-### Human，Calabash，Grandpa类
+### Human,Calabash,Grandpa类
 
 * Human类是Calabash类和Grandpa类的共同父类，Calabash和Grandpa都直接继承自Human
 * Human类每个实例都有一个名字name，并且报数方法reportName()在这个地方实现
@@ -15,7 +15,7 @@
 
 
 
-### SortMethod，SortMethod1，SortMethod2类
+### SortMethod,SortMethod1,SortMethod2类
 
 * SortMethod是一个抽象类，类中需要待实现两个方法，一个是**orchestration()**,另一个是**choreography()**
 * SortMethod1和SortMethod2都是直接继承自SortMethod类，并且都在类中实现了抽象类中的抽象方法，他们分别表示冒泡排序和选择排序，可以定义多个这样的类，**通过main()方法中Method的动态绑定可以实现改动一个数字就可以更改排序算法**
