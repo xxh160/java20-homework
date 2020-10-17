@@ -12,16 +12,21 @@ java God input\
 即可获得如下输出：
 
 ```shell
-Class Name: Monster
-Class Constructors:
+Instance: Monster@e9e54c2
+Name: Boss
+Health: 100
+Damage: 10
+Instance Constructors:
 Monster(java.lang.String,int,int)
-Class Fields:
+Instance Fields:
 public java.lang.String Monster.name
 public int Monster.health
 public int Monster.damage
-Class Methods:
+Instance Methods:
 public java.lang.String Monster.attack(Monster)
 ```
+
+其中前3行是创建对象的属性值，第5-12行是创建的对象的属性和方法（不包含继承自`Object`类的属性、方法）
 
 ## 类加载
 
@@ -37,10 +42,6 @@ Class<?> cls = clsLoader.loadClass("Monster");
 执行自定义的类加载。
 
 ## 反射
-
-在`God`类中，执行完类加载以后可以通过`getName`、`getDeclaredConstructors`、`getDeclaredFields`和`getDeclaredMethods`的反射机制找出对象的所有属性和方法。
-
-## 额外说明
 
 作业要求需要我们创建一个该类型的对象实例，但因为调用
 
@@ -64,22 +65,14 @@ Class Constructors:
 Monster(java.lang.String,int,int)
 ```
 
-可以发现`Monster`对象没有无参构造函数，因此系统无法调用无参数的构造函数实例化类。所以调用
+可以发现`Monster`对象没有无参构造函数，因此系统无法调用无参数的构造函数实例化类。所以考虑改用如下方式利用有参构造函数实例化对象：
 
-```java
-Object obj = cls.newInstance();
+```Java
+Constructor<?> declaredCons = cls.getDeclaredConstructor(java.lang.String.class, int.class, int.class);
+declaredCons.setAccessible(true);
+Object obj = declaredCons.newInstance("Boss",100,10);
 ```
 
-语句会抛出`InstantiationException`的异常：
+该方法创建了一个名字叫Boss，生命值为100，伤害为10的怪物实例。我们可以利用`getDeclaredField("name").get(obj)`、`getDeclaredField("health").get(obj)`和`getDeclaredField("damage").get(obj)`的反射机制获取该对象的属性值。
 
-```shell
-java.lang.InstantiationException: Monster
-	at java.lang.Class.newInstance(Class.java:427)
-	at God.main(God.java:20)
-Caused by: java.lang.NoSuchMethodException: Monster.<init>()
-	at java.lang.Class.getConstructor0(Class.java:3082)
-	at java.lang.Class.newInstance(Class.java:412)
-	... 1 more
-```
-
-也就是说我们无法完成“创建一个该类型的对象实例”的作业要求。
+最后，可以通过`getDeclaredConstructors`、`getDeclaredFields`和`getDeclaredMethods`的反射机制找出对象所有声明的构造函数、属性和方法。

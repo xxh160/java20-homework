@@ -34,8 +34,8 @@ public class CustomClassLoader extends ClassLoader {
             fileInputStream.read(buffer);
             fileInputStream.close();
             buffer = Base64.getDecoder().decode(buffer);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return buffer;
     }
