@@ -31,11 +31,21 @@ public class Main{
         Method M[] = obj.getDeclaredMethods();
         for (int i = 0; i < M.length; i++)
             System.out.println('\t'+M[i].toString());
-        
-
     }
     public static void main(String[] args) {
         Class obj=loaderClass("unknow.txt");
         printClassInfo(obj);
+        
+        //create an instance
+        try {
+            Class [] parameterType={java.lang.String.class,int.class,int.class};
+            Constructor con=obj.getDeclaredConstructor(parameterType);
+            con.setAccessible(true);
+            Object ins=con.newInstance("Gojira",1000,100);
+            System.out.println("create an instance:"+ins.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
