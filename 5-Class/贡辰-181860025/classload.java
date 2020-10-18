@@ -1,4 +1,8 @@
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+
 import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Base64;
 
@@ -14,13 +18,27 @@ public class classload extends ClassLoader {
     }
 
 
-    public static void main(String args[]) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public static void main(String args[]) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 
         //File file=new File("D://2.class");
         classload myClassload=new classload();
         Class<?> log=myClassload.findClass("Monster");
+        //Object obj=log.newInstance();
 
-       Method m[] = log.getDeclaredMethods();
+        System.out.println("The constructor is:");
+        Constructor<?> cons[] = log.getDeclaredConstructors();
+        for (Constructor<?> constructor : cons) {
+            System.out.println(constructor);
+        }
+        //获得构造函数
+
+        Class[] classes = new Class[] {String.class, int.class, int.class};
+        Constructor<?> Con=log.getDeclaredConstructor(classes);
+        Con.setAccessible(true);
+        Object obj=Con.newInstance("1",1,1);
+
+        System.out.println("The Method is:");
+        Method m[] = log.getDeclaredMethods();
         for (int i = 0; i < m.length; i++)
             System.out.println(m[i].toString());
     }
