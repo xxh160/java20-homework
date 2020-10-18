@@ -12,10 +12,9 @@ public class ClassLoaderMain {
 
          // 加载文件的绝对路径
         String classPath = "/home/njucs/Class3_fall/JAVAClass/Javahomework/java20-homework/5-Class/徐佳美-181860117/Test";
-        CustomClassLoader myClassLoader = new CustomClassLoader(classPath,1);
+        CustomClassLoader myClassLoader = new CustomClassLoader(classPath,1);//0:从class构建 1:从base64构建
         // 加载这个class文件
         Class<?> Monster = Class.forName("Monster", true, myClassLoader);
-        System.out.println("good trap");
         //打印构造器，属性，方法
         printInformation(Monster);
         //检查是否由自定义加载器加载

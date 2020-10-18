@@ -1,17 +1,10 @@
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.WritableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,7 +30,6 @@ public class CustomClassLoader extends ClassLoader {
     @Override
     // para1: name是类的全路径
     public Class<?> findClass(String name) throws ClassNotFoundException {
-        System.out.println("run myown findclass");
         try {
             loadClassFromFile();
             // defineClass方法可以把二进制流字节组成的文件转换为一个java.lang.Class
@@ -51,8 +43,6 @@ public class CustomClassLoader extends ClassLoader {
 
     // 将文件转成字节码数组
     private void loadClassFromFile() throws IOException {
-        System.out.println("run myown loadclass");
-
         // 从class文件构建
         if (inmethod == 0) {
             InputStream inputStream = getClass().getClassLoader()
