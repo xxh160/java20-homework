@@ -6,7 +6,7 @@ import java.util.Base64;
 public class MyClassLoader extends ClassLoader {
     /**
      * @param classbyte
-     *        class为用Base64编码的一个Java字节码对应的字符串
+     *        classbyte为用Base64编码的一个Java字节码对应的字符串
      */
     public Class findClass(String classbyte) {
         Base64.Decoder decoder = Base64.getDecoder();
