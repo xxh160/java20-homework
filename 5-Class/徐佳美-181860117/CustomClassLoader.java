@@ -8,7 +8,12 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import sun.misc.BASE64Decoder;
 
@@ -16,10 +21,11 @@ public class CustomClassLoader extends ClassLoader {
     private String pathName;
     private int inmethod;
     byte[] buffer;
+
     public CustomClassLoader() {
     }
 
-    public CustomClassLoader(String classPath,int inme) {
+    public CustomClassLoader(String classPath, int inme) {
         pathName = classPath;
         inmethod = inme;
     }
@@ -43,10 +49,10 @@ public class CustomClassLoader extends ClassLoader {
         return super.findClass(name);
     }
 
-    // 将class文件转成字节码数组
+    // 将文件转成字节码数组
     private void loadClassFromFile() throws IOException {
         System.out.println("run myown loadclass");
-       
+
         // 从class文件构建
         if (inmethod == 0) {
             InputStream inputStream = getClass().getClassLoader()
@@ -64,20 +70,31 @@ public class CustomClassLoader extends ClassLoader {
             System.out.println("good run loadclass");
             // return buffer;
         }
-        //从base64编码的文件构建
+
+        // 从base64编码的文件构建
         if (inmethod == 1) {
-            BASE64Decoder decoder = new BASE64Decoder();
-
             try {
-                if (null != pathName && !pathName.equals("")) {
-                    buffer = decoder.decodeBuffer(pathName);
-                }
-            } catch (IOException e) {
-                System.out.println("pathname Exception");
-            }
-        }
-       
+                Path path = Paths.get(pathName);
+                Stream<String> lines = Files.lines(path);
 
-        
+                String content = lines.collect(Collectors.joining(System.lineSeparator()));
+                lines.close();
+
+                BASE64Decoder decoder = new BASE64Decoder();
+
+                try {
+                    if (content != null && !content.equals("")) {
+                        buffer = decoder.decodeBuffer(content);
+                    }
+                } catch (IOException e) {
+                    System.out.println("pathname Exception");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 }

@@ -10,35 +10,28 @@ public class ClassLoaderMain {
             throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException,
             SecurityException, IllegalArgumentException, InvocationTargetException {
 
-              
-
-        // 这个类class的路径
-        // String classPath = "/home/njucs/Class3_fall/JAVAClass/Javahomework/java20-homework/5-Class/徐佳美-181860117/People.class";
-        // System.out.println(classPath);
-
-        // CustomClassLoader myClassLoader = new CustomClassLoader(classPath,0);
-        // // 加载这个class文件
-        // Class<?> Testclass = Class.forName("People", true, myClassLoader);
-
-         // 这个类class的路径
+         // 加载文件的绝对路径
         String classPath = "/home/njucs/Class3_fall/JAVAClass/Javahomework/java20-homework/5-Class/徐佳美-181860117/Test";
-        System.out.println(classPath);
-
         CustomClassLoader myClassLoader = new CustomClassLoader(classPath,1);
         // 加载这个class文件
-        Class<?> Testclass = Class.forName("Monster", true, myClassLoader);
-
+        Class<?> Monster = Class.forName("Monster", true, myClassLoader);
         System.out.println("good trap");
-        printInformation(Testclass);
-        System.out.println("类加载器是:" + Testclass.getClassLoader());
+        //打印构造器，属性，方法
+        printInformation(Monster);
+        //检查是否由自定义加载器加载
+        System.out.println("类加载器是:" + Monster.getClassLoader());
         //构造实例
-        Constructor<?> constructor = Testclass.getConstructor(String.class, int.class, int.class);
-        Object XJM= constructor.newInstance("sevenxqq", 7, 777);
-
-       
-
+        try{
+            Constructor<?> constructor=Monster.getDeclaredConstructor(java.lang.String.class,int.class,int.class);
+            constructor.setAccessible(true);
+            Object XJM= constructor.newInstance("sevenxqq", 7, 777);
+        }catch (InstantiationException ie){System.out.println("InstantiationException");return;}
+        catch (IllegalAccessException iae){System.out.println("IllegalAccessException");return;}
+        catch (NoSuchMethodException nme){System.out.println("NoSuchMethodException");return;}
+        catch (InvocationTargetException ite){System.out.println("InvocationTargetException");return;}
         ///////////
     }
+
     private static void printInformation(Class<?> Testclass){
         Constructor[] con = Testclass.getDeclaredConstructors();
         for (int i = 0; i < con.length; i++)
