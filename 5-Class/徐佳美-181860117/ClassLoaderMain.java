@@ -13,19 +13,27 @@ public class ClassLoaderMain {
               
 
         // 这个类class的路径
-        String classPath = "/home/njucs/Class3_fall/JAVAClass/Javahomework/java20-homework/5-Class/徐佳美-181860117/People.class";
+        // String classPath = "/home/njucs/Class3_fall/JAVAClass/Javahomework/java20-homework/5-Class/徐佳美-181860117/People.class";
+        // System.out.println(classPath);
+
+        // CustomClassLoader myClassLoader = new CustomClassLoader(classPath,0);
+        // // 加载这个class文件
+        // Class<?> Testclass = Class.forName("People", true, myClassLoader);
+
+         // 这个类class的路径
+        String classPath = "/home/njucs/Class3_fall/JAVAClass/Javahomework/java20-homework/5-Class/徐佳美-181860117/Test";
         System.out.println(classPath);
 
-        CustomClassLoader myClassLoader = new CustomClassLoader(classPath,0);
-
+        CustomClassLoader myClassLoader = new CustomClassLoader(classPath,1);
         // 加载这个class文件
-        Class<?> Testclass = Class.forName("People", true, myClassLoader);
+        Class<?> Testclass = Class.forName("Monster", true, myClassLoader);
+
         System.out.println("good trap");
         printInformation(Testclass);
-        Object obj = Testclass.newInstance();
-
-
         System.out.println("类加载器是:" + Testclass.getClassLoader());
+        //构造实例
+        Constructor<?> constructor = Testclass.getConstructor(String.class, int.class, int.class);
+        Object XJM= constructor.newInstance("sevenxqq", 7, 777);
 
        
 
@@ -47,6 +55,9 @@ public class ClassLoaderMain {
         Method m[] = Testclass.getDeclaredMethods();
         for (int i = 0; i < m.length; i++)
             System.out.println(m[i].toString());
+        
+        System.out.println("print over");
+        
     }
 
 }
