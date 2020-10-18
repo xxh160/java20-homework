@@ -12,10 +12,15 @@
 Main 类中利用 CustomClassLoader 的 findClass 方法加载储存在 class.txt 中的字节码中的类，用 Class 类中的 getName、getDeclaredFields、getDeclaredMethods、getDeclaredConstructors 方法获得类的名字、属性、方法及构造器，根据得到的信息
 
 > name:Monster
+>
 > method #0: public java.lang.String Monster.attack(Monster)
+>
 > constructor #0: Monster(java.lang.String,int,int)
+>
 > field #0: public java.lang.String Monster.name
+>
 > field #1: public int Monster.health
+>
 > field #2: public int Monster.damage
 
 可知，类有三个属性，分别为字符串 name、整形 health、整形 damage，有一个需要输入三个参数的构造器，由此，并利用 Constructor 类的 newInstance 方法创建一个该类型的对象实例。
