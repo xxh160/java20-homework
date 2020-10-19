@@ -15,36 +15,32 @@ public class CustomClassLoader extends ClassLoader {
 
     public static void main(String[] args){
         ClassLoader loader= new CustomClassLoader();
-        try{
-            Class myClass = loader.loadClass(b64Bytecode);
-            System.out.println(myClass.getName());  //Monster
-            Constructor[] constructors=myClass.getDeclaredConstructors();
-            Method[] classMethods=myClass.getDeclaredMethods();
-            Field[] members=myClass.getDeclaredFields();
-            //Monster(java.lang.String,int,int)
-            for(Constructor c: constructors){
-                System.out.println("constructor:");
-                System.out.println(c.toString());
-            }
-            for(Method m:classMethods){
-                System.out.println("methods:");
-                System.out.println(m.toString());
-            }
-            System.out.println("members:");
-            for(Field m: members){
-                
-                System.out.println(m.toString());
-            }
-            Constructor instanceConstructor=myClass.getDeclaredConstructor(new Class[]{String.class,int.class,int.class});
-            instanceConstructor.setAccessible(true);
-            Object[] parameters={"myLittleMonster",2333,233};
-            Object myLittleMonster = instanceConstructor.newInstance(parameters);
+   
+		Class myClass = loader.loadClass(b64Bytecode);
+		System.out.println(myClass.getName());  //Monster
+		Constructor[] constructors=myClass.getDeclaredConstructors();
+		Method[] classMethods=myClass.getDeclaredMethods();
+		Field[] members=myClass.getDeclaredFields();
+		//Monster(java.lang.String,int,int)
+		for(Constructor c: constructors){
+			System.out.println("constructor:");
+			System.out.println(c.toString());
+		}
+		for(Method m:classMethods){
+			System.out.println("methods:");
+			System.out.println(m.toString());
+		}
+		System.out.println("members:");
+		for(Field m: members){
+			
+			System.out.println(m.toString());
+		}
+		Constructor instanceConstructor=myClass.getDeclaredConstructor(new Class[]{String.class,int.class,int.class});
+		instanceConstructor.setAccessible(true);
+		Object[] parameters={"myLittleMonster",2333,233};
+		Object myLittleMonster = instanceConstructor.newInstance(parameters);
 
-        }
-        catch(Throwable e){
-            e.printStackTrace();
-        }
-
+        
     }
 }
 
