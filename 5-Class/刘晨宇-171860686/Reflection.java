@@ -16,31 +16,45 @@ public class Reflection {
             constructor.setAccessible(true);
             Object instance = constructor.newInstance("Godzilla", 1919810, 114514);
             System.out.println("Created an object of encoded class: " + instance.toString());
-            // find out all methods and fields of encoded class
-            ArrayList<Method> allMethods = new ArrayList<>(Arrays.asList(encodedClass.getDeclaredMethods()));
-            ArrayList<Field> allFields = new ArrayList<>(Arrays.asList(encodedClass.getDeclaredFields()));
+            // find out inherited methods and fields
+            ArrayList<Method> inheritedMethods = new ArrayList<>();
+            ArrayList<Field> inheritedFields = new ArrayList<>();
             Class<?> superClass = encodedClass.getSuperclass();
             while(superClass != null) {
                 for(Method method: superClass.getDeclaredMethods()) {
                     int modifier = method.getModifiers();
                     if(Modifier.isPublic(modifier) || Modifier.isProtected(modifier)) {
-                        allMethods.add(method);
+                        inheritedMethods.add(method);
                     }
                 }
                 for(Field field: superClass.getDeclaredFields()) {
                     int modifier = field.getModifiers();
                     if(Modifier.isPublic(modifier) || Modifier.isProtected(modifier)) {
-                        allFields.add(field);
+                        inheritedFields.add(field);
                     }
                 }
                 superClass = superClass.getSuperclass();
             }
             System.out.println("Class canonical name:");
             System.out.println("\t" + encodedClass.getCanonicalName());
-            System.out.println("All methods of class:");
-            allMethods.forEach(method -> System.out.println("\t" + method));
-            System.out.println("All fields of class:");
-            allFields.forEach(field -> System.out.println("\t" + field));
+            System.out.println("Methods declared in class:");
+            for(Method method: encodedClass.getDeclaredMethods()) {
+                System.out.println("\t" + method);
+            }
+            System.out.println("Fields declared in class:");
+            for(Field field: encodedClass.getDeclaredFields()) {
+                System.out.println("\t" + field);
+            }
+            System.out.println("Inherited methods:");
+            inheritedMethods.forEach(method -> System.out.println("\t" + method));
+            if(inheritedMethods.isEmpty()) {
+                System.out.println("\tNone");
+            }
+            System.out.println("Inherited fields:");
+            inheritedFields.forEach(field -> System.out.println("\t" + field));
+            if(inheritedFields.isEmpty()) {
+                System.out.println("\tNone");
+            }
         } catch(ClassNotFoundException e) {
             System.out.println("Class loading failed.");
         } catch(NoSuchMethodException e) {
