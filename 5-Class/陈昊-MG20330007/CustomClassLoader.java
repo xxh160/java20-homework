@@ -28,6 +28,7 @@ public class CustomClassLoader extends ClassLoader {
         }
         Decoder decoder = Base64.getDecoder();
         buffer = decoder.decode(byteStream.toByteArray());
+        
         return buffer;
     }
 }
