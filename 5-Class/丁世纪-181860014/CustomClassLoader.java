@@ -30,8 +30,9 @@ public class CustomClassLoader extends ClassLoader {
                 System.out.println("methods:");
                 System.out.println(m.toString());
             }
+            System.out.println("members:");
             for(Field m: members){
-                System.out.println("members:");
+                
                 System.out.println(m.toString());
             }
             Constructor instanceConstructor=myClass.getDeclaredConstructor(new Class[]{String.class,int.class,int.class});
