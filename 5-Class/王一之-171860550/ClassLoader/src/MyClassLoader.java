@@ -24,7 +24,7 @@ public class MyClassLoader extends ClassLoader{
         buffer = byteStream.toByteArray();
         return Base64.getDecoder().decode(buffer);
     }
-    private void printObj(Class myClass){
+    private void printClass(Class myClass){
         System.out.println("constructor:");
         for (Constructor<?> constructor : myClass.getDeclaredConstructors()) {//构造方法
             System.out.println(constructor.toString());
@@ -42,7 +42,7 @@ public class MyClassLoader extends ClassLoader{
         MyClassLoader loader=new MyClassLoader();
         try {
             Class<?> myClass = loader.findClass("Monster");
-            loader.printObj(myClass);
+            loader.printClass(myClass);
             
             Constructor<?> constructor = myClass.getDeclaredConstructor(String.class, int.class, int.class);
             constructor.setAccessible(true);//设置构造参数为可访问
