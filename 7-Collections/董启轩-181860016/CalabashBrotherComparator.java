@@ -14,6 +14,7 @@ public  class CalabashBrotherComparator implements Comparator<CalabashBrother>{
     public void set_order(Order o){
         order=o;
     }
+    @Override
     public int compare(CalabashBrother bro1,CalabashBrother bro2){
         switch(order){
             case POSITIVE:

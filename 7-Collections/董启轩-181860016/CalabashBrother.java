@@ -45,6 +45,7 @@ public class CalabashBrother implements Comparable<CalabashBrother>{
     public void printInformation(){
         System.out.println("Name:"+name+"  "+"Gender:"+gender);
     }
+    @Override
     public int compareTo(CalabashBrother bro){
         String broname=bro.getName();
         return name.compareTo(broname);

@@ -1,36 +1,34 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Collections;
+import java.util.*;
 
 public class CalabashBrotherCollections{
     private static final int BROTHER_NUM=12;
-    public static void DOSort(ArrayList<CalabashBrother> bros){
+    public static void DOSort(CalabashBrotherList bros){
         CalabashBrotherComparator comparator=new CalabashBrotherComparator();
         System.out.println("Positive Sort:");
-        Collections.sort(bros,comparator);
+        bros.sort(comparator);
         Iterator<CalabashBrother> iter=bros.iterator();
         while(iter.hasNext()){
             iter.next().printInformation();
         }
         comparator.set_order(Order.NEGATIVE);
         System.out.println("Negative Sort:");
-        Collections.sort(bros,comparator);
+        bros.sort(comparator);
         iter=bros.iterator();
         while(iter.hasNext()){
             iter.next().printInformation();
         }
         comparator.set_order(Order.RANDOM);
         System.out.println("Random Sort:");
-        Collections.sort(bros,comparator);
+        bros.sort(comparator);
         iter=bros.iterator();
         while(iter.hasNext()){
             iter.next().printInformation();
         }
     }
     public static void main(String[] args){
-        ArrayList<CalabashBrother> bros=new ArrayList<CalabashBrother>();
-        ArrayList<CalabashBrother> male_bros=new ArrayList<CalabashBrother>();
-        ArrayList<CalabashBrother> female_bros=new ArrayList<CalabashBrother>();
+        CalabashBrotherList bros=new CalabashBrotherList();
+        CalabashBrotherList male_bros=new CalabashBrotherList();
+        CalabashBrotherList female_bros=new CalabashBrotherList();
         for(int i=0;i<BROTHER_NUM;i++){
             CalabashBrother bro=new CalabashBrother();
             bros.add(bro);
