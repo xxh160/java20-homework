@@ -60,8 +60,8 @@ public class homework2 {
         hw2.construct_queue();//生成随机队列
         hw2.count_off();//报数
         System.out.println("");
-        //queue gf=new Choreography();//选择排序方法
-        queue gf=new Orchestration();
+        queue gf=new Choreography();//选择排序方法
+        //queue gf=new Orchestration();
         gf.sort(brothers);
         hw2.count_off();
         
