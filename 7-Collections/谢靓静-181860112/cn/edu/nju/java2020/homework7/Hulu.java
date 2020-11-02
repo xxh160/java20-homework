@@ -33,27 +33,25 @@ public class Hulu extends CartonCharacter implements Sort<Hulu>, Comparable<Hulu
         }
         ArrayList<Hulu> female = new ArrayList<>(), male = new ArrayList<>();
         //按性别排成两队
-        for(int i = 0; i < huluBrothers.size(); ++i){
-            if (huluBrothers.get(i).gender == gender.FEMALE){
-                female.add(huluBrothers.get(i));
-            }
-            else{
-                    male.add(huluBrothers.get(i));
+        for (Hulu huluBrother : huluBrothers) {
+            if (huluBrother.gender == cn.edu.nju.java2020.homework7.gender.FEMALE) {
+                female.add(huluBrother);
+            } else {
+                male.add(huluBrother);
             }
         }
         System.out.print("女生队伍：");
-        for(int i = 0; i < female.size(); ++i) {
-            System.out.print(female.get(i).name);
+        for (Hulu hulu : female) {
+            System.out.print(hulu.name);
             System.out.print(" ");
         }
         System.out.println();
         System.out.print("男生队伍：");
-        for(int i = 0; i < male.size(); ++i) {
-            System.out.print(male.get(i).name);
+        for (Hulu hulu : male) {
+            System.out.print(hulu.name);
             System.out.print(" ");
         }
         System.out.println();
-        return;
     }
 
     @Override
