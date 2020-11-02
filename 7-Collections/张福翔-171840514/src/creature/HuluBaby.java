@@ -1,23 +1,84 @@
 package creature;
 
+import com.sun.tools.javah.Gen;
+import org.jetbrains.annotations.NotNull;
 import utils.Sortable;
 
-public class HuluBaby extends Creature implements Comparable<HuluBaby>, Sortable<HuluBaby> {
-    public enum HuluType {
-        ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN
-    };
-    HuluType type;
-    String name;
+import java.util.Iterator;
+import java.util.Random;
 
-    public HuluBaby(HuluType type, String name) {
-        this.type = type;
+public class HuluBaby extends Creature implements Comparable<HuluBaby>, Sortable<HuluBaby> {
+    public enum HuluOrder {
+        ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, OTHERS
+    };
+    public enum ComparationType {
+        BYNAME, BYORDER, BYNAMEREVERSED
+    };
+    public enum Gender {
+        MALE("男♂"), FEMALE("女♀");
+
+        private String name;
+        Gender(String s) {
+            this.name = s;
+        }
+        @Override
+        public String toString() {
+            return this.name;
+        }
+    }
+
+    static ComparationType comparationType = ComparationType.BYNAME;
+
+    static public Gender sampleGender() {
+        Gender[] genders = Gender.values();
+        int rand = (int) (Math.random() * Gender.values().length);
+        return genders[rand];
+    }
+    static public String sampleName() {
+        // randomly generate name with length in 4-7
+        int nameLength = (int) (Math.random() * 4) + 4;
+        String nameList = "abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String name = "";
+        for (int i = 0; i < nameLength; i++) {
+            int rand = (int) (Math.random() * nameList.length());
+            name += nameList.charAt(rand);
+        }
+        return name;
+    }
+    static public void setComparationType(ComparationType type) {
+        HuluBaby.comparationType = type;
+    }
+
+    HuluOrder order;
+    String name;
+    Gender gender;
+
+    public HuluBaby(HuluOrder type, String name, Gender gender) {
+        this.order = type;
         this.name = name;
+        this.gender = gender;
+    }
+
+    public void greet() {
+        System.out.println("大家好, 我是葫芦娃" + this.name + ", 性别" + gender.toString() + "! ");
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     @Override
     public int compareTo(HuluBaby o) {
-        // small number first
-        return this.type.compareTo(o.type);
+        if (comparationType == ComparationType.BYNAME) {
+            return this.name.compareTo(o.name);
+        }
+        else if (comparationType == ComparationType.BYNAMEREVERSED) {
+            return o.name.compareTo(this.name);
+        }
+        else {
+            // small number first
+            return this.order.compareTo(o.order);
+        }
     }
 
     @Override
@@ -37,7 +98,4 @@ public class HuluBaby extends Creature implements Comparable<HuluBaby>, Sortable
         return idx;
     }
 
-    public void greet() {
-        System.out.println("大家好，我是" + this.toString() + "！");
-    }
 }
