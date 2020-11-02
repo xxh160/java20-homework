@@ -6,3 +6,4 @@
 4. BubbleSorter和QuickSorter的构造器接受一个类型为Comparator<CalabashBrother>的参数，通过使用不同的Comparator，就能以不同的顺序对葫芦娃进行排序。实现了Comparator<CalabashBrother>接口的类包括DescendingComparator和RandomComparator，分别用于字典序降序排序和随机排序。此外，葫芦娃类实现了Comparable接口，它的自然序，即compareTo方法，返回字典序升序排序。
 5. Grandpa类为老爷爷的抽象，它提供public void sort(List<CalabashBrother> list)对葫芦娃们进行排序。实际上它将该任务委托给作为成员变量的Sorter来实现。并且，只要通过setSorter()方法设置不同的Sorter，老爷爷就能用各种不同的方式，以及不同的顺序，对葫芦娃进行排序。
 6. GenderFilter类提供静态方法List<CalabashBrother> filter(List<CalabashBrother> list, CalabashBrother.Gender gender)方法，用于获取一个队列中给定性别的葫芦娃组成的子队列。
+7. 程序的入口是CollectionSort类的main()方法，在该方法中演示了对葫芦娃按照名字的字典序进行正序、倒序、随机排序，再将葫芦娃按性别分为两队，再按照名字的字典序正序进行排序的过程（分为两队后也能按照不同顺序排序，为输出简洁考虑，只进行正序排序）。
