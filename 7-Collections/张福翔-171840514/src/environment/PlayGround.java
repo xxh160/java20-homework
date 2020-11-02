@@ -3,14 +3,14 @@ package environment;
 import creature.Grandpa;
 import creature.HuluBaby;
 import utils.ArraySorter;
-import utils.IterableQueue;
+import utils.IterableArrayList;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class PlayGround extends EnvComponent {
-    IterableQueue<HuluBaby> huluFamily = new IterableQueue<>();
+    IterableArrayList<HuluBaby> huluFamily = new IterableArrayList<>();
     public PlayGround() {
     }
 
@@ -39,7 +39,7 @@ public class PlayGround extends EnvComponent {
         huluBabiesGreeting(huluFamily);
 
         System.out.println("按性别分开...");
-        IterableQueue<HuluBaby> maleGroup = new IterableQueue<>(), femaleGroup = new IterableQueue<>();
+        IterableArrayList<HuluBaby> maleGroup = new IterableArrayList<>(), femaleGroup = new IterableArrayList<>();
         for (HuluBaby baby : huluFamily) {
             if (HuluBaby.Gender.MALE.equals(baby.getGender())) {
                 maleGroup.add(baby);

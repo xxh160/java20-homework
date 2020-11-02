@@ -3,7 +3,7 @@ package utils;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class IterableQueue<E extends Comparable<E>> extends ArrayList<E> implements Iterable<E> {
+public class IterableArrayList<E extends Comparable<E>> extends ArrayList<E> implements Iterable<E> {
     public class InOrderIterator implements Iterator<E> {
         private int ptr = 0;
         @Override

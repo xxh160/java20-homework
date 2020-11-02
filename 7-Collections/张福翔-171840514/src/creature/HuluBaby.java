@@ -1,11 +1,6 @@
 package creature;
 
-import com.sun.tools.javah.Gen;
-import org.jetbrains.annotations.NotNull;
 import utils.Sortable;
-
-import java.util.Iterator;
-import java.util.Random;
 
 public class HuluBaby extends Creature implements Comparable<HuluBaby>, Sortable<HuluBaby> {
     public enum HuluOrder {
