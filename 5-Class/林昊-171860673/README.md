@@ -26,7 +26,7 @@ Instance Methods:
 public java.lang.String Monster.attack(Monster)
 ```
 
-其中前3行是创建对象的属性值，第5-12行是创建的对象的属性和方法（不包含继承自`Object`类的属性、方法）
+其中2-4行是创建对象的属性值，第5-12行是创建的对象的属性和方法（不包含继承自`Object`类的属性、方法）
 
 ## 类加载
 
