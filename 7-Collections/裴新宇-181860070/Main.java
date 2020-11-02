@@ -1,44 +1,85 @@
 import java.util.*;
+import java.lang.Math;
 
 public class Main {
+    public static void Count_off(LinkedList<Huluwa> list) {
+        for(Huluwa it: list) {
+            it.count_off();
+            System.out.print(" ");
+        }
+        System.out.println();
+    }
+
     public static void main(String []args) {
         LinkedList<Huluwa> huluwaList = new LinkedList<Huluwa>();
-        // String name = '';
-        // boolean gender = 0;
-        // for(int i=0;i<50;i++) {
-        //     // name = ...
-        //     // gender = ...
-        //     huluwaList.add(new Huluwa(name,gender));
-        Huluwa a = new Huluwa("9wa",true);
-        huluwaList.add(a);
-        huluwaList.add(new Huluwa("1wa",false));
-        huluwaList.add(new Huluwa("2wa",true));
-        huluwaList.add(new Huluwa("8wa",true));
-        huluwaList.add(new Huluwa("3wa",false));
-        huluwaList.add(new Huluwa("7wa",true));
-        huluwaList.add(new Huluwa("6wa",false));
-        huluwaList.add(new Huluwa("4wa",false));
-        huluwaList.add(new Huluwa("5wa",true));
-        
-        for(Huluwa it: huluwaList) {
-            it.count_off();
-            System.out.println(' ');
+        String name = "abcd";
+        boolean gender = true;
+        char[] dict = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+        for(int i=0;i<50;i++) {
+            // 五十个随机姓名、性别的葫芦娃
+            char[] n = {dict[(int)(Math.random()*26)],dict[(int)(Math.random()*26)],dict[(int)(Math.random()*26)],dict[(int)(Math.random()*26)]};
+            name = String.valueOf(n);
+            gender = (int)(Math.random()*2) == 1 ? true : false;
+            huluwaList.add(new Huluwa(name,gender));
         }
-        System.out.println();
+        System.out.println("原始队列：");
+        Main.Count_off(huluwaList);
+
+        System.out.println("正序队列：");
         HuluwaAscendingComparator hac = new HuluwaAscendingComparator();
         Collections.sort(huluwaList,hac);
-        for(Huluwa it: huluwaList) {
-            it.count_off();
-            System.out.println(' ');
-        }
-        System.out.println();
+        Main.Count_off(huluwaList);
         
+        System.out.println("反序队列：");
         HuluwaDescendingComparator hdc = new HuluwaDescendingComparator();
         Collections.sort(huluwaList,hdc);
+        Main.Count_off(huluwaList);
+
+        System.out.println("乱序队列：");
+        Collections.shuffle(huluwaList);
+        Main.Count_off(huluwaList);
+
+        System.out.println();
+
+        LinkedList huluwaMaleList = new LinkedList<Huluwa>();
+        LinkedList huluwaFemaleList = new LinkedList<Huluwa>();
         for(Huluwa it: huluwaList) {
-            it.count_off();
-            System.out.println(' ');
+            if(it.get_gender() == true)
+                huluwaMaleList.add(it);
+            else
+                huluwaFemaleList.add(it);
         }
-        
+        System.out.println("公葫芦娃原始队列：");
+        Main.Count_off(huluwaMaleList);
+
+        System.out.println("公葫芦娃正序队列：");
+        Collections.sort(huluwaMaleList,hac);
+        Main.Count_off(huluwaMaleList);
+
+        System.out.println("公葫芦娃反序队列：");
+        Collections.sort(huluwaMaleList,hdc);
+        Main.Count_off(huluwaMaleList);
+
+        System.out.println("公葫芦娃乱序队列：");
+        Collections.shuffle(huluwaMaleList);
+        Main.Count_off(huluwaMaleList);
+
+        System.out.println();
+
+        System.out.println("母葫芦娃原始队列：");
+        Main.Count_off(huluwaFemaleList);
+
+        System.out.println("母葫芦娃正序队列：");
+        Collections.sort(huluwaFemaleList,hac);
+        Main.Count_off(huluwaFemaleList);
+
+        System.out.println("母葫芦娃反序队列：");
+        Collections.sort(huluwaFemaleList,hdc);
+        Main.Count_off(huluwaFemaleList);
+
+        System.out.println("母葫芦娃乱序队列：");
+        Collections.shuffle(huluwaFemaleList);
+        Main.Count_off(huluwaFemaleList);
     }
+
 }
