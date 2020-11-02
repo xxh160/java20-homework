@@ -1,4 +1,4 @@
-package cn.edu.nju.hw3;
+package mycode.hw7;
 import java.util.Random;
 
 import sortmethod.*;
@@ -27,7 +27,7 @@ public class Grandpa extends Human {
         {
             for(int j=0;j<HULU_NUM-1-i;j++)
             {
-                if(w.hulu[j].get_rank()>w.hulu[j+1].get_rank()){
+                if(w.hulu.get(j).get_rank()>w.hulu.get(j+1).get_rank()){
                      w.Swap2boy(j, j+1);
                 }
             }

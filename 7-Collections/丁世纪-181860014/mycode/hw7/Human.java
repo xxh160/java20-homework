@@ -1,4 +1,5 @@
-package cn.edu.nju.hw3;
+package mycode.hw7;
+enum Gender {male,female,unknown};
 interface Communicate{
     public void Speaksth(String str);
 
@@ -15,6 +16,7 @@ interface Fight{
 
 class Human implements Communicate {
     protected String name;
+    protected Gender gender;
 
     static int total;
     static{
