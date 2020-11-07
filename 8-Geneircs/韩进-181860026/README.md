@@ -10,7 +10,7 @@
 
 将$GourdFamily$类改写为
 ```
-CreatureFamily<T\space extends\space Creature> implements\space Iterable<T>
+CreatureFamily<T extends Creature> implements Iterable<T>
 ```
   
 让存储的对象类型可以为任意继承了`Creature`类的对象
@@ -19,7 +19,7 @@ CreatureFamily<T\space extends\space Creature> implements\space Iterable<T>
 
 将原先的反向比较器类改写为
 ```
-NegativeComparator<T\space extends\space Creature> implements\space Comparator<T>
+NegativeComparator<T extends Creature> implements Comparator<T>
 ```
   
 该比较器便可以比较任何继承了`Creature`类的对象
