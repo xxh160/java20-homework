@@ -1,13 +1,13 @@
 package creature;
 
-import utils.Sortable;
+import java.util.ArrayList;
 
-public class HuluBaby extends Creature implements Comparable<HuluBaby>, Sortable<HuluBaby> {
+public class HuluBaby extends Creature {
     public enum HuluOrder {
         ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, OTHERS
     };
     public enum ComparationType {
-        BYNAME, BYORDER, BYNAMEREVERSED
+        BYNAME, BYORDER, BYGENDER
     };
     public enum Gender {
         MALE("男♂"), FEMALE("女♀");
@@ -43,6 +43,11 @@ public class HuluBaby extends Creature implements Comparable<HuluBaby>, Sortable
     static public void setComparationType(ComparationType type) {
         HuluBaby.comparationType = type;
     }
+    static public void huluBabiesGreetings(ArrayList<HuluBaby> huluBabies) {
+        for (HuluBaby huluBaby : huluBabies) {
+            huluBaby.greet();
+        }
+    }
 
     HuluOrder order;
     String name;
@@ -63,34 +68,28 @@ public class HuluBaby extends Creature implements Comparable<HuluBaby>, Sortable
     }
 
     @Override
-    public int compareTo(HuluBaby o) {
-        if (comparationType == ComparationType.BYNAME) {
-            return this.name.compareTo(o.name);
-        }
-        else if (comparationType == ComparationType.BYNAMEREVERSED) {
-            return o.name.compareTo(this.name);
+    public String toString() {
+        return super.toString() + " 葫芦娃姓名: " + this.name + " 性别: " + this.gender;
+    }
+
+    @Override
+    public int compareTo(Creature o) {
+        if (this.getClass().equals(o.getClass())) {
+            HuluBaby obj = (HuluBaby)o;
+            if (comparationType.equals(ComparationType.BYNAME)) {
+                return this.name.compareTo(obj.name);
+            } else if (comparationType.equals(ComparationType.BYORDER)) {
+                return this.order.compareTo(obj.order);
+            } else {
+                if (this.gender.equals(obj.gender)) {
+                    return this.name.compareTo(obj.name);
+                } else {
+                    return this.gender.compareTo(obj.gender);
+                }
+            }
         }
         else {
-            // small number first
-            return this.order.compareTo(o.order);
+            return super.compareTo(o);
         }
     }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
-    @Override
-    public int moveTo(HuluBaby[] arr, int myIndex) {
-        int idx = 0;
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i].compareTo(this) <= 0 && i < myIndex)
-                idx++;
-            else if (arr[i].compareTo(this) < 0)
-                idx++;
-        }
-        return idx;
-    }
-
 }

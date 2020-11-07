@@ -1,8 +1,9 @@
+import core.Controller;
 import environment.PlayGround;
 
 public class Runner {
     public static void main(String[]args) {
-        PlayGround playGround = new PlayGround();
-        playGround.huluFamilyDemo();
+        Controller controller = new Controller();
+        controller.runDemoHW8();
     }
 }
