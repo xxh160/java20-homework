@@ -4,17 +4,25 @@
 
 #### 1.1
 
-定义了一个名为$Creature$的基类，其中定义了$name$和$isMale$的属性，让$GourdBrother$类继承该类。
+定义了一个名为'Creature'的基类，其中定义了$name$和$isMale$的属性，让$GourdBrother$类继承该类。
 
 #### 1.2
 
-将$GourdFamily$类改写为$CreatureFamily<T\space extends\space Creature> implements\space Iterable<T>$
-
+将$GourdFamily$类改写为
+'''
+CreatureFamily<T\space extends\space Creature> implements\space Iterable<T>
+'''
+  
 让存储的对象类型可以为任意继承了$Creature$类的对象
 
 #### 1.3
 
-将原先的反向比较器类改写为$NegativeComparator<T\space extends\space Creature> implements\space Comparator<T>$该比较器便可以比较任何继承了$Creature$类的对象
+将原先的反向比较器类改写为
+'''
+NegativeComparator<T\space extends\space Creature> implements\space Comparator<T>
+'''
+  
+该比较器便可以比较任何继承了$Creature$类的对象
 
 ### 2.泛型的好处
 
