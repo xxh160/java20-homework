@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<? extends Huluwa> arr;
-        
+        ArrayList<Huluwa<Ability>> arr=new ArrayList<Huluwa<Ability>>();
     }
 }

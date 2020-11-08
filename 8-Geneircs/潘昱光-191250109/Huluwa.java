@@ -1,25 +1,25 @@
-public class Huluwa implements Comparable<Huluwa>{
+public class Huluwa<T extends Ability> implements Comparable<Huluwa> {
     private String name;
-    private int level;
+    private T ability;
     Huluwa(){
         name=null;
-        level=0;
+        ability=null;
     }
-    Huluwa(String name,int level){
+    Huluwa(String name,int level,T ability){
         this.name=name;
-        this.level=level;
+        this.ability=ability;
     }
 
     public String getName(){
         return name;
     }
-    public int getLevel(){
-        return level;
+    public T getAbility(){
+        return ability;
     }
 
     @Override
     public int compareTo(Huluwa o) {
-        return this.level-o.level;
+        return this.ability.getLevel()-o.getAbility().getLevel();
     }
 
 }
