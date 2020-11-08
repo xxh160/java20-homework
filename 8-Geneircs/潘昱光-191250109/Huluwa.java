@@ -5,7 +5,7 @@ public class Huluwa<T extends Ability> implements Comparable<Huluwa> {
         name=null;
         ability=null;
     }
-    Huluwa(String name,int level,T ability){
+    Huluwa(String name,T ability){
         this.name=name;
         this.ability=ability;
     }
