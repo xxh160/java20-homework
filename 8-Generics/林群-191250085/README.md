@@ -1,6 +1,6 @@
-#homework 08
+# homework 08
 
-##类型设计
+## 类型设计
 类`Creature`：是所有生物（葫芦娃、蛇精等）的父类，负责保存每个生物的姓名`name`和所在队列的位置`position`，并实现了`Comparable`接口，将`name`按照字典序比较，为后续的队列排序做准备。    
 
 类`Calabash`：用于存放葫芦娃对象，继承自类`Creature`，另存放每个葫芦娃的性别，枚举类`Gender`，实现方法`numberOff`，使得每个葫芦娃能够报数。
@@ -19,7 +19,7 @@
 
 类`Main`：`main`方法的入口，提供初始化方法。
 
-##泛型应用
+## 泛型应用
 `IterableQueue<T extends Creature>` : 传入一种继承自`Creature`类的类型的队列，该队列在外部保证单一类型，使得目前可以排序的队列中只有一种生物（葫芦娃、蛇精等）。同时由于父类型`Creature`实现`Comparable`接口，使得该队列中存放的都是可以排序的类型。
 
 `SortAdapter<T extends Creature>`：将排序算法的适配器传入泛型，这样做可以保证每次进行排序的对象都是类`Creature`的子类，并且由于其中的排序算法持有`IterableQueue`的引用，所以能够保证排序的时候对同一个类型的对象进行排序。通过复写`Creature`类的`CompareTo`方法，就能够实现不同规则的排序。
