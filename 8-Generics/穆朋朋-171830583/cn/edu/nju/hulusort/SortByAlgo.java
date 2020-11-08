@@ -2,7 +2,7 @@ package cn.edu.nju.hulusort;
 public class SortByAlgo implements SortHuluwaList{
     
     @Override
-    public void sort(HuluwaList list) {
+    public void sort(HuluwaList<Huluwa> list) {
         System.out.println("算法排序：");
         for (int i = 0; i < list.size(); i++) {
             int minHuluwaIndex=i;

@@ -7,23 +7,23 @@ public class Huluwa extends Hulu implements Comparable<Huluwa>{
     }
 
     String name;
-    Huluwa() {
+    public Huluwa() {
         super();
         rank=0;
         numHuluwa++;
     }
-    Huluwa(int color,String name) {
+    public Huluwa(int color,String name) {
         super(color);
         rank=0;
         numHuluwa++;
         this.name=name;
     }
 
-    void sayName() {
+    public void sayName() {
         System.out.print(name);
     }
 
-    int getRank() {
+    public int getRank() {
         return rank;
     }
 
