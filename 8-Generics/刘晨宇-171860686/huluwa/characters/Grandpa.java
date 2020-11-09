@@ -1,5 +1,6 @@
 package huluwa.characters;
 
+import java.util.Comparator;
 import java.util.List;
 
 import huluwa.tools.Sorter;
@@ -14,13 +15,13 @@ public class Grandpa extends Character {
         this.gender = Gender.MALE;
     }
 
-    private Sorter<CalabashBrother> sorter;
+    private Sorter sorter;
 
-    public void setSorter(Sorter<CalabashBrother> sorter) {
+    public void setSorter(Sorter sorter) {
         this.sorter = sorter;
     }
 
-    public void sort(List<CalabashBrother> list) {
-        sorter.sort(list);
+    public void sort(List<CalabashBrother> list, Comparator<? super CalabashBrother> comparator) {
+        sorter.sort(list, comparator);
     }
 }

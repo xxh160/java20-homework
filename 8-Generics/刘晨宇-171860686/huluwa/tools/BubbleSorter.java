@@ -9,15 +9,9 @@ import huluwa.characters.Swappable;
 /**
  * 实现了冒泡排序的排序器，基于List, Iterator和Comparator接口
  */
-public class BubbleSorter<T extends Swappable<T>> implements Sorter<T> {
-    Comparator<? super T> comparator;
-
-    public BubbleSorter(Comparator<? super T> comparator) {
-        this.comparator = comparator;
-    }
-
+public class BubbleSorter implements Sorter {
     @Override
-    public void sort(List<T> list) {
+    public <T extends Swappable<T>> void sort(List<T> list, Comparator<? super T> comparator) {
         if(list.size() <= 1) {
             return;
         }

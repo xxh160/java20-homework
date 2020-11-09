@@ -9,15 +9,9 @@ import java.util.ListIterator;
 /**
  * 实现了快速排序的排序器
  */
-public class QuickSorter<T extends Swappable<T>> implements Sorter<T> {
-    Comparator<? super T> comparator;
-
-    public QuickSorter(Comparator<? super T> comparator) {
-        this.comparator = comparator;
-    }
-
+public class QuickSorter implements Sorter {
     @Override
-    public void sort(List<T> list) {
+    public <T extends Swappable<T>> void sort(List<T> list, Comparator<? super T> comparator) {
         T base = list.listIterator().next();
         ListIterator<T> leftIt = list.listIterator();
         ListIterator<T> rightIt = list.listIterator(list.size());
@@ -40,10 +34,10 @@ public class QuickSorter<T extends Swappable<T>> implements Sorter<T> {
             }
         }
         if(leftIt.nextIndex() - 1 > 0) {
-            sort(list.subList(0, leftIt.nextIndex()));
+            sort(list.subList(0, leftIt.nextIndex()), comparator);
         }
         if(list.size() - leftIt.nextIndex() - 2 > 0) {
-            sort(list.subList(leftIt.nextIndex() + 1, list.size()));
+            sort(list.subList(leftIt.nextIndex() + 1, list.size()), comparator);
         }
     }
 
