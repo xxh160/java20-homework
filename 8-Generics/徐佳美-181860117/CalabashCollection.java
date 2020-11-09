@@ -4,22 +4,22 @@ import java.util.Iterator;
 import java.util.Random;
 
 
-public class CalabashCollection{
+public class CalabashCollection <T extends Calabash>{
     private static final int N=20;//调整葫芦娃数目
     private static final int LEN = 5;//调整名字长度
-    public static void main(String[] args)
+    public static <T extends Calabash> void main (String[] args) throws InstantiationException, IllegalAccessException
 	{
-		ArrayList<Calabash> cal = new ArrayList<Calabash>(); // 葫芦娃数组序列
+		ArrayList<Calabash> cal = new ArrayList<>(); // 葫芦娃数组序列
 		ArrayList<Calabash> male_cal = new ArrayList<Calabash>(); // 男葫芦娃数组序列
 		ArrayList<Calabash> female_cal = new ArrayList<Calabash>(); // 女葫芦娃数组序列
 		// 随机生成N个葫芦娃
 		for (int i=0;i<N;i++) { 
-			Calabash newcal = randomCalabash();
+			Calabash newcal = randomCalabash(Calabash.class);
 			cal.add(newcal); // 生成葫芦娃数组序列
         }
         //按性别区分
-        male_cal = sortBySex(cal, "male");
-        female_cal = sortBySex(cal, "female");
+        male_cal = sortBySex(cal, "male",Calabash.class);
+        female_cal = sortBySex(cal, "female",Calabash.class);
         //测试排序
         System.out.println("*******葫芦娃排序测试*********");
         test(cal);
@@ -30,7 +30,7 @@ public class CalabashCollection{
     }
     
 
-    public static void test(ArrayList<Calabash> cal){
+    public static <T extends Calabash> void test(ArrayList<T> cal){
         // 正序（comparable），正序，反序，乱序排序测试(Comparator)
         System.out.println("========正序comparable序列=======");
         sortByComparable(cal);
@@ -44,7 +44,8 @@ public class CalabashCollection{
     }
 
 
-    public static Calabash randomCalabash(){ // 随机生成一个葫芦娃
+    public static <T extends Calabash> T randomCalabash(Class<T> type)
+			throws InstantiationException, IllegalAccessException { // 随机生成一个葫芦娃
 		String name = "";
 		String sex ;
 		Random r = new Random();
@@ -66,44 +67,48 @@ public class CalabashCollection{
 		else {
 			sex = "female";
 		}
-		
-		Calabash cal = new Calabash (name,sex);
+		T cal = type.newInstance();
+		Calabash caltmp = new Calabash(name, sex);
+		cal.rename(caltmp);
 		return cal;
     }
     
-    public static ArrayList<Calabash> sortBySex(ArrayList<Calabash> cal,String sexkind){
-        ArrayList<Calabash> ans = new ArrayList<Calabash>();
-        Iterator<Calabash> iter = cal.iterator(); 
+    public static <T extends Calabash> ArrayList<T> sortBySex(ArrayList<T> cal,String sexkind,Class<T> type)
+			throws InstantiationException, IllegalAccessException {
+        ArrayList<T> ans = new ArrayList<>();
+        Iterator<T> iter = cal.iterator(); 
 		while(iter.hasNext()) {
-           Calabash caltemp=iter.next();
+		   Calabash caltemp=iter.next();
+		   T cal1 = type.newInstance();
+			cal1.rename(caltemp);
            if (caltemp.get_sex()==sexkind){
-               ans.add(caltemp);
+               ans.add(cal1);
            }
         }
         return ans;
     }
 
-    public static void sortByComparable(ArrayList<Calabash> cal) {
+    public static <T extends Calabash> void sortByComparable(ArrayList<T> cal) {
 		Collections.sort(cal);
 		printArray(cal);
 	}
 
 
-    public static void IncSort(ArrayList<Calabash> cal) { 
+    public static <T extends Calabash> void IncSort(ArrayList<T> cal) { 
 		Collections.sort(cal,new  CalabashIncComparator());
 		printArray(cal);
 	}	
-	public static void DecSort(ArrayList<Calabash> cal) {
+	public static <T extends Calabash>  void DecSort(ArrayList<T> cal) {
 		Collections.sort(cal,new  CalabashDecComparator());
 		printArray(cal);
 	}
-	public static void RandSort(ArrayList<Calabash> cal) {
+	public static <T extends Calabash> void RandSort(ArrayList<T> cal) {
         Collections.sort(cal,new  CalabashRandomComparator());
 		printArray(cal);
     }
     
-    public static void printArray(ArrayList<Calabash> cal){
-        Iterator<Calabash> iter = cal.iterator(); 
+    public static <T extends Calabash> void printArray(ArrayList<T> cal){
+        Iterator<T> iter = cal.iterator(); 
 		while(iter.hasNext()) {
 			iter.next().selfIntroduce();
 		}

@@ -1,14 +1,27 @@
 import java.lang.Comparable;
 
 
+
 class Calabash implements Comparable<Calabash>{
     private String name; // 名字
     private String sex; // 性别
     private int age;//年纪
+
+    public Calabash() {
+		name = "noname";
+		sex = "nosex";
+    }
+    
 	public Calabash(String n,String s) {
 		name = n;
 		sex = s;
-	}
+    }
+    
+    public void rename(Calabash x){
+        this.name=x.name;
+        this.sex=x.sex;
+    }
+
     public void selfIntroduce() {
 		System.out.println("I am "+name+", and I'm a "+sex);
     }
