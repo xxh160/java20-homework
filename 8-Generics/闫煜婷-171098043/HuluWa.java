@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Random;
 
 enum Gender {
@@ -9,9 +8,14 @@ enum Gender {
     }
 };
 
-public class HuluWa implements Comparable<HuluWa>{
+abstract class Creature{
+    String name;
+    abstract String getName();
+
+};
+
+public class HuluWa extends Creature implements Comparable<HuluWa>{
     private int seniority;
-    private String name;
     private int pos;
     private Gender gender;
     HuluWa(int seniority, String name, int pos, Gender gender){
@@ -49,22 +53,6 @@ public class HuluWa implements Comparable<HuluWa>{
         this.pos = pos;
     }
 
-    private void exchangePos(HuluWa huluWa, ArrayList<HuluWa> huluArray){
-        int tmp = this.pos;
-        this.pos = huluWa.getPos();
-        huluWa.setPos(tmp);
-        huluArray.set(this.pos, this);
-        huluArray.set(huluWa.getPos(), huluWa);
-    }
-
-    public void goToCorrectPos(ArrayList<HuluWa> huluArray){
-        while(this.pos > 0){
-            if(this.compareTo(huluArray.get(this.pos-1)) < 0){
-                this.exchangePos(huluArray.get(this.pos-1), huluArray);
-            }
-            else break;
-        }
-    }
 
     public void tellName(){
         System.out.print(this.name + " ");
@@ -72,6 +60,6 @@ public class HuluWa implements Comparable<HuluWa>{
 
     @Override
     public int compareTo(HuluWa h2){
-        return name.compareTo(h2.name);
+        return name.compareTo(h2.getName());
     }
 }
