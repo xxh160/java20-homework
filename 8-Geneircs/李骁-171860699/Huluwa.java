@@ -1,6 +1,4 @@
-import java.util.Comparator;
 import java.util.Random;
-//import org.apache.commons.lang.RandomStringsUtils;
 
 enum Gender {
     female, male

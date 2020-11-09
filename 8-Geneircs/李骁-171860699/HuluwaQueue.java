@@ -2,11 +2,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Collection;
-//import Huluwa;
 
 public class HuluwaQueue implements Iterable<Huluwa> {
-
-    //private Huluwa[] queue;
 
     private ArrayList<Huluwa> queue = new ArrayList<Huluwa>();
 
@@ -14,11 +11,9 @@ public class HuluwaQueue implements Iterable<Huluwa> {
         return new Iterator<Huluwa>() {
             private int index = 0;
             public boolean hasNext() {
-                //return index < queue.length;
                 return index < queue.size();
             }
             public Huluwa next() { 
-                //return queue[index++];
                 return queue.get(index++);
             }
             public void remove() { // Not implemented
