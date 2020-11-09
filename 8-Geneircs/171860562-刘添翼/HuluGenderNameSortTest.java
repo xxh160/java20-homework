@@ -18,8 +18,8 @@ public class HuluGenderNameSortTest {
 
     public static void main(String[] args) {
         RandomEnum<Hulu.Gender> randomEnum = new RandomEnum<Hulu.Gender>(Hulu.Gender.class);
-        HuluCollection huluCollection = new HuluCollection();
-        HuluNameComparator huluNameComparator = new HuluNameComparator();
+        HuluCollection<Hulu> huluCollection = new HuluCollection<>();
+        HuluNameComparator<Hulu> huluNameComparator = new HuluNameComparator<>();
 
         for (int i = 0; i < 10; ++i) {
             Hulu hulu = new Hulu(UUID.randomUUID().toString(), randomEnum.random());
@@ -30,8 +30,8 @@ public class HuluGenderNameSortTest {
         huluCollection.printContent();
         System.out.println("");
 
-        HuluCollection huluCollectionMale = new HuluCollection();
-        HuluCollection huluCollectionFemale = new HuluCollection();
+        HuluCollection<Hulu> huluCollectionMale = new HuluCollection<>();
+        HuluCollection<Hulu> huluCollectionFemale = new HuluCollection<>();
 
         ListIterator<Hulu> listIterator = huluCollection.iterator();
         while (listIterator.hasNext()) {

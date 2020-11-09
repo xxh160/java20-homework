@@ -3,11 +3,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class HuluCollection implements Iterable<Hulu> {
-    private List<Hulu> list = new LinkedList<Hulu>();
+public class HuluCollection<T extends Hulu> implements Iterable<T> {
+    private List<T> list = new LinkedList<T>();
 
     @Override
-    public ListIterator<Hulu> iterator() {
+    public ListIterator<T> iterator() {
         return list.listIterator();
     }
 
@@ -16,12 +16,12 @@ public class HuluCollection implements Iterable<Hulu> {
         return "HuluCollection [list=" + list + "]";
     }
 
-    public void sort(Comparator<Hulu> comparator) {
+    public void sort(Comparator<T> comparator) {
         list.sort(comparator);
     }
 
     public void printContent() {
-        for (Hulu hulu : list) {
+        for (T hulu : list) {
             System.out.println(hulu);
         }
     }
