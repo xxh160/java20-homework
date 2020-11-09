@@ -6,7 +6,7 @@
 主要属性有：life（血量）、anger_level（蓝量）
 、attack（攻击力）、defence（防御力）
 
-主要行为有：get_life（返回血量）、get_anger_level（返回蓝量）、get_attack（返回攻击力）、get_defence（返回防御力）
+主要行为有：get_life（返回血量）、get_anger_level（返回蓝量）、get_attack（返回攻击力）、get_defence（返回防御力），get_name（返回姓名，在HuLuWa和GrandPa中有重写）
 
 ## HuLuWa
 该类继承Creature，表示葫芦娃基类
@@ -15,6 +15,9 @@
 
 ### One_Huluwa/Two_Huluwa../Seven_Huluwa
 分别表示大娃到七娃，继承HuLuWa类，之后会实现不同的葫芦娃技能大招
+
+## GrandPa
+该类继承Creature，表示爷爷这一个体
 
 ## Position
 组成棋盘的基本元素，采用泛型设计，占据Position的可以是任意一种Creature
