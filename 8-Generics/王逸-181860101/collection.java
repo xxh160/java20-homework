@@ -16,6 +16,12 @@ class Creature{
         sex a[] = {sex.female,sex.male};
         _sex = a[seed2.nextInt(2)];
     }
+    public String get_name(){return name;}
+    public sex get_sex(){return _sex;}
+    @Override
+    public String toString(){
+        return name+"<"+_sex.toString()+">";
+    }
 }
 enum sex{
     male(1),
@@ -31,20 +37,12 @@ enum sex{
     }
 }
 
-class huluwa extends Creature implements Comparable<huluwa>{
-
+class huluwa<T extends Creature> extends Creature implements Comparable<T>{
     @Override
-    public int compareTo(huluwa a){
+    public int compareTo(T a){
         String _name = a.get_name();
         return _name.compareTo(name);
     }
-
-    @Override
-    public String toString(){
-        return name+"<"+_sex.toString()+">";
-    }
-    public String get_name(){return name;}
-    public sex get_sex(){return _sex;};
 }
 class yeyecomparator<T extends Creature> implements Comparator<T>{
     @Override
@@ -55,7 +53,7 @@ class yeyecomparator<T extends Creature> implements Comparator<T>{
         else return 0;
     }
 }
-public class collection{
+public class collection<T extends Creature>{
     ArrayList<huluwa> huluteng = new ArrayList<huluwa>();
 
     collection linebysex(sex a){
