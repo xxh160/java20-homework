@@ -17,9 +17,9 @@
 
 - 测试结果输出如下
 
-  ![image-20201111201629948](C:\Users\宋超群\AppData\Roaming\Typora\typora-user-images\image-20201111201629948.png)
+  ![image-20201111201629948](D:\日常生活\大三上\JAVA\java20-homework\9-Testing\宋超群-171860642\image-20201111201629948.png)
 
-  ![image-20201111201658051](C:\Users\宋超群\AppData\Roaming\Typora\typora-user-images\image-20201111201658051.png)
+  ![image-20201111201658051](D:\日常生活\大三上\JAVA\java20-homework\9-Testing\宋超群-171860642\image-20201111201658051.png)
 
 #### 安抚技能测试
 
@@ -31,7 +31,7 @@
 
 - 测试结果输出如下
 
-  ![image-20201111201739913](C:\Users\宋超群\AppData\Roaming\Typora\typora-user-images\image-20201111201739913.png)
+  ![image-20201111201739913](D:\日常生活\大三上\JAVA\java20-homework\9-Testing\宋超群-171860642\image-20201111201739913.png)
 
-  ![image-20201111201815334](C:\Users\宋超群\AppData\Roaming\Typora\typora-user-images\image-20201111201815334.png)
+  ![image-20201111201815334](D:\日常生活\大三上\JAVA\java20-homework\9-Testing\宋超群-171860642\image-20201111201815334.png)
 
