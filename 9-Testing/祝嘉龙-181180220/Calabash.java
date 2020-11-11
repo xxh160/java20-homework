@@ -47,5 +47,5 @@ public class Calabash implements Named, Gendered, Comparable<Calabash>{
 			name[i] = (char)(rand.nextInt(26) + 'a');;
 		}
 		return String.valueOf(name);
-	}
+    }
 }
