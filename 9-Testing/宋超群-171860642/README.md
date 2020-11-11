@@ -17,9 +17,9 @@
 
 - 测试结果输出如下
 
-  ![image-20201111201629948](D:\日常生活\大三上\JAVA\java20-homework\9-Testing\宋超群-171860642\image-20201111201629948.png)
+  ![](https://i.loli.net/2020/11/11/H5mYLfGkFBJ7rMa.png)
 
-  ![image-20201111201658051](D:\日常生活\大三上\JAVA\java20-homework\9-Testing\宋超群-171860642\image-20201111201658051.png)
+  ![image-20201111201658051](https://i.loli.net/2020/11/11/FTaM3rOyl7U9gLe.png)
 
 #### 安抚技能测试
 
@@ -31,7 +31,7 @@
 
 - 测试结果输出如下
 
-  ![image-20201111201739913](D:\日常生活\大三上\JAVA\java20-homework\9-Testing\宋超群-171860642\image-20201111201739913.png)
+  ![image-20201111201739913](https://i.loli.net/2020/11/11/iEb3BcHoXLj2Ofg.png)
 
-  ![image-20201111201815334](D:\日常生活\大三上\JAVA\java20-homework\9-Testing\宋超群-171860642\image-20201111201815334.png)
+  ![image-20201111201815334](https://i.loli.net/2020/11/11/tiUmPG6ZdeVMKY7.png)
 
