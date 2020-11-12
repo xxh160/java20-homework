@@ -4,7 +4,7 @@
 
 
 
-新建测试类`TestSort`并`import`所需的库。
+新建测试类`SortTest`并`import`所需的库。
 
 ```java
 import org.junit.*;
@@ -41,7 +41,7 @@ import static org.junit.Assert.*;
         }
     }
 
-    @Test
+@Test
     public void testIntComparator() {
         ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 2, 6, 8, 9));
         ArrayList<Integer> testList = new ArrayList<>(Arrays.asList(9, 8, 6, 4, 2, 1));
@@ -55,7 +55,7 @@ import static org.junit.Assert.*;
 `double`:
 
 ```java
-	@Test
+@Test
     public void testDouble() {
         ArrayList<Double> arrayList = new ArrayList<>(Arrays.asList(4.5, 5.7, 2.8, 3.0, 1.3));
         ArrayList<Double> testList = new ArrayList<>(Arrays.asList(1.3, 2.8, 3.0, 4.5, 5.7));
@@ -67,7 +67,7 @@ import static org.junit.Assert.*;
 
     }
 
-    @Test
+@Test
     public void testDoubleComparator() {
         ArrayList<Double> arrayList = new ArrayList<>(Arrays.asList(4.5, 5.7, 2.8, 3.0, 1.3));
         ArrayList<Double> testList = new ArrayList<>(Arrays.asList(5.7,4.5,3.0,2.8,1.3));
@@ -82,7 +82,7 @@ import static org.junit.Assert.*;
 `String`:
 
 ```java
-	@Test
+@Test
     public void testString() {
         ArrayList<String> arrayList = new ArrayList<>(Arrays.asList("ac", "bd", "ae", "bbc", "cnn"));
         ArrayList<String> testList = new ArrayList<>(Arrays.asList("ac", "ae", "bbc", "bd", "cnn"));
@@ -93,7 +93,7 @@ import static org.junit.Assert.*;
         }
     }
 
-    @Test
+@Test
     public void testStringComparator() {
         ArrayList<String> arrayList = new ArrayList<>(Arrays.asList("ac", "bd", "ae", "bbc", "cnn"));
         ArrayList<String> testList = new ArrayList<>(Arrays.asList("cnn", "bd", "bbc", "ae", "ac"));
