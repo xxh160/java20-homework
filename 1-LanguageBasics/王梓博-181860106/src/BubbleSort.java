@@ -1,3 +1,9 @@
+/*
+ * @Author: zb-nju
+ * @Date: 2020-09-09 10:59:54
+ * @LastEditors: zb-nju
+ * @LastEditTime: 2020-11-05 17:39:34
+ */
 public class BubbleSort {
     public static void main(String[] args){
         int arr[]={5,6,3,7,5,7,97,56,32,234,1},t;
