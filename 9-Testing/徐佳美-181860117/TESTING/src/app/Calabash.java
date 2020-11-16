@@ -5,8 +5,8 @@ import java.lang.Comparable;
 
 
 class Calabash implements Comparable<Calabash>{
-    private String name; // 名字
-    private String sex; // 性别
+    public String name; // 名字
+    public String sex; // 性别
     private int age;//年纪
 
     public Calabash() {
