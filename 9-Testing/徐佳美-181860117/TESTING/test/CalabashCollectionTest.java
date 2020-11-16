@@ -58,8 +58,10 @@ public class CalabashCollectionTest {
         assertEquals(it.next().name, "d");
         assertEquals(it.next().name, "e");
         assertEquals(it.next().name, "f");
+	assertEquals(it.next().name, "g");
         assertEquals(it.next().name, "h");
         assertEquals(it.next().name, "i");
+	assertEquals(it.next().name, "j");
         assertFalse(it.hasNext());
     }
 
@@ -72,16 +74,20 @@ public class CalabashCollectionTest {
         assertEquals(it.next().name, "d");
         assertEquals(it.next().name, "e");
         assertEquals(it.next().name, "f");
+	assertEquals(it.next().name, "g");
         assertEquals(it.next().name, "h");
         assertEquals(it.next().name, "i");
+	assertEquals(it.next().name, "j");
         assertFalse(it.hasNext());
     }
 
     @Test
     void testdesSort() {
         Iterator<Calabash> it = Cal1.iterator();
+	assertEquals(it.next().name, "j");
         assertEquals(it.next().name, "i");
         assertEquals(it.next().name, "h");
+	assertEquals(it.next().name, "g");
         assertEquals(it.next().name, "f");
         assertEquals(it.next().name, "e");
         assertEquals(it.next().name, "d");
