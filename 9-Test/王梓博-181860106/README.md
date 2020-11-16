@@ -1,14 +1,11 @@
-## Getting Started
+<!--
+ * @Author: zb-nju
+ * @Date: 2020-11-15 12:18:16
+ * @LastEditors: zb-nju
+ * @LastEditTime: 2020-11-16 09:13:54
+-->
+# 第九次作业
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## 测试
 
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-## Dependency Management
-
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
+在这次作业中，我生成一个指定名字的存放在 MyCollection 中的葫芦娃序列，利用上次作业中实现的各种排序函数对该序列进行排序，并将排序结果与实际的结果进行比较来进行对葫芦娃开发的单元测试，并通过了所有测试。
