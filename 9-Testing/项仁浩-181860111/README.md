@@ -44,7 +44,7 @@
 
 每一组数据的初始数据为init_str*1~2*和init_gender*1~2*
 
-预期结果为expected**1~2** 1,expected**1~2 ** 2,expected**1~2 ** 3,expected**1~2 ** 4
+预期结果为expected1,expected2,expected3,expected4
 
 分别表示升序排序姓名的结果，降序排序姓名的结果，对初始数据进行MALE分类的结果，对初始数据进行FEMALE分类的结果
 
