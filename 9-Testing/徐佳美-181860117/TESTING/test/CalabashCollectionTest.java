@@ -39,10 +39,34 @@ public class CalabashCollectionTest {
         this.Cal1 = null;
     }
 
+
     @Test
-    
+    void sortBySexTest() {
+        Iterator<Calabash> iter = Cal1.iterator();
+        String sexkind = it.sex;
+        while(iter.hasNext()) {
+			assertEquals(iter.next().sex, sexkind);
+		}
+       
+    }
+
+    @Test
+    void sortByComparableTest() {
+        Iterator<Calabash> it = Cal1.iterator();
+        assertEquals(it.next().name, "a");
+        assertEquals(it.next().name, "b");
+        assertEquals(it.next().name, "c");
+        assertEquals(it.next().name, "d");
+        assertEquals(it.next().name, "e");
+        assertEquals(it.next().name, "f");
+        assertEquals(it.next().name, "h");
+        assertEquals(it.next().name, "i");
+        assertFalse(it.hasNext());
+    }
+
+    @Test
     void incSortTest() {
-        Iterator<Calabash> it = Calabash.iterator();
+        Iterator<Calabash> it = Cal1.iterator();
         assertEquals(it.next().name, "a");
         assertEquals(it.next().name, "b");
         assertEquals(it.next().name, "c");
@@ -56,7 +80,7 @@ public class CalabashCollectionTest {
 
     @Test
     void desSortTest() {
-        Iterator<Calabash> it = Calabash.iterator();
+        Iterator<Calabash> it = Cal1.iterator();
         assertEquals(it.next().name, "i");
         assertEquals(it.next().name, "h");
         assertEquals(it.next().name, "f");
@@ -67,6 +91,7 @@ public class CalabashCollectionTest {
         assertEquals(it.next().name, "a");
         assertFalse(it.hasNext());
     }
+
 
   
 }

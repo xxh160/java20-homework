@@ -37,11 +37,11 @@ public class CalabashCollection <T extends Calabash>{
         System.out.println("========正序comparable序列=======");
         sortByComparable(cal);
 		System.out.println("========正序comparator序列=======");
-        IncSort(cal);
+        incSort(cal);
         System.out.println("========反序comparator序列=======");
-		DecSort(cal);
+		decSort(cal);
 		System.out.println("========乱序comparator序列=======");
-        RandSort(cal);
+        randSort(cal);
         System.out.print("\n\n\n");
     }
 
@@ -96,15 +96,15 @@ public class CalabashCollection <T extends Calabash>{
 	}
 
 
-    public static <T extends Calabash> void IncSort(ArrayList<T> cal) { 
+    public static <T extends Calabash> void incSort(ArrayList<T> cal) { 
 		Collections.sort(cal,new  CalabashIncComparator());
 		printArray(cal);
 	}	
-	public static <T extends Calabash>  void DecSort(ArrayList<T> cal) {
+	public static <T extends Calabash>  void decSort(ArrayList<T> cal) {
 		Collections.sort(cal,new  CalabashDecComparator());
 		printArray(cal);
 	}
-	public static <T extends Calabash> void RandSort(ArrayList<T> cal) {
+	public static <T extends Calabash> void randSort(ArrayList<T> cal) {
         Collections.sort(cal,new  CalabashRandomComparator());
 		printArray(cal);
     }
