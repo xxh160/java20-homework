@@ -15,15 +15,11 @@ public class LineUp {
         Ground ground = new Ground(2);//2列
 
         HuLuWa[] hulu = new HuLuWa[huluNum];
-        hulu[0] = new HuLuWa(1, HuLuWa.HuLuColor.RED);
-        hulu[1] = new HuLuWa(2, HuLuWa.HuLuColor.ORANGE);
-        hulu[2] = new HuLuWa(3, HuLuWa.HuLuColor.YELLOW);
-        hulu[3] = new HuLuWa(4, HuLuWa.HuLuColor.GREEN);
-        hulu[4] = new HuLuWa(5, HuLuWa.HuLuColor.CYAN);
-        hulu[5] = new HuLuWa(6, HuLuWa.HuLuColor.BLUE);
-        hulu[6] = new HuLuWa(7, HuLuWa.HuLuColor.PURPLE);
+        for(int i=0;i<huluNum;++i){
+            hulu[i]=new HuLuWa(i);
+        }
 
-        ground.init(hulu);
+        ground.init(0,hulu);
         ground.sort(0,3);
         System.out.println("after randomly init:");
         ground.printColumn(0);

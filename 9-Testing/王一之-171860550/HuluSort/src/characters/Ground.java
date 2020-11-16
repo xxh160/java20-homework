@@ -18,6 +18,9 @@ public class Ground {
         }
     }
 
+    public ArrayList<Tile> getColumn(int n){
+        return tiles.get(n);
+    }
     public void printColumn(int n) {
         for (Iterator<Tile> it = tiles.get(n).iterator(); it.hasNext(); ) {
             Tile t = it.next();
@@ -77,10 +80,10 @@ public class Ground {
         return tiles.get(col).get(pos).isEmpty();
     }*/
 
-    public void init(Unit[] units) {//将units中的单元随机分配到ground中
+    public void init(int col,Unit[] units) {//将units中的单元随机分配到ground中
         int len = units.length;
         for (Unit unit : units) {//用该序列初始化位置
-            tiles.get(0).add(new Tile(unit));
+            tiles.get(col).add(new Tile(unit));
         }
     }
 }

@@ -3,11 +3,21 @@
    
 
 ## 修改
-interface Say重命名为Tostring，含tostring函数，返回一个该类的字符串描述其身份信息。  
-tile的位置属性由一维pos改为二维 row 以及 col。但目前阶段暂时不维护位置属性。  
-由于现在都实现了compareTo接口，因此删去了原本unit下的compare函数。
+修改了部分变量的名称 如一个String buffer由sb改为sBuffer.  
+增加了一个继承自Unit的新类Monster，用于对葫芦娃的测试以及今后使用。  
+添加了葫芦娃的随机颜色初始化
 
-## 泛型使用
-创建地面二维arrayList时检查成员为一维arrayList，创建一维arrayList时检查成员为tile，
-打印遍历arraylist时，同样检查类型。  
-葫芦娃的compareTo函数参数为其父类Unit，此时无法使用泛型检查是否为葫芦娃，因此使用运行时检查instanceof
+## 单元测试内容
+正确性测试：  
+* HuLuWa的方法：  
+compareTo：检查是否对非葫芦娃类正确返回0,两个葫芦娃交换次序比较结果是否相反。  
+getRandomString：检查返回的字符串长度是否正确  
+* Tile的方法：  
+swap：检查两个都有成员、都为空、仅有一个为空的tile的swap。
+leave：检查是否返回了leave的unit，以及leave后是否为空。  
+enter：检查已有单位后是否返回失败，以及无单位是否成功。  
+* Ground方法：
+divideByGender:检查是否分成了男女两组
+
+性能测试：  
+* 测试三种sort的用时。
