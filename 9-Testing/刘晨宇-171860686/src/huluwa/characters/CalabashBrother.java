@@ -1,4 +1,6 @@
 package huluwa.characters;
+import huluwa.tools.NotInQueueException;
+
 import java.util.*;
 
 /**
@@ -35,9 +37,12 @@ public class CalabashBrother extends Character implements Comparable<CalabashBro
 
     // Choreography形式的冒泡排序，与其他葫芦娃协同完成，不依赖于Sorter
     public void bubbleSort(List<CalabashBrother> list, int lastIndex,
-                                 Comparator<CalabashBrother> comparator) {
+                           Comparator<? super CalabashBrother> comparator) throws NotInQueueException{
         // 获取自己的位置
         int thisIndex = list.indexOf(this);
+        if(thisIndex == -1) {
+            throw new NotInQueueException("This calabash brother is not in the given queue");
+        }
         // 如果自己不在可移动到的最后一个位置，并且自己比下一个位置的葫芦娃排行靠后，则和它交换位置
         CalabashBrother nextBrother = null;
         while(thisIndex < lastIndex &&
@@ -57,9 +62,13 @@ public class CalabashBrother extends Character implements Comparable<CalabashBro
 
     // Choreography形式的快速排序，与其他葫芦娃协同完成，不依赖于Sorter
     public void quickSort(List<CalabashBrother> list, CalabashBrother base,
-                          int baseIndex, boolean forward, Comparator<CalabashBrother> comparator) {
+                          int baseIndex, boolean forward, Comparator<? super CalabashBrother> comparator)
+            throws NotInQueueException {
         // 获取自己的位置
         int thisIndex = list.indexOf(this);
+        if(thisIndex == -1) {
+            throw new NotInQueueException("This calabash brother is not in the given queue");
+        }
         // 如果排序进行到空位置旁边，则分治算法即将把队列分为两部分
         if(thisIndex + (forward ? 1 : -1) == baseIndex) {
             // 通过与基准葫芦娃进行比较，结合当前排序的进行方向，判断是否交换位置
@@ -72,13 +81,13 @@ public class CalabashBrother extends Character implements Comparable<CalabashBro
             if(baseIndex - 1 > 0) {
                 CalabashBrother leftSuccessor = list.get(baseIndex - 1);
                 CalabashBrother leftBase = list.get(0);
-                leftSuccessor.quickSort(list.subList(0, baseIndex - 1), leftBase,
+                leftSuccessor.quickSort(list.subList(0, baseIndex), leftBase,
                         0, false, comparator);
             }
             if(baseIndex + 1 < list.size() - 1) {
                 CalabashBrother rightSuccessor = list.get(list.size() - 1);
                 CalabashBrother rightBase = list.get(baseIndex + 1);
-                rightSuccessor.quickSort(list.subList(baseIndex + 1, list.size() - 1), rightBase,
+                rightSuccessor.quickSort(list.subList(baseIndex + 1, list.size()), rightBase,
                         0, false, comparator);
             }
         } else {
