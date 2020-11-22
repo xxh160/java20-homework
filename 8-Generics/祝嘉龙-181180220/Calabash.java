@@ -1,4 +1,3 @@
-import java.lang.Comparable;
 import java.util.Random;
 
 public class Calabash implements Named, Gendered, Comparable<Calabash>{
