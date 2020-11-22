@@ -32,3 +32,7 @@
 编写了`nameClassify()`，用于测试`classify()`的正确性。
 
 初始队列为`"nju", "jun", "nuj", "jnu", "ujn"`，以`"nju"`为边界，分为三组，分别为`"jnu jun"`，`"nju"`，`"nuj ujn"`。
+
+### 自动构建
+
+使用`maven`自动构建，通过`pom.xml`导入即可。
