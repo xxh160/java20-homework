@@ -5,7 +5,6 @@ public class CreatureList<T extends Creature> implements Iterable<T>{
     
     public void sort(Comparator<Creature> cp){
         Collections.sort(lst,cp);
-
     }
 
     public void add(T cb){
