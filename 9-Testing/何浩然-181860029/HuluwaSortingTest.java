@@ -28,7 +28,7 @@ public class HuluwaSortingTest {
     @BeforeEach
     public void initialize(){
         System.out.println("Running Initialize()");
-        s=new Sorting<Huluwa>();//s的初始化
+        //s=new Sorting<Huluwa>();//s的初始化
         assertNotNull(s);//断言，判断s初始化成功，现在不是null
     }
     @Test
