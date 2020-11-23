@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import huluwa.ability.Ability;
 
-import static org.junit.Assert.*;
-
-import java.beans.BeanProperty;
 import java.util.ArrayList;
 
 /**
