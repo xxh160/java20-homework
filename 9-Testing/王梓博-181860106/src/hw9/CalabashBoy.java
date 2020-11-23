@@ -2,9 +2,9 @@
  * @Author: zb-nju
  * @Date: 2020-11-05 11:49:11
  * @LastEditors: zb-nju
- * @LastEditTime: 2020-11-15 10:09:07
+ * @LastEditTime: 2020-11-15 12:35:33
  */
-package hw8;
+package hw9;
 import java.util.Random;
 
 interface People{
@@ -19,6 +19,11 @@ public class CalabashBoy implements People, Comparable<CalabashBoy>{
     CalabashBoy(){
         this.name = genName();
         this.gender = genGender();
+    }
+
+    public CalabashBoy(String name, Gender gender){
+        this.name = name;
+        this.gender = gender;
     }
 
     public String getName() {
