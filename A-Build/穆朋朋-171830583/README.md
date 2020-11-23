@@ -41,3 +41,16 @@ import com.google.common.collect.Ordering;
     </dependencies>
 ```
 本项目依赖的两个库Junit和Google guava，在pom.xml中配置好后就可以直接使用。
+
+### 项目构建与执行
+进入项目的pom.xml所在目录，只需执行命令
+```
+mvn package
+``` 
+即可自动完成测试并构建相应的jar包:hulusort-0.1.0.jar；
+
+使用命令
+```
+java -jar .\target\hulusort-0.1.0.jar
+```
+可以执行我实现的**Main**类的main()函数，输出排序结果。
