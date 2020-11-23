@@ -1,17 +1,21 @@
 package com.xjm;
 
-import java.util.Iterator;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import java.util.ArrayList;
-import org.junit.Test;
+import java.util.Iterator;
+
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.Assert.*;
+
 public class CalabashCollectionTest {
     ArrayList<Calabash> Cal1 = new ArrayList<Calabash>();
 
     @Before
-    void setUp(){
+    public void setUp(){
         Cal1 = new ArrayList<Calabash>(){
             /**
              *
@@ -40,7 +44,7 @@ public class CalabashCollectionTest {
 
 
     @Test
-    void testsortBySex() {
+    public void testsortBySex() {
         Iterator<Calabash> iter = Cal1.iterator();
         String sexkind = iter.next().get_sex();
         while(iter.hasNext()) {
@@ -50,7 +54,7 @@ public class CalabashCollectionTest {
     }
 
     @Test
-    void testsortByComparable() {
+    public void testsortByComparable() {
         Iterator<Calabash> it = Cal1.iterator();
         assertEquals(it.next().name, "a");
         assertEquals(it.next().name, "b");
@@ -66,7 +70,7 @@ public class CalabashCollectionTest {
     }
 
     @Test
-    void testincSort() {
+    public void testincSort() {
         Iterator<Calabash> it = Cal1.iterator();
         assertEquals(it.next().name, "a");
         assertEquals(it.next().name, "b");
@@ -82,7 +86,7 @@ public class CalabashCollectionTest {
     }
 
     @Test
-    void testdesSort() {
+    public void testdesSort() {
         Iterator<Calabash> it = Cal1.iterator();
 	    assertEquals(it.next().name, "j");
         assertEquals(it.next().name, "i");
