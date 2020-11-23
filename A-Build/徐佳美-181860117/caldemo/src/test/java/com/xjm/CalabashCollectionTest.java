@@ -44,7 +44,7 @@ public class CalabashCollectionTest {
 
 
     @Test
-    public void testsortBySex() {
+    public void testsortBySex() throws InstantiationException, IllegalAccessException {
         ArrayList<Calabash> Cal = CalabashCollection.sortBySex(Cal1,"male",Calabash.class);
         Iterator<Calabash> iter = Cal.iterator();
         String sexkind = iter.next().get_sex();
