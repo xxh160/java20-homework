@@ -26,18 +26,28 @@ public class Main {
         huluwaList.shuffle();
         huluwaList.printList();
         sortByAlgo.sort(huluwaList);
+        System.out.println("算法排序：");
         huluwaList.printList();
 
         System.out.println("\n阶段2：");
         huluwaList.shuffle();
         huluwaList.printList();
         grandpa.sort(huluwaList);
+        System.out.println("Orchestration排序：");
         huluwaList.printList();
 
         System.out.println("\n阶段3：");
         huluwaList.shuffle();
         huluwaList.printList();
         sortChoreography.sort(huluwaList);
+        System.out.println("Choreography排序：");
+        huluwaList.printList();
+        
+        System.out.println("\n阶段4：");
+        huluwaList.shuffle();
+        huluwaList.printList();
+        huluwaList.sortByName();
+        System.out.println("按姓名排序：");
         huluwaList.printList();
     }
 }

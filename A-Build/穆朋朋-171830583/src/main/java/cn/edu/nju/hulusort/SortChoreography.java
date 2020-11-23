@@ -3,7 +3,6 @@ public class SortChoreography implements SortHuluwaList{
 
     @Override
     public void sort(HuluwaList<Huluwa> list) {
-        System.out.println("Choreography排序：");
         for (int i = 0; i < list.size(); i++) {
             int iColor=list.get(i).getColor();
             for (int j = 0; j < list.size(); j++) {
