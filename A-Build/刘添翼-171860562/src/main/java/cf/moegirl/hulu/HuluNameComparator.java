@@ -1,3 +1,5 @@
+package cf.moegirl.hulu;
+
 import java.util.Comparator;
 
 public class HuluNameComparator<T extends Hulu> implements Comparator<T> {

@@ -1,3 +1,4 @@
+package cf.moegirl.hulu;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;
@@ -5,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
-import java.util.UUID;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import org.junit.Test;
 
@@ -31,7 +32,7 @@ public class HuluCollectionTest {
         final int LENGTH = 100;
 
         for (int i = 0; i < LENGTH; ++i) {
-            Hulu hulu = new Hulu(UUID.randomUUID().toString(), randomEnum.random());
+            Hulu hulu = new Hulu(RandomStringUtils.randomAlphanumeric(10), randomEnum.random());
             huluCollection.iterator().add(hulu);
         }
 

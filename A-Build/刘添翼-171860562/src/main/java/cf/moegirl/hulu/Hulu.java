@@ -1,3 +1,5 @@
+package cf.moegirl.hulu;
+
 public class Hulu {
 
     public enum Gender {

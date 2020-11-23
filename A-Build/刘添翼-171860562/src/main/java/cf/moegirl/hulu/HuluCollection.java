@@ -1,3 +1,5 @@
+package cf.moegirl.hulu;
+
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
