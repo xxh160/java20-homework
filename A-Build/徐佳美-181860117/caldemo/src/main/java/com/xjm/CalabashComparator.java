@@ -1,4 +1,4 @@
-package app;
+package com.xjm;
 
 import java.util.Random;
 
