@@ -1,0 +1,4 @@
+controller\PlayAction.class
+entity\FiveChess.class
+view\ChessPane.class
+Test.class
