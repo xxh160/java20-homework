@@ -1,4 +1,3 @@
-controller\PlayAction.class
 entity\FiveChess.class
+controller\PlayAction.class
 view\ChessPane.class
-Test.class
