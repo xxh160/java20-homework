@@ -1,10 +1,16 @@
 package card;
 
 import java.net.URL;
+import java.util.ArrayList;
 
+import creature.Creature;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+
+import runway.Runway;
+import java.util.ArrayList;
+import view.*;
 
 public abstract class Card {
 
@@ -40,18 +46,38 @@ public abstract class Card {
             double dy = lastEventY - e.getSceneY();
             double nx = lastX - dx;
             double ny = lastY - dy;
-            System.out.println("nx: " + nx + ", ny: " + ny);
+            //System.out.println("nx: " + nx + ", ny: " + ny);
             imageView.setTranslateX(nx);
             imageView.setTranslateY(ny);
         });
 
         imageView.setOnMouseReleased(e->{
             System.out.println("mouse released, sceney: " + e.getSceneY());
-
-            if (e.getSceneY() < 150 && e.getSceneY() > 100) {
-                //do nothing
+            //能拖动的，添加到跑道，或者回到原地
+            double dx = e.getSceneX();
+            double dy = e.getSceneY();
+            boolean releaseOnRunway = false;
+            int runwayIndex = 0;
+            for (; runwayIndex < MainCanvas.runways.size(); runwayIndex++) {
+                int runwayX = MainCanvas.runways.get(runwayIndex).getPosX();
+                int runwayY = MainCanvas.runways.get(runwayIndex).getPosY();
+                int runwayWidth = MainCanvas.runways.get(runwayIndex).getWidth();
+                if (dy > runwayY && dy < runwayY + runwayWidth) {
+                    releaseOnRunway = true;
+                    break;
+                }
+            }
+            if (releaseOnRunway == true) {
+                System.out.println("释放在跑道" + runwayIndex);
+                Creature creature = new Creature(1, MainCanvas.runways.get(runwayIndex).getPosX(), MainCanvas.runways.get(runwayIndex).getPosY(), 1, true, "huluwa", MainCanvas.runways.get(0));
+                System.out.println("坐标 x: " + creature.getPosX() + ", y: " + creature.getPosY());
+                MainCanvas.runways.get(runwayIndex).addMyCreature(creature); //TODO Draggable接口
+                MainCanvas.exec.submit(creature); // 启动线程
+                //new Thread(creature).start();
+                MainCanvas.cardField.removeCard(this); //从卡牌区移除这张卡
             }
             else {
+                
                 imageView.setTranslateX(0);
                 imageView.setTranslateY(0);
                 //imageView.setX(initX);

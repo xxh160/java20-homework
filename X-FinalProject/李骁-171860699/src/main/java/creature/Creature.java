@@ -3,11 +3,16 @@ package creature;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javafx.scene.image.*;
-import view.MainCanvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import javafx.scene.canvas.GraphicsContext;
 import java.lang.Math;
+import javafx.scene.layout.Pane;
+import javafx.application.Platform;
+
 import runway.Runway;
+import view.MainCanvas;
 
 public class Creature implements Runnable {
 
@@ -29,7 +34,9 @@ public class Creature implements Runnable {
 
     private Image image;
 
-    private Runway runway;
+    private ImageView imageView;
+
+    private Runway runway; // 所处的跑道
 
     private int price;
 
@@ -38,6 +45,7 @@ public class Creature implements Runnable {
         System.out.println(url);
         String imagePath = new String(url.toString());
         image = new Image(url.toString());
+        imageView = new ImageView(image);
     }
 
     public Creature(int power, int posX, int posY, int moveSpeed, boolean isGoodMan, String name, Runway runway) {
@@ -53,15 +61,14 @@ public class Creature implements Runnable {
         System.out.println(url);
         String imagePath = new String(url.toString());
         image = new Image(url.toString());
+        imageView = new ImageView(image);
 
-        
     }
 
     public void move() {
         if (belongToMe) {
             posX = posX + moveSpeed;
-        }
-        else {
+        } else {
             posX = posX - moveSpeed;
         }
     }
@@ -69,19 +76,33 @@ public class Creature implements Runnable {
     @Override
     public void run() {
         while (!Thread.interrupted()) {
-        //while (true) {
-            //获取敌方生物
-            ArrayList<Creature> enemyCreatures = (belongToMe == true) ?
-             this.runway.getYourCreatures() : this.runway.getMyCreatures();
-            //检测碰撞，撞到就停
-            if (enemyCreatures.size() > 0 && isCollide(enemyCreatures.get(0))) {
-                this.moveSpeed = 0;
-            }
-            else {
-                this.moveSpeed = defaultMoveSpeed;
-                this.move();
-            }
-
+            Platform.runLater(new Runnable(){
+                @Override
+                public void run() {
+                    //跑出跑道就结束
+                    if (posX > runway.getPosX() + runway.getLength()) {
+                        //break; TODO 别的方法跳出
+                    }
+                    //绘制图形
+                    //imageView.setImage(image);
+                    //imageView.setX(posX);
+                    //imageView.setY(posY);
+                    imageView.setLayoutX(posX);
+                    imageView.setLayoutY(posY);
+        
+                    //获取敌方生物
+                    ArrayList<Creature> enemyCreatures = (belongToMe == true) ?
+                        runway.getYourCreatures() : runway.getMyCreatures();
+                    //检测碰撞，撞到就停
+                    if (enemyCreatures.size() > 0 && isCollide(enemyCreatures.get(0))) {
+                        moveSpeed = 0;
+                    }
+                    else {
+                        moveSpeed = defaultMoveSpeed;
+                        move();
+                    }
+                }
+            });
             try {
                 Thread.sleep(10);
             }
@@ -89,13 +110,14 @@ public class Creature implements Runnable {
                 Thread.currentThread().interrupt();
             }
         }
+        System.out.println("creature线程结束");
     }
 
-    /*public void drawCreature(GraphicsContext gc) {
-        double w = image.getWidth();
-        double h = image.getHeight();
-        gc.drawImage(image, 0, 0, w, h, posX, posY, w, h);
-    }*/
+    /*
+     * public void drawCreature(GraphicsContext gc) { double w = image.getWidth();
+     * double h = image.getHeight(); gc.drawImage(image, 0, 0, w, h, posX, posY, w,
+     * h); }
+     */
 
     public void drawCreature(ImageView imageView) {
         imageView.setImage(image);
@@ -104,8 +126,11 @@ public class Creature implements Runnable {
     }
 
     public boolean isCollide(Creature other) {
-        return this.posY == other.posY
-            && Math.abs(this.posX - other.posX) <= this.figureSize + other.figureSize;
+        return this.posY == other.posY && Math.abs(this.posX - other.posX) <= this.figureSize + other.figureSize;
+    }
+
+    public void addToPane(Pane pane) {
+        pane.getChildren().add(imageView);
     }
 
     public int getPosX() {
