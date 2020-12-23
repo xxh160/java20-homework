@@ -48,7 +48,7 @@ public abstract class Card {
         imageView.setOnMouseReleased(e->{
             System.out.println("mouse released, sceney: " + e.getSceneY());
 
-            if (e.getSceneY() < 120 && e.getSceneY() > 100) {
+            if (e.getSceneY() < 150 && e.getSceneY() > 100) {
                 //do nothing
             }
             else {
