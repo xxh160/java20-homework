@@ -33,7 +33,7 @@ public class MainCanvas extends Canvas {
 
     CardField cardField; //卡牌区
 
-    private ArrayList<ImageView> cardViews;
+    //private ArrayList<ImageView> cardViews;
 
     private GraphicsContext graphicsContext; //移动后无法消除原图
 
@@ -73,14 +73,13 @@ public class MainCanvas extends Canvas {
         this.root = root; //父面板
         graphicsContext = getGraphicsContext2D();
 
-        
-        
         //初始化控制器按钮
-        controller = new Button("controller");
+        controller = new Button();
         controller.setLayoutX(300);
         controller.setLayoutY(400);
         controller.setPrefWidth(50);
         controller.setPrefHeight(50);
+        //controller.setVisible(false);
         controller.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -116,10 +115,7 @@ public class MainCanvas extends Canvas {
         runways.get(0).addMyCreature(huluwa1);
         runways.get(0).addYourCreature(huluwa2);
 
-        //初始化卡牌区
-        cardField = new CardField();
-        cardField.fillCards();
-
+        
         //线程池
         exec = Executors.newCachedThreadPool();
         //启动葫芦娃线程
@@ -127,32 +123,44 @@ public class MainCanvas extends Canvas {
         exec.execute(huluwa2);
         exec.execute(thread);
 
+        //初始化卡牌区
+        cardField = new CardField(root);
+        cardField.removeAllCards();
+        cardField.fillCards();
+
+
         //用于显示葫芦娃的imageview，加入面板
         imageView = new ImageView();
         root.getChildren().add(imageView); 
         imageView2 = new ImageView();
         root.getChildren().add(imageView2);
 
+        /*
         //用于显示卡牌区的imageview，加入面板
         cardViews = new ArrayList<ImageView>();
         for (int i = 0; i < cardField.getCardFieldSize(); i++) {
             ImageView cardView = new ImageView();
             cardViews.add(cardView);
             root.getChildren().add(cardView);
-        }
-
+        }*/
+        /*
+        //遍历卡牌区，画卡牌区
+        ArrayList<Card> cards = cardField.getCards();
+        for (int i = 0; i < cards.size(); i++) {
+            cards.get(i).drawCard();
+        }*/
     }
 
     public void draw() {
         
         huluwa1.drawCreature(imageView);
         huluwa2.drawCreature(imageView2);
-        
+        /*
         //遍历卡牌区，画卡牌区
         ArrayList<Card> cards = cardField.getCards();
         for (int i = 0; i < cards.size(); i++) {
-            cards.get(i).drawCard(cardViews.get(i));
-        }
+            cards.get(i).drawCard();
+        }*/
     }
 
     public void update() {

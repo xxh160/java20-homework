@@ -1,8 +1,9 @@
 package card;
 
 import java.util.ArrayList;
-
 import creature.Creature;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 
 public class CardField {
     private ArrayList<Card> cards;
@@ -15,16 +16,24 @@ public class CardField {
 
     private final int posY = 500;
 
-    public CardField() {
+    private Pane root; //所在pane
+
+    public CardField(Pane root) {
         cards = new ArrayList<Card>();
+        this.root = root;
     }
 
     public void removeCard(Card card) {
+        root.getChildren().remove(card.getImageView()); //清理掉
         cards.remove(card);
     }
 
     public void removeCard(int index) {
-        cards.remove(index);
+        if (index < cards.size()) {
+            Card card = cards.get(index);
+            root.getChildren().remove(card.getImageView());
+            cards.remove(index);
+        }
     }
 
     public void removeAllCards() {
@@ -40,6 +49,9 @@ public class CardField {
             Card card = new CreatureCard(new Creature());
             cards.add(card);
             card.setPosition(cards.indexOf(card));
+            
+            card.drawCard();
+            card.addToPane(root); //添加到pane里
         }
     }
 
