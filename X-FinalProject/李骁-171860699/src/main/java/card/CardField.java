@@ -10,22 +10,29 @@ public class CardField {
 
     private final int cardFieldSize = 5;
 
-    private int money; //拥有的金钱
+    private int money; // 拥有的金钱
 
     private final int posX = 300;
 
     private final int posY = 500;
 
-    private Pane root; //所在pane
+    private Pane root; // 所在pane
 
     public CardField(Pane root) {
         cards = new ArrayList<Card>();
         this.root = root;
     }
 
+    public void freshAllCards() {
+        removeAllCards();
+        fillCards();
+    }
+
     public void removeCard(Card card) {
-        root.getChildren().remove(card.getImageView()); //清理掉
-        cards.remove(card);
+        root.getChildren().remove(card.getImageView()); // 清理掉
+        synchronized (cards) {
+            cards.remove(card);
+        }
     }
 
     public void removeCard(int index) {
@@ -37,21 +44,27 @@ public class CardField {
     }
 
     public void removeAllCards() {
-        cards.clear();
+        synchronized (cards) {
+            for (int i = cards.size() - 1; i >= 0; i--) {
+                removeCard(i);
+            }
+        }
+        // cards.clear();
     }
 
     public void fillCards() {
         int empty = cardFieldSize - cards.size();
         System.out.println("卡牌需要填充" + Integer.toString(empty) + "张");
-        if (empty == 0) return;
-        //补充消耗的卡，TODO 定时，随机
+        if (empty == 0)
+            return;
+        // 补充消耗的卡，TODO 定时，随机
         for (int i = 0; i < empty; i++) {
             Card card = new CreatureCard(new Creature());
             cards.add(card);
             card.setPosition(cards.indexOf(card));
-            
+
             card.drawCard();
-            card.addToPane(root); //添加到pane里
+            card.addToPane(root); // 添加到pane里
         }
     }
 

@@ -33,8 +33,6 @@ public class MainCanvas extends Canvas {
 
     public static CardField cardField; //卡牌区
 
-    //private ArrayList<ImageView> cardViews;
-
     private GraphicsContext graphicsContext; //移动后无法消除原图
 
     //private ImageView imageView, imageView2; //移动后可以消除原图
@@ -77,25 +75,20 @@ public class MainCanvas extends Canvas {
         controller = new Button();
         controller.setLayoutX(300);
         controller.setLayoutY(400);
-        controller.setPrefWidth(50);
-        controller.setPrefHeight(50);
+        controller.setPrefWidth(1);
+        controller.setPrefHeight(1);
         //controller.setVisible(false);
         controller.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 System.out.println("按下了：" + event.getCode().name());
-                if (event.getCode() == KeyCode.Q) {
-                    System.out.println("线程池shundown");
-                    exec.shutdownNow();
-                }
-                else if (event.getCode() == KeyCode.J) {
-                    System.out.println("抽卡0");
-                    cardField.removeCard(0);
-                }
-                else if (event.getCode() == KeyCode.D) {
+                if (event.getCode() == KeyCode.D) {
                     System.out.println("换牌");
-                    cardField.removeAllCards();
-                    cardField.fillCards();
+                    cardField.freshAllCards();
+                }
+                else if (event.getCode() == KeyCode.G) {
+                    System.out.println("给敌方加人");
+                    runways.get(1).addYourCreature(new Creature());
                 }
             }
         });

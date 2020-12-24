@@ -1,5 +1,7 @@
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 
 import javafx.scene.layout.BorderPane;
@@ -8,6 +10,9 @@ import javafx.scene.shape.*;
 import javafx.scene.paint.*;
 import javafx.scene.*;
 import javafx.scene.image.*;
+import javafx.application.Platform;
+
+import java.util.concurrent.ExecutorService;
 
 import creature.*;
 import view.*;
@@ -28,6 +33,14 @@ public class Main extends Application {
 
         //Adding the scene to Stage
         primaryStage.setScene(scene);
+
+        //设置关闭窗口时结束线程
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+            @Override
+            public void handle(WindowEvent event) {
+                MainCanvas.exec.shutdownNow();
+            }
+        });
 
         //Displaying the contents of the stage
         primaryStage.show();

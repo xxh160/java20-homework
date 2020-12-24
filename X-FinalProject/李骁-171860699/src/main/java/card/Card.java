@@ -57,7 +57,7 @@ public abstract class Card {
             double dx = e.getSceneX();
             double dy = e.getSceneY();
             boolean releaseOnRunway = false;
-            int runwayIndex = 0;
+            int runwayIndex = 0; //释放的跑道下标
             for (; runwayIndex < MainCanvas.runways.size(); runwayIndex++) {
                 int runwayX = MainCanvas.runways.get(runwayIndex).getPosX();
                 int runwayY = MainCanvas.runways.get(runwayIndex).getPosY();
@@ -69,10 +69,11 @@ public abstract class Card {
             }
             if (releaseOnRunway == true) {
                 System.out.println("释放在跑道" + runwayIndex);
-                Creature creature = new Creature(1, MainCanvas.runways.get(runwayIndex).getPosX(), MainCanvas.runways.get(runwayIndex).getPosY(), 1, true, "huluwa", MainCanvas.runways.get(0));
-                System.out.println("坐标 x: " + creature.getPosX() + ", y: " + creature.getPosY());
+                Creature creature = new Creature(); //TODO 生成具体的生物
+                
+                //System.out.println("坐标 x: " + creature.getPosX() + ", y: " + creature.getPosY());
                 MainCanvas.runways.get(runwayIndex).addMyCreature(creature); //TODO Draggable接口
-                MainCanvas.exec.submit(creature); // 启动线程
+                //MainCanvas.exec.submit(creature); // 启动线程
                 //new Thread(creature).start();
                 MainCanvas.cardField.removeCard(this); //从卡牌区移除这张卡
             }
