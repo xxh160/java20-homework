@@ -23,7 +23,7 @@ public class Main extends Application {
         
         AnchorPane root = new AnchorPane();
         Scene scene = new Scene(root, 800, 600);
-        scene.setFill(Color.BLACK); //黑底，有button不生效，why？
+        //scene.setFill(Color.BLACK); //黑底，有button不生效，why？
         MainCanvas mainCanvas = new MainCanvas(root, 800, 600);
         //root.getChildren().add(mainCanvas); //这一句加了直接导致此前在构造函数中生成的Node不生效，只有之后生成的Node才生效
         //root.setStyle("-fx-background:red;"); //设置pane的style

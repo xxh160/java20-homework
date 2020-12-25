@@ -1,17 +1,15 @@
 package card;
 
-import creature.Creature;
 import view.MainCanvas;
+import runway.Runway;
 
-public class CreatureCard extends Card {
+public class PropCardKillEnemyHead extends Card implements PropAction {
 
-    Creature creature;
+    Runway runway;
 
-    public CreatureCard(Creature creature) {
-        super();
-        this.creature = creature;
+    public PropCardKillEnemyHead() {
 
-        loadImage("huluwa_card.png");
+        loadImage(this.getClass().getSimpleName() + ".png");
 
         System.out.println("card设置鼠标事件");
         // 鼠标点击
@@ -59,8 +57,8 @@ public class CreatureCard extends Card {
             if (releaseOnRunway == true) {
                 System.out.println("释放在跑道" + runwayIndex);
                 System.out.println("价格为" + price);
-                Creature creatureTmp = new Creature(); // TODO 生成具体的生物
-                MainCanvas.runways.get(runwayIndex).addMyCreature(creatureTmp); // TODO Draggable接口
+                this.runway = MainCanvas.runways.get(runwayIndex); //定位跑道
+                propAction(); //击杀敌人队头
                 MainCanvas.cardField.removeCard(this); // 从卡牌区移除这张卡
                 MainCanvas.cardField.setMoney(MainCanvas.cardField.getMoney() - price); // 扣掉金币数
             } else {
@@ -71,5 +69,10 @@ public class CreatureCard extends Card {
                 // imageView.setY(initY);
             }
         });
+    }
+
+    public void propAction() {
+        //TODO 给对方发包
+        runway.killEnemyHead();
     }
 }

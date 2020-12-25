@@ -67,15 +67,43 @@ public class Runway {
     }
 
     public void removeFromMyCreature(Creature creature) {
-        //将一个生物从我方队伍移除，并从pane中移除，线程已run完
+        //将一个生物从我方队伍移除，并从pane中移除，设置isRunning为false，让他线程跑完
         myCreatures.remove(creature);
+        creature.setRunning(false);
         MainCanvas.root.getChildren().remove(creature.getImageView());
     }
 
     public void removeFromYourCreature(Creature creature) {
-        //将一个生物从敌方队伍移除，并从pane中移除，线程已run完
+        //将一个生物从敌方队伍移除，并从pane中移除，设置isRunning为false，让他线程跑完
         yourCreatures.remove(creature);
+        creature.setRunning(false);
         MainCanvas.root.getChildren().remove(creature.getImageView());
+    }
+
+    public void removeAllCreatures() {
+        //移除所有creature，并停止线程，TODO 线程安全
+        synchronized(myCreatures) {
+            for (int i = myCreatures.size()-1; i >= 0; i--) {
+                removeFromMyCreature(myCreatures.get(i));
+            }
+        }
+        synchronized(yourCreatures) {
+            for (int i = yourCreatures.size() - 1; i >= 0; i--) {
+                removeFromYourCreature(yourCreatures.get(i));
+            }
+        }
+    }
+
+    public void killEnemyHead() {
+        synchronized(yourCreatures) {
+            if (yourCreatures.size() > 0) {
+                System.out.println("击杀敌方队头");
+                removeFromYourCreature(yourCreatures.get(0));
+            }
+            else {
+                System.out.println("敌方无队头");
+            }
+        }
     }
 
     public ArrayList<Creature> getYourCreatures() {

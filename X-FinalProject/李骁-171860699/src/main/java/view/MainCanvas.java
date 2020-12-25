@@ -27,19 +27,19 @@ public class MainCanvas extends Canvas {
 
     public static AnchorPane root; //父面板
 
-    private Creature huluwa1, huluwa2; //测试的生物
+    //private Creature huluwa1, huluwa2; //测试的生物
 
     public static ArrayList<Runway> runways; //跑道区
 
     public static CardField cardField; //卡牌区
 
-    private GraphicsContext graphicsContext; //移动后无法消除原图
+    //private GraphicsContext graphicsContext; //移动后无法消除原图
 
     //private ImageView imageView, imageView2; //移动后可以消除原图
 
     private boolean isRunning = true; //游戏正在运行
 
-    private Button controller; //按Q退出的控制器
+    //private Button controller; //按Q退出的控制器
 
     public static ExecutorService exec; //线程池
 
@@ -69,11 +69,12 @@ public class MainCanvas extends Canvas {
     public MainCanvas(AnchorPane root, double width, double height) {
         super(width, height);
         this.root = root; //父面板
-        graphicsContext = getGraphicsContext2D();
+        //graphicsContext = getGraphicsContext2D();
 
-        //初始化控制器按钮
+        /*
+        //初始化控制器按钮 TODO 换个控制器
         controller = new Button();
-        controller.setLayoutX(300);
+        controller.setLayoutX(50);
         controller.setLayoutY(400);
         controller.setPrefWidth(1);
         controller.setPrefHeight(1);
@@ -92,7 +93,7 @@ public class MainCanvas extends Canvas {
                 }
             }
         });
-        root.getChildren().add(controller);
+        root.getChildren().add(controller);*/
 
 
 

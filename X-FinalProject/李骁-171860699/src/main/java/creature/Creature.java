@@ -30,7 +30,7 @@ public class Creature implements Runnable {
 
     protected int figureSize;
 
-    protected Body body; // 矩形刚体
+    //protected Body body; // 矩形刚体
 
     protected boolean belongToMe;
 
@@ -40,34 +40,25 @@ public class Creature implements Runnable {
 
     protected ImageView imageView;
 
+    protected Image cardImage; //位于卡牌区时的卡
+
     protected Runway runway; // 所处的跑道
 
-    boolean isRunning = true;
+    protected boolean isRunning = true;
 
     protected int price;
 
     public Creature() {
         URL url = getClass().getClassLoader().getResource("huluwa.png");
         System.out.println(url);
-        String imagePath = new String(url.toString());
         image = new Image(url.toString());
         imageView = new ImageView(image);
-        this.figureSize = 50;
+        imageView.setFitWidth(50);
+        imageView.setPreserveRatio(true); //保持比例，但fitheight由于没设置，会是0！
+        this.figureSize = (int)(imageView.getFitWidth() / 2);
         this.power = 1; // TODO 别的方式初始化
         this.moveSpeed = defaultMoveSpeed = 1;
     }
-
-    /*
-     * public Creature(int power, int posX, int posY, int moveSpeed, boolean
-     * isGoodMan, String name, Runway runway) { this.power = power; this.posX =
-     * posX; this.posY = posY; this.moveSpeed = moveSpeed; this.figureSize = 50;
-     * this.belongToMe = isGoodMan; this.name = name; this.runway = runway; URL url
-     * = getClass().getClassLoader().getResource(name + ".png");
-     * System.out.println(url); String imagePath = new String(url.toString()); image
-     * = new Image(url.toString()); imageView = new ImageView(image);
-     * 
-     * }
-     */
 
     public void move() {
         if (belongToMe) {
@@ -103,7 +94,6 @@ public class Creature implements Runnable {
     }
 
     public void update() {
-
         // 获取我方生物
         ArrayList<Creature> myCreatures = (belongToMe == true) ? runway.getMyCreatures() : runway.getYourCreatures();
         // 获取敌方生物
@@ -191,6 +181,7 @@ public class Creature implements Runnable {
             }
         } else {
             // 队员
+            // TODO 需要考虑前方队友被冰冻，我撞上去也得速度归0，而不是移动
             move();
         }
 
@@ -321,5 +312,13 @@ public class Creature implements Runnable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public Image getCardImage() {
+        return cardImage;
+    }
+
+    public void setCardImage(Image cardImage) {
+        this.cardImage = cardImage;
     }
 }
