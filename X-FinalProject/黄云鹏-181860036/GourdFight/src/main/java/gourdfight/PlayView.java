@@ -39,18 +39,13 @@ public class PlayView extends View { // 游戏页面类
 		setBackground();
 		// 玩家1
 		setPlayer1();
-	}
-	
-	// Setter
-	private void reset() { // 复位实体字典
-		entityMap.clear();
-		imgLocateMap.clear();
-		textLocateMap.clear();
+		// 玩家2
+		setPlayer2();
 	}
 	
 	private void setBackground() { // 初设背景
 		Entity background = new Entity(Constants.BACKGROUND);
-		Image background_img = new Image("gourdfight/Mario_background.png"); // test
+		Image background_img = new Image("resources/Mario_background.png"); // test
 		background.addImage(Constants.BACKGROUND_INIT_IMAGE, background_img);
 		addEntity(Constants.BACKGROUND, background);
 		
@@ -68,7 +63,7 @@ public class PlayView extends View { // 游戏页面类
 		
 		Entity player1 = new Entity(Constants.PLAYER1);
 		player1.setMobile(true);
-		Image player1_img = new Image("gourdfight/Mario_standToLeft.png"); // test
+		Image player1_img = new Image("resources/Mario_standToLeft.png"); // test
 		player1.addImage(Constants.PLAYER1_INIT_IMAGE, player1_img);
 		addEntity(Constants.PLAYER1, player1);
 				
@@ -80,6 +75,30 @@ public class PlayView extends View { // 游戏页面类
 				Constants.PLAYER1_INIT_H);
 		
 		addImageLocate(Constants.PLAYER1, player1_imgLocate);
+	}
+	
+	private void setPlayer2() { // 初设玩家2
+		Entity player2 = new Entity(Constants.PLAYER2);
+		player2.setMobile(true);
+		Image player2_img = new Image("resources/Mario_standToRight.png"); // test
+		player2.addImage(Constants.PLAYER2_INIT_IMAGE, player2_img);
+		addEntity(Constants.PLAYER2, player2);
+				
+		ImageLocate player2_imgLocate = new ImageLocate(
+				player2_img,
+				Constants.PLAYER2_INIT_X,
+				Constants.PLAYER2_INIT_Y,
+				Constants.PLAYER2_INIT_W,
+				Constants.PLAYER2_INIT_H);
+		
+		addImageLocate(Constants.PLAYER2, player2_imgLocate);
+	}
+	
+	// Setter
+	private void reset() { // 复位实体字典
+		entityMap.clear();
+		imgLocateMap.clear();
+		textLocateMap.clear();
 	}
 	
 	private void updatePlayer1() { // 更新玩家1
@@ -100,6 +119,34 @@ public class PlayView extends View { // 游戏页面类
 					Constants.PLAYER1_INIT_X + deltaX
 					);
 		}
+	}
+	
+	private void updatePlayer2() { // 更新玩家2
+		if(Framework.keyInput.isPressed(Key.L)) { // 玩家1向右移动
+			
+			entityMap.get(Constants.PLAYER2).moveRight();
+			double deltaX = entityMap.get(Constants.PLAYER2).getDeltaX();
+			
+			imgLocateMap.get(Constants.PLAYER2).setX(
+					Constants.PLAYER2_INIT_X + deltaX
+					);
+		}
+		if(Framework.keyInput.isPressed(Key.J)) { // 玩家1向左移动
+			
+			entityMap.get(Constants.PLAYER2).moveLeft();
+			double deltaX = entityMap.get(Constants.PLAYER2).getDeltaX();
+			imgLocateMap.get(Constants.PLAYER2).setX(
+					Constants.PLAYER2_INIT_X + deltaX
+					);
+		}
+	}
+	
+	private void updateFrame() { // 更新帧
+		((ImagePane) pane).clear();
+//		((ImagePane) pane).update(imgLocateMap.values(),textLocateMap.values());
+		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.BACKGROUND));
+		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.PLAYER1));
+		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.PLAYER2));
 	}
 	
 	public void addEntity(String id, Entity entity) { // 添加实体
@@ -167,13 +214,13 @@ public class PlayView extends View { // 游戏页面类
 	
 	@Override
 	public void onUpdate(double time) {
-		// 更新实体属性
-		updatePlayer1(); // 更新玩家1
 		
-		// 更新实体图片/文本
-//		((ImagePane) pane).update(imgLocateMap.values(),textLocateMap.values());
-		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.BACKGROUND));
-		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.PLAYER1));
+		// 更新实体
+		updatePlayer1(); // 更新玩家1
+		updatePlayer2(); // 更新玩家2
+		
+		// 更新帧
+		updateFrame();
 		
 		super.onUpdate(time);
 	}

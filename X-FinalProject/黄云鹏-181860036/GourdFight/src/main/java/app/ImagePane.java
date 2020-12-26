@@ -35,6 +35,10 @@ public class ImagePane extends Pane { // 用于绘画的控件
 		canvas.resizeRelocate(0, 0, width, height);
 	}
 	
+	public void clear() {  // 清空画布
+		gc.clearRect(0, 0, getWidth(), getHeight());
+	}
+	
 	// 绘制图片到画布指定位置
 	public void drawImage(ImageLocate imgLocate) {
 		Image img = imgLocate.getImg();
@@ -60,7 +64,9 @@ public class ImagePane extends Pane { // 用于绘画的控件
 	
 	// 刷新画布
 	public void update(Collection<ImageLocate> imgLocates, Collection<TextLocate> textLocates) {
-		gc.clearRect(0, 0, getWidth(), getHeight()); // 清空画布
+		
+		clear();  // 清空画布
+		
 		for(ImageLocate imgLocate : imgLocates) { // 重绘所有图片
 			drawImage(imgLocate);
 		}
