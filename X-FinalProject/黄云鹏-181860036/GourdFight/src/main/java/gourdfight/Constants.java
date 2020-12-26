@@ -26,18 +26,23 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String STATE2 = "state2"; // 状态2
 	
 	// 实体位置(注：后缀1的为自己，后缀2的为对手)
+	public static final double BACKGROUND_X = 0; // 背景x轴坐标
+	public static final double BACKGROUND_Y = 0; // 背景y轴坐标
 	public static final double PLAYER1_INIT_X = 50; // 玩家1初始x轴坐标
 	public static final double PLAYER1_INIT_Y = 100; // 玩家1初始y轴坐标
 	public static final double PLAYER2_INIT_X = 200; // 玩家2初始x轴坐标
 	public static final double PLAYER2_INIT_Y = 100; // 玩家2初始y轴坐标
 	
 	// 实体大小(注：后缀1的为自己，后缀2的为对手)
+	public static final double BACKGROUND_W = WINDOW_WIDTH; // 背景宽度
+	public static final double BACKGROUND_H = WINDOW_HEIGHT; // 背景宽度
 	public static final double PLAYER1_INIT_W = 50; // 玩家1初始宽度
 	public static final double PLAYER1_INIT_H = 50; // 玩家1初始高度
 	public static final double PLAYER2_INIT_W = 50; // 玩家2初始宽度
 	public static final double PLAYER2_INIT_H = 50; // 玩家2初始高度
 	
 	// 实体图片(注：后缀1的为自己，后缀2的为对手)
+	public static final String BACKGROUND_INIT_IMAGE = "background_init_image"; // 初始背景图片
 	public static final String PLAYER1_INIT_IMAGE = "player1_init_image"; // 玩家1初始图片
 	public static final String PLAYER2_INIT_IMAGE = "player2_init_image"; // 玩家2初始图片
 	

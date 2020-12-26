@@ -9,7 +9,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private String name; // 实体名称
 	
 	private boolean isMobile; // 是否可移动(默认不可移动)
-	private boolean isActive; // 是否活跃(默认不活跃)
+	private boolean isActive; // 是否活跃(默认活跃)
 	
 	private double deltaX; // x轴位移
 	private double deltaY; // y轴位移
@@ -25,6 +25,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		deltaY = 0;
 		setName(name);
 		setMobile(false);
+		setActive(true);
 	}
 	
 	// Getter
@@ -83,26 +84,27 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	// 移动
 	public void moveRight() { // 向右移动
-		if(isMobile()) {
+		if(isActive() && isMobile()) {
 			deltaX += 1;
 		}
 	}
 	
 	public void moveLeft() { // 向左移动
-		if(isMobile()) {
+		if(isActive() && isMobile()) {
 			deltaX -= 1;
 		}
 	}
 	
 	public void moveUp() { // 向上移动
-		if(isMobile()) {
+		if(isActive() && isMobile()) {
 			deltaY -= 1;
 		}
 	}
 	
 	public void moveDown() { // 向下移动
-		if(isMobile()) {
+		if(isActive() && isMobile()) {
 			deltaY += 1;
 		}
 	}
+	
 }

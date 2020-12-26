@@ -36,7 +36,7 @@ public class ImagePane extends Pane { // 用于绘画的控件
 	}
 	
 	// 绘制图片到画布指定位置
-	private void drawImage(ImageLocate imgLocate) {
+	public void drawImage(ImageLocate imgLocate) {
 		Image img = imgLocate.getImg();
 		
 		double sw = img.getWidth();
@@ -51,7 +51,7 @@ public class ImagePane extends Pane { // 用于绘画的控件
 	}
 	
 	// 绘制文本到画布指定位置
-	private void drawText(TextLocate textLocate) {
+	public void drawText(TextLocate textLocate) {
 		String text = textLocate.getText();
 		double dx = textLocate.getX();
 		double dy = textLocate.getY();

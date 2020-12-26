@@ -35,6 +35,8 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void initEntity() { // 初始创建一些必要实体
+		// 背景
+		setBackground();
 		// 玩家1
 		setPlayer1();
 	}
@@ -46,11 +48,27 @@ public class PlayView extends View { // 游戏页面类
 		textLocateMap.clear();
 	}
 	
+	private void setBackground() { // 初设背景
+		Entity background = new Entity(Constants.BACKGROUND);
+		Image background_img = new Image("gourdfight/Mario_background.png"); // test
+		background.addImage(Constants.BACKGROUND_INIT_IMAGE, background_img);
+		addEntity(Constants.BACKGROUND, background);
+		
+		ImageLocate background_imgLocate = new ImageLocate(
+				background_img,
+				Constants.BACKGROUND_X,
+				Constants.BACKGROUND_Y,
+				Constants.BACKGROUND_W,
+				Constants.BACKGROUND_H);
+		
+		addImageLocate(Constants.BACKGROUND, background_imgLocate);
+	}
+	
 	private void setPlayer1() { // 初设玩家1
 		
 		Entity player1 = new Entity(Constants.PLAYER1);
 		player1.setMobile(true);
-		Image player1_img = new Image("gourdfight/swift.png"); // test
+		Image player1_img = new Image("gourdfight/Mario_standToLeft.png"); // test
 		player1.addImage(Constants.PLAYER1_INIT_IMAGE, player1_img);
 		addEntity(Constants.PLAYER1, player1);
 				
@@ -153,7 +171,9 @@ public class PlayView extends View { // 游戏页面类
 		updatePlayer1(); // 更新玩家1
 		
 		// 更新实体图片/文本
-		((ImagePane) pane).update(imgLocateMap.values(),textLocateMap.values());
+//		((ImagePane) pane).update(imgLocateMap.values(),textLocateMap.values());
+		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.BACKGROUND));
+		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.PLAYER1));
 		
 		super.onUpdate(time);
 	}
