@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 import javafx.scene.control.Button;
 
@@ -56,12 +57,11 @@ public class CardField implements Runnable {
 
 
         //初始化控制器按钮 TODO 换个控制器
-        //TODO 还是没解决D牌时卡一下的问题
-        controller = new Button();
-        controller.setLayoutX(50);
+        controller = new Button("D牌，" + freshCost + "块");
+        controller.setLayoutX(40);
         controller.setLayoutY(400);
-        controller.setPrefWidth(1);
-        controller.setPrefHeight(1);
+        controller.setPrefWidth(100);
+        controller.setPrefHeight(40);
         //controller.setVisible(false);
         controller.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -73,8 +73,15 @@ public class CardField implements Runnable {
                 }
                 else if (event.getCode() == KeyCode.G) {
                     System.out.println("给敌方加人");
-                    MainCanvas.runways.get(1).addYourCreature(new Creature());
+                    MainCanvas.runwayField.getRunways().get(1).addYourCreature(new Creature());
                 }
+            }
+        });
+        //点击D牌按钮
+        controller.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                freshAllCards();
             }
         });
         root.getChildren().add(controller);

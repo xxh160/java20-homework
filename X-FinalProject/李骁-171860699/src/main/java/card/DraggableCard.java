@@ -7,7 +7,7 @@ public abstract class DraggableCard extends Card {
 
     protected double lastEventX, lastEventY, lastX, lastY; // 控制卡片拖动的变量
 
-    protected Runway runway;
+    protected Runway runway; //要拖到的跑道
 
     protected DraggableCard() {
         setOnMousePressed();
@@ -42,6 +42,7 @@ public abstract class DraggableCard extends Card {
                 // System.out.println("nx: " + nx + ", ny: " + ny);
                 imageView.setTranslateX(nx);
                 imageView.setTranslateY(ny);
+                //TODO 拖动时位于图形顶层，否则会被排在后面的卡牌覆盖
             }
         });
     }
@@ -55,10 +56,10 @@ public abstract class DraggableCard extends Card {
             double dy = e.getSceneY();
             boolean releaseOnRunway = false;
             int runwayIndex = 0; // 释放的跑道下标
-            for (; runwayIndex < MainCanvas.runways.size(); runwayIndex++) {
-                int runwayX = MainCanvas.runways.get(runwayIndex).getPosX();
-                int runwayY = MainCanvas.runways.get(runwayIndex).getPosY();
-                int runwayWidth = MainCanvas.runways.get(runwayIndex).getWidth();
+            for (; runwayIndex < MainCanvas.runwayField.getRunwayFieldSize(); runwayIndex++) {
+                int runwayX = MainCanvas.runwayField.getRunways().get(runwayIndex).getPosX();
+                int runwayY = MainCanvas.runwayField.getRunways().get(runwayIndex).getPosY();
+                int runwayWidth = MainCanvas.runwayField.getRunways().get(runwayIndex).getWidth();
                 if (dy > runwayY && dy < runwayY + runwayWidth) {
                     releaseOnRunway = true;
                     break;
@@ -67,7 +68,7 @@ public abstract class DraggableCard extends Card {
             if (releaseOnRunway == true && MainCanvas.cardField.getMoney() >= price) {
                 System.out.println("释放在跑道" + runwayIndex);
                 System.out.println("价格为" + price);
-                this.runway = MainCanvas.runways.get(runwayIndex); //定位跑道
+                this.runway = MainCanvas.runwayField.getRunways().get(runwayIndex); //定位跑道
                 cardAction(); // 卡牌生效
                 MainCanvas.cardField.removeCard(this); // 从卡牌区移除这张卡
                 MainCanvas.cardField.setMoney(MainCanvas.cardField.getMoney() - price); // 扣掉金币数

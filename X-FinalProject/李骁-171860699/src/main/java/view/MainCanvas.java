@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import creature.Creature;
 import runway.Runway;
+import runway.RunwayField;
 import card.CardField;
 import card.Card;
 import card.CreatureCard;
@@ -27,15 +28,11 @@ public class MainCanvas extends Canvas {
 
     public static AnchorPane root; //父面板
 
-    //private Creature huluwa1, huluwa2; //测试的生物
+    //public static ArrayList<Runway> runways; //跑道区
 
-    public static ArrayList<Runway> runways; //跑道区
+    public static RunwayField runwayField; //跑道区
 
     public static CardField cardField; //卡牌区
-
-    //private GraphicsContext graphicsContext; //移动后无法消除原图
-
-    //private ImageView imageView, imageView2; //移动后可以消除原图
 
     private boolean isRunning = true; //游戏正在运行
 
@@ -69,52 +66,17 @@ public class MainCanvas extends Canvas {
     public MainCanvas(AnchorPane root, double width, double height) {
         super(width, height);
         this.root = root; //父面板
-        //graphicsContext = getGraphicsContext2D();
-
-        /*
-        //初始化控制器按钮 TODO 换个控制器
-        controller = new Button();
-        controller.setLayoutX(50);
-        controller.setLayoutY(400);
-        controller.setPrefWidth(1);
-        controller.setPrefHeight(1);
-        //controller.setVisible(false);
-        controller.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                System.out.println("按下了：" + event.getCode().name());
-                if (event.getCode() == KeyCode.D) {
-                    System.out.println("换牌");
-                    cardField.freshAllCards();
-                }
-                else if (event.getCode() == KeyCode.G) {
-                    System.out.println("给敌方加人");
-                    runways.get(1).addYourCreature(new Creature());
-                }
-            }
-        });
-        root.getChildren().add(controller);*/
-
-
-
+        
         //初始化跑道
-        runways = new ArrayList<Runway>();
+        /*runways = new ArrayList<Runway>();
         for (int i = 0; i < 3; i++) {
             runways.add(new Runway(100, 50 + 100*i, 100, 600));
-        }
-        //生成葫芦娃
-        //huluwa1 = new Creature(1, 0, 0, 1, true, "huluwa", runways.get(0));
-        //huluwa2 = new Creature(1, 600, 0, 1, false, "huluwa", runways.get(0));
-        //葫芦娃放置到跑道上
-        //runways.get(0).addMyCreature(huluwa1);
-        //runways.get(0).addYourCreature(huluwa2);
+        }*/
+        runwayField = new RunwayField();
 
-        
         //线程池
         exec = Executors.newCachedThreadPool();
         //启动葫芦娃线程
-        //exec.execute(huluwa1);
-        //exec.execute(huluwa2);
         //exec.execute(thread);
 
         //初始化卡牌区
@@ -122,42 +84,10 @@ public class MainCanvas extends Canvas {
         cardField.removeAllCards();
         cardField.fillCards();
 
-        //添加葫芦娃到pane
-        //huluwa1.addToPane(root);
-        //huluwa2.addToPane(root);
-        /*
-        //用于显示葫芦娃的imageview，加入面板
-        imageView = new ImageView();
-        root.getChildren().add(imageView); 
-        imageView2 = new ImageView();
-        root.getChildren().add(imageView2);*/
-
-        /*
-        //用于显示卡牌区的imageview，加入面板
-        cardViews = new ArrayList<ImageView>();
-        for (int i = 0; i < cardField.getCardFieldSize(); i++) {
-            ImageView cardView = new ImageView();
-            cardViews.add(cardView);
-            root.getChildren().add(cardView);
-        }*/
-        /*
-        //遍历卡牌区，画卡牌区
-        ArrayList<Card> cards = cardField.getCards();
-        for (int i = 0; i < cards.size(); i++) {
-            cards.get(i).drawCard();
-        }*/
     }
 
     public void draw() {
-        
-        //huluwa1.drawCreature(imageView);
-        //huluwa2.drawCreature(imageView2);
-        /*
-        //遍历卡牌区，画卡牌区
-        ArrayList<Card> cards = cardField.getCards();
-        for (int i = 0; i < cards.size(); i++) {
-            cards.get(i).drawCard();
-        }*/
+
     }
 
     public void update() {

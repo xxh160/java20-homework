@@ -207,8 +207,28 @@ D牌时崩溃，要加线程锁，而且反向遍历删除，由于增删卡牌�
 BUG： D牌的时候会卡一下，估计D的也得作为单独线程，放入cardField，其实并不是，是因为D牌算法写的太慢了，考虑换LinkedList试试
 是fillcards太慢，是createRandomCard太慢
 
+冰冻：立刻设置isRunning=false，计时器负责若干秒后解冻，设置isRunning=true
+
+设置辅助标志willThaw
+
+正常流程，冰冻时设置isRunning=false，检查willThaw，如果为true，就设为false，如果为false，就设置willThaw=true。然后schedule一个，3s后启动的线程
+内容为，如果willThaw=true，isRunning=true
+否则设置willThaw为true
+
+被冰时更新当前时间，冰冻时间，到点了检查时间差是否>=冰冻时间，到了就解冻，完事~
+
+TODO 还要给update加上后面的撞到前面的，速度减到和他一样，还得恢复
+
+撞到冻住的人，就不要move了，但速度和isrunning不改变
+
 ***
 
 12.26
 
 再下一步实现多元的人物，多实现几个人物，和图片
+
+人物添加力量格子，价格文本
+
+金钱增长速度减慢
+
+D牌需要的钱

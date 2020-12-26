@@ -45,7 +45,7 @@ public abstract class Card {
     public static Card createRandomCard() {
         Random rand = new Random();
         Card card;
-        switch (rand.nextInt(5)) {
+        switch (rand.nextInt(6)) {
             case 0:
                 card = new CreatureCard(new Creature());
                 break; // TODO 改实际生物
@@ -60,6 +60,9 @@ public abstract class Card {
                 break;
             case 4:
                 card = new PropCardKillEnemyHead();
+                break;
+            case 5:
+                card = new PropCardFreeze();
                 break;
             default:
                 card = new PropCardClearRunway();

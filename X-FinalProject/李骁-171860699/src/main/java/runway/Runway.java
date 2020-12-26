@@ -69,15 +69,15 @@ public class Runway {
     public void removeFromMyCreature(Creature creature) {
         //将一个生物从我方队伍移除，并从pane中移除，设置isRunning为false，让他线程跑完
         myCreatures.remove(creature);
-        creature.setRunning(false);
-        MainCanvas.root.getChildren().remove(creature.getImageView());
+        creature.Die();
+        creature.removeFromPane(MainCanvas.root);
     }
 
     public void removeFromYourCreature(Creature creature) {
         //将一个生物从敌方队伍移除，并从pane中移除，设置isRunning为false，让他线程跑完
         yourCreatures.remove(creature);
-        creature.setRunning(false);
-        MainCanvas.root.getChildren().remove(creature.getImageView());
+        creature.Die();
+        creature.removeFromPane(MainCanvas.root);
     }
 
     public void removeAllCreatures() {
@@ -107,11 +107,19 @@ public class Runway {
     }
 
     public void freezeEnemyCreatures() {
+        //TODO
         System.out.println("freezeEnemyCreatures");
+        for (Creature c : yourCreatures) {
+            c.freeze(3000);
+        }
     }
 
     public void freezeMyCreatures() {
+        //TODO
         System.out.println("freezeMyCreatures");
+        for (Creature c : myCreatures) {
+            c.freeze(3000);
+        }
     }
 
     public ArrayList<Creature> getYourCreatures() {

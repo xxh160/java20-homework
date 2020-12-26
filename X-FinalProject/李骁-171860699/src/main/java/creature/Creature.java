@@ -12,6 +12,13 @@ import javafx.scene.layout.Pane;
 import javafx.application.Platform;
 
 import org.jbox2d.dynamics.Body;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import runway.Runway;
 import view.MainCanvas;
@@ -30,7 +37,7 @@ public class Creature implements Runnable {
 
     protected int figureSize;
 
-    //protected Body body; // 矩形刚体
+    // protected Body body; // 矩形刚体
 
     protected boolean belongToMe;
 
@@ -40,45 +47,63 @@ public class Creature implements Runnable {
 
     protected ImageView imageView;
 
-    protected Image cardImage; //位于卡牌区时的卡
+    protected Image cardImage; // 位于卡牌区时的卡
 
     protected Runway runway; // 所处的跑道
 
     protected boolean isRunning = true;
+
+    protected Instant timeOnFreeze; // 被冰冻时的时间
+
+    protected long frozenTimeMs = 0; // 要被冻多久，单位毫秒
+
+    //protected Timer freezeTimer = new Timer(); //不知为何cancel不了，游戏结束还在跑
+
+    protected ScheduledExecutorService freezeService = Executors.newSingleThreadScheduledExecutor(); //被冰冻的调度器，可以结束线程
 
     protected int price;
 
     public Creature() {
         imageView = new ImageView();
         loadImage("huluwa.png");
-        
-        this.figureSize = (int)(imageView.getFitWidth() / 2);
+
+        this.figureSize = (int) (imageView.getFitWidth() / 2);
         this.power = 1; // TODO 别的方式初始化
         this.moveSpeed = defaultMoveSpeed = 1;
+    }
+
+    public void Die() {
+        // 死亡，停止运动，停止线程，停止计时器，移出Pane
+        isRunning = false;
+        Thread.currentThread().interrupt();
+        //freezeTimer.cancel();
+        freezeService.shutdownNow();
     }
 
     protected void loadImage(String imageName) {
         URL url = getClass().getClassLoader().getResource(imageName);
         System.out.println("loadImage: " + url);
         image = new Image(url.toString());
-        
+
         imageView.setImage(image); // TODO 这里会不会导致脱节
         imageView.setFitWidth(50);
-        imageView.setPreserveRatio(true); //保持比例，但fitheight由于没设置，会是0！
-        cardImage = new Image(url.toString()); //TODO 改掉
+        imageView.setPreserveRatio(true); // 保持比例，但fitheight由于没设置，会是0！
+        cardImage = new Image(url.toString()); // TODO 改掉
     }
 
     public void move() {
+        // if (isRunning) {
         if (belongToMe) {
             posX = posX + moveSpeed;
         } else {
             posX = posX - moveSpeed;
         }
+        // }
     }
 
     @Override
     public void run() {
-        while (!Thread.interrupted() && isRunning) {
+        while (!Thread.interrupted() /* && isRunning */) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -101,6 +126,48 @@ public class Creature implements Runnable {
         imageView.setLayoutY(posY);
     }
 
+    public void freeze(long ms) {
+        // 首先设置不能运动
+        isRunning = false;
+        timeOnFreeze = Instant.now();
+        frozenTimeMs = ms;
+        TimerTask thawTask = new TimerTask() {
+            @Override
+            public void run() {
+                long timeDure = Duration.between(timeOnFreeze, Instant.now()).toMillis();
+                System.out.println("过去了" + timeDure);
+                if (timeDure >= frozenTimeMs) {
+                    System.out.println("解冻");
+                    isRunning = true;
+                } else {
+                    System.out.println("解冻时间未到");
+                }
+            }
+        };
+
+        //freezeTimer.schedule(thawTask, ms);
+
+        /*Timer freezeTimer2 = new Timer();
+        freezeTimer2.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                long timeDure = Duration.between(timeOnFreeze, Instant.now()).toMillis();
+                System.out.println("过去了" + timeDure);
+                if (timeDure >= frozenTimeMs) {
+                    System.out.println("解冻");
+                    isRunning = true;
+                } else {
+                    System.out.println("解冻时间未到");
+                }
+                this.cancel();
+                freezeTimer2.cancel();
+            }
+        }, ms);*/
+        // freezeTimer.cancel();
+
+        freezeService.schedule(thawTask, ms, TimeUnit.MILLISECONDS);
+    }
+
     public void update() {
         // 获取我方生物
         ArrayList<Creature> myCreatures = (belongToMe == true) ? runway.getMyCreatures() : runway.getYourCreatures();
@@ -110,13 +177,17 @@ public class Creature implements Runnable {
         // 跑出跑道就结束
         if (posX < runway.getPosX() || posX > runway.getPosX() + runway.getLength()) {
             // TODO 别的方法跳出
-            isRunning = false;
+            // isRunning = false;
+            // Thread.currentThread().interrupt();
             if (belongToMe) {
                 runway.removeFromMyCreature(this);
             } else {
                 runway.removeFromYourCreature(this);
             }
         }
+
+        // 如果我被冻住了，那么直接跳过所有判断
+        // 如果我撞到一个被冻住的人，那么不运动
 
         // 如果是我的队头，看看和敌方队头碰了没，没碰需要恢复我方速度，然后继续走
         // 碰了往后计算贴着自己的队友有哪些，计算Mpower，再算对面的Ypower
@@ -127,14 +198,24 @@ public class Creature implements Runnable {
         // 碰了也继续走，因为你的速度已经被队头改了，所以走就完事了。。
         // TODO 线程安全问题
 
+        if (isRunning == false) {
+            return;
+        }
+
         if (myCreatures.indexOf(this) == 0) {
             // 队头
             if (enemyCreatures.size() > 0 && isCollide(enemyCreatures.get(0))) {
-                if (enemyCreatures.get(0).getMoveSpeed() < 0) {
-                    //如果对面头是负的速度，直接不管，不用比了
-                    //解决N:1由于N的速度不一致而贴合不紧
-                    //导致一会N:1一会1:1，那个对面的1速度不稳的问题
+                if (enemyCreatures.get(0).isRunning == false) {
+                    // 对面头被冻住了，你就别动了
+                    // 不move
+                    moveSpeed = 0;
+                } else if (enemyCreatures.get(0).getMoveSpeed() < 0) {
+                    // 如果对面头是负的速度，直接不管，不用比了
+                    // 解决N:1由于N的速度不一致而贴合不紧
+                    // 导致一会N:1一会1:1，那个对面的1速度不稳的问题
+
                     move();
+
                 } else {
                     ArrayList<Creature> myHeadCreatures = headLinkedCreatures(myCreatures);
                     ArrayList<Creature> enemyHeadCreatures = headLinkedCreatures(enemyCreatures);
@@ -170,11 +251,6 @@ public class Creature implements Runnable {
                     } else {
                         myHeadCreatures.forEach(c -> c.setMoveSpeed(-1 * c.getDefaultMoveSpeed()));
                         enemyHeadCreatures.forEach(c -> c.setMoveSpeed(c.getDefaultMoveSpeed()));
-                        /*
-                         * for (Creature c : myHeadCreatures) { c.moveSpeed = -1; } for (Creature c :
-                         * enemyHeadCreatures) { c.moveSpeed = 1; }
-                         */
-
                         System.out.println("我方力量小，我的当前速度 " + moveSpeed);
                     }
                     move();
@@ -185,12 +261,26 @@ public class Creature implements Runnable {
                 for (int i = 0; i < myCreatures.size(); i++) {
                     myCreatures.get(i).setMoveSpeed(defaultMoveSpeed);
                 }
+
                 move();
             }
         } else {
             // 队员
-            // TODO 需要考虑前方队友被冰冻，我撞上去也得速度归0，而不是移动
-            move();
+            // TODO 需要考虑前方队友被冰冻或者速度被归0，我撞上去也得不移动
+
+            boolean collideFrozen = false;
+            for (Creature c : myCreatures) {
+                if (isCollide(c) && (c.isRunning == false || c.moveSpeed == 0) && c != this) {
+                    collideFrozen = true;
+                    break;
+                }
+            }
+            if (collideFrozen == false) {
+                move();
+            }
+            else {
+                moveSpeed = 0;
+            }
         }
 
     }
@@ -216,6 +306,10 @@ public class Creature implements Runnable {
 
     public void addToPane(Pane pane) {
         pane.getChildren().add(imageView);
+    }
+
+    public void removeFromPane(Pane pane) {
+        pane.getChildren().remove(imageView);
     }
 
     public int getPosX() {

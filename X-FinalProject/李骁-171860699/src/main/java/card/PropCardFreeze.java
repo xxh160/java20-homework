@@ -9,7 +9,8 @@ public class PropCardFreeze extends DraggableCard {
         loadImage(this.getClass().getSimpleName() + ".png");
     }
 
-    public void propAction() {
+    @Override
+    protected void cardAction() {
         //TODO 发包给对面
         runway.freezeEnemyCreatures();
     }
