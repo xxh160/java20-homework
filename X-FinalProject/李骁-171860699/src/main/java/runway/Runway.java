@@ -7,15 +7,15 @@ import view.MainCanvas;
 
 public class Runway {
 
-    private ArrayList<Creature> myCreatures; //跑道上的我方生物
+    private ArrayList<Creature> myCreatures; // 跑道上的我方生物
 
-    private ArrayList<Creature> yourCreatures; //跑道上的对方生物
+    private ArrayList<Creature> yourCreatures; // 跑道上的对方生物
 
     private int posX, posY;
 
     private int width, length;
 
-    //private ImageView imageView; //跑道图片
+    // private ImageView imageView; //跑道图片
 
     public int getPosX() {
         return posX;
@@ -43,7 +43,7 @@ public class Runway {
     }
 
     public void addMyCreature(Creature creature) {
-        //将一个生物插入到我方阵营，并设置位置，方向，加入pane，启动线程
+        // 将一个生物插入到我方阵营，并设置位置，方向，加入pane，启动线程
         creature.setPosX(posX);
         creature.setPosY(posY);
         creature.setBelongToMe(true);
@@ -55,7 +55,7 @@ public class Runway {
     }
 
     public void addYourCreature(Creature creature) {
-        //将一个生物插入到敌方阵营，并设置位置，方向，加入pane，启动线程
+        // 将一个生物插入到敌方阵营，并设置位置，方向，加入pane，启动线程
         creature.setPosX(posX + length);
         creature.setPosY(posY);
         creature.setBelongToMe(false);
@@ -67,27 +67,27 @@ public class Runway {
     }
 
     public void removeFromMyCreature(Creature creature) {
-        //将一个生物从我方队伍移除，并从pane中移除，设置isRunning为false，让他线程跑完
+        // 将一个生物从我方队伍移除，让生物死亡，关闭线程和定时器，并从pane中移除
         myCreatures.remove(creature);
         creature.Die();
         creature.removeFromPane(MainCanvas.root);
     }
 
     public void removeFromYourCreature(Creature creature) {
-        //将一个生物从敌方队伍移除，并从pane中移除，设置isRunning为false，让他线程跑完
+        // 将一个生物从敌方队伍移除，让生物死亡，关闭线程和定时器，并从pane中移除
         yourCreatures.remove(creature);
         creature.Die();
         creature.removeFromPane(MainCanvas.root);
     }
 
     public void removeAllCreatures() {
-        //移除所有creature，并停止线程，TODO 线程安全
-        synchronized(myCreatures) {
-            for (int i = myCreatures.size()-1; i >= 0; i--) {
+        // 移除所有creature，并停止线程，TODO 线程安全
+        synchronized (myCreatures) {
+            for (int i = myCreatures.size() - 1; i >= 0; i--) {
                 removeFromMyCreature(myCreatures.get(i));
             }
         }
-        synchronized(yourCreatures) {
+        synchronized (yourCreatures) {
             for (int i = yourCreatures.size() - 1; i >= 0; i--) {
                 removeFromYourCreature(yourCreatures.get(i));
             }
@@ -95,19 +95,18 @@ public class Runway {
     }
 
     public void killEnemyHead() {
-        synchronized(yourCreatures) {
+        synchronized (yourCreatures) {
             if (yourCreatures.size() > 0) {
                 System.out.println("击杀敌方队头");
                 removeFromYourCreature(yourCreatures.get(0));
-            }
-            else {
+            } else {
                 System.out.println("敌方无队头");
             }
         }
     }
 
     public void freezeEnemyCreatures() {
-        //TODO
+        // 冰冻敌方
         System.out.println("freezeEnemyCreatures");
         for (Creature c : yourCreatures) {
             c.freeze(3000);
@@ -115,7 +114,7 @@ public class Runway {
     }
 
     public void freezeMyCreatures() {
-        //TODO
+        // 冰冻我方生物3000ms
         System.out.println("freezeMyCreatures");
         for (Creature c : myCreatures) {
             c.freeze(3000);

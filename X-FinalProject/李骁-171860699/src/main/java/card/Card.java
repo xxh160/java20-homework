@@ -34,7 +34,7 @@ public abstract class Card {
         URL url = getClass().getClassLoader().getResource(imageName);
         System.out.println("loadImage: " + url);
         image = new Image(url.toString());
-        imageView.setImage(image); // TODO 这里会不会导致脱节
+        imageView.setImage(image);
     }
 
     protected void loadImage(Image image) {

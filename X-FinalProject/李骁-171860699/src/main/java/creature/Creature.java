@@ -85,7 +85,7 @@ public class Creature implements Runnable {
         System.out.println("loadImage: " + url);
         image = new Image(url.toString());
 
-        imageView.setImage(image); // TODO 这里会不会导致脱节
+        imageView.setImage(image);
         imageView.setFitWidth(50);
         imageView.setPreserveRatio(true); // 保持比例，但fitheight由于没设置，会是0！
         cardImage = new Image(url.toString()); // TODO 改掉
@@ -266,7 +266,7 @@ public class Creature implements Runnable {
             }
         } else {
             // 队员
-            // TODO 需要考虑前方队友被冰冻或者速度被归0，我撞上去也得不移动
+            // 需要考虑前方队友被冰冻或者速度被归0，我撞上去也得不移动
 
             boolean collideFrozen = false;
             for (Creature c : myCreatures) {
