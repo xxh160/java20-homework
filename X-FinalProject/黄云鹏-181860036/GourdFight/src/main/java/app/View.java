@@ -26,7 +26,8 @@ import javafx.scene.layout.StackPane;
  */
 
 public abstract class View { // 游戏页面抽象类，子类为页面实例
-	private final Pane pane; // 根容器
+	
+	protected Pane pane; // 根容器
 	
 	// 初始化
 	public View() {
@@ -53,26 +54,21 @@ public abstract class View { // 游戏页面抽象类，子类为页面实例
 		// 结束页面管理，子类选择实现
 	}
 	
-	
 	public void onEnter() { 
 		// 进入页面管理，子类选择实现
 	}
-	
 	
 	public void onStart() {
 		// 游戏引擎启动页面管理，子类选择实现
 	}
 	
-	
 	public void onStop() {
 		// 游戏引擎关闭页面管理，子类选择实现
 	}
 	
-	
 	public void onUpdate(double time) {
 		// 页面帧更新，子类选择实现
 	}
-	
 	
 	public void onLeave() { 
 		// 退出页面管理，子类选择实现

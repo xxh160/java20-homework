@@ -11,14 +11,15 @@ public class Main extends Game { // 主函数类，程序入口
 	@Override
 	public void onLaunch() {
 		// 游戏启动设置
-		Framework.app.setTitle("Test Game"); // 设置窗口标题
-		Framework.app.setWidth(800); // 设置窗口宽度
-		Framework.app.setHeight(600); // 设置窗口高度
+		Framework.app.setTitle(Constants.WINDOW_TITLE); // 设置窗口标题
+		Framework.app.setWidth(Constants.WINDOW_WIDTH); // 设置窗口宽度
+		Framework.app.setHeight(Constants.WINDOW_HEIGHT); // 设置窗口高度
+		Framework.app.setResizeable(false); // 设置窗口不可改变大小
 				
 		// 注册页面
-		Framework.app.regView("Home", new HomeView()); // 主页面
-		Framework.app.regView("Play", new PlayView()); // 游戏界面
-		Framework.app.gotoView("Home");
+		Framework.app.regView(Constants.HOME_VIEW_KEY, new HomeView()); // 主页面
+		Framework.app.regView(Constants.PLAY_VIEW_KEY, new PlayView()); // 游戏界面
+		Framework.app.gotoView(Constants.HOME_VIEW_KEY);
 	}
 	
 	@Override

@@ -60,7 +60,6 @@ public class App {
 	OnFinish onFinish; // 窗口关闭管理接口
 	OnExit onExit; // 窗口退出许可管理接口
 	
-	
 	// 初始化
 	private final void initFramework() { // 初始化全局框架
 		Framework.app = this;
@@ -240,6 +239,10 @@ public class App {
 	
 	public void setHeight(double height) { // 设置根容器高度
 		root.setMinHeight(height);
+	}
+	
+	public void setResizeable(boolean value) { // 设置是否可以调节窗口大小
+		stage.setResizable(value);
 	}
 	
 	public void regView(String name,View view) { // 注册页面

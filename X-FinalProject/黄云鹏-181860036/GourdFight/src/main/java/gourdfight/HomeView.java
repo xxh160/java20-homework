@@ -17,6 +17,7 @@ public class HomeView extends View { // 主页面类
 	private Button playBtn; // 开启游戏按钮
 	private Button exitBtn; // 退出游戏按钮
 	
+	// 生命周期管理
 	@Override
 	public void onLaunch() {
 		// 页面启动管理测试
@@ -26,7 +27,7 @@ public class HomeView extends View { // 主页面类
 			@Override
 			public void handle(ActionEvent event) {
 				// 切换到游戏页面
-				Framework.app.gotoView("Play");
+				Framework.app.gotoView(Constants.PLAY_VIEW_KEY);
 			}
 		});
 		
