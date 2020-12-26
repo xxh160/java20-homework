@@ -1,5 +1,8 @@
 package app;
 
+import java.util.Collection;
+
+import gourdfight.Constants;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Background;
@@ -30,10 +33,15 @@ public abstract class View { // 游戏页面抽象类，子类为页面实例
 	protected Pane pane; // 根容器
 	
 	// 初始化
-	public View() {
-//		pane = new Pane();
-		pane = new StackPane(); // 栈布局
-		pane.setBackground(Background.EMPTY); // 设置根容器的背景为空
+	public View(String type) {
+		if(type.equals(Constants.STACK_PANE)) {
+			pane = new StackPane(); // 栈控件
+		}
+		else if (type.equals(Constants.IMAGE_PANE)) {
+			pane = new ImagePane();
+		}
+		
+		// pane.setBackground(Background.EMPTY); // 设置根容器的背景为空
 	}
 	
 	// Getter

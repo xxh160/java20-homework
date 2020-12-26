@@ -6,10 +6,15 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 import framework.*;
+import gourdfight.Constants;
 
 public class PlayView extends View { // 游戏页面测试类
 
 	private Button homeBtn; // 返回主页面按钮
+	
+	public PlayView() {
+		super(Constants.STACK_PANE);
+	}
 	
 	@Override
 	public void onLaunch() {

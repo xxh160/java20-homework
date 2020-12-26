@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 import framework.*;
+import gourdfight.Constants;
 import input.Key;
 import input.KeyInput;
 import input.Mouse;
@@ -16,6 +17,10 @@ public class HomeView extends View { // 主页面测试类
 
 	private Button playBtn; // 开启游戏按钮
 	private Button exitBtn; // 退出游戏按钮
+	
+	public HomeView() {
+		super(Constants.STACK_PANE);
+	}
 	
 	@Override
 	public void onLaunch() {
