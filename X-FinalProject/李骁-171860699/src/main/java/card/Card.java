@@ -15,40 +15,71 @@ import view.*;
 
 public abstract class Card {
 
-    protected int price; //卡牌价格
+    protected int price; // 卡牌价格
 
     protected int position; // 位于卡牌区第几号位置
 
-    protected Image image; //卡牌图片
+    protected Image image; // 卡牌图片
 
     protected ImageView imageView; // 画卡牌区里的卡
 
-    protected double lastEventX, lastEventY, lastX, lastY; // 控制卡片拖动的变量
-
     public Card() {
-        
-        imageView = new ImageView(); //要放在load之前，不然iv还没加载
-        
-        price = 2;
+
+        imageView = new ImageView(); // 要放在load之前，不然iv还没加载
+
+        price = 2; //TODO 由具体子类自己设置
     }
 
     protected void loadImage(String imageName) {
         URL url = getClass().getClassLoader().getResource(imageName);
-        System.out.println(url);
+        System.out.println("loadImage: " + url);
         image = new Image(url.toString());
-        imageView.setImage(image); //TODO 这里会不会导致脱节
+        imageView.setImage(image); // TODO 这里会不会导致脱节
+    }
+
+    protected void loadImage(Image image) {
+        this.image = image;
+        imageView.setImage(image);
     }
 
     public static Card createRandomCard() {
         Random rand = new Random();
-        Card[] cardPool = { 
-            new CreatureCard(new Creature()), // TODO 改实际生物
-            new PropCardCostAddN(1),
-            new PropCardCostMinusN(1),
-            new PropCardClearRunway(),
-            new PropCardKillEnemyHead(),
-        };
-        return cardPool[rand.nextInt(cardPool.length)];
+        Card card;
+        switch (rand.nextInt(5)) {
+            case 0:
+                card = new CreatureCard(new Creature());
+                break; // TODO 改实际生物
+            case 1:
+                card = new PropCardCostAddN(1);
+                break;
+            case 2:
+                card = new PropCardCostMinusN(1);
+                break;
+            case 3:
+                card = new PropCardClearRunway();
+                break;
+            case 4:
+                card = new PropCardKillEnemyHead();
+                break;
+            default:
+                card = new PropCardClearRunway();
+                break;
+        }
+        return card;
+    }
+
+    protected void cardAction() {
+
+    }
+
+    public void drawCard() {
+        imageView.setImage(image);
+        imageView.setX(MainCanvas.cardField.getPosX() + (image.getWidth() + 10) * position);
+        imageView.setY(MainCanvas.cardField.getPosY());
+    }
+
+    public void addToPane(Pane pane) {
+        pane.getChildren().add(imageView);
     }
 
     public int getPrice() {
@@ -73,16 +104,6 @@ public abstract class Card {
 
     public void setPosition(int position) {
         this.position = position;
-    }
-
-    public void drawCard() {
-        imageView.setImage(image);
-        imageView.setX(MainCanvas.cardField.getPosX() + (image.getWidth() + 10) * position);
-        imageView.setY(MainCanvas.cardField.getPosY());
-    }
-
-    public void addToPane(Pane pane) {
-        pane.getChildren().add(imageView);
     }
 
     public int getPosition() {

@@ -106,6 +106,14 @@ public class Runway {
         }
     }
 
+    public void freezeEnemyCreatures() {
+        System.out.println("freezeEnemyCreatures");
+    }
+
+    public void freezeMyCreatures() {
+        System.out.println("freezeMyCreatures");
+    }
+
     public ArrayList<Creature> getYourCreatures() {
         return yourCreatures;
     }

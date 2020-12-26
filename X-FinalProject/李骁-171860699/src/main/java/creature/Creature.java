@@ -49,15 +49,23 @@ public class Creature implements Runnable {
     protected int price;
 
     public Creature() {
-        URL url = getClass().getClassLoader().getResource("huluwa.png");
-        System.out.println(url);
-        image = new Image(url.toString());
-        imageView = new ImageView(image);
-        imageView.setFitWidth(50);
-        imageView.setPreserveRatio(true); //保持比例，但fitheight由于没设置，会是0！
+        imageView = new ImageView();
+        loadImage("huluwa.png");
+        
         this.figureSize = (int)(imageView.getFitWidth() / 2);
         this.power = 1; // TODO 别的方式初始化
         this.moveSpeed = defaultMoveSpeed = 1;
+    }
+
+    protected void loadImage(String imageName) {
+        URL url = getClass().getClassLoader().getResource(imageName);
+        System.out.println("loadImage: " + url);
+        image = new Image(url.toString());
+        
+        imageView.setImage(image); // TODO 这里会不会导致脱节
+        imageView.setFitWidth(50);
+        imageView.setPreserveRatio(true); //保持比例，但fitheight由于没设置，会是0！
+        cardImage = new Image(url.toString()); //TODO 改掉
     }
 
     public void move() {

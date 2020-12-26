@@ -202,10 +202,13 @@ D牌时崩溃，要加线程锁，而且反向遍历删除，由于增删卡牌�
 
 5. 冰冻：冰冻一条线上的敌方单位，3s，得发包，给runway添加frozenEnemyCreature方法，给creature添加frozen方法，设置冰冻计时器启动，在update中，如果处于冰冻状态，速度归0，计时器减少，计时器结束时速度恢复（到原来状态）（恢复到默认速度可能会有问题？）
 
-6. 闪电：消灭一条线上的第一个敌方单位，得发包，给runway添加removeEnemyHead方法，线程安全问题
+6. 闪电：消灭一条线上的第一个敌方单位，得发包，给runway添加removeEnemyHead方法，和对应removeMyHead线程安全问题
 
-BUG： D牌的时候会卡一下，估计D的也得作为单独线程，放入cardField
+BUG： D牌的时候会卡一下，估计D的也得作为单独线程，放入cardField，其实并不是，是因为D牌算法写的太慢了，考虑换LinkedList试试
+是fillcards太慢，是createRandomCard太慢
 
 ***
+
+12.26
 
 再下一步实现多元的人物，多实现几个人物，和图片

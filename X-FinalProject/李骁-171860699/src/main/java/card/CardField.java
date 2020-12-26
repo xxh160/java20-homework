@@ -1,7 +1,11 @@
 package card;
 
-import java.util.ArrayList;
 import creature.Creature;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.LinkedList;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -17,7 +21,7 @@ import javafx.scene.control.Button;
 
 
 public class CardField implements Runnable {
-    private ArrayList<Card> cards;
+    private List<Card> cards;
 
     private final int cardFieldSize = 5;
 
@@ -36,7 +40,8 @@ public class CardField implements Runnable {
     private Pane root; // 所在pane
 
     public CardField(Pane root) {
-        cards = new ArrayList<Card>();
+        //cards = new ArrayList<Card>();
+        cards = new LinkedList<Card>();
         this.root = root;
         moneyText = new Text("金钱数：" + money);
         moneyText.setLayoutX(posX);
@@ -92,16 +97,16 @@ public class CardField implements Runnable {
     public void removeCard(Card card) {
         root.getChildren().remove(card.getImageView()); // 清理掉
         synchronized (cards) {
-            cards.remove(card);
+            cards.remove(card); //O(n)
         }
     }
 
     public void removeCard(int index) {
         if (index < cards.size()) {
-            Card card = cards.get(index);
+            Card card = cards.get(index); //O(n)
             root.getChildren().remove(card.getImageView());
             synchronized (cards) {
-                cards.remove(index);
+                cards.remove(index); //O(n)
             }
         }
     }
@@ -123,6 +128,7 @@ public class CardField implements Runnable {
         // 补充消耗的卡，TODO 随机
         for (int i = 0; i < empty; i++) {
             Card card = Card.createRandomCard();
+            //Card card = new PropCardClearRunway();
             cards.add(card);
             card.setPosition(cards.indexOf(card));
 
@@ -173,7 +179,7 @@ public class CardField implements Runnable {
         money = money + 1;
     }
 
-    public ArrayList<Card> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 
@@ -181,7 +187,7 @@ public class CardField implements Runnable {
         return cardFieldSize;
     }
 
-    public void setCards(ArrayList<Card> cards) {
+    public void setCards(List<Card> cards) {
         this.cards = cards;
     }
 
