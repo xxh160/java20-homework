@@ -104,7 +104,7 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void updatePlayer1() { // 更新玩家1
-		if(Framework.keyInput.isPressed(Key.D)) { // 玩家1向右移动
+		if(Framework.keyInput.isTyped(Key.D)) { // 玩家1向右移动
 			
 			entityMap.get(Constants.PLAYER1).moveRight();
 			double deltaX = entityMap.get(Constants.PLAYER1).getDeltaX();
@@ -117,7 +117,7 @@ public class PlayView extends View { // 游戏页面类
 			Image img = new Image(URL.toURL(filePath));
 			imgLocateMap.get(Constants.PLAYER1).setImg(img);
 		}
-		else if(Framework.keyInput.isPressed(Key.A)) { // 玩家1向左移动
+		else if(Framework.keyInput.isTyped(Key.A)) { // 玩家1向左移动
 			
 			entityMap.get(Constants.PLAYER1).moveLeft();
 			double deltaX = entityMap.get(Constants.PLAYER1).getDeltaX();
@@ -139,7 +139,7 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void updatePlayer2() { // 更新玩家2
-		if(Framework.keyInput.isPressed(Key.L)) { // 玩家1向右移动
+		if(Framework.keyInput.isTyped(Key.L)) { // 玩家1向右移动
 			
 			entityMap.get(Constants.PLAYER2).moveRight();
 			double deltaX = entityMap.get(Constants.PLAYER2).getDeltaX();
@@ -148,7 +148,7 @@ public class PlayView extends View { // 游戏页面类
 					Constants.PLAYER2_INIT_X + deltaX
 					);
 		}
-		if(Framework.keyInput.isPressed(Key.J)) { // 玩家1向左移动
+		if(Framework.keyInput.isTyped(Key.J)) { // 玩家1向左移动
 			
 			entityMap.get(Constants.PLAYER2).moveLeft();
 			double deltaX = entityMap.get(Constants.PLAYER2).getDeltaX();
