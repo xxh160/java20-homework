@@ -7,18 +7,12 @@ import app.ImagePane;
 import app.TextLocate;
 import app.View;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
-
+import output.URL;
 import world.Entity;
 import framework.*;
 import input.Key;
-import input.KeyInput;
-import input.Mouse;
+
+import javafx.scene.image.Image;
 
 public class PlayView extends View { // 游戏页面类
 	
@@ -45,8 +39,11 @@ public class PlayView extends View { // 游戏页面类
 	
 	private void setBackground() { // 初设背景
 		Entity background = new Entity(Constants.BACKGROUND);
-		Image background_img = new Image("resources/Mario_background.png"); // test
+		
+		String filePath = "src/test/resources/mario/Mario_background.png";
+		Image background_img = new Image(URL.toURL(filePath)); // test
 		background.addImage(Constants.BACKGROUND_INIT_IMAGE, background_img);
+		
 		addEntity(Constants.BACKGROUND, background);
 		
 		ImageLocate background_imgLocate = new ImageLocate(
@@ -63,8 +60,11 @@ public class PlayView extends View { // 游戏页面类
 		
 		Entity player1 = new Entity(Constants.PLAYER1);
 		player1.setMobile(true);
-		Image player1_img = new Image("resources/Mario_standToLeft.png"); // test
+		
+		String filePath = "src/test/resources/mario/Mario_standToLeft.png";
+		Image player1_img = new Image(URL.toURL(filePath)); // test
 		player1.addImage(Constants.PLAYER1_INIT_IMAGE, player1_img);
+		
 		addEntity(Constants.PLAYER1, player1);
 				
 		ImageLocate player1_imgLocate = new ImageLocate(
@@ -80,7 +80,9 @@ public class PlayView extends View { // 游戏页面类
 	private void setPlayer2() { // 初设玩家2
 		Entity player2 = new Entity(Constants.PLAYER2);
 		player2.setMobile(true);
-		Image player2_img = new Image("resources/Mario_standToRight.png"); // test
+		
+		String filePath = "src/test/resources/mario/Mario_standToRight.png";
+		Image player2_img = new Image(URL.toURL(filePath)); // test
 		player2.addImage(Constants.PLAYER2_INIT_IMAGE, player2_img);
 		addEntity(Constants.PLAYER2, player2);
 				
