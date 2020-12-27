@@ -2,6 +2,9 @@ package gourdfight;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import app.ImageLocate;
 import app.ImagePane;
@@ -18,8 +21,6 @@ import javafx.scene.image.Image;
 public class PlayView extends View { // 游戏页面类
 	
 	HashMap<String, Entity> entityMap; // 游戏实体字典 
-//	HashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
-//	HashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
 	LinkedHashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
 	LinkedHashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
 	
@@ -27,8 +28,6 @@ public class PlayView extends View { // 游戏页面类
 	public PlayView() {
 		super(Constants.IMAGE_PANE);
 		entityMap = new HashMap<>();
-//		imgLocateMap = new HashMap<>();
-//		textLocateMap = new HashMap<>();
 		imgLocateMap = new LinkedHashMap<>();
 		textLocateMap = new LinkedHashMap<>();
 	}
@@ -167,11 +166,9 @@ public class PlayView extends View { // 游戏页面类
 	
 	private void updateFrame() { // 更新帧
 
-		((ImagePane) pane).update(imgLocateMap.values(),textLocateMap.values());
-//		((ImagePane) pane).clear();
-//		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.BACKGROUND));
-//		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.PLAYER1));
-//		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.PLAYER2));
+		((ImagePane) pane).update(
+				imgLocateMap.values(),
+				textLocateMap.values());
 	}
 	
 	public void addEntity(String id, Entity entity) { // 添加实体
