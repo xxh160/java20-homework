@@ -21,6 +21,8 @@ public class PlayView extends View { // 游戏页面类
 	LinkedHashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
 	LinkedHashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
 	
+	int test_count = 0; // 测试计数器
+	
 	// 初始化
 	public PlayView() {
 		super(Constants.IMAGE_PANE);
@@ -62,8 +64,8 @@ public class PlayView extends View { // 游戏页面类
 		Entity player1 = new Entity(Constants.PLAYER1);
 		player1.setMobile(true);
 		
-		String filePath = URL.toPngPath("test", "mario", "Mario_standToLeft");
-//		String filePath = URL.toGifPath("test", "mario", "Mario_squatToLeft");
+//		String filePath = URL.toPngPath("test", "mario", "Mario_standToLeft");
+		String filePath = URL.toPngPath("test", "spongebob", "spongebob00");
 		Image player1_img = new Image(URL.toURL(filePath)); // test
 		player1.addImage(Constants.PLAYER1_INIT_IMAGE, player1_img);
 		
@@ -134,8 +136,14 @@ public class PlayView extends View { // 游戏页面类
 		}
 		
 		else {
-			String filePath = URL.toPngPath("test", "mario", "Mario_standToLeft");
-//			String filePath = URL.toGifPath("test", "mario", "Mario_squatToLeft");
+//			String filePath = URL.toPngPath("test", "mario", "Mario_standToLeft");
+//			Image img = new Image(URL.toURL(filePath));
+//			imgLocateMap.get(Constants.PLAYER1).setImg(img);
+			String spongebob = "spongebob";
+			test_count = (++test_count) % 17;
+			String num = test_count < 10 ? "0" + test_count : "" + test_count;
+			
+			String filePath = URL.toPngPath("test", spongebob,spongebob + num);
 			Image img = new Image(URL.toURL(filePath));
 			imgLocateMap.get(Constants.PLAYER1).setImg(img);
 		}
