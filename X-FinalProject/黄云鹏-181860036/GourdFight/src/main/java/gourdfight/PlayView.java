@@ -62,6 +62,7 @@ public class PlayView extends View { // 游戏页面类
 		player1.setMobile(true);
 		
 		String filePath = URL.toPngPath("test", "mario", "Mario_standToLeft");
+//		String filePath = URL.toGifPath("test", "mario", "Mario_squatToLeft");
 		Image player1_img = new Image(URL.toURL(filePath)); // test
 		player1.addImage(Constants.PLAYER1_INIT_IMAGE, player1_img);
 		
@@ -133,6 +134,7 @@ public class PlayView extends View { // 游戏页面类
 		
 		else {
 			String filePath = URL.toPngPath("test", "mario", "Mario_standToLeft");
+//			String filePath = URL.toGifPath("test", "mario", "Mario_squatToLeft");
 			Image img = new Image(URL.toURL(filePath));
 			imgLocateMap.get(Constants.PLAYER1).setImg(img);
 		}

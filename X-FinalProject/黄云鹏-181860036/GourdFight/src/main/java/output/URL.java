@@ -20,4 +20,14 @@ public class URL { // URL转化类，提供简单的将包路径转化成URL/Ima
 		
 		return s + c + d + c + r + c + p + c + f + z;
 	}
+	
+	public static String toGifPath(String d, String p,String f) { // 拼接成gif文件的包路径
+		// d = main/test, p为包名，f为gif文件名
+		String s = "src";
+		String c = "/";
+		String r = "resources";
+		String z = ".gif";
+		
+		return s + c + d + c + r + c + p + c + f + z;
+	}
 }
