@@ -41,6 +41,22 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double PLAYER2_INIT_W = 50; // 玩家2初始宽度
 	public static final double PLAYER2_INIT_H = 50; // 玩家2初始高度
 	
+	// 实体状态值
+	public static final String STANDING_TOLEFT = "standingToLeft"; // 朝左边站着
+	public static final String STANDING_TORIGHT = "standingToRight"; // 朝右边站着
+	public static final String MOVING_TOLEFT = "movingToLeft"; // 朝左边移动
+	public static final String MOVING_TORIGHT = "movingToRight"; // 朝右边移动
+	public static final String RUNNING_TOLEFT = "runningToLeft"; // 朝左边冲刺
+	public static final String RUNNING_TORIGHT = "runningToRight"; // 朝右边冲刺
+	public static final String JUMPING = "jumping"; // 跳跃
+	public static final String LYING = "lying"; // 倒地
+	public static final String ATTACKING_NEAR = "attackingNear"; // 近攻
+	public static final String ATTACKING_FAR = "attackingFar"; // 远攻
+	public static final String ATTACKING_KILL = "attackingKill"; // 必杀
+	public static final String DEFENDING = "defending"; // 防御
+	public static final String WOUNDED = "wounded"; // 受伤
+	
+	
 	// 实体图片(注：后缀1的为自己，后缀2的为对手)
 	public static final String BACKGROUND_INIT_IMAGE = "background_init_image"; // 初始背景图片
 	public static final String PLAYER1_INIT_IMAGE = "player1_init_image"; // 玩家1初始图片

@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 public class Entity { // 游戏实体类，所有游戏角色、道具等的父类
 	
 	private String name; // 实体名称
+	private EntityState state; // 实体状态(默认"朝左边站着")
 	
 	private boolean isMobile; // 是否可移动(默认不可移动)
 	private boolean isActive; // 是否活跃(默认活跃)
@@ -24,6 +25,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		deltaX = 0;
 		deltaY = 0;
 		setName(name);
+		setState(EntityState.STANDING_TOLEFT);
 		setMobile(false);
 		setActive(true);
 	}
@@ -31,6 +33,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	// Getter
 	public String getName() { // 获取名称
 		return name;
+	}
+	
+	public EntityState getState() { // 获取当前状态
+		return state;
 	}
 	
 	public boolean isMobile() { // 判断实体是否可移动
@@ -60,6 +66,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	// Setter
 	public void setName(String name) { // 设置名称
 		this.name = name;
+	}
+	
+	public void setState(EntityState state) { // 设置实体状态
+		this.state = state;
 	}
 	
 	public void setMobile(boolean m) { // 设置实体是否可移动
@@ -106,5 +116,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 			deltaY += 1;
 		}
 	}
+	
 	
 }
