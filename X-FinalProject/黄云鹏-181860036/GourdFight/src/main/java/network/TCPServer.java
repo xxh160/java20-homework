@@ -1,8 +1,12 @@
 package network;
 
+import java.io.IOException;
 import java.net.*;
 
 public class TCPServer { // TCP服务器类
+	
+	ServerSocket serverSocket; // 服务器总套接字
+	
 	private String serverIP; // 服务器IP地址
 	private String clientIP; // 客户端IP地址
 	
@@ -51,9 +55,9 @@ public class TCPServer { // TCP服务器类
 	// 启动服务器
 	public void start() {
 		try {
-			ServerSocket serrverSocket = new ServerSocket(serverPort);
+			serverSocket = new ServerSocket(serverPort);
 			
-			Socket socket = serrverSocket.accept(); // 等待客户端连接上(阻塞状态)
+			Socket socket = serverSocket.accept(); // 等待客户端连接上(阻塞状态)
 			
 			isAccept = true; // 客户端已经连接上
 			
@@ -63,4 +67,14 @@ public class TCPServer { // TCP服务器类
 			e.printStackTrace();
 		}
 	}
+	
+	// 关闭服务器
+	public void shutDown() {
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

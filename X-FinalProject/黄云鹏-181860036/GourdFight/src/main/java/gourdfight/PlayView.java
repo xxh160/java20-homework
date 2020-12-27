@@ -2,9 +2,6 @@ package gourdfight;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import app.ImageLocate;
 import app.ImagePane;
