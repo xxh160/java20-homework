@@ -1,6 +1,7 @@
 package gourdfight;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import app.ImageLocate;
 import app.ImagePane;
@@ -17,15 +18,19 @@ import javafx.scene.image.Image;
 public class PlayView extends View { // 游戏页面类
 	
 	HashMap<String, Entity> entityMap; // 游戏实体字典 
-	HashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
-	HashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
+//	HashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
+//	HashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
+	LinkedHashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
+	LinkedHashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
 	
 	// 初始化
 	public PlayView() {
 		super(Constants.IMAGE_PANE);
 		entityMap = new HashMap<>();
-		imgLocateMap = new HashMap<>();
-		textLocateMap = new HashMap<>();
+//		imgLocateMap = new HashMap<>();
+//		textLocateMap = new HashMap<>();
+		imgLocateMap = new LinkedHashMap<>();
+		textLocateMap = new LinkedHashMap<>();
 	}
 	
 	private void initEntity() { // 初始创建一些必要实体
@@ -161,11 +166,12 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void updateFrame() { // 更新帧
-		((ImagePane) pane).clear();
-//		((ImagePane) pane).update(imgLocateMap.values(),textLocateMap.values());
-		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.BACKGROUND));
-		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.PLAYER1));
-		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.PLAYER2));
+
+		((ImagePane) pane).update(imgLocateMap.values(),textLocateMap.values());
+//		((ImagePane) pane).clear();
+//		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.BACKGROUND));
+//		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.PLAYER1));
+//		((ImagePane) pane).drawImage(imgLocateMap.get(Constants.PLAYER2));
 	}
 	
 	public void addEntity(String id, Entity entity) { // 添加实体
@@ -207,7 +213,7 @@ public class PlayView extends View { // 游戏页面类
 	
 	// 生命周期管理
 	public void onLaunch() { // 页面启动设置
-		reset(); // 清空实体
+		reset(); // 先清空上一次启动时的字典
 		initEntity(); // 初始化游戏实体
 	}
 	
