@@ -40,7 +40,7 @@ public class PlayView extends View { // 游戏页面类
 	private void setBackground() { // 初设背景
 		Entity background = new Entity(Constants.BACKGROUND);
 		
-		String filePath = "src/test/resources/mario/Mario_background.png";
+		String filePath = URL.toPngPath("test", "mario", "Mario_background");
 		Image background_img = new Image(URL.toURL(filePath)); // test
 		background.addImage(Constants.BACKGROUND_INIT_IMAGE, background_img);
 		
@@ -61,7 +61,7 @@ public class PlayView extends View { // 游戏页面类
 		Entity player1 = new Entity(Constants.PLAYER1);
 		player1.setMobile(true);
 		
-		String filePath = "src/test/resources/mario/Mario_standToLeft.png";
+		String filePath = URL.toPngPath("test", "mario", "Mario_standToLeft");
 		Image player1_img = new Image(URL.toURL(filePath)); // test
 		player1.addImage(Constants.PLAYER1_INIT_IMAGE, player1_img);
 		
@@ -81,7 +81,7 @@ public class PlayView extends View { // 游戏页面类
 		Entity player2 = new Entity(Constants.PLAYER2);
 		player2.setMobile(true);
 		
-		String filePath = "src/test/resources/mario/Mario_standToRight.png";
+		String filePath = URL.toPngPath("test", "mario", "Mario_standToRight");
 		Image player2_img = new Image(URL.toURL(filePath)); // test
 		player2.addImage(Constants.PLAYER2_INIT_IMAGE, player2_img);
 		addEntity(Constants.PLAYER2, player2);
@@ -112,14 +112,29 @@ public class PlayView extends View { // 游戏页面类
 			imgLocateMap.get(Constants.PLAYER1).setX(
 					Constants.PLAYER1_INIT_X + deltaX
 					);
+			
+			String filePath = URL.toPngPath("test", "mario", "Mario_runToRight");
+			Image img = new Image(URL.toURL(filePath));
+			imgLocateMap.get(Constants.PLAYER1).setImg(img);
 		}
-		if(Framework.keyInput.isPressed(Key.A)) { // 玩家1向左移动
+		else if(Framework.keyInput.isPressed(Key.A)) { // 玩家1向左移动
 			
 			entityMap.get(Constants.PLAYER1).moveLeft();
 			double deltaX = entityMap.get(Constants.PLAYER1).getDeltaX();
+			
 			imgLocateMap.get(Constants.PLAYER1).setX(
 					Constants.PLAYER1_INIT_X + deltaX
 					);
+			
+			String filePath = URL.toPngPath("test", "mario", "Mario_runToLeft");
+			Image img = new Image(URL.toURL(filePath));
+			imgLocateMap.get(Constants.PLAYER1).setImg(img);
+		}
+		
+		else {
+			String filePath = URL.toPngPath("test", "mario", "Mario_standToLeft");
+			Image img = new Image(URL.toURL(filePath));
+			imgLocateMap.get(Constants.PLAYER1).setImg(img);
 		}
 	}
 	
