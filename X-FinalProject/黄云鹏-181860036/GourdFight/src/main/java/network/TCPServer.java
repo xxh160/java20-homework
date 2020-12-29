@@ -22,6 +22,8 @@ public class TCPServer { // TCP服务器类
 		this.serverIP = serverIP;
 		this.serverPort = serverPort;
 		this.isAccept = false;
+		
+		this.worker = null;
 	}
 	
 	// Getter
@@ -46,7 +48,10 @@ public class TCPServer { // TCP服务器类
 	}
 	
 	public Packet getReceivePakcet() { // 获取接受包
-		return worker.getReceivePacket();
+		if(worker != null) {
+			return worker.getReceivePacket();
+		}
+		return null;
 	}
 	
 	// Setter
@@ -59,16 +64,19 @@ public class TCPServer { // TCP服务器类
 	}
 	
 	public void setSendPacket(Packet p) { // 设置发送包
-		worker.setSendPacket(p);
+		if(worker != null) {
+			worker.setSendPacket(p);
+		}
 	}
 	
 	// 启动服务器
 	public void start() {
 		try {
 			serverSocket = new ServerSocket(serverPort);
-			serverIP = serverSocket.getInetAddress().getHostAddress(); // 自动设置本地IP
+			serverIP = serverSocket.getInetAddress().getHostAddress(); // 自动配置服务器IP
 			
 			Socket socket = serverSocket.accept(); // 等待客户端连接上(阻塞状态)
+			clientIP = socket.getInetAddress().getHostAddress(); // 自动配置客户端IP
 			
 			isAccept = true; // 客户端已经连接上
 			

@@ -20,6 +20,9 @@ public class TCPWorker implements Runnable { // TCP工作线程类，用于交�
 	public TCPWorker(Socket socket) {
 		this.socket = socket;
 		isRunnable = true;
+		
+		sendPacket = null;
+		receivePacket = null;
 	}
 
 	// Getter
@@ -54,6 +57,9 @@ public class TCPWorker implements Runnable { // TCP工作线程类，用于交�
 			while(isRunnable()) {
 				String line = br.readLine(); // 接收字符串
 				if(line != null) {
+					if(receivePacket == null) {
+						receivePacket = new Packet();
+					}
 					receivePacket.receive(line); // 接受包
 				}
 				

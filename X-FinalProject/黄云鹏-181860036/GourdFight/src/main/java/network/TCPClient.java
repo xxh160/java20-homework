@@ -15,13 +15,11 @@ public class TCPClient { // TCP客户端类
 	
 	private boolean isServerStart; // 服务器是否启动
 	
-	private Packet sendPacket; // 发送包
-	private Packet receivePacket; // 接收包
-	
 	// 初始化
 	public TCPClient(String clientIP, int clientPort) {
 		this.clientIP = clientIP;
 		this.clientPort = clientPort;
+		worker = null;
 	}
 	
 	// Getter
@@ -46,7 +44,10 @@ public class TCPClient { // TCP客户端类
 	}
 	
 	public Packet getReceivePakcet() { // 获取接受包
-		return worker.getReceivePacket();
+		if(worker != null) {
+			return worker.getReceivePacket();
+		}
+		return null;
 	}
 	
 	// Setter
@@ -63,7 +64,9 @@ public class TCPClient { // TCP客户端类
 	}
 	
 	public void setSendPacket(Packet p) { // 设置发送包
-		worker.setSendPacket(p);
+		if(worker != null) {
+			worker.setSendPacket(p);
+		}
 	}
 	
 	// 启动客户端
@@ -75,6 +78,7 @@ public class TCPClient { // TCP客户端类
 		
 		try {
 			Socket socket = new Socket(InetAddress.getByName(serverIP), serverPort);
+			clientIP = socket.getLocalAddress().getHostAddress();
 			worker = new TCPWorker(socket);
 			new Thread(worker).start(); // 启动工作线程
 		}

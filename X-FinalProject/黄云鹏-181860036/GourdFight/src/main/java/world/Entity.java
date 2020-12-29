@@ -120,7 +120,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public Image getCurrentImage() { // 获取当前帧图片
 		if(imgSetMap.containsKey(state))
-			return imgSetMap.get(state).getCurrentImage(isLeft);
+		{
+			Image img =  imgSetMap.get(state).getCurrentImage(isLeft);
+			if(imgSetMap.get(state).isDone()) { // 如果当前动作动画结束了，自动返回到静止状态
+				resetToStand(); 
+			}
+			return img;
+		}
+			
 		return null;
 	}
 	

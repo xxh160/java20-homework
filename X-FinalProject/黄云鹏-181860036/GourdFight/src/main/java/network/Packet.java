@@ -21,8 +21,16 @@ public class Packet { // 数据包，定义服务器和客户端交互的数据�
 	}
 	
 	// Getter
-	public boolean isSendReady() { // 是否允许发送
+	public boolean isSendReady() { // 判断是否允许发送
 		return sendReady;
+	}
+	
+	public int getFrame() { // 获取帧数
+		return frame;
+	}
+	
+	public EntityState getAction() { // 获取动作
+		return action;
 	}
 	
 	// Setter
