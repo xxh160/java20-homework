@@ -14,7 +14,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private boolean isMobile; // 是否可移动(默认不可移动)
 	private boolean isActive; // 是否活跃(默认活跃)
 	private boolean isAttackable; // 是否具有攻击性(用于碰撞检测, 默认不具有攻击性)
-	private boolean toLeft; // 朝向左边(false 则朝向右边, 默认朝向左边)
+	private boolean isLeft; // 朝向左边(false 则朝向右边, 默认朝向左边)
 	
 	private double deltaX; // x轴位移
 	private double deltaY; // y轴位移
@@ -112,7 +112,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public Image getCurrentImage() { // 获取当前帧图片
 		if(imgSetMap.containsKey(state))
-			return imgSetMap.get(state).getCurrentImage();
+			return imgSetMap.get(state).getCurrentImage(isLeft);
 		return null;
 	}
 	
@@ -127,10 +127,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	public void setState(EntityState state) { // 设置实体状态
 		this.state = state;
 		if(state == EntityState.MOVING_TOLEFT || state == EntityState.RUNNING_TOLEFT) {
-			toLeft = true;
+			isLeft = true;
 		}
 		else if (state == EntityState.MOVING_TORIGHT || state == EntityState.RUNNING_TORIGHT) {
-			toLeft = false;
+			isLeft = false;
 		}
 	}
 	
@@ -207,6 +207,15 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	// 状态切换
+	public void resetToStand() { // 返回站立的静止状态(只有在这些状态下才能响应用户操作)
+		if(isLeft) {
+			state = EntityState.STANDING_TOLEFT;
+		}
+		else {
+			state = EntityState.STANDING_TORIGHT;
+		}
+	}
+	
 	public void moveRight() { // 向右移动
 		if(isActive() && isMobile()) {
 			deltaX += moveSpeed;

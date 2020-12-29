@@ -5,13 +5,15 @@ import javafx.scene.image.Image;
 public class ImageSet { // 存储实体一个状态下的动画图片序列，并提供调用方法
 	
 	private int num; // 图片数量
-	private Image[] imgs; // 图片序列
+	private Image[] imgsLeft; // 图片序列(朝向左边)
+	private Image[] imgsRight; // 图片序列(朝向右边)
 	private int count; // 序列计数器
 	
 	// 初始化
 	public ImageSet(int num) {
 		this.num = num;
-		imgs = new Image[num];
+		imgsLeft = new Image[num];
+		imgsRight = new Image[num];
 		count = 0;
 	}
 	
@@ -20,10 +22,18 @@ public class ImageSet { // 存储实体一个状态下的动画图片序列，�
 		return num;
 	}
 	
-	public Image getCurrentImage() { // 获取当前图片帧
-		Image img = imgs[count];
-		count = (count + 1) % num;
-		return img;
+	public Image getCurrentImage(boolean isLeft) { // 获取当前图片帧
+		if(isLeft) {
+			Image img = imgsLeft[count];
+			count = (count + 1) % num;
+			return img;
+		}
+		else {
+			Image img = imgsRight[count];
+			count = (count + 1) % num;
+			return img;
+		}
+		
 	}
 	
 	public boolean isDone() { // 判断当前帧是否已经是图片序列的最后一帧
@@ -31,11 +41,17 @@ public class ImageSet { // 存储实体一个状态下的动画图片序列，�
 	}
 	
 	// Setter
-	public void setImage(int idx, Image img) { // 设置图片帧
+	public void setImage(int idx, Image img,boolean isLeft) { // 设置图片帧
 		if(idx < 0 || idx >= num) {
 			return;
 		}
-		imgs[idx] = img;
+		
+		if(isLeft) {
+			imgsLeft[idx] = img;
+		}
+		else {
+			imgsRight[idx] = img;
+		}
 	}
 	
 	public void clearCount() { // 清零计数器
