@@ -2,6 +2,7 @@ package world;
 
 import java.util.HashMap;
 
+import app.ImageSet;
 import javafx.scene.image.Image;
 
 public class Entity { // 游戏实体类，所有游戏角色、道具等的父类
@@ -17,6 +18,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	private HashMap<String,Image> imageMap; // 实体图片字典
 	private HashMap<String,String> textMap; // 实体文本字典 
+	private HashMap<EntityState,ImageSet> imgSetMap; // 实体动画序列字典
 	
 	// 初始化
 	public Entity(String name) {
