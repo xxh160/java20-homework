@@ -35,4 +35,13 @@ public enum EntityState { // 实体状态枚举类，用于判断实体当前的
 		return state;
 	}
 	
+	public static EntityState find(String str) { // 根据状态原始值查找状态枚举量
+		for(EntityState s:EntityState.values()) {
+			if (s.getState().equals(str)) {
+				return s;
+			}
+		}
+		return null;
+	}
+	
 }

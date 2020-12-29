@@ -13,6 +13,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String STACK_PANE = "Stack Pane"; //栈控件
 	public static final String IMAGE_PANE = "Image Pane"; // 图片控件
 	
+	// 网络
+	public static final int PORT = 8001; // 端口号
+	
 	// 实体身份/名称(注：后缀1的为自己，后缀2的为对手)
 	public static final String BACKGROUND = "background"; // 背景
 	public static final String STATEBAR = "statebar"; // 状态栏

@@ -5,6 +5,8 @@ import java.net.Socket;
 
 public class TCPClient { // TCP客户端类
 
+	private TCPWorker worker; // 工作线程
+	
 	private String serverIP; // 服务器IP地址
 	private String clientIP; // 客户端IP地址
 	
@@ -12,6 +14,9 @@ public class TCPClient { // TCP客户端类
 	private int clientPort; // 客户端端口号
 	
 	private boolean isServerStart; // 服务器是否启动
+	
+	private Packet sendPacket; // 发送包
+	private Packet receivePacket; // 接收包
 	
 	// 初始化
 	public TCPClient(String clientIP, int clientPort) {
@@ -40,6 +45,10 @@ public class TCPClient { // TCP客户端类
 		return isServerStart;
 	}
 	
+	public Packet getReceivePakcet() { // 获取接受包
+		return worker.getReceivePacket();
+	}
+	
 	// Setter
 	public void setServerIP(String serverIP) { // 设置服务器IP地址
 		this.serverIP = serverIP;
@@ -53,6 +62,10 @@ public class TCPClient { // TCP客户端类
 		this.isServerStart = isServerStart;
 	}
 	
+	public void setSendPacket(Packet p) { // 设置发送包
+		worker.setSendPacket(p);
+	}
+	
 	// 启动客户端
 	public void start() {
 		
@@ -62,7 +75,8 @@ public class TCPClient { // TCP客户端类
 		
 		try {
 			Socket socket = new Socket(InetAddress.getByName(serverIP), serverPort);
-			new Thread(new TCPWorker(socket)).start(); // 启动工作线程
+			worker = new TCPWorker(socket);
+			new Thread(worker).start(); // 启动工作线程
 		}
 		catch (Exception e) {
 			e.printStackTrace();

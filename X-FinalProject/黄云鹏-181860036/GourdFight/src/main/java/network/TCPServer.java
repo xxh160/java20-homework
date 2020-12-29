@@ -6,6 +6,7 @@ import java.net.*;
 public class TCPServer { // TCP服务器类
 	
 	ServerSocket serverSocket; // 服务器总套接字
+	private TCPWorker worker; // 工作线程
 	
 	private String serverIP; // 服务器IP地址
 	private String clientIP; // 客户端IP地址
@@ -17,6 +18,7 @@ public class TCPServer { // TCP服务器类
 	
 	// 初始化
 	public TCPServer(String serverIP, int serverPort) {
+		
 		this.serverIP = serverIP;
 		this.serverPort = serverPort;
 		this.isAccept = false;
@@ -43,6 +45,10 @@ public class TCPServer { // TCP服务器类
 		return isAccept;
 	}
 	
+	public Packet getReceivePakcet() { // 获取接受包
+		return worker.getReceivePacket();
+	}
+	
 	// Setter
 	public void setClientIP(String clientIP) { // 设置客户端IP地址
 		this.clientIP = clientIP;
@@ -52,16 +58,23 @@ public class TCPServer { // TCP服务器类
 		this.clientPort = clientPort;
 	}
 	
+	public void setSendPacket(Packet p) { // 设置发送包
+		worker.setSendPacket(p);
+	}
+	
 	// 启动服务器
 	public void start() {
 		try {
 			serverSocket = new ServerSocket(serverPort);
+			serverIP = serverSocket.getInetAddress().getHostAddress(); // 自动设置本地IP
 			
 			Socket socket = serverSocket.accept(); // 等待客户端连接上(阻塞状态)
 			
 			isAccept = true; // 客户端已经连接上
 			
-			new Thread(new TCPWorker(socket)).start(); // 启动工作线程
+			worker = new TCPWorker(socket);
+			
+			new Thread(worker).start(); // 启动工作线程
 		}
 		catch (Exception e) {
 			e.printStackTrace();

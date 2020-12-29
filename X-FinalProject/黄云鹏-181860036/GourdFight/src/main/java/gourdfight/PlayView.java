@@ -165,35 +165,49 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void updatePlayer1() { // 更新玩家1
-		if(Framework.keyInput.isTyped(Key.D)) { // 玩家1向右移动
-			
-			entityMap.get(Constants.PLAYER1).moveRight();
-			double deltaX = entityMap.get(Constants.PLAYER1).getDeltaX();
-			
-			imgLocateMap.get(Constants.PLAYER1).setX(
-					Constants.PLAYER1_INIT_X + deltaX
-					);
-			
-			String filePath = URL.toPngPath("test", "mario", "Mario_runToRight");
-			Image img = new Image(URL.toURL(filePath));
-			imgLocateMap.get(Constants.PLAYER1).setImg(img);
-		}
-		else if(Framework.keyInput.isTyped(Key.A)) { // 玩家1向左移动
-			
-			entityMap.get(Constants.PLAYER1).moveLeft();
-			double deltaX = entityMap.get(Constants.PLAYER1).getDeltaX();
-			
-			imgLocateMap.get(Constants.PLAYER1).setX(
-					Constants.PLAYER1_INIT_X + deltaX
-					);
-			
-			String filePath = URL.toPngPath("test", "mario", "Mario_runToLeft");
-			Image img = new Image(URL.toURL(filePath));
-			imgLocateMap.get(Constants.PLAYER1).setImg(img);
-		}
 		
-		else {
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		
+		// 只有处于站着的静止状态才能响应用户的下一个输入
+		if(player1.isStanding()) {
+			if(Framework.keyInput.isTyped(Key.A)) { // 向左移动
+				
+//				player1.moveRight();
+//				double deltaX = player1.getDeltaX();
+//				
+//				imgLocateMap.get(Constants.PLAYER1).setX(
+//						Constants.PLAYER1_INIT_X + deltaX
+//						);
+//				
+//				imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
+			}
+			else if(Framework.keyInput.isTyped(Key.D)) { // 向右移动
+				
+				
+			}
+			else if(Framework.keyInput.isTyped(Key.W)) { // 跳跃
+				
+				
+			}
+			else if(Framework.keyInput.isTyped(Key.S)) { // 防御
+				
+				
+			}
+			else if(Framework.keyInput.isTyped(Key.J)) { // 近攻
+				
+				
+			}
+			else if(Framework.keyInput.isTyped(Key.K)) { // 远攻
+				
+				
+			}
+			else if(Framework.keyInput.isTyped(Key.L)) { // 必杀
+				
+				
+			}
+			else {
 
+			}
 		}
 	}
 	
@@ -215,6 +229,10 @@ public class PlayView extends View { // 游戏页面类
 //					Constants.PLAYER2_INIT_X + deltaX
 //					);
 //		}
+	}
+	
+	private void parseQueue() { // 解析操作队列
+		
 	}
 	
 	private void updateFrame() { // 更新帧
@@ -293,6 +311,9 @@ public class PlayView extends View { // 游戏页面类
 		// 更新实体
 		updatePlayer1(); // 更新玩家1
 		updatePlayer2(); // 更新玩家2
+		
+		// 解析操作队列
+		parseQueue();
 		
 		// 更新帧
 		updateFrame();
