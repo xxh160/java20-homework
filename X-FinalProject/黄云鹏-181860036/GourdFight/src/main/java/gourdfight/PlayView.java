@@ -115,8 +115,15 @@ public class PlayView extends View { // 游戏页面类
 			int num = imgNumMap.get(state);
 			ImageSet imgSet = new ImageSet(num);
 			for(int i=0; i<num; i++) {
-				String numStr = i < 10 ? "0" + i : "" + i;
-				String filePath = URL.toPngPath("main", nameStr, state + "0" + numStr); // "0"表示朝向左的图片
+				String numStr = "";
+				if(num < 10) {
+					numStr = "" + i;
+				}
+				else {
+					numStr = i < 10 ? "0" + i : "" + i;
+				}
+				
+				String filePath = URL.toPngPath("main", nameStr + "/" + state + "0", numStr); // "0"表示朝向左的图片
 				Image img = new Image(URL.toURL(filePath));
 				imgSet.setImage(i, img, true); // true表示朝向左的图片
 			}
