@@ -15,6 +15,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private boolean isActive; // 是否活跃(默认活跃)
 	private boolean isAttackable; // 是否具有攻击性(用于碰撞检测, 默认不具有攻击性)
 	private boolean isLeft; // 朝向左边(false 则朝向右边, 默认朝向左边)
+	private int jumpTag; // 跳跃标记(0:没有起跳,1:正在上升,2:正在下落,3:落地)
 	
 	private double deltaX; // x轴位移
 	private double deltaY; // y轴位移
@@ -116,7 +117,15 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return null;
 	}
 	
-	// Setter
+	public double getCurrentAttackvalue() { // 获取当前攻击值(用于碰撞回调)
+		if(isAttackable()) {
+			return currentAttackValue;
+		}
+		else {
+			return 0;
+		}
+		
+	}
 	
 	// Setter
 	public void setName(String name) { // 设置名称
@@ -214,6 +223,9 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		else {
 			state = EntityState.STANDING_TORIGHT;
 		}
+		currentAttackValue = 0;
+		currentDefendValue = 0;
+		jumpTag = 0;
 	}
 	
 	public void moveRight() { // 向右移动
@@ -228,6 +240,20 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		if(isActive() && isMobile()) {
 			deltaX -= moveSpeed;
 			setState(EntityState.MOVING_TOLEFT);
+		}
+	}
+	
+	public void runLeft() { // 向左冲刺
+		if(isActive() && isMobile()) {
+			deltaX -= runSpeed;
+			setState(EntityState.RUNNING_TOLEFT);
+		}
+	}
+	
+	public void runRight() { // 向右冲刺
+		if(isActive() && isMobile()) {
+			deltaX += runSpeed;
+			setState(EntityState.RUNNING_TOLEFT);
 		}
 	}
 	
@@ -274,15 +300,38 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	// 动作
 	
-	public void collide(double attackValue) { // 与实体other碰撞
+	public void collided(double attackValue) { // 被其他实体碰撞
 		boolean isHurt = getHurt(attackValue);
 		if(isHurt) {
 			state = EntityState.WOUNDED;
 		}
 	}
 	
-	public void jump() { // 跳跃
+	public boolean jump() { // 跳跃
+		if(jumpTag == 0) { // 尚未起跳
+			moveUp();
+			jumpTag = 1;
+		}
+		else if (jumpTag == 1) { // 正在上升
+			moveUp();
+			if(deltaY >= jumpHeight) {
+				deltaY = jumpHeight;
+				jumpTag = 2;
+			}
+		}
+		else if(jumpTag == 2) { // 正在下落
+			moveDown();
+			if(deltaY <= 0) {
+				deltaY = 0;
+				jumpTag = 3;
+			}
+		}
+		else if(jumpTag == 3) { // 已经落地
+			resetToStand();
+		}
 		
+		
+		return false;
 	}
 	
 	public boolean getHurt(double attackValue) { // 计算伤害，并返回是否受伤
