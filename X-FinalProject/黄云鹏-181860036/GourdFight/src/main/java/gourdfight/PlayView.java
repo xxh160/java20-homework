@@ -98,18 +98,20 @@ public class PlayView extends View { // 游戏页面类
 		HashMap<EntityState, Integer> imgNumMap = new HashMap<>();
 		
 		// 朝左边
-		imgNumMap.put(EntityState.STANDING_TOLEFT, 16);
-		imgNumMap.put(EntityState.STANDING_TORIGHT, 16);
-		imgNumMap.put(EntityState.STANDING_FORWARD, 16);
-		imgNumMap.put(EntityState.RUNNING_TOLEFT, 16);
-		imgNumMap.put(EntityState.RUNNING_TORIGHT, 16);
-		imgNumMap.put(EntityState.JUMPING, 16);
-		imgNumMap.put(EntityState.LYING, 16);
-		imgNumMap.put(EntityState.WOUNDED, 16);
-		imgNumMap.put(EntityState.DEFENDING, 16);
-		imgNumMap.put(EntityState.ATTACKING_NEAR, 16);
-		imgNumMap.put(EntityState.ATTACKING_FAR, 16);
-		imgNumMap.put(EntityState.ATTACKING_KILL, 16);
+		imgNumMap.put(EntityState.STANDING_TOLEFT, 15);
+		imgNumMap.put(EntityState.STANDING_TORIGHT, 15);
+		imgNumMap.put(EntityState.STANDING_FORWARD, 15);
+		imgNumMap.put(EntityState.MOVING_TOLEFT, 7);
+		imgNumMap.put(EntityState.MOVING_TORIGHT, 7);
+		imgNumMap.put(EntityState.RUNNING_TOLEFT, 7);
+		imgNumMap.put(EntityState.RUNNING_TORIGHT, 7);
+		imgNumMap.put(EntityState.JUMPING, 28);
+		imgNumMap.put(EntityState.LYING, 28);
+		imgNumMap.put(EntityState.WOUNDED, 28);
+		imgNumMap.put(EntityState.DEFENDING, 28);
+		imgNumMap.put(EntityState.ATTACKING_NEAR, 28);
+		imgNumMap.put(EntityState.ATTACKING_FAR, 28);
+		imgNumMap.put(EntityState.ATTACKING_KILL, 28);
 	
 		for(EntityState state: EntityState.values()){
 			int num = imgNumMap.get(state);
@@ -123,41 +125,16 @@ public class PlayView extends View { // 游戏页面类
 					numStr = i < 10 ? "0" + i : "" + i;
 				}
 				
-				String filePath = URL.toPngPath("main", nameStr + "/" + state + "0", numStr); // "0"表示朝向左的图片
-				Image img = new Image(URL.toURL(filePath));
-				imgSet.setImage(i, img, true); // true表示朝向左的图片
+				String filePath = URL.toPngPath("main", nameStr + "/" + state.getState() + "0", numStr); // "0"表示朝向左的图片
+				Image imgLeft = new Image(URL.toURL(filePath));
+				imgSet.setImage(i, imgLeft, true); // true表示朝向左的图片
+				filePath = URL.toPngPath("main", nameStr + "/" + state.getState() + "1", numStr); // "1"表示朝向右的图片
+				Image imgRight = new Image(URL.toURL(filePath));
+				imgSet.setImage(i, imgRight, false); // false表示朝向右的图片
 			}
 			player1.addImageSet(state, imgSet);
 		}
 		
-		// 朝右边
-		imgNumMap.clear();
-		imgNumMap.put(EntityState.STANDING_TOLEFT, 16);
-		imgNumMap.put(EntityState.STANDING_TORIGHT, 16);
-		imgNumMap.put(EntityState.STANDING_FORWARD, 16);
-		imgNumMap.put(EntityState.RUNNING_TOLEFT, 16);
-		imgNumMap.put(EntityState.RUNNING_TORIGHT, 16);
-		imgNumMap.put(EntityState.JUMPING, 16);
-		imgNumMap.put(EntityState.LYING, 16);
-		imgNumMap.put(EntityState.WOUNDED, 16);
-		imgNumMap.put(EntityState.DEFENDING, 16);
-		imgNumMap.put(EntityState.ATTACKING_NEAR, 16);
-		imgNumMap.put(EntityState.ATTACKING_FAR, 16);
-		imgNumMap.put(EntityState.ATTACKING_KILL, 16);
-		
-		for(EntityState state: EntityState.values()){
-			int num = imgNumMap.get(state);
-			ImageSet imgSet = new ImageSet(num);
-			for(int i=0; i<num; i++) {
-				String numStr = i < 10 ? "0" + i : "" + i;
-				String filePath = URL.toPngPath("main", nameStr, state + "1" + numStr); // "1"表示朝向右的图片
-				Image img = new Image(URL.toURL(filePath));
-				imgSet.setImage(i, img, false); // false表示朝向右的图片
-			}
-			player1.addImageSet(state, imgSet);
-		}
-		
-
 		// 添加实体
 		addEntity(Constants.PLAYER1, player1);
 				
@@ -202,6 +179,7 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 只有处于站着的静止状态才能响应用户的下一个输入
 		if(player1.isStanding()) {
+			
 			if(Framework.keyInput.isTyped(Key.A)) { // 向左移动
 				
 				Packet pkt = new Packet(frameCount,EntityState.MOVING_TOLEFT);
@@ -237,7 +215,7 @@ public class PlayView extends View { // 游戏页面类
 				}
 				
 			}
-			else if(Framework.keyInput.isTyped(Key.S)) { // 防御
+			else if(Framework.keyInput.isTyped(Key.K)) { // 防御
 				
 				Packet pkt = new Packet(frameCount,EntityState.DEFENDING);
 				sendPktQueue.add(pkt);
@@ -259,7 +237,7 @@ public class PlayView extends View { // 游戏页面类
 					client.setSendPacket(pkt);
 				}
 			}
-			else if(Framework.keyInput.isTyped(Key.K)) { // 远攻
+			else if(Framework.keyInput.isTyped(Key.L)) { // 远攻
 				
 				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_FAR);
 				sendPktQueue.add(pkt);
@@ -270,7 +248,21 @@ public class PlayView extends View { // 游戏页面类
 					client.setSendPacket(pkt);
 				}
 			}
-			else if(Framework.keyInput.isTyped(Key.L)) { // 必杀
+			else if(Framework.keyInput.isTyped(Key.S)) { // 冲刺
+				Packet pkt = null;
+				if(player1.isLeft()) // 向左冲刺
+					pkt = new Packet(frameCount,EntityState.RUNNING_TOLEFT);
+				else // 向右冲刺
+					pkt = new Packet(frameCount,EntityState.RUNNING_TORIGHT);
+				sendPktQueue.add(pkt);
+				if(isServer) {
+					server.setSendPacket(pkt);
+				}
+				else {
+					client.setSendPacket(pkt);
+				}
+			}
+			else if(Framework.keyInput.isTyped(Key.I)) { // 必杀
 				
 				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_KILL);
 				sendPktQueue.add(pkt);
@@ -462,7 +454,7 @@ public class PlayView extends View { // 游戏页面类
 			player1.jump();
 			double deltaY = player1.getDeltaY();
 			
-			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_Y + deltaY);
+			imgLocateMap.get(Constants.PLAYER1).setY(Constants.PLAYER1_INIT_Y + deltaY);
 			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
 		}break;
 		case ATTACKING_NEAR: // 近攻

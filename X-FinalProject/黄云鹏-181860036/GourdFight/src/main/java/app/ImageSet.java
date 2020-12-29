@@ -9,6 +9,8 @@ public class ImageSet { // 存储实体一个状态下的动画图片序列，�
 	private Image[] imgsRight; // 图片序列(朝向右边)
 	private int count; // 序列计数器
 	
+	private boolean isDone; // 是否播放完成
+	
 	// 初始化
 	public ImageSet(int num) {
 		this.num = num;
@@ -23,14 +25,19 @@ public class ImageSet { // 存储实体一个状态下的动画图片序列，�
 	}
 	
 	public Image getCurrentImage(boolean isLeft) { // 获取当前图片帧
+
+		if(count >= num) {
+			return null;
+		}
+		
 		if(isLeft) {
 			Image img = imgsLeft[count];
-			count = (count + 1) % num;
+			count++;
 			return img;
 		}
 		else {
 			Image img = imgsRight[count];
-			count = (count + 1) % num;
+			count++;
 			return img;
 		}
 		

@@ -97,6 +97,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 				state == EntityState.STANDING_FORWARD);
 	}
 	
+	public boolean isLeft() { // 判断当前朝向是否是朝左
+		return isLeft;
+	}
+	
 	
 	public Image getImage(String id) { // 获取图片
 		return imageMap.get(id);
@@ -119,11 +123,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	
 	public Image getCurrentImage() { // 获取当前帧图片
+
 		if(imgSetMap.containsKey(state))
 		{
-			Image img =  imgSetMap.get(state).getCurrentImage(isLeft);
-			if(imgSetMap.get(state).isDone()) { // 如果当前动作动画结束了，自动返回到静止状态
-				resetToStand(); 
+			Image img =  imgSetMap.get(state).getCurrentImage(isLeft); 
+			if(img == null) { // 如果当前动作动画结束了
+				imgSetMap.get(state).clearCount(); // 清空上一状态图片序列的计数器
+				resetToStand();   // 自动返回到静止状态，等待下一事件到来
+				img =  imgSetMap.get(state).getCurrentImage(isLeft); // 同时播放静止时的动画
 			}
 			return img;
 		}
