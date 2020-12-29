@@ -42,6 +42,7 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double PLAYER2_INIT_H = 50; // 玩家2初始高度
 	
 	// 实体状态值
+	public static final String STANDING_FORWARD = "standing_forward"; // 朝正面站着
 	public static final String STANDING_TOLEFT = "standingToLeft"; // 朝左边站着
 	public static final String STANDING_TORIGHT = "standingToRight"; // 朝右边站着
 	public static final String MOVING_TOLEFT = "movingToLeft"; // 朝左边移动
