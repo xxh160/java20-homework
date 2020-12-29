@@ -5,11 +5,13 @@ import java.util.LinkedHashMap;
 
 import app.ImageLocate;
 import app.ImagePane;
+import app.ImageSet;
 import app.TextLocate;
 import app.View;
 
 import output.URL;
 import world.Entity;
+import world.EntityState;
 import framework.*;
 import input.Key;
 
@@ -20,8 +22,6 @@ public class PlayView extends View { // 游戏页面类
 	HashMap<String, Entity> entityMap; // 游戏实体字典 
 	LinkedHashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
 	LinkedHashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
-	
-	int test_count = 0; // 测试计数器
 	
 	// 初始化
 	public PlayView() {
@@ -61,18 +61,75 @@ public class PlayView extends View { // 游戏页面类
 	
 	private void setPlayer1() { // 初设玩家1
 		
+		// 基本属性设置
 		Entity player1 = new Entity(Constants.PLAYER1);
 		player1.setMobile(true);
+		player1.setAttackable(true);
 		
-//		String filePath = URL.toPngPath("test", "mario", "Mario_standToLeft");
-		String filePath = URL.toPngPath("test", "spongebob", "spongebob00");
-		Image player1_img = new Image(URL.toURL(filePath)); // test
-		player1.addImage(Constants.PLAYER1_INIT_IMAGE, player1_img);
+		// 动画序列设置
+		String nameStr = "redBaby"; // 大娃(测试角色)
+		HashMap<EntityState, Integer> imgNumMap = new HashMap<>();
 		
+		// 朝左边
+		imgNumMap.put(EntityState.STANDING_TOLEFT, 16);
+		imgNumMap.put(EntityState.STANDING_TORIGHT, 16);
+		imgNumMap.put(EntityState.STANDING_FORWARD, 16);
+		imgNumMap.put(EntityState.RUNNING_TOLEFT, 16);
+		imgNumMap.put(EntityState.RUNNING_TORIGHT, 16);
+		imgNumMap.put(EntityState.JUMPING, 16);
+		imgNumMap.put(EntityState.LYING, 16);
+		imgNumMap.put(EntityState.WOUNDED, 16);
+		imgNumMap.put(EntityState.DEFENDING, 16);
+		imgNumMap.put(EntityState.ATTACKING_NEAR, 16);
+		imgNumMap.put(EntityState.ATTACKING_FAR, 16);
+		imgNumMap.put(EntityState.ATTACKING_KILL, 16);
+	
+		for(EntityState state: EntityState.values()){
+			int num = imgNumMap.get(state);
+			ImageSet imgSet = new ImageSet(num);
+			for(int i=0; i<num; i++) {
+				String numStr = i < 10 ? "0" + i : "" + i;
+				String filePath = URL.toPngPath("main", nameStr, state + "0" + numStr); // "0"表示朝向左的图片
+				Image img = new Image(URL.toURL(filePath));
+				imgSet.setImage(i, img, true); // true表示朝向左的图片
+			}
+			player1.addImageSet(state, imgSet);
+		}
+		
+		// 朝右边
+		imgNumMap.clear();
+		imgNumMap.put(EntityState.STANDING_TOLEFT, 16);
+		imgNumMap.put(EntityState.STANDING_TORIGHT, 16);
+		imgNumMap.put(EntityState.STANDING_FORWARD, 16);
+		imgNumMap.put(EntityState.RUNNING_TOLEFT, 16);
+		imgNumMap.put(EntityState.RUNNING_TORIGHT, 16);
+		imgNumMap.put(EntityState.JUMPING, 16);
+		imgNumMap.put(EntityState.LYING, 16);
+		imgNumMap.put(EntityState.WOUNDED, 16);
+		imgNumMap.put(EntityState.DEFENDING, 16);
+		imgNumMap.put(EntityState.ATTACKING_NEAR, 16);
+		imgNumMap.put(EntityState.ATTACKING_FAR, 16);
+		imgNumMap.put(EntityState.ATTACKING_KILL, 16);
+		
+		for(EntityState state: EntityState.values()){
+			int num = imgNumMap.get(state);
+			ImageSet imgSet = new ImageSet(num);
+			for(int i=0; i<num; i++) {
+				String numStr = i < 10 ? "0" + i : "" + i;
+				String filePath = URL.toPngPath("main", nameStr, state + "1" + numStr); // "1"表示朝向右的图片
+				Image img = new Image(URL.toURL(filePath));
+				imgSet.setImage(i, img, false); // false表示朝向右的图片
+			}
+			player1.addImageSet(state, imgSet);
+		}
+		
+
+		// 添加实体
 		addEntity(Constants.PLAYER1, player1);
 				
+		// 添加图片定位器
 		ImageLocate player1_imgLocate = new ImageLocate(
-				player1_img,
+				player1.getCurrentImage(),
 				Constants.PLAYER1_INIT_X,
 				Constants.PLAYER1_INIT_Y,
 				Constants.PLAYER1_INIT_W,
@@ -82,22 +139,22 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void setPlayer2() { // 初设玩家2
-		Entity player2 = new Entity(Constants.PLAYER2);
-		player2.setMobile(true);
-		
-		String filePath = URL.toPngPath("test", "mario", "Mario_standToRight");
-		Image player2_img = new Image(URL.toURL(filePath)); // test
-		player2.addImage(Constants.PLAYER2_INIT_IMAGE, player2_img);
-		addEntity(Constants.PLAYER2, player2);
-				
-		ImageLocate player2_imgLocate = new ImageLocate(
-				player2_img,
-				Constants.PLAYER2_INIT_X,
-				Constants.PLAYER2_INIT_Y,
-				Constants.PLAYER2_INIT_W,
-				Constants.PLAYER2_INIT_H);
-		
-		addImageLocate(Constants.PLAYER2, player2_imgLocate);
+//		Entity player2 = new Entity(Constants.PLAYER2);
+//		player2.setMobile(true);
+//		
+//		String filePath = URL.toPngPath("test", "mario", "Mario_standToRight");
+//		Image player2_img = new Image(URL.toURL(filePath)); // test
+//		player2.addImage(Constants.PLAYER2_INIT_IMAGE, player2_img);
+//		addEntity(Constants.PLAYER2, player2);
+//				
+//		ImageLocate player2_imgLocate = new ImageLocate(
+//				player2_img,
+//				Constants.PLAYER2_INIT_X,
+//				Constants.PLAYER2_INIT_Y,
+//				Constants.PLAYER2_INIT_W,
+//				Constants.PLAYER2_INIT_H);
+//		
+//		addImageLocate(Constants.PLAYER2, player2_imgLocate);
 	}
 	
 	// Setter
@@ -136,37 +193,28 @@ public class PlayView extends View { // 游戏页面类
 		}
 		
 		else {
-//			String filePath = URL.toPngPath("test", "mario", "Mario_standToLeft");
-//			Image img = new Image(URL.toURL(filePath));
-//			imgLocateMap.get(Constants.PLAYER1).setImg(img);
-			String spongebob = "spongebob";
-			test_count = (++test_count) % 17;
-			String num = test_count < 10 ? "0" + test_count : "" + test_count;
-			
-			String filePath = URL.toPngPath("test", spongebob,spongebob + num);
-			Image img = new Image(URL.toURL(filePath));
-			imgLocateMap.get(Constants.PLAYER1).setImg(img);
+
 		}
 	}
 	
 	private void updatePlayer2() { // 更新玩家2
-		if(Framework.keyInput.isTyped(Key.L)) { // 玩家1向右移动
-			
-			entityMap.get(Constants.PLAYER2).moveRight();
-			double deltaX = entityMap.get(Constants.PLAYER2).getDeltaX();
-			
-			imgLocateMap.get(Constants.PLAYER2).setX(
-					Constants.PLAYER2_INIT_X + deltaX
-					);
-		}
-		if(Framework.keyInput.isTyped(Key.J)) { // 玩家1向左移动
-			
-			entityMap.get(Constants.PLAYER2).moveLeft();
-			double deltaX = entityMap.get(Constants.PLAYER2).getDeltaX();
-			imgLocateMap.get(Constants.PLAYER2).setX(
-					Constants.PLAYER2_INIT_X + deltaX
-					);
-		}
+//		if(Framework.keyInput.isTyped(Key.L)) { // 玩家1向右移动
+//			
+//			entityMap.get(Constants.PLAYER2).moveRight();
+//			double deltaX = entityMap.get(Constants.PLAYER2).getDeltaX();
+//			
+//			imgLocateMap.get(Constants.PLAYER2).setX(
+//					Constants.PLAYER2_INIT_X + deltaX
+//					);
+//		}
+//		if(Framework.keyInput.isTyped(Key.J)) { // 玩家1向左移动
+//			
+//			entityMap.get(Constants.PLAYER2).moveLeft();
+//			double deltaX = entityMap.get(Constants.PLAYER2).getDeltaX();
+//			imgLocateMap.get(Constants.PLAYER2).setX(
+//					Constants.PLAYER2_INIT_X + deltaX
+//					);
+//		}
 	}
 	
 	private void updateFrame() { // 更新帧

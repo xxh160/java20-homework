@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 public class Entity { // 游戏实体类，所有游戏角色、道具等的父类
 	
 	private String name; // 实体名称
-	private EntityState state; // 实体状态(默认"朝左边站着")
+	private EntityState state; // 实体状态(默认"朝右边站着")
 	
 	private boolean isMobile; // 是否可移动(默认不可移动)
 	private boolean isActive; // 是否活跃(默认活跃)
@@ -58,7 +58,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		currentDefendValue = 0;
 		
 		setName(name);
-		setState(EntityState.STANDING_TOLEFT);
+		setState(EntityState.STANDING_TORIGHT);
 		setMobile(false);
 		setActive(true);
 		setAttackable(false);
@@ -88,6 +88,13 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public boolean isAttackable() { // 判断实体是否具有攻击性
 		return isAttackable;
+	}
+	
+	public boolean isStanding() { // 判断实体是否处于站着的状态
+		// 只有处于站着的状态才能响应用户下一个操作
+		return (state == EntityState.STANDING_TOLEFT || 
+				state == EntityState.STANDING_TORIGHT || 
+				state == EntityState.STANDING_FORWARD);
 	}
 	
 	

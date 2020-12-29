@@ -34,4 +34,5 @@ public enum EntityState { // 实体状态枚举类，用于判断实体当前的
 	public String getState() { // 获取状态原始值
 		return state;
 	}
+	
 }

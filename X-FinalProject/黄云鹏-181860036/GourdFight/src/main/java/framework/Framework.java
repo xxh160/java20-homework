@@ -4,6 +4,7 @@ import app.App;
 import app.Engine;
 import input.KeyInput;
 import input.MouseInput;
+import world.Entity;
 
 /**
  * 
@@ -24,4 +25,5 @@ public class Framework { // 全局框架类，存放全局静态模块对象
 	public static KeyInput keyInput; // 键盘输入模块
 	
 	public static MouseInput mouseInput; // 鼠标输入模块
+
 }

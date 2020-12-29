@@ -41,7 +41,7 @@ public class ImageSet { // 存储实体一个状态下的动画图片序列，�
 	}
 	
 	// Setter
-	public void setImage(int idx, Image img,boolean isLeft) { // 设置图片帧
+	public void setImage(int idx,Image img,boolean isLeft) { // 设置图片帧
 		if(idx < 0 || idx >= num) {
 			return;
 		}
