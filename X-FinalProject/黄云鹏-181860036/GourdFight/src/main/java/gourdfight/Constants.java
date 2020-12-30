@@ -52,13 +52,18 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String MOVING_TORIGHT = "movingToRight"; // 朝右边移动
 	public static final String RUNNING_TOLEFT = "runningToLeft"; // 朝左边冲刺
 	public static final String RUNNING_TORIGHT = "runningToRight"; // 朝右边冲刺
-	public static final String JUMPING = "jumping"; // 跳跃
-	public static final String LYING = "lying"; // 倒地
-	public static final String ATTACKING_NEAR = "attackingNear"; // 近攻
-	public static final String ATTACKING_FAR = "attackingFar"; // 远攻
-	public static final String ATTACKING_KILL = "attackingKill"; // 必杀
-	public static final String DEFENDING = "defending"; // 防御
-	public static final String WOUNDED = "wounded"; // 受伤
+	public static final String JUMPING_TOLEFT = "jumpingToLeft"; // 朝左边跳跃
+	public static final String JUMPING_TORIGHT = "jumpingToRight"; // 朝右边跳跃
+	public static final String LYING_TOLEFT = "lyingToLeft"; //朝左边倒地
+	public static final String LYING_TORIGHT = "lyingToRight"; // 朝右边倒地
+	public static final String ATTACKING_NEAR_TOLEFT = "attackingNearToLeft"; // 朝左边近攻
+	public static final String ATTACKING_NEAR_TORIGHT = "attackingNearToRight"; // 朝右边近攻
+	public static final String ATTACKING_FAR_TOLEFT = "attackingFarToLeft"; // 朝左边远攻
+	public static final String ATTACKING_FAR_TORIGHT = "attackingFarToRight"; // 朝右边远攻
+	public static final String ATTACKING_KILL_TOLEFT = "attackingKillToLeft"; // 朝左边必杀
+	public static final String ATTACKING_KILL_TORIGHT = "attackingKillToRight"; // 朝右边必杀
+	public static final String DEFENDING_TOLEFT = "defendingToLeft"; // 朝左边防御
+	public static final String DEFENDING_TORIGHT = "defendingToRight"; // 朝右边防御
 	
 	
 	// 实体图片(注：后缀1的为自己，后缀2的为对手)

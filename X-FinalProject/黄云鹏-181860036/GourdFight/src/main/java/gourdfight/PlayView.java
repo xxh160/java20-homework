@@ -3,6 +3,7 @@ package gourdfight;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 import app.ImageLocate;
 import app.ImagePane;
@@ -70,9 +71,11 @@ public class PlayView extends View { // 游戏页面类
 	private void setBackground() { // 初设背景
 		Entity background = new Entity(Constants.BACKGROUND);
 		
-		String filePath = URL.toPngPath("test", "mario", "Mario_background");
-		Image background_img = new Image(URL.toURL(filePath)); // test
-		background.addImage(Constants.BACKGROUND_INIT_IMAGE, background_img);
+		String[] bgs = new String[]{"door","desk","ground","hole","home"}; 
+		
+		String filePath = URL.toPngPath("main", "background",bgs[new Random().nextInt(5)]);
+		Image background_img = new Image(URL.toURL(filePath)); 
+		background.addImage(EntityState.STANDING_FORWARD, background_img);
 		
 		addEntity(Constants.BACKGROUND, background);
 		
@@ -93,45 +96,17 @@ public class PlayView extends View { // 游戏页面类
 		player1.setMobile(true);
 		player1.setState(EntityState.STANDING_TORIGHT);
 		
-		// 动画序列设置
-		String nameStr = "redBaby"; // 大娃(测试角色)
-		HashMap<EntityState, Integer> imgNumMap = new HashMap<>();
 		
-		// 朝左边
-		imgNumMap.put(EntityState.STANDING_TOLEFT, 15);
-		imgNumMap.put(EntityState.STANDING_TORIGHT, 15);
-		imgNumMap.put(EntityState.STANDING_FORWARD, 15);
-		imgNumMap.put(EntityState.MOVING_TOLEFT, 7);
-		imgNumMap.put(EntityState.MOVING_TORIGHT, 7);
-		imgNumMap.put(EntityState.RUNNING_TOLEFT, 7);
-		imgNumMap.put(EntityState.RUNNING_TORIGHT, 7);
-		imgNumMap.put(EntityState.JUMPING, 28);
-		imgNumMap.put(EntityState.LYING, 28);
-		imgNumMap.put(EntityState.WOUNDED, 28);
-		imgNumMap.put(EntityState.DEFENDING, 28);
-		imgNumMap.put(EntityState.ATTACKING_NEAR, 28);
-		imgNumMap.put(EntityState.ATTACKING_FAR, 28);
-		imgNumMap.put(EntityState.ATTACKING_KILL, 28);
 	
 		for(EntityState state: EntityState.values()){
-			int num = imgNumMap.get(state);
-			ImageSet imgSet = new ImageSet(num);
-			for(int i=0; i<num; i++) {
-				String numStr = "";
-				if(num < 10) {
-					numStr = "" + i;
-				}
-				else {
-					numStr = i < 10 ? "0" + i : "" + i;
-				}
-				
-				String filePath = URL.toPngPath("main", nameStr + "/" + state.getState() + "0", numStr); // "0"表示朝向左的图片
-				Image imgLeft = new Image(URL.toURL(filePath));
-				imgSet.setImage(i, imgLeft, true); // true表示朝向左的图片
-				filePath = URL.toPngPath("main", nameStr + "/" + state.getState() + "1", numStr); // "1"表示朝向右的图片
-				Image imgRight = new Image(URL.toURL(filePath));
-				imgSet.setImage(i, imgRight, false); // false表示朝向右的图片
-			}
+		
+			String filePath = URL.toPngPath("main",, numStr); // "0"表示朝向左的图片
+			Image imgLeft = new Image(URL.toURL(filePath));
+			imgSet.setImage(i, imgLeft, true); // true表示朝向左的图片
+			filePath = URL.toPngPath("main", nameStr + "/" + state.getState() + "1", numStr); // "1"表示朝向右的图片
+			Image imgRight = new Image(URL.toURL(filePath));
+			imgSet.setImage(i, imgRight, false); // false表示朝向右的图片
+		}
 			player1.addImageSet(state, imgSet);
 		}
 		
