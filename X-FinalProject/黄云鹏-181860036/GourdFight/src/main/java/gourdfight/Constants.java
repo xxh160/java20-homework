@@ -65,6 +65,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String DEFENDING_TOLEFT = "defendingToLeft"; // 朝左边防御
 	public static final String DEFENDING_TORIGHT = "defendingToRight"; // 朝右边防御
 	
+	public static final String ATTACKING_TOLEFT = "attackingToLeft"; // 朝左边进攻
+	public static final String ATTACKING_TORIGHT = "attackingToRight"; // 朝右边进攻
+	
 	
 	// 实体图片(注：后缀1的为自己，后缀2的为对手)
 	public static final String BACKGROUND_INIT_IMAGE = "background_init_image"; // 初始背景图片

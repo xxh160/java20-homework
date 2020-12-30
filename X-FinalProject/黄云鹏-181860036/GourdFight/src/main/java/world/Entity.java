@@ -19,9 +19,11 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	private double deltaX; // x轴位移
 	private double deltaY; // y轴位移
+	private int frameCount; // 状态帧计数器
 	
 	private HashMap<EntityState,Image> imageMap; // 实体图片字典
 	private HashMap<EntityState,String> textMap; // 实体文本字典 
+	private HashMap<EntityState, Integer> frameMap; // 每个状态持续的帧数
 	
 	private double lifeValue; // 生命值
 	private double moveSpeed; // 移动速度
@@ -39,14 +41,16 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	public Entity(String name) {
 		imageMap = new HashMap<>();
 		textMap = new HashMap<>();
+		frameMap = new HashMap<>();
 		
 		deltaX = 0;
 		deltaY = 0;
+		frameCount = 0;
 		
 		lifeValue = 100;
-		moveSpeed = 5;
-		runSpeed = 20;
-		jumpSpeed = 5;
+		moveSpeed = 1;
+		runSpeed = 2;
+		jumpSpeed = 1;
 		jumpHeight = 20;
 		attackNearValue = 10;
 		attackFarValue = 15;
@@ -60,9 +64,44 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setMobile(false);
 		setActive(true);
 		setAttackable(false);
+		
+		initFrame();
 	}
 	
-	// Getter
+	public void initFrame() { // 初始化帧计数
+		for(EntityState state : EntityState.values()){
+			switch (state) {
+			case ATTACKING_NEAR_TOLEFT:
+				addFrame(state, 30);
+				break;
+			case ATTACKING_NEAR_TORIGHT:
+				addFrame(state, 30);
+				break;
+			case ATTACKING_FAR_TOLEFT:
+				addFrame(state, 40);
+				break;
+			case ATTACKING_FAR_TORIGHT:
+				addFrame(state, 40);
+				break;
+			case ATTACKING_KILL_TOLEFT:
+				addFrame(state, 60);
+				break;
+			case ATTACKING_KILL_TORIGHT:
+				addFrame(state, 60);
+				break;
+			case JUMPING_TOLEFT:
+				addFrame(state, (int)(2*jumpHeight / jumpSpeed));
+				break;
+			case JUMPING_TORIGHT:
+				addFrame(state, (int)(2*jumpHeight / jumpSpeed));
+				break;
+			default:
+				addFrame(state, 20);
+				break;
+			}
+		}
+	}
+	
 	// Getter
 	public String getName() { // 获取名称
 		return name;
@@ -100,15 +139,18 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	
-	public Image getImage(String id) { // 获取图片
-		return imageMap.get(id);
+	public Image getImage(EntityState state) { // 获取图片
+		return imageMap.get(state);
 	}
 	
 	
-	public String getText(String id) { // 获取文本
-		return textMap.get(id);
+	public String getText(EntityState state) { // 获取文本
+		return textMap.get(state);
 	}
 	
+	public int getFrame(EntityState state) { // 获取帧计数
+		return frameMap.get(state);
+	}
 	
 	public double getDeltaX() { // 获取x轴位移
 		return deltaX;
@@ -144,10 +186,11 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public void setState(EntityState state) { // 设置实体状态
 		this.state = state;
-		if(state == EntityState.MOVING_TOLEFT || state == EntityState.RUNNING_TOLEFT) {
+//		frameCount = 0;
+		if(state == EntityState.MOVING_TOLEFT) { // 只有左向移动能切换朝向
 			isLeft = true;
 		}
-		else if (state == EntityState.MOVING_TORIGHT || state == EntityState.RUNNING_TORIGHT) {
+		else if (state == EntityState.MOVING_TORIGHT) { // 只有右向移动能切换朝向
 			isLeft = false;
 		}
 	}
@@ -168,14 +211,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	
-	public void addImage(EntityState state, Image img) { // 添加图片
+	public void addImage(EntityState state, Image img) { // 添加状态图片
 		if(img != null) {
 			imageMap.put(state, img);
 		}
 	}
 	
 	
-	public void addText(EntityState state, String text) { // 添加文本
+	public void addText(EntityState state, String text) { // 添加状态文本
 		if(text != null) {
 			textMap.put(state, text);
 		}
@@ -184,6 +227,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	// 状态切换
 
+	public void addFrame(EntityState state, int frm) { // 添加帧计数
+		frameMap.put(state, frm);
+	}
+	
 	public void setLifeValue(double val) { // 设置生命值
 		lifeValue = val;
 	}
@@ -198,10 +245,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public void setJumpSpeed(double val) { // 设置跳跃速度
 		jumpSpeed = val;
+		addFrame(EntityState.JUMPING_TOLEFT, (int)(2*jumpHeight / jumpSpeed));
+		addFrame(EntityState.JUMPING_TORIGHT, (int)(2*jumpHeight / jumpSpeed));
 	}
 	
 	public void setJumpHeight(double val) { // 设置跳跃高度
 		jumpHeight = val;
+		addFrame(EntityState.JUMPING_TOLEFT, (int)(2*jumpHeight / jumpSpeed));
+		addFrame(EntityState.JUMPING_TORIGHT, (int)(2*jumpHeight / jumpSpeed));
 	}
 	
 	public void setAttackNearValue(double val) { // 设置近攻攻击值
@@ -220,13 +271,21 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		defendValue = val;
 	}
 	
+	public void countFrame(EntityState state) { // 帧计数，并自动回退到静止状态
+		frameCount++;
+		if(frameCount >= frameMap.get(state)) {
+			frameCount = 0;
+			resetToStand();
+		}
+	}
+	
 	// 状态切换
 	public void resetToStand() { // 返回站立的静止状态(只有在这些状态下才能响应用户操作)
 		if(isLeft) {
-			state = EntityState.STANDING_TOLEFT;
+			setState(EntityState.STANDING_TOLEFT);
 		}
 		else {
-			state = EntityState.STANDING_TORIGHT;
+			setState(EntityState.STANDING_TORIGHT);
 		}
 		currentAttackValue = 0;
 		currentDefendValue = 0;
@@ -236,7 +295,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	public void moveRight() { // 向右移动
 		if(isActive() && isMobile()) {
 			deltaX += moveSpeed;
-			setState(EntityState.MOVING_TORIGHT);
+			countFrame(EntityState.MOVING_TORIGHT);
 		}
 	}
 	
@@ -244,21 +303,21 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	public void moveLeft() { // 向左移动
 		if(isActive() && isMobile()) {
 			deltaX -= moveSpeed;
-			setState(EntityState.MOVING_TOLEFT);
+			countFrame(EntityState.MOVING_TOLEFT);
 		}
 	}
 	
 	public void runLeft() { // 向左冲刺
 		if(isActive() && isMobile()) {
 			deltaX -= runSpeed;
-			setState(EntityState.RUNNING_TOLEFT);
+			countFrame(EntityState.RUNNING_TOLEFT);
 		}
 	}
 	
 	public void runRight() { // 向右冲刺
 		if(isActive() && isMobile()) {
 			deltaX += runSpeed;
-			setState(EntityState.RUNNING_TOLEFT);
+			countFrame(EntityState.RUNNING_TORIGHT);
 		}
 	}
 	
@@ -266,7 +325,13 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	public void moveUp() { // 向上移动
 		if(isActive() && isMobile()) {
 			deltaY -= jumpSpeed;
-			setState(EntityState.JUMPING);
+			if(isLeft) {
+				countFrame(EntityState.JUMPING_TOLEFT);
+			}
+			else {
+				countFrame(EntityState.JUMPING_TORIGHT);
+			}
+			
 		}
 	}
 	
@@ -274,7 +339,12 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	public void moveDown() { // 向下移动
 		if(isActive() && isMobile()) {
 			deltaY += jumpSpeed;
-			setState(EntityState.JUMPING);
+			if(isLeft) {
+				countFrame(EntityState.JUMPING_TOLEFT);
+			}
+			else {
+				countFrame(EntityState.JUMPING_TORIGHT);
+			}
 		}
 	}
 		
@@ -282,25 +352,45 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public void defend() { // 防御
 		currentDefendValue = defendValue;
-		setState(EntityState.DEFENDING);
+		if(isLeft) {
+			countFrame(EntityState.DEFENDING_TOLEFT);
+		}
+		else {
+			countFrame(EntityState.DEFENDING_TORIGHT);
+		}
 	}
 	
 	
 	public void attackNear() { // 近攻
 		currentAttackValue = attackNearValue;
-		setState(EntityState.ATTACKING_NEAR);
+		if(isLeft) {
+			countFrame(EntityState.ATTACKING_NEAR_TOLEFT);
+		}
+		else {
+			countFrame(EntityState.ATTACKING_NEAR_TORIGHT);
+		}
 	}
 	
 	
 	public void attackFar() { // 远攻
 		currentAttackValue = attackFarValue;
-		setState(EntityState.ATTACKING_FAR);
+		if(isLeft) {
+			countFrame(EntityState.ATTACKING_FAR_TOLEFT);
+		}
+		else {
+			countFrame(EntityState.ATTACKING_FAR_TORIGHT);
+		}
 	}
 	
 	
 	public void attackKill() { // 必杀
 		currentAttackValue = attackKillValue;
-		setState(EntityState.ATTACKING_KILL);
+		if(isLeft) {
+			countFrame(EntityState.ATTACKING_KILL_TOLEFT);
+		}
+		else {
+			countFrame(EntityState.ATTACKING_KILL_TORIGHT);
+		}
 	}
 	
 	// 动作
@@ -308,11 +398,11 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	public void collided(double attackValue) { // 被其他实体碰撞
 		boolean isHurt = getHurt(attackValue);
 		if(isHurt) {
-			state = EntityState.WOUNDED;
+			
 		}
 	}
 	
-	public boolean jump() { // 跳跃
+	public void jump() { // 跳跃
 		if(jumpTag == 0) { // 尚未起跳
 			moveUp();
 			jumpTag = 1;
@@ -332,11 +422,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 			}
 		}
 		else if(jumpTag == 3) { // 已经落地
-			resetToStand();
+			
 		}
-		
-		
-		return false;
 	}
 	
 	public boolean getHurt(double attackValue) { // 计算伤害，并返回是否受伤

@@ -14,13 +14,18 @@ public enum EntityState { // 实体状态枚举类，用于判断实体当前的
 	RUNNING_TOLEFT(Constants.RUNNING_TOLEFT),// 朝左边冲刺
 	RUNNING_TORIGHT(Constants.RUNNING_TORIGHT), // 朝右边冲刺
 	
-	JUMPING_TOLEFT(Constants.JUMPING_), // 跳跃
-	LYING(Constants.LYING), // 倒地
-	WOUNDED(Constants.WOUNDED), // 受伤
-	DEFENDING(Constants.DEFENDING), // 防御
-	ATTACKING_NEAR(Constants.ATTACKING_NEAR), // 近攻
-	ATTACKING_FAR(Constants.ATTACKING_FAR), // 远攻
-	ATTACKING_KILL(Constants.ATTACKING_KILL), // 必杀
+	JUMPING_TOLEFT(Constants.JUMPING_TOLEFT), // 朝左边跳跃
+	JUMPING_TORIGHT(Constants.JUMPING_TORIGHT), // 朝右边跳跃
+	LYING_TOLEFT(Constants.LYING_TOLEFT), // 朝左边倒地
+	LYING_TORIGHT(Constants.LYING_TORIGHT), // 朝右边倒地
+	DEFENDING_TOLEFT(Constants.DEFENDING_TOLEFT), // 朝左边防御
+	DEFENDING_TORIGHT(Constants.DEFENDING_TORIGHT), // 朝右边防御
+	ATTACKING_NEAR_TOLEFT(Constants.ATTACKING_NEAR_TOLEFT), // 朝左边近攻
+	ATTACKING_NEAR_TORIGHT(Constants.ATTACKING_NEAR_TORIGHT), // 朝右边近攻
+	ATTACKING_FAR_TOLEFT(Constants.ATTACKING_FAR_TOLEFT), // 朝左边远攻
+	ATTACKING_FAR_TORIGHT(Constants.ATTACKING_FAR_TORIGHT), // 朝右边远攻
+	ATTACKING_KILL_TOLEFT(Constants.ATTACKING_KILL_TOLEFT), // 朝左边必杀
+	ATTACKING_KILL_TORIGHT(Constants.ATTACKING_KILL_TORIGHT), // 朝右边必杀
 	;
 	
 	private String state;

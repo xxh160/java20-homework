@@ -95,19 +95,79 @@ public class PlayView extends View { // 游戏页面类
 		Entity player1 = new Entity(Constants.PLAYER1);
 		player1.setMobile(true);
 		player1.setState(EntityState.STANDING_TORIGHT);
-		
-		
 	
-		for(EntityState state: EntityState.values()){
+		String nameStr = "redBaby"; // 大娃测试
 		
-			String filePath = URL.toPngPath("main",, numStr); // "0"表示朝向左的图片
-			Image imgLeft = new Image(URL.toURL(filePath));
-			imgSet.setImage(i, imgLeft, true); // true表示朝向左的图片
-			filePath = URL.toPngPath("main", nameStr + "/" + state.getState() + "1", numStr); // "1"表示朝向右的图片
-			Image imgRight = new Image(URL.toURL(filePath));
-			imgSet.setImage(i, imgRight, false); // false表示朝向右的图片
-		}
-			player1.addImageSet(state, imgSet);
+		
+		// 状态图片设置
+		for(EntityState state: EntityState.values()){
+			String filePath = "";
+			switch (state) {
+			case STANDING_FORWARD:
+				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
+				break;
+			case STANDING_TOLEFT:
+				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
+				break;
+			case STANDING_TORIGHT:
+				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
+				break;
+			case MOVING_TOLEFT:
+				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
+				break;
+			case MOVING_TORIGHT:
+				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
+				break;
+			case RUNNING_TOLEFT:
+				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
+				break;
+			case RUNNING_TORIGHT:
+				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
+				break;
+			case LYING_TOLEFT:
+				filePath = URL.toPngPath("main", nameStr, Constants.LYING_TOLEFT);
+				break;
+			case LYING_TORIGHT:
+				filePath = URL.toPngPath("main", nameStr, Constants.LYING_TORIGHT);
+				break;
+			case JUMPING_TOLEFT:
+				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
+				break;
+			case JUMPING_TORIGHT:
+				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
+				break;
+			case DEFENDING_TOLEFT:
+				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
+				break;
+			case DEFENDING_TORIGHT:
+				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
+				break;
+			case ATTACKING_NEAR_TOLEFT:
+				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
+				break;
+			case ATTACKING_NEAR_TORIGHT:
+				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
+				break;
+			case ATTACKING_FAR_TOLEFT:
+				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
+				break;
+			case ATTACKING_FAR_TORIGHT:
+				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
+				break;
+			case ATTACKING_KILL_TOLEFT:
+				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
+				break;
+			case ATTACKING_KILL_TORIGHT:
+				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
+				break;
+
+			default:
+				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
+				break;
+			}
+			
+			Image img = new Image(URL.toURL(filePath));
+			player1.addImage(state,img);
 		}
 		
 		// 添加实体
@@ -153,6 +213,7 @@ public class PlayView extends View { // 游戏页面类
 		Entity player1 = entityMap.get(Constants.PLAYER1);
 		
 		// 只有处于站着的静止状态才能响应用户的下一个输入
+		// 有些状态虽然统一传递朝向左的动作，但是实际操作应该按照当时的朝向来定
 		if(player1.isStanding()) {
 			
 			if(Framework.keyInput.isTyped(Key.A)) { // 向左移动
@@ -180,7 +241,7 @@ public class PlayView extends View { // 游戏页面类
 			}
 			else if(Framework.keyInput.isTyped(Key.W)) { // 跳跃
 				
-				Packet pkt = new Packet(frameCount,EntityState.JUMPING);
+				Packet pkt = new Packet(frameCount,EntityState.JUMPING_TOLEFT);
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
@@ -192,7 +253,7 @@ public class PlayView extends View { // 游戏页面类
 			}
 			else if(Framework.keyInput.isTyped(Key.K)) { // 防御
 				
-				Packet pkt = new Packet(frameCount,EntityState.DEFENDING);
+				Packet pkt = new Packet(frameCount,EntityState.DEFENDING_TOLEFT);
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
@@ -203,7 +264,7 @@ public class PlayView extends View { // 游戏页面类
 			}
 			else if(Framework.keyInput.isTyped(Key.J)) { // 近攻
 				
-				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_NEAR);
+				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_NEAR_TOLEFT);
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
@@ -214,7 +275,7 @@ public class PlayView extends View { // 游戏页面类
 			}
 			else if(Framework.keyInput.isTyped(Key.L)) { // 远攻
 				
-				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_FAR);
+				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_FAR_TOLEFT);
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
@@ -224,11 +285,7 @@ public class PlayView extends View { // 游戏页面类
 				}
 			}
 			else if(Framework.keyInput.isTyped(Key.S)) { // 冲刺
-				Packet pkt = null;
-				if(player1.isLeft()) // 向左冲刺
-					pkt = new Packet(frameCount,EntityState.RUNNING_TOLEFT);
-				else // 向右冲刺
-					pkt = new Packet(frameCount,EntityState.RUNNING_TORIGHT);
+				Packet pkt = new Packet(frameCount,EntityState.RUNNING_TOLEFT);
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
@@ -239,7 +296,7 @@ public class PlayView extends View { // 游戏页面类
 			}
 			else if(Framework.keyInput.isTyped(Key.I)) { // 必杀
 				
-				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_KILL);
+				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_KILL_TOLEFT);
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
@@ -377,28 +434,12 @@ public class PlayView extends View { // 游戏页面类
 		
 		EntityState player1_state = player1.getState();
 		switch (player1_state) {
-		case STANDING_TOLEFT: // 向左站着
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
-			break;
-		case STANDING_TORIGHT: // 向右站着
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
-			break;
-		case LYING: // 倒地
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
-			break;
-		case WOUNDED: // 受伤
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
-			break;
-		case DEFENDING: // 防御
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
-			break;
 		case MOVING_TOLEFT: // 向左移动
 		{
 			player1.moveLeft();
 			double deltaX = player1.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_X + deltaX);
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
 		}break;
 		case MOVING_TORIGHT: // 向右移动
 		{
@@ -406,7 +447,6 @@ public class PlayView extends View { // 游戏页面类
 			double deltaX = player1.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_X + deltaX);
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
 		}break;
 		case RUNNING_TOLEFT: // 向左冲刺
 		{
@@ -414,7 +454,6 @@ public class PlayView extends View { // 游戏页面类
 			double deltaX = player1.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_X + deltaX);
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
 		}break;
 		case RUNNING_TORIGHT: // 向右冲刺
 		{
@@ -422,36 +461,59 @@ public class PlayView extends View { // 游戏页面类
 			double deltaX = player1.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_X + deltaX);
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
 		}break;
-		case JUMPING: // 跳跃
+		case JUMPING_TOLEFT: // 向左跳跃
 		{
 			player1.jump();
 			double deltaY = player1.getDeltaY();
 			
 			imgLocateMap.get(Constants.PLAYER1).setY(Constants.PLAYER1_INIT_Y + deltaY);
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
 		}break;
-		case ATTACKING_NEAR: // 近攻
+		case JUMPING_TORIGHT: // 向右跳跃
+		{
+			player1.jump();
+			double deltaY = player1.getDeltaY();
+			
+			imgLocateMap.get(Constants.PLAYER1).setY(Constants.PLAYER1_INIT_Y + deltaY);
+		}break;
+		case DEFENDING_TOLEFT: // 向左防御
+		{
+			player1.defend();
+		}break;
+		case DEFENDING_TORIGHT: // 向右防御
+		{
+			player1.defend();
+		}break;
+		case ATTACKING_NEAR_TOLEFT: // 向左近攻
 		{
 			player1.attackNear();
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
 		}break;
-		case ATTACKING_FAR: // 远攻
+		case ATTACKING_NEAR_TORIGHT: // 向右近攻
+		{
+			player1.attackNear();
+		}break;
+		case ATTACKING_FAR_TOLEFT: // 向左远攻
 		{
 			player1.attackFar();
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
 		}break;
-		case ATTACKING_KILL: // 必杀
+		case ATTACKING_FAR_TORIGHT: // 向右远攻
+		{
+			player1.attackFar();
+		}break;
+		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
 			player1.attackKill();
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
+		}break;
+		case ATTACKING_KILL_TORIGHT: // 向右必杀
+		{
+			player1.attackKill();
 		}break;
 		default:
-			imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage());
 			break;
 		}
+		imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage()); // 设置图片
 	}
+	
 	
 	private void parsePlayer2Action() { // 解析完操作队列并找到同步帧后，进而解析对手的同步帧的动作
 		if(receivePktQueue.isEmpty())
@@ -460,7 +522,7 @@ public class PlayView extends View { // 游戏页面类
 		receivePktQueueIdx++;
 		
 		// 解析自己的动作
-		Entity player2 = entityMap.get(Constants.PLAYER2);
+		Entity player2 = entityMap.get(Constants.PLAYER1);
 		if(player2_action == EntityState.STANDING_TOLEFT) { // 保持上一个状态的延续
 			
 		}else {
@@ -469,28 +531,12 @@ public class PlayView extends View { // 游戏页面类
 		
 		EntityState player2_state = player2.getState();
 		switch (player2_state) {
-		case STANDING_TOLEFT: // 向左站着
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
-			break;
-		case STANDING_TORIGHT: // 向右站着
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
-			break;
-		case LYING: // 倒地
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
-			break;
-		case WOUNDED: // 受伤
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
-			break;
-		case DEFENDING: // 防御
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
-			break;
 		case MOVING_TOLEFT: // 向左移动
 		{
 			player2.moveLeft();
 			double deltaX = player2.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_X + deltaX);
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
 		}break;
 		case MOVING_TORIGHT: // 向右移动
 		{
@@ -498,7 +544,6 @@ public class PlayView extends View { // 游戏页面类
 			double deltaX = player2.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_X + deltaX);
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
 		}break;
 		case RUNNING_TOLEFT: // 向左冲刺
 		{
@@ -506,7 +551,6 @@ public class PlayView extends View { // 游戏页面类
 			double deltaX = player2.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_X + deltaX);
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
 		}break;
 		case RUNNING_TORIGHT: // 向右冲刺
 		{
@@ -514,35 +558,57 @@ public class PlayView extends View { // 游戏页面类
 			double deltaX = player2.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_X + deltaX);
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
 		}break;
-		case JUMPING: // 跳跃
+		case JUMPING_TOLEFT: // 向左跳跃
 		{
 			player2.jump();
 			double deltaY = player2.getDeltaY();
 			
-			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_Y + deltaY);
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
+			imgLocateMap.get(Constants.PLAYER1).setY(Constants.PLAYER1_INIT_Y + deltaY);
 		}break;
-		case ATTACKING_NEAR: // 近攻
+		case JUMPING_TORIGHT: // 向右跳跃
+		{
+			player2.jump();
+			double deltaY = player2.getDeltaY();
+			
+			imgLocateMap.get(Constants.PLAYER1).setY(Constants.PLAYER1_INIT_Y + deltaY);
+		}break;
+		case DEFENDING_TOLEFT: // 向左防御
+		{
+			player2.defend();
+		}break;
+		case DEFENDING_TORIGHT: // 向右防御
+		{
+			player2.defend();
+		}break;
+		case ATTACKING_NEAR_TOLEFT: // 向左近攻
 		{
 			player2.attackNear();
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
 		}break;
-		case ATTACKING_FAR: // 远攻
+		case ATTACKING_NEAR_TORIGHT: // 向右近攻
+		{
+			player2.attackNear();
+		}break;
+		case ATTACKING_FAR_TOLEFT: // 向左远攻
 		{
 			player2.attackFar();
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
 		}break;
-		case ATTACKING_KILL: // 必杀
+		case ATTACKING_FAR_TORIGHT: // 向右远攻
+		{
+			player2.attackFar();
+		}break;
+		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
 			player2.attackKill();
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
+		}break;
+		case ATTACKING_KILL_TORIGHT: // 向右必杀
+		{
+			player2.attackKill();
 		}break;
 		default:
-			imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage());
 			break;
 		}
+		imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage()); // 设置图片
 	}
 	
 	private void updateFrame() { // 更新帧
@@ -553,11 +619,13 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	
+	
 	public void addEntity(String id, Entity entity) { // 添加实体
 		if(id != null && entity != null) {
 			entityMap.put(id, entity);
 		}
 	}
+	
 	
 	
 	public void removeEntity(String id) { // 删除实体
@@ -592,7 +660,10 @@ public class PlayView extends View { // 游戏页面类
 		if(id != null) {
 			textLocateMap.remove(id);
 		}
+		onLaunch();
 	}
+	
+	// 页面生命周期管理
 	
 	
 	// 生命周期管理
@@ -605,10 +676,12 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	
+	
 	@Override
 	public void onFinish() {
 		super.onFinish();
 	}
+	
 	
 	
 	@Override
@@ -617,16 +690,19 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	
+	
 	@Override
 	public void onLeave() {
 		super.onLeave();
 	}
 	
 	
+	
 	@Override
 	public void onStart() {
 		super.onStart();
 	}
+	
 	
 	
 	@Override
