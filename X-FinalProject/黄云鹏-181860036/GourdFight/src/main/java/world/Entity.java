@@ -1,5 +1,6 @@
 package world;
 
+import java.awt.print.Printable;
 import java.util.HashMap;
 
 import app.ImageSet;
@@ -178,6 +179,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		
 	}
 	
+	public int getJumpTag() {
+		return jumpTag;
+	}
+	
 	// Setter
 	public void setName(String name) { // 设置名称
 		this.name = name;
@@ -186,7 +191,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public void setState(EntityState state) { // 设置实体状态
 		this.state = state;
-//		frameCount = 0;
 		if(state == EntityState.MOVING_TOLEFT) { // 只有左向移动能切换朝向
 			isLeft = true;
 		}
@@ -281,15 +285,15 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	// 状态切换
 	public void resetToStand() { // 返回站立的静止状态(只有在这些状态下才能响应用户操作)
+		currentAttackValue = 0;
+		currentDefendValue = 0;
+		jumpTag = 0;
 		if(isLeft) {
 			setState(EntityState.STANDING_TOLEFT);
 		}
 		else {
 			setState(EntityState.STANDING_TORIGHT);
 		}
-		currentAttackValue = 0;
-		currentDefendValue = 0;
-		jumpTag = 0;
 	}
 	
 	public void moveRight() { // 向右移动
@@ -403,26 +407,48 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	public void jump() { // 跳跃
+		
 		if(jumpTag == 0) { // 尚未起跳
 			moveUp();
 			jumpTag = 1;
 		}
 		else if (jumpTag == 1) { // 正在上升
-			moveUp();
-			if(deltaY >= jumpHeight) {
-				deltaY = jumpHeight;
+			if(deltaY <= -jumpHeight) { // 达到最大高度
+				deltaY = -jumpHeight;
 				jumpTag = 2;
+				if(isLeft) {
+					countFrame(EntityState.JUMPING_TOLEFT);
+				}
+				else {
+					countFrame(EntityState.JUMPING_TORIGHT);
+				}
+			}
+			else {
+				moveUp();
 			}
 		}
 		else if(jumpTag == 2) { // 正在下落
-			moveDown();
-			if(deltaY <= 0) {
+			if(deltaY >= 0) { // 落到地面
 				deltaY = 0;
 				jumpTag = 3;
+				if(isLeft) {
+					countFrame(EntityState.JUMPING_TOLEFT);
+				}
+				else {
+					countFrame(EntityState.JUMPING_TORIGHT);
+				}
+			}
+			else {
+				moveDown();
 			}
 		}
-		else if(jumpTag == 3) { // 已经落地
-			
+		else if(jumpTag == 3) { // 已经落地，但帧数没有计数完(正常情况下应该不会发生)
+			if(isLeft) {
+				countFrame(EntityState.JUMPING_TOLEFT);
+			}
+			else {
+				countFrame(EntityState.JUMPING_TORIGHT);
+			}
 		}
 	}
 	

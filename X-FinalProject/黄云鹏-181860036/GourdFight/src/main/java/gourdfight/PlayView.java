@@ -239,9 +239,30 @@ public class PlayView extends View { // 游戏页面类
 				}
 				
 			}
-			else if(Framework.keyInput.isTyped(Key.W)) { // 跳跃
+			else if(Framework.keyInput.isTyped(Key.S)) { // 冲刺
+				Packet pkt = null;
+				if(player1.isLeft()) {
+					pkt = new Packet(frameCount,EntityState.RUNNING_TOLEFT);
+				}else {
+					pkt = new Packet(frameCount,EntityState.RUNNING_TORIGHT);
+				}
 				
-				Packet pkt = new Packet(frameCount,EntityState.JUMPING_TOLEFT);
+				sendPktQueue.add(pkt);
+				if(isServer) {
+					server.setSendPacket(pkt);
+				}
+				else {
+					client.setSendPacket(pkt);
+				}
+			}
+			else if(Framework.keyInput.isTyped(Key.W)) { // 跳跃
+				Packet pkt = null;
+				if(player1.isLeft()) {
+					pkt = new Packet(frameCount,EntityState.JUMPING_TOLEFT);
+				}else {
+					pkt = new Packet(frameCount,EntityState.JUMPING_TORIGHT);
+				}
+				
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
@@ -252,8 +273,13 @@ public class PlayView extends View { // 游戏页面类
 				
 			}
 			else if(Framework.keyInput.isTyped(Key.K)) { // 防御
+				Packet pkt = null;
+				if(player1.isLeft()) {
+					pkt = new Packet(frameCount,EntityState.DEFENDING_TOLEFT);
+				}else {
+					pkt = new Packet(frameCount,EntityState.DEFENDING_TORIGHT);
+				}
 				
-				Packet pkt = new Packet(frameCount,EntityState.DEFENDING_TOLEFT);
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
@@ -263,8 +289,13 @@ public class PlayView extends View { // 游戏页面类
 				}
 			}
 			else if(Framework.keyInput.isTyped(Key.J)) { // 近攻
+				Packet pkt = null;
+				if(player1.isLeft()) {
+					pkt = new Packet(frameCount,EntityState.ATTACKING_NEAR_TOLEFT);
+				}else {
+					pkt = new Packet(frameCount,EntityState.ATTACKING_NEAR_TORIGHT);
+				}
 				
-				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_NEAR_TOLEFT);
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
@@ -274,18 +305,13 @@ public class PlayView extends View { // 游戏页面类
 				}
 			}
 			else if(Framework.keyInput.isTyped(Key.L)) { // 远攻
+				Packet pkt = null;
+				if(player1.isLeft()) {
+					pkt = new Packet(frameCount,EntityState.ATTACKING_FAR_TOLEFT);
+				}else {
+					pkt = new Packet(frameCount,EntityState.ATTACKING_FAR_TORIGHT);
+				}
 				
-				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_FAR_TOLEFT);
-				sendPktQueue.add(pkt);
-				if(isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
-			}
-			else if(Framework.keyInput.isTyped(Key.S)) { // 冲刺
-				Packet pkt = new Packet(frameCount,EntityState.RUNNING_TOLEFT);
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
@@ -295,8 +321,13 @@ public class PlayView extends View { // 游戏页面类
 				}
 			}
 			else if(Framework.keyInput.isTyped(Key.I)) { // 必杀
+				Packet pkt = null;
+				if(player1.isLeft()) {
+					pkt = new Packet(frameCount,EntityState.ATTACKING_KILL_TOLEFT);
+				}else {
+					pkt = new Packet(frameCount,EntityState.ATTACKING_KILL_TORIGHT);
+				}
 				
-				Packet pkt = new Packet(frameCount,EntityState.ATTACKING_KILL_TOLEFT);
 				sendPktQueue.add(pkt);
 				if(isServer) {
 					server.setSendPacket(pkt);
