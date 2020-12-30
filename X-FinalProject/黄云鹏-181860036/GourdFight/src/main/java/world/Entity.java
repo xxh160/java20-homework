@@ -20,9 +20,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private double deltaX; // x轴位移
 	private double deltaY; // y轴位移
 	
-	private HashMap<String,Image> imageMap; // 实体图片字典
-	private HashMap<String,String> textMap; // 实体文本字典 
-	private HashMap<EntityState,ImageSet> imgSetMap; // 实体动画序列字典
+	private HashMap<EntityState,Image> imageMap; // 实体图片字典
+	private HashMap<EntityState,String> textMap; // 实体文本字典 
 	
 	private double lifeValue; // 生命值
 	private double moveSpeed; // 移动速度
@@ -40,7 +39,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	public Entity(String name) {
 		imageMap = new HashMap<>();
 		textMap = new HashMap<>();
-		imgSetMap = new HashMap<>();
 		
 		deltaX = 0;
 		deltaY = 0;
@@ -122,20 +120,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	
-	public Image getCurrentImage() { // 获取当前帧图片
-
-		if(imgSetMap.containsKey(state))
-		{
-			Image img =  imgSetMap.get(state).getCurrentImage(isLeft); 
-			if(img == null) { // 如果当前动作动画结束了
-				imgSetMap.get(state).clearCount(); // 清空上一状态图片序列的计数器
-				resetToStand();   // 自动返回到静止状态，等待下一事件到来
-				img =  imgSetMap.get(state).getCurrentImage(isLeft); // 同时播放静止时的动画
-			}
-			return img;
-		}
-			
-		return null;
+	
+	public Image getCurrentImage() { // 获取当前状态图片
+	
+		return imageMap.get(state);
 	}
 	
 	public double getCurrentAttackvalue() { // 获取当前攻击值(用于碰撞回调)
@@ -180,26 +168,22 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	
-	public void addImage(String id, Image img) { // 添加图片
-		if(img != null && id != null) {
-			imageMap.put(id, img);
+	public void addImage(EntityState state, Image img) { // 添加图片
+		if(img != null) {
+			imageMap.put(state, img);
 		}
 	}
 	
 	
-	public void addText(String id, String text) { // 添加文本
-		if(text != null && id != null) {
-			textMap.put(id, text);
+	public void addText(EntityState state, String text) { // 添加文本
+		if(text != null) {
+			textMap.put(state, text);
 		}
 	}
-	
-	
-	public void addImageSet(EntityState state, ImageSet imgSet) { // 添加状态state的动画序列
-		imgSetMap.put(state, imgSet);
-	}
+		
 	
 	// 状态切换
-	
+
 	public void setLifeValue(double val) { // 设置生命值
 		lifeValue = val;
 	}
