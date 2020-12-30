@@ -14,7 +14,7 @@ public enum EntityState { // 实体状态枚举类，用于判断实体当前的
 	RUNNING_TOLEFT(Constants.RUNNING_TOLEFT),// 朝左边冲刺
 	RUNNING_TORIGHT(Constants.RUNNING_TORIGHT), // 朝右边冲刺
 	
-	JUMPING(Constants.JUMPING), // 跳跃
+	JUMPING_TOLEFT(Constants.JUMPING_), // 跳跃
 	LYING(Constants.LYING), // 倒地
 	WOUNDED(Constants.WOUNDED), // 受伤
 	DEFENDING(Constants.DEFENDING), // 防御
