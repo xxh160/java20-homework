@@ -96,7 +96,7 @@ public class PlayView extends View { // 游戏页面类
 		player1.setMobile(true);
 		player1.setState(EntityState.STANDING_TORIGHT);
 	
-		String nameStr = "redBaby"; // 大娃测试
+		String nameStr = "scorpion"; // 鳄鱼精测试
 		
 		
 		// 状态图片设置
@@ -158,7 +158,7 @@ public class PlayView extends View { // 游戏页面类
 				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
 				break;
 			case ATTACKING_KILL_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
+				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
 				break;
 
 			default:
