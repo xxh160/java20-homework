@@ -106,7 +106,7 @@ public void listen() throws IOException {
 
 先输入1打开服务器，再输入2打开一个客户端。
 
-![image](https://github.com/181860153/java20-homework/blob/master/X-FinalProject/%E6%9C%B1%E4%BF%8A%E4%BF%8A-181860153/img/pic1.PNG)
+![image](https://github.com/181860153/java20-homework/blob/master/X-FinalProject/%E6%9C%B1%E4%BF%8A%E4%BF%8A-181860153/img/pic1.png)
 
 再打开一个主程序，输入2打开另一个客户端。
 
