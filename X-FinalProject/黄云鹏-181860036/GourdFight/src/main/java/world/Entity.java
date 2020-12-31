@@ -2,6 +2,8 @@ package world;
 
 import java.awt.font.ImageGraphicAttribute;
 import java.util.HashMap;
+
+import gourdfight.Constants;
 import javafx.scene.image.Image;
 
 public class Entity { // 游戏实体类，所有游戏角色、道具等的父类
@@ -16,6 +18,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	protected boolean isLeft; // 朝向左边(false 则朝向右边, 默认朝向左边)
 	private int jumpTag; // 跳跃标记(0:没有起跳,1:正在上升,2:正在下落,3:落地)
 	
+	private double width; // 实体宽度
+	private double height; // 实体高度
 	protected double deltaX; // x轴位移
 	protected double deltaY; // y轴位移
 	private int frameCount; // 状态帧计数器
@@ -36,6 +40,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private double attackNearValue; // 近攻攻击值
 	private double attackNearDist; // 近攻距离
 	private double attackNearSpeed; // 近攻实体移动速度
+	private double attackNearWidth; // 近攻实体宽度
+	private double attackNearHeight; // 近攻实体高度
 	
 	private String attackFarName; // 远攻招式名称
 	private Image attackFarLeftImg; // 远攻实体图片(朝左)
@@ -43,6 +49,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private double attackFarValue; // 远攻攻击值
 	private double attackFarDist; // 远攻距离
 	private double attackFarSpeed; // 远攻实体移动速度
+	private double attackFarWidth; // 远攻实体宽度
+	private double attackFarHeight; // 远攻实体高度
 	
 	private String attackKillName; // 必杀招式名称
 	private Image attackKillLeftImg; // 必杀实体图片(朝左)
@@ -50,12 +58,16 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private double attackKillValue; // 必杀攻击值
 	private double attackKillDist; // 必杀距离
 	private double attackKillSpeed; // 必杀实体移动速度
+	private double attackKillWidth; // 必杀实体宽度
+	private double attackKillHeight; // 必杀实体高度
 	
 	protected String currentAttackName; // 当前攻击招式名称
 	protected Image currentAttackImg; // 当前攻击实体图片
 	protected double currentAttackValue; // 当前攻击值
 	protected double currentAttackDist; // 当前攻击距离
 	protected double currentAttackSpeed; // 当前攻击实体移动速度
+	private double currentAttackWidth; // 当前攻击实体宽度
+	private double currentAttackHeight; // 当前攻击实体高度
 	
 	private String defendName; // 防御招式名称
 	private Image defendLeftImg; // 防御实体图片(朝左)
@@ -73,6 +85,9 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		textMap = new HashMap<>();
 		frameMap = new HashMap<>();
 		
+		setWidth(Constants.PLAYER1_INIT_W);
+		setHeight(Constants.PLAYER1_INIT_H);
+		
 		deltaX = 0;
 		deltaY = 0;
 		frameCount = 0;
@@ -86,18 +101,26 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setAttackNearValue(10);
 		setAttackNearDist(35);
 		setAttackNearSpeed(2);
+		setAttackNearWidth(Constants.PLAYER1_ATTACK_W);
+		setAttackNearHeight(Constants.PLAYER1_ATTACK_H);
 		
 		setAttackFarValue(15);
 		setAttackFarDist(150);
 		setAttackFarSpeed(3);
+		setAttackFarWidth(Constants.PLAYER1_ATTACK_W);
+		setAttackFarHeight(Constants.PLAYER1_ATTACK_H);
 		
 		setAttackKillValue(25);
 		setAttackKillDist(100);
 		setAttackKillSpeed(2.5);
+		setAttackKillWidth(Constants.PLAYER1_ATTACK_W);
+		setAttackKillHeight(Constants.PLAYER1_ATTACK_H);
 		
 		setCurrentAttackValue(0);
 		setCurrentAttackDist(0);
 		setCurrentAttackSpeed(0);
+		setCurrentAttackWidth(0);
+		setCurrentAttackHeight(0);
 		
 		setDefendValue(5);
 		setDefendDist(20);
@@ -239,6 +262,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	
 	
+	public double getWidth() { // 获取实体宽度
+		return width;
+	}
+	
+	public double getHeight() { // 获取实体高度
+		return height;
+	}
+	
 	public Image getCurrentImage() { // 获取当前状态图片
 	
 		return imageMap.get(state);
@@ -260,19 +291,35 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return currentAttackDist;
 	}
 	
-	public double getCurrentDefendvalue() { // 获取当前防御值(用于碰撞回调)
-		return currentDefendValue;
-	}
-	
-	public double getCurrentAttackSpeed() { // 获取当前实体移动速度
+	public double getCurrentAttackSpeed() { // 获取当前攻击实体移动速度
 		return currentAttackSpeed;
 	}
 	
+	public double getCurrentAttackWidth() { // 获取当前攻击实体宽度
+		return currentAttackWidth;
+	}
+	
+	public double getCurrentAttackHeight() { // 获取当前攻击实体高度
+		return currentAttackHeight;
+	}
+	
+	public double getCurrentDefendvalue() { // 获取当前防御值(用于碰撞回调)
+		return currentDefendValue;
+	}
+
 	// Setter
 	public void setName(String name) { // 设置名称
 		this.name = name;
 	}
 
+	public void setWidth(double val) { // 设置实体宽度
+		width = val;
+	}
+	
+	public void setHeight(double val) { // 设置实体高度
+		height = val;
+	}
+	
 	
 	public void setState(EntityState state) { // 设置实体状态
 		this.state = state;
@@ -360,6 +407,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		attackNearDist = val;
 	}
 	
+	public void setAttackNearWidth(double val) { // 设置近攻实体宽度
+		attackNearWidth = val;
+	}
+	
+	public void setAttackNearHeight(double val) { // 设置近攻实体高度
+		attackNearHeight = val;
+	}
+	
 	public void setAttackNearSpeed(double val) { // 设置近攻实体移动速度
 		attackNearSpeed = val;
 	}
@@ -381,6 +436,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		attackFarDist = val;
 	}
 	
+	public void setAttackFarWidth(double val) { // 设置远攻实体宽度
+		attackFarWidth = val;
+	}
+	
+	public void setAttackFarHeight(double val) { // 设置远攻实体高度
+		attackFarHeight = val;
+	}
+	
 	public void setAttackFarSpeed(double val) { // 设置远攻实体移动速度
 		attackFarSpeed = val;
 	}
@@ -400,6 +463,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public void setAttackKillDist(double val) { // 设置必杀距离
 		attackKillDist = val;
+	}
+	
+	public void setAttackKillWidth(double val) { // 设置必杀实体宽度
+		attackKillWidth = val;
+	}
+	
+	public void setAttackKillHeight(double val) { // 设置必杀实体高度
+		attackKillHeight = val;
 	}
 	
 	public void setAttackKillSpeed(double val) { // 设置必杀实体移动速度
@@ -425,6 +496,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public void setCurrentAttackDist(double val) { // 设置当前攻击距离
 		currentAttackDist = val;
+	}
+	
+	public void setCurrentAttackWidth(double val) { // 设置当前攻击实体宽度
+		currentAttackWidth = val;
+	}
+	
+	public void setCurrentAttackHeight(double val) { // 设置当前攻击实体高度
+		currentAttackHeight = val;
 	}
 	
 	public void setCurrentAttackSpeed(double val) { // 设置当前攻击实体移动速度
@@ -556,6 +635,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setCurrentAttackValue(attackNearValue);
 		setCurrentAttackDist(attackNearDist);
 		setCurrentAttackSpeed(attackNearSpeed);
+		setCurrentAttackWidth(attackNearWidth);
+		setCurrentAttackHeight(attackNearHeight);
 		
 		if(isLeft) {
 			countFrame(EntityState.ATTACKING_NEAR_TOLEFT);
@@ -576,6 +657,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setCurrentAttackValue(attackFarValue);
 		setCurrentAttackDist(attackFarDist);
 		setCurrentAttackSpeed(attackFarSpeed);
+		setCurrentAttackWidth(attackFarWidth);
+		setCurrentAttackHeight(attackFarHeight);
 		
 		if(isLeft) {
 			countFrame(EntityState.ATTACKING_FAR_TOLEFT);
@@ -596,6 +679,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setCurrentAttackValue(attackKillValue);
 		setCurrentAttackDist(attackKillDist);
 		setCurrentAttackSpeed(attackKillSpeed);
+		setCurrentAttackWidth(attackKillWidth);
+		setCurrentAttackHeight(attackKillHeight);
 		
 		if(isLeft) {
 			countFrame(EntityState.ATTACKING_KILL_TOLEFT);

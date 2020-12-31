@@ -207,8 +207,8 @@ public class PlayView extends View { // 游戏页面类
 				player1.getCurrentImage(),
 				Constants.PLAYER1_INIT_X,
 				Constants.PLAYER1_INIT_Y,
-				Constants.PLAYER1_INIT_W,
-				Constants.PLAYER1_INIT_H);
+				player1.getWidth(),
+				player1.getHeight());
 		
 		addImageLocate(Constants.PLAYER1, player1_imgLocate);
 	}
@@ -444,8 +444,8 @@ public class PlayView extends View { // 游戏页面类
 						img, 
 						Constants.PLAYER1_INIT_X + player1_attackEntity.getDeltaX(), 
 						Constants.PLAYER1_INIT_Y, 
-						Constants.PLAYER1_ATTACK_W,
-						Constants.PLAYER1_ATTACK_H));
+						player1_attackEntity.getWidth(),
+						player1_attackEntity.getHeight()));
 			}else { // 否则让攻击实体向前移动
 				if(player1_attackEntity.isLeft()) {
 					player1_attackEntity.moveLeft();
@@ -628,6 +628,8 @@ public class PlayView extends View { // 游戏页面类
 			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
+			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
 			player1_attackEntity = attackEntity;
 		}break;
 		case ATTACKING_NEAR_TORIGHT: // 向右近攻
@@ -653,6 +655,8 @@ public class PlayView extends View { // 游戏页面类
 			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
+			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
 			player1_attackEntity = attackEntity;
 		}break;
 		case ATTACKING_FAR_TOLEFT: // 向左远攻
@@ -678,6 +682,8 @@ public class PlayView extends View { // 游戏页面类
 			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
+			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
 			player1_attackEntity = attackEntity;
 		}break;
 		case ATTACKING_FAR_TORIGHT: // 向右远攻
@@ -703,6 +709,8 @@ public class PlayView extends View { // 游戏页面类
 			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
+			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
 			player1_attackEntity = attackEntity;
 		}break;
 		case ATTACKING_KILL_TOLEFT: // 向左必杀
@@ -728,6 +736,8 @@ public class PlayView extends View { // 游戏页面类
 			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
+			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
 			player1_attackEntity = attackEntity;
 		}break;
 		case ATTACKING_KILL_TORIGHT: // 向右必杀
@@ -753,6 +763,8 @@ public class PlayView extends View { // 游戏页面类
 			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
+			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
 			player1_attackEntity = attackEntity;
 		}break;
 		default:

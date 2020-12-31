@@ -43,4 +43,16 @@ public class AttackEntity extends Entity { // 攻击实体，用于在角色实�
 		setLifeValue(val); // 攻击实体的生命值即是其攻击值，因碰撞而被消耗后死亡
 	}
 	
+	@Override
+	public void setCurrentAttackWidth(double val) {
+		super.setCurrentAttackWidth(val);
+		setWidth(val);
+	}
+	
+	@Override
+	public void setCurrentAttackHeight(double val) {
+		super.setCurrentAttackHeight(val);
+		setHeight(val);
+	}
+	
 }
