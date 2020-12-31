@@ -2,6 +2,7 @@ package world;
 
 import java.util.HashMap;
 import gourdfight.Constants;
+import javafx.beans.binding.DoubleExpression;
 import javafx.scene.image.Image;
 
 public class Entity { // 游戏实体类，所有游戏角色、道具等的父类
@@ -27,10 +28,15 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private HashMap<EntityState, Integer> frameMap; // 每个状态持续的帧数
 	
 	private double lifeValue; // 生命值
-	private double moveSpeed; // 移动速度
-	private double runSpeed; // 冲刺速度
-	private double jumpSpeed; // 跳跃速度
+	
+	private double moveSpeed; // 移动初速度
+	private double moveAcceleration; // 移动加速度
+	private double runSpeed; // 冲刺初速度
+	private double runAcceleration; // 冲刺加速度
+	
+	private double jumpSpeed; // 跳跃初速度
 	private double jumpHeight; // 跳跃高度
+	private double jumpAcceleration; // 重力加速度
 	
 	private String attackNearName; // 近攻招式名称
 	private Image attackNearLeftImg; // 近攻实体图片(朝左)
@@ -81,6 +87,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		imageMap = new HashMap<>();
 		textMap = new HashMap<>();
 		frameMap = new HashMap<>();
+		initFrame();
 		
 		setWidth(Constants.PLAYER1_INIT_W);
 		setHeight(Constants.PLAYER1_INIT_H);
@@ -90,10 +97,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		frameCount = 0;
 		
 		setLifeValue(100);
-		setMoveSpeed(1.5);
-		setRunSpeed(2.5);
-		setJumpSpeed(1.5);
-		setJumpHeight(30);
+		setMoveSpeed(5);
+		setRunSpeed(12);
+		setJumpSpeed(5);
+		setJumpHeight(200);
 		
 		setAttackNearValue(10);
 		setAttackNearDist(35);
@@ -131,8 +138,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setActive(true);
 		setAttackable(false);
 		setDefendable(false);
-		
-		initFrame();
 	}
 	
 	public void initFrame() { // 初始化帧计数
@@ -239,6 +244,9 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return isLeft;
 	}
 	
+	public double getLifeValue() { // 获取当前生命值
+		return lifeValue;
+	}
 	
 	public Image getImage(EntityState state) { // 获取图片
 		return imageMap.get(state);
@@ -413,24 +421,28 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		lifeValue = val;
 	}
 	
-	public void setMoveSpeed(double val) { // 设置移动速度
-		moveSpeed = val;
+	public void setMoveSpeed(double val) { // 设置移动初速度
+		moveSpeed = val; // 设置初速度
+		moveAcceleration = moveSpeed / frameMap.get(EntityState.MOVING_TOLEFT); // 设置移动加速度
 	}
 	
-	public void setRunSpeed(double val) { // 设置冲刺速度
+	public void setRunSpeed(double val) { // 设置冲刺初速度
 		runSpeed = val;
+		runAcceleration = runSpeed / frameMap.get(EntityState.RUNNING_TOLEFT); // 设置冲刺加速度
 	}
 	
-	public void setJumpSpeed(double val) { // 设置跳跃速度
-		jumpSpeed = val;
-		addFrame(EntityState.JUMPING_TOLEFT, (int)(2*jumpHeight / jumpSpeed));
-		addFrame(EntityState.JUMPING_TORIGHT, (int)(2*jumpHeight / jumpSpeed));
+	public void setJumpSpeed(double val) { // 设置跳跃初速度
+		jumpSpeed = val; // 设置初速度
+		addFrame(EntityState.JUMPING_TOLEFT, (int)(2*jumpHeight / jumpSpeed)); // 设置帧时
+		addFrame(EntityState.JUMPING_TORIGHT, (int)(2*jumpHeight / jumpSpeed)); // 设置帧时
+		jumpAcceleration = 2*jumpSpeed / frameMap.get(EntityState.JUMPING_TOLEFT); // 设置重力加速度
 	}
 	
 	public void setJumpHeight(double val) { // 设置跳跃高度
-		jumpHeight = val;
-		addFrame(EntityState.JUMPING_TOLEFT, (int)(2*jumpHeight / jumpSpeed));
-		addFrame(EntityState.JUMPING_TORIGHT, (int)(2*jumpHeight / jumpSpeed));
+		jumpHeight = val; // 设置跳跃高度
+		addFrame(EntityState.JUMPING_TOLEFT, (int)(2*jumpHeight / jumpSpeed)); // 设置帧时
+		addFrame(EntityState.JUMPING_TORIGHT, (int)(2*jumpHeight / jumpSpeed)); // 设置帧时
+		jumpAcceleration = 2*jumpSpeed / frameMap.get(EntityState.JUMPING_TOLEFT); // 设置重力加速度
 	}
 	
 	public void setAttackNearName(String name) { // 设置近攻招式名称
@@ -597,39 +609,54 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		}
 	}
 	
-	public void moveRight() { // 向右移动
+	public void moveRight() { // 向右移动(初速度方向为正方向)
 		if(isActive() && isMobile()) {
-			deltaX += moveSpeed;
+			double v0 = moveSpeed - moveAcceleration * (frameCount-1); // 初速度
+			double v = moveSpeed - moveAcceleration * frameCount; // 末速度
+			double x = (v*v - v0*v0) / (2*-moveAcceleration); // 位移
+			deltaX += x; // 真实移动距离
 			countFrame(EntityState.MOVING_TORIGHT);
 		}
 	}
 	
 	
-	public void moveLeft() { // 向左移动
+	public void moveLeft() { // 向左移动(初速度方向为正方向)
 		if(isActive() && isMobile()) {
-			deltaX -= moveSpeed;
+			double v0 = moveSpeed - moveAcceleration * (frameCount-1); // 初速度
+			double v = moveSpeed - moveAcceleration * frameCount; // 末速度
+			double x = (v*v - v0*v0) / (2*-moveAcceleration); // 位移
+			deltaX -= x; // 真实移动距离
 			countFrame(EntityState.MOVING_TOLEFT);
 		}
 	}
 	
 	public void runLeft() { // 向左冲刺
 		if(isActive() && isMobile()) {
-			deltaX -= runSpeed;
+			double v0 = runSpeed - runAcceleration * (frameCount-1); // 初速度
+			double v = runSpeed - runAcceleration * frameCount; // 末速度
+			double x = (v*v - v0*v0) / (2*-runAcceleration); // 位移
+			deltaX -= x; // 真实移动距离
 			countFrame(EntityState.RUNNING_TOLEFT);
 		}
 	}
 	
 	public void runRight() { // 向右冲刺
 		if(isActive() && isMobile()) {
-			deltaX += runSpeed;
+			double v0 = runSpeed - runAcceleration * (frameCount-1); // 初速度
+			double v = runSpeed - runAcceleration * frameCount; // 末速度
+			double x = (v*v - v0*v0) / (2*-runAcceleration); // 位移
+			deltaX += x; // 真实移动距离
 			countFrame(EntityState.RUNNING_TORIGHT);
 		}
 	}
 	
 	
-	public void moveUp() { // 向上移动
+	public void moveUp() { // 向上移动(竖直向下为正方向)
 		if(isActive() && isMobile()) {
-			deltaY -= jumpSpeed;
+			double v0 = -jumpSpeed; // 初速度
+			double v = v0 + jumpAcceleration * frameCount; // 末速度
+			
+			deltaY = (v*v - v0*v0) / (2*jumpAcceleration); // 位移
 			if(isLeft) {
 				countFrame(EntityState.JUMPING_TOLEFT);
 			}
@@ -641,9 +668,12 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	
-	public void moveDown() { // 向下移动
+	public void moveDown() { // 向下移动(竖直向下为正方向)
 		if(isActive() && isMobile()) {
-			deltaY += jumpSpeed;
+			double v0 = -jumpSpeed; // 初速度
+			double v = v0 + jumpAcceleration * frameCount; // 末速度
+			
+			deltaY = (v*v - v0*v0) / (2*jumpAcceleration); // 位移
 			if(isLeft) {
 				countFrame(EntityState.JUMPING_TOLEFT);
 			}

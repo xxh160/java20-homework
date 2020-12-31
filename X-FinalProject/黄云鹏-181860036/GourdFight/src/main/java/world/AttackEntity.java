@@ -4,7 +4,9 @@ public class AttackEntity extends Entity { // 攻击实体，用于在角色实�
 
 	private int endFrame; // 当攻击实体达到最大距离之后，若还没有因碰撞而消亡，则会驻留在最大距离处持续endFrame帧时
 	private int endFrameCount; // endFrame的计数器
+	private boolean isCounting; // 判断是否正在倒计时
 	
+	// 初始化
 	public AttackEntity(String name,boolean l,double dx) {
 		super(name);
 		isLeft = l;
@@ -13,13 +15,18 @@ public class AttackEntity extends Entity { // 攻击实体，用于在角色实�
 		setAttackable(true); // 具有可攻击性
 		endFrame = 10;
 		endFrameCount = 0;
+		isCounting = false;
 	}
-	 
+	
+	
+	// 动作
 	public void countEndFrame() { // 计数endFrame
 		endFrameCount++;
+		isCounting = true;
 		if(endFrameCount >= endFrame) {
 			setActive(false);
 			endFrameCount = 0;
+			isCounting = false;
 		}
 	}
 	
@@ -37,6 +44,12 @@ public class AttackEntity extends Entity { // 攻击实体，用于在角色实�
 		}
 	}
 	
+	// Getter
+	public boolean isCounting() { // 判断是否正在倒计时
+		return isCounting;
+	}
+	
+	// Setter
 	@Override
 	public void setCurrentAttackName(String name) {
 		super.setCurrentAttackName(name);

@@ -48,6 +48,9 @@ public class PlayView extends View { // 游戏页面类
 	int sendPktQueueIdx; // 发送包队列指针
 	int receivePktQueueIdx; // 接受包队列指针
 	
+	boolean player1Hurt = false; // 玩家1被攻击中(防止攻击实体在生命周期中连续攻击玩家)
+	boolean player2Hurt = false; // 玩家2被攻击中(防止攻击实体在生命周期中连续攻击玩家)
+	
 	// 初始化
 	public PlayView() {
 		super(Constants.IMAGE_PANE);
@@ -772,6 +775,7 @@ public class PlayView extends View { // 游戏页面类
 						Constants.PLAYER1_INIT_X + dx);
 				
 				if(!player1_attackEntity.isActive()) {
+					player2Hurt = false; // 下一次可继续伤害玩家2
 					if(player1.isAttacking()) {
 						player1.resetToStand();
 					}
@@ -888,6 +892,7 @@ public class PlayView extends View { // 游戏页面类
 						Constants.PLAYER2_INIT_X + dx);
 				
 				if(!player2_attackEntity.isActive()) {
+					player1Hurt = false; // 下一次可继续伤害玩家1
 					if(player2.isAttacking()) {
 						player2.resetToStand();
 					}
@@ -1070,7 +1075,7 @@ public class PlayView extends View { // 游戏页面类
 	
 	
 	private void collisionDetectA1P2(){ // 碰撞检测：玩家1攻击实体 vs 玩家2实体
-		
+	
 		Entity player1 = entityMap.get(Constants.PLAYER1);
 		Entity player2 = entityMap.get(Constants.PLAYER2);
 		
@@ -1086,16 +1091,20 @@ public class PlayView extends View { // 游戏页面类
 			double h2 = player2.getHeight();
 			
 			boolean isCollided = isCollided(x1, y1, w1, h1, x2, y2, w2, h2);
-			if(isCollided) { // 如果碰撞
+			if(isCollided && !player2Hurt) { // 如果是第一次碰撞
 				double attackValue1 = player1_attackEntity.getCurrentAttackValue();
 				boolean isHurt = player2.getHurt(attackValue1);
-				if(isHurt) { // 如果成功攻击到了玩家，则直接死亡
-					player1_attackEntity.setActive(false);
+				if(isHurt) { 
+					player2Hurt = true;
 				}
+			}
+			if(player2Hurt) { // 如果成功攻击到了玩家, 则直接进入倒计时(若本身达到最大距离，则加速)
+				player1_attackEntity.countEndFrame(); 
 			}
 			
 			// 检测是否死亡
 			if(!player1_attackEntity.isActive()) {
+				player2Hurt = false;
 				if(player1.isAttacking()) {
 					player1.resetToStand();
 				}
@@ -1125,16 +1134,20 @@ public class PlayView extends View { // 游戏页面类
 			double h2 = player1.getHeight();
 			
 			boolean isCollided = isCollided(x1, y1, w1, h1, x2, y2, w2, h2);
-			if(isCollided) { // 如果碰撞
+			if(isCollided && !player1Hurt) { // 如果是第一次碰撞
 				double attackValue2 = player2_attackEntity.getCurrentAttackValue();
 				boolean isHurt = player1.getHurt(attackValue2);
-				if(isHurt) { // 如果成功攻击到了玩家，则直接死亡
-					player2_attackEntity.setActive(false);
+				if(isHurt) { 
+					player1Hurt = true;
 				}
+			}
+			if(player1Hurt) { // 如果成功攻击到了玩家, 则直接进入倒计时(若本身达到最大距离，则加速)
+				player2_attackEntity.countEndFrame(); 
 			}
 			
 			// 检测是否死亡
 			if(!player2_attackEntity.isActive()) {
+				player1Hurt = false;
 				if(player2.isAttacking()) {
 					player2.resetToStand();
 				}
@@ -1165,7 +1178,7 @@ public class PlayView extends View { // 游戏页面类
 			yCollided = true;
 		}
 		
-		return xCollided | yCollided; // x轴或者y轴碰撞，则两个矩形碰撞
+		return xCollided & yCollided; // x轴且y轴碰撞，则两个矩形碰撞
 	}
 	
 	private void parseQueue() { // 解析操作/状态队列
@@ -1220,6 +1233,7 @@ public class PlayView extends View { // 游戏页面类
 			}
 		}
 	}
+	
 	
 	private void parsePlayer1Action() { // 解析完操作队列并找到同步帧后，进而解析自己的同步帧的动作
 		if(sendPktQueue.isEmpty())
@@ -1896,7 +1910,7 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 更新玩家实体
 		updatePlayer1(); // 更新玩家1
-		updatePlayer2(mode); // 更新玩家2 // !!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
+		updatePlayer2(mode); // 更新玩家2
 		
 		// 解析操作队列
 //		parseQueue(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
@@ -1910,7 +1924,9 @@ public class PlayView extends View { // 游戏页面类
 		updatePlayer2DefendEntity();
 		
 		// 碰撞检测
-//		collisionDetect();
+		collisionDetect();
+//		System.out.println("player1's life = "+ entityMap.get(Constants.PLAYER1).getLifeValue()); // test
+//		System.out.println("player2's life = "+ entityMap.get(Constants.PLAYER2).getLifeValue()); // test
 		
 		// 更新帧
 		updateFrame();
