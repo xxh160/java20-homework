@@ -1,10 +1,7 @@
 package world;
 
-import java.awt.print.Printable;
+import java.awt.font.ImageGraphicAttribute;
 import java.util.HashMap;
-
-import app.ImageSet;
-import javafx.beans.binding.DoubleExpression;
 import javafx.scene.image.Image;
 
 public class Entity { // 游戏实体类，所有游戏角色、道具等的父类
@@ -15,11 +12,12 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private boolean isMobile; // 是否可移动(默认不可移动)
 	private boolean isActive; // 是否活跃(默认活跃)
 	private boolean isAttackable; // 是否具有攻击性(用于碰撞检测, 默认不具有攻击性)
-	private boolean isLeft; // 朝向左边(false 则朝向右边, 默认朝向左边)
+	private boolean isDefendable; // 是否具有防御性(用于碰撞检测，默认不具有防御性)
+	protected boolean isLeft; // 朝向左边(false 则朝向右边, 默认朝向左边)
 	private int jumpTag; // 跳跃标记(0:没有起跳,1:正在上升,2:正在下落,3:落地)
 	
-	private double deltaX; // x轴位移
-	private double deltaY; // y轴位移
+	protected double deltaX; // x轴位移
+	protected double deltaY; // y轴位移
 	private int frameCount; // 状态帧计数器
 	
 	private HashMap<EntityState,Image> imageMap; // 实体图片字典
@@ -31,11 +29,42 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private double runSpeed; // 冲刺速度
 	private double jumpSpeed; // 跳跃速度
 	private double jumpHeight; // 跳跃高度
+	
+	private String attackNearName; // 近攻招式名称
+	private Image attackNearLeftImg; // 近攻实体图片(朝左)
+	private Image attackNearRightImg; // 近攻实体图片(朝右)
 	private double attackNearValue; // 近攻攻击值
+	private double attackNearDist; // 近攻距离
+	private double attackNearSpeed; // 近攻实体移动速度
+	
+	private String attackFarName; // 远攻招式名称
+	private Image attackFarLeftImg; // 远攻实体图片(朝左)
+	private Image attackFarRightImg; // 远攻实体图片(朝右)
 	private double attackFarValue; // 远攻攻击值
+	private double attackFarDist; // 远攻距离
+	private double attackFarSpeed; // 远攻实体移动速度
+	
+	private String attackKillName; // 必杀招式名称
+	private Image attackKillLeftImg; // 必杀实体图片(朝左)
+	private Image attackKillRightImg; // 必杀实体图片(朝右)
 	private double attackKillValue; // 必杀攻击值
-	private double currentAttackValue; // 当前攻击值
+	private double attackKillDist; // 必杀距离
+	private double attackKillSpeed; // 必杀实体移动速度
+	
+	protected String currentAttackName; // 当前攻击招式名称
+	protected Image currentAttackImg; // 当前攻击实体图片
+	protected double currentAttackValue; // 当前攻击值
+	protected double currentAttackDist; // 当前攻击距离
+	protected double currentAttackSpeed; // 当前攻击实体移动速度
+	
+	private String defendName; // 防御招式名称
+	private Image defendLeftImg; // 防御实体图片(朝左)
+	private Image defendRightImg; // 防御实体图片(朝右)
 	private double defendValue; // 防御值
+	private double defendDist; // 防御距离
+	private double defendSpeed; // 防御实体移动速度
+	
+	
 	private double currentDefendValue; // 当前防御值
 	
 	// 初始化
@@ -48,23 +77,40 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		deltaY = 0;
 		frameCount = 0;
 		
-		lifeValue = 100;
-		moveSpeed = 1;
-		runSpeed = 2;
-		jumpSpeed = 1;
-		jumpHeight = 20;
-		attackNearValue = 10;
-		attackFarValue = 15;
-		attackKillValue = 25;
-		currentAttackValue = 0;
-		defendValue = 5;
-		currentDefendValue = 0;
+		setLifeValue(100);
+		setMoveSpeed(1.5);
+		setRunSpeed(2.5);
+		setJumpSpeed(1.5);
+		setJumpHeight(30);
+		
+		setAttackNearValue(10);
+		setAttackNearDist(35);
+		setAttackNearSpeed(2);
+		
+		setAttackFarValue(15);
+		setAttackFarDist(150);
+		setAttackFarSpeed(3);
+		
+		setAttackKillValue(25);
+		setAttackKillDist(100);
+		setAttackKillSpeed(2.5);
+		
+		setCurrentAttackValue(0);
+		setCurrentAttackDist(0);
+		setCurrentAttackSpeed(0);
+		
+		setDefendValue(5);
+		setDefendDist(20);
+		setDefendSpeed(4);
+		
+		setCurrentDefendValue(0);
 		
 		setName(name);
 		setState(EntityState.STANDING_TORIGHT);
 		setMobile(false);
 		setActive(true);
 		setAttackable(false);
+		setDefendable(false);
 		
 		initFrame();
 	}
@@ -108,6 +154,22 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return name;
 	}
 	
+	public String getAttackNearName() { // 获取近攻招式名称
+		return attackNearName;
+	}
+	
+	public String getAttackFarName() { // 获取远攻招式名称
+		return attackFarName;
+	}
+	
+	public String getAttackKillName() { // 获取必杀招式名称
+		return attackKillName;
+	}
+	
+	public String getDefendName() { // 获取防御招式名称
+		return defendName;
+	}
+	
 	
 	public EntityState getState() { // 获取当前状态
 		return state;
@@ -128,11 +190,24 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return isAttackable;
 	}
 	
+	public boolean isDefendable() { // 判断实体是否具有防御性
+		return isDefendable;
+	}
+	
 	public boolean isStanding() { // 判断实体是否处于站着的状态
 		// 只有处于站着的状态才能响应用户下一个操作
 		return (state == EntityState.STANDING_TOLEFT || 
 				state == EntityState.STANDING_TORIGHT || 
 				state == EntityState.STANDING_FORWARD);
+	}
+	
+	public boolean isAttacking() { // 判断实体是否处于攻击状态
+		return 	(state == EntityState.ATTACKING_NEAR_TOLEFT) ||
+				(state == EntityState.ATTACKING_NEAR_TORIGHT) ||
+				(state == EntityState.ATTACKING_FAR_TOLEFT) ||
+				(state == EntityState.ATTACKING_FAR_TORIGHT) ||
+				(state == EntityState.ATTACKING_KILL_TOLEFT) ||
+				(state == EntityState.ATTACKING_KILL_TORIGHT);
 	}
 	
 	public boolean isLeft() { // 判断当前朝向是否是朝左
@@ -169,25 +244,35 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return imageMap.get(state);
 	}
 	
-	public double getCurrentAttackvalue() { // 获取当前攻击值(用于碰撞回调)
-		if(isAttackable()) {
-			return currentAttackValue;
-		}
-		else {
-			return 0;
-		}
-		
+	public String getCurrentAttackName() { // 获取当前攻击招式名称
+		return currentAttackName;
 	}
 	
-	public int getJumpTag() {
-		return jumpTag;
+	public Image getCurrentAttackImg() { // 获取当前攻击实体图片
+		return currentAttackImg;
+	}
+	
+	public double getCurrentAttackvalue() { // 获取当前攻击值(用于碰撞回调)
+		return currentAttackValue;
+	}
+	
+	public double getCurrentAttackDist() { // 获取当前攻击距离
+		return currentAttackDist;
+	}
+	
+	public double getCurrentDefendvalue() { // 获取当前防御值(用于碰撞回调)
+		return currentDefendValue;
+	}
+	
+	public double getCurrentAttackSpeed() { // 获取当前实体移动速度
+		return currentAttackSpeed;
 	}
 	
 	// Setter
 	public void setName(String name) { // 设置名称
 		this.name = name;
 	}
-	
+
 	
 	public void setState(EntityState state) { // 设置实体状态
 		this.state = state;
@@ -212,6 +297,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public void setAttackable(boolean a) { // 设置实体是否具有攻击性
 		isAttackable = a;
+	}
+	
+	public void setDefendable(boolean d) { // 设置实体是否具有防御性
+		isDefendable = d;
 	}
 	
 	
@@ -259,26 +348,117 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		addFrame(EntityState.JUMPING_TORIGHT, (int)(2*jumpHeight / jumpSpeed));
 	}
 	
+	public void setAttackNearName(String name) { // 设置近攻招式名称
+		attackNearName = name;
+	}
+	
 	public void setAttackNearValue(double val) { // 设置近攻攻击值
 		attackNearValue = val;
+	}
+	
+	public void setAttackNearDist(double val) { // 设置近攻距离
+		attackNearDist = val;
+	}
+	
+	public void setAttackNearSpeed(double val) { // 设置近攻实体移动速度
+		attackNearSpeed = val;
+	}
+
+	public void setAttackNearImage(Image lImg,Image rImg) { // 设置近攻实体图片
+		attackNearLeftImg = lImg;
+		attackNearRightImg = rImg;
+	}
+	
+	public void setAttackFarName(String name) { // 设置远攻招式名称
+		attackFarName = name;
 	}
 	
 	public void setAttackFarValue(double val) { // 设置远攻攻击值
 		attackFarValue = val;
 	}
 	
-	public void setAttackKillValue(Double val) { // 设置必杀攻击值
+	public void setAttackFarDist(double val) { // 设置远攻距离
+		attackFarDist = val;
+	}
+	
+	public void setAttackFarSpeed(double val) { // 设置远攻实体移动速度
+		attackFarSpeed = val;
+	}
+	
+	public void setAttackFarImage(Image lImg, Image rImg) { // 设置远攻实体图片
+		attackFarLeftImg = lImg;
+		attackFarRightImg = rImg;
+	}
+	
+	public void setAttackKillName(String name) { // 设置必杀招式名称
+		attackKillName = name;
+	}
+	
+	public void setAttackKillValue(double val) { // 设置必杀攻击值
 		attackKillValue = val;
+	}
+	
+	public void setAttackKillDist(double val) { // 设置必杀距离
+		attackKillDist = val;
+	}
+	
+	public void setAttackKillSpeed(double val) { // 设置必杀实体移动速度
+		attackKillSpeed = val;
+	}
+	
+	public void setAttackKillImage(Image lImg, Image rImg) { // 设置必杀实体图片
+		attackKillLeftImg = lImg;
+		attackKillRightImg = rImg;
+	}
+	
+	public void setCurrentAttackName(String name) { // 设置当前攻击招式名称
+		currentAttackName = name;
+	}
+	
+	public void setCurrentAttackImg(Image img) { // 设置当前攻击实体图片
+		currentAttackImg = img;
+	}
+	
+	public void setCurrentAttackValue(double val) { // 设置当前攻击值
+		currentAttackValue = val;
+	}
+	
+	public void setCurrentAttackDist(double val) { // 设置当前攻击距离
+		currentAttackDist = val;
+	}
+	
+	public void setCurrentAttackSpeed(double val) { // 设置当前攻击实体移动速度
+		currentAttackSpeed = val;
+	}
+	
+	public void setDefendName(String name) { // 设置防御招式名称
+		defendName = name;
 	}
 	
 	public void setDefendValue(double val) { // 设置防御值
 		defendValue = val;
 	}
 	
+	public void setDefendDist(double val) { // 设置防御距离
+		defendDist = val;
+	}
+	
+	public void setDefendSpeed(double val) { // 设置防御实体移动速度
+		defendSpeed = val;
+	}
+	
+	public void setDefendImage(Image lImg, Image rImg) { // 设置防御实体图片
+		defendLeftImg = lImg;
+		defendRightImg = rImg;
+	}
+	
+	public void setCurrentDefendValue(double val) { // 设置当前防御值
+		currentDefendValue = val;
+	}
+	
 	public void countFrame(EntityState state) { // 帧计数，并自动回退到静止状态
 		frameCount++;
 		if(frameCount >= frameMap.get(state)) {
-			frameCount = 0;
 			resetToStand();
 		}
 	}
@@ -288,6 +468,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		currentAttackValue = 0;
 		currentDefendValue = 0;
 		jumpTag = 0;
+		frameCount = 0;
 		if(isLeft) {
 			setState(EntityState.STANDING_TOLEFT);
 		}
@@ -366,7 +547,16 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	
 	public void attackNear() { // 近攻
-		currentAttackValue = attackNearValue;
+		setCurrentAttackName(attackNearName);
+		if(isLeft) {
+			setCurrentAttackImg(attackNearLeftImg);
+		}else {
+			setCurrentAttackImg(attackNearRightImg);
+		}
+		setCurrentAttackValue(attackNearValue);
+		setCurrentAttackDist(attackNearDist);
+		setCurrentAttackSpeed(attackNearSpeed);
+		
 		if(isLeft) {
 			countFrame(EntityState.ATTACKING_NEAR_TOLEFT);
 		}
@@ -377,7 +567,16 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	
 	public void attackFar() { // 远攻
-		currentAttackValue = attackFarValue;
+		setCurrentAttackName(attackFarName);
+		if(isLeft) {
+			setCurrentAttackImg(attackFarLeftImg);
+		}else {
+			setCurrentAttackImg(attackFarRightImg);
+		}
+		setCurrentAttackValue(attackFarValue);
+		setCurrentAttackDist(attackFarDist);
+		setCurrentAttackSpeed(attackFarSpeed);
+		
 		if(isLeft) {
 			countFrame(EntityState.ATTACKING_FAR_TOLEFT);
 		}
@@ -388,7 +587,16 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	
 	public void attackKill() { // 必杀
-		currentAttackValue = attackKillValue;
+		setCurrentAttackName(attackKillName);
+		if(isLeft) {
+			setCurrentAttackImg(attackKillLeftImg);
+		}else {
+			setCurrentAttackImg(attackKillRightImg);
+		}
+		setCurrentAttackValue(attackKillValue);
+		setCurrentAttackDist(attackKillDist);
+		setCurrentAttackSpeed(attackKillSpeed);
+		
 		if(isLeft) {
 			countFrame(EntityState.ATTACKING_KILL_TOLEFT);
 		}
@@ -453,11 +661,17 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	public boolean getHurt(double attackValue) { // 计算伤害，并返回是否受伤
-		double hurt = attackValue - currentDefendValue;
+		
+		double hurt = 0;
+		if (isDefendable()) { // 可防御
+			hurt = attackValue - currentDefendValue;
+		}else { // 不可防御
+			hurt = attackValue;
+		}
 		if(hurt > 0) {
 			if(hurt > lifeValue) {
 				lifeValue  = 0;
-				setActive(false);
+				setActive(false); // 生命值减为零，要么处于倒地状态，要么直接消失
 			}
 			else {
 				lifeValue -= hurt;

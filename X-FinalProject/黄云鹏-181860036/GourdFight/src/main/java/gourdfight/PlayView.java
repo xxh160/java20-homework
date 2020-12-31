@@ -12,6 +12,8 @@ import app.TextLocate;
 import app.View;
 
 import output.URL;
+import world.AttackEntity;
+import world.DefendEntity;
 import world.Entity;
 import world.EntityState;
 import framework.*;
@@ -27,6 +29,11 @@ public class PlayView extends View { // 游戏页面类
 	HashMap<String, Entity> entityMap; // 游戏实体字典 
 	LinkedHashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
 	LinkedHashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
+	
+	AttackEntity player1_attackEntity; // 玩家1的攻击实体
+	AttackEntity player2_attackEntity; // 玩家2的攻击实体
+	DefendEntity player1_defendEntity; // 玩家1的防御实体
+	DefendEntity player2_defendEntity; // 玩家2的防御实体
 	
 	private boolean isServer; // 是否作为服务器端(false 则为客户端, 默认为客户端)
 	
@@ -96,7 +103,7 @@ public class PlayView extends View { // 游戏页面类
 		player1.setMobile(true);
 		player1.setState(EntityState.STANDING_TORIGHT);
 	
-		String nameStr = "scorpion"; // 鳄鱼精测试
+		String nameStr = "redBaby"; // 大娃测试
 		
 		
 		// 状态图片设置
@@ -170,6 +177,28 @@ public class PlayView extends View { // 游戏页面类
 			player1.addImage(state,img);
 		}
 		
+		// 设置攻击实体图片
+		String lFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKNEAR_LEFT);
+		String rFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKNEAR_RIGHT);
+		Image lImg = new Image(URL.toURL(lFilePath));
+		Image rImg = new Image(URL.toURL(rFilePath));
+		player1.setAttackNearName(Constants.REDBABY_ATTACKNEAR_NAME);
+		player1.setAttackNearImage(lImg, rImg); // 近攻
+		
+		lFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKFAR_LEFT);
+		rFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKFAR_RIGHT);
+		lImg = new Image(URL.toURL(lFilePath));
+		rImg = new Image(URL.toURL(rFilePath));
+		player1.setAttackFarName(Constants.REDBABY_ATTACKFAR_NAME);
+		player1.setAttackFarImage(lImg, rImg); // 远攻
+		
+		lFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKKILL_LEFT);
+		rFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKKILL_RIGHT);
+		lImg = new Image(URL.toURL(lFilePath));
+		rImg = new Image(URL.toURL(rFilePath));
+		player1.setAttackKillName(Constants.REDBABY_ATTACKKILL_NAME);
+		player1.setAttackKillImage(lImg, rImg); // 必杀
+		
 		// 添加实体
 		addEntity(Constants.PLAYER1, player1);
 				
@@ -215,7 +244,6 @@ public class PlayView extends View { // 游戏页面类
 		// 只有处于站着的静止状态才能响应用户的下一个输入
 		// 有些状态虽然统一传递朝向左的动作，但是实际操作应该按照当时的朝向来定
 		if(player1.isStanding()) {
-			
 			if(Framework.keyInput.isTyped(Key.A)) { // 向左移动
 				
 				Packet pkt = new Packet(frameCount,EntityState.MOVING_TOLEFT);
@@ -396,6 +424,68 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
+	private void updateAttackEntity() { // 更新攻击实体
+		if(player1_attackEntity == null) { // 攻击实体尚未被设置，则不可能存在于图片定位字典中
+			return;
+		}
+		else if(!player1_attackEntity.isActive()) { // 攻击实体被设置过
+			String name = player1_attackEntity.getCurrentAttackName();
+			if(imgLocateMap.containsKey(name)) { // 还存在于图片定位字典中，说明刚刚死亡
+				removeImageLocate(name);
+			}
+			
+		}else {
+			Entity player1 = entityMap.get(Constants.PLAYER1);
+			String name = player1_attackEntity.getCurrentAttackName();
+			Image img = player1_attackEntity.getCurrentAttackImg();
+			if(!imgLocateMap.containsKey(name)) { // 没在图片定位字典中，说明刚刚生成
+				addImageLocate(name, 
+						new ImageLocate(
+						img, 
+						Constants.PLAYER1_INIT_X + player1_attackEntity.getDeltaX(), 
+						Constants.PLAYER1_INIT_Y, 
+						Constants.PLAYER1_ATTACK_W,
+						Constants.PLAYER1_ATTACK_H));
+			}else { // 否则让攻击实体向前移动
+				if(player1_attackEntity.isLeft()) {
+					player1_attackEntity.moveLeft();
+				}else {
+					player1_attackEntity.moveRight();
+				}
+				
+				double dx = player1_attackEntity.getDeltaX();
+				double dist = player1_attackEntity.getCurrentAttackDist();
+				// 如果攻击实体移动距离超过攻击距离
+				if(!player1_attackEntity.isLeft() && dx >= dist) { 
+					dx = dist;
+					player1_attackEntity.countEndFrame(); // 计数最大距离驻留帧时
+				}
+				else if(player1_attackEntity.isLeft() && dx <= -dist) { 
+					dx = -dist;
+					player1_attackEntity.countEndFrame(); // 计数最大距离驻留帧时
+				}
+				// 达到边界，也算最大距离
+				else if(Constants.PLAYER1_INIT_X + dx <= 0 ||
+					Constants.PLAYER1_INIT_X + dx + Constants.PLAYER1_ATTACK_W
+					>= Constants.BACKGROUND_W) { 
+					player1_attackEntity.countEndFrame(); // 计数最大距离驻留帧时
+				}
+				imgLocateMap.get(name).setX(
+						Constants.PLAYER1_INIT_X + dx);
+				
+				if(!player1_attackEntity.isActive()) {
+					if(player1.isAttacking()) {
+						player1.resetToStand();
+					}
+				}
+			}
+		}
+	}
+	
+	private void updateDefendEntity() { // 更新防御实体
+		
+	}
+	
 	private void parseQueue() { // 解析操作/状态队列
 		
 		if(!sendPktQueue.isEmpty() && !receivePktQueue.isEmpty()) {
@@ -518,26 +608,152 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_NEAR_TOLEFT: // 向左近攻
 		{
 			player1.attackNear();
+			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
+				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
+			}
+			String name = player1.getCurrentAttackName();
+			boolean isLeft = player1.isLeft();
+			double dx = player1.getDeltaX();
+			double dist = player1.getCurrentAttackDist();
+			if(isLeft) {
+				dx -= Constants.PLAYER1_ATTACK_W; 
+				dist -= dx;
+			}else {
+				dx += Constants.PLAYER1_INIT_W; 
+				dist += dx;
+			}
+			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
+			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
+			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackDist(dist);
+			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			player1_attackEntity = attackEntity;
 		}break;
 		case ATTACKING_NEAR_TORIGHT: // 向右近攻
 		{
 			player1.attackNear();
+			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
+				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
+			}
+			String name = player1.getCurrentAttackName();
+			boolean isLeft = player1.isLeft();
+			double dx = player1.getDeltaX();
+			double dist = player1.getCurrentAttackDist();
+			if(isLeft) {
+				dx -= Constants.PLAYER1_ATTACK_W; 
+				dist -= dx;
+			}else {
+				dx += Constants.PLAYER1_INIT_W; 
+				dist += dx;
+			}
+			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
+			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
+			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackDist(dist);
+			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			player1_attackEntity = attackEntity;
 		}break;
 		case ATTACKING_FAR_TOLEFT: // 向左远攻
 		{
 			player1.attackFar();
+			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
+				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
+			}
+			String name = player1.getCurrentAttackName();
+			boolean isLeft = player1.isLeft();
+			double dx = player1.getDeltaX();
+			double dist = player1.getCurrentAttackDist();
+			if(isLeft) {
+				dx -= Constants.PLAYER1_ATTACK_W; 
+				dist -= dx;
+			}else {
+				dx += Constants.PLAYER1_INIT_W; 
+				dist += dx;
+			}
+			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
+			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
+			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackDist(dist);
+			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			player1_attackEntity = attackEntity;
 		}break;
 		case ATTACKING_FAR_TORIGHT: // 向右远攻
 		{
 			player1.attackFar();
+			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
+				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
+			}
+			String name = player1.getCurrentAttackName();
+			boolean isLeft = player1.isLeft();
+			double dx = player1.getDeltaX();
+			double dist = player1.getCurrentAttackDist();
+			if(isLeft) {
+				dx -= Constants.PLAYER1_ATTACK_W; 
+				dist -= dx;
+			}else {
+				dx += Constants.PLAYER1_INIT_W; 
+				dist += dx;
+			}
+			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
+			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
+			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackDist(dist);
+			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			player1_attackEntity = attackEntity;
 		}break;
 		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
 			player1.attackKill();
+			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
+				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
+			}
+			String name = player1.getCurrentAttackName();
+			boolean isLeft = player1.isLeft();
+			double dx = player1.getDeltaX();
+			double dist = player1.getCurrentAttackDist();
+			if(isLeft) {
+				dx -= Constants.PLAYER1_ATTACK_W; 
+				dist -= dx;
+			}else {
+				dx += Constants.PLAYER1_INIT_W; 
+				dist += dx;
+			}
+			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
+			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
+			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackDist(dist);
+			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			player1_attackEntity = attackEntity;
 		}break;
 		case ATTACKING_KILL_TORIGHT: // 向右必杀
 		{
 			player1.attackKill();
+			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
+				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
+			}
+			String name = player1.getCurrentAttackName();
+			boolean isLeft = player1.isLeft();
+			double dx = player1.getDeltaX();
+			double dist = player1.getCurrentAttackDist();
+			if(isLeft) {
+				dx -= Constants.PLAYER1_ATTACK_W; 
+				dist -= dx;
+			}else {
+				dx += Constants.PLAYER1_INIT_W; 
+				dist += dx;
+			}
+			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
+			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
+			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackDist(dist);
+			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+			player1_attackEntity = attackEntity;
 		}break;
 		default:
 			break;
@@ -642,6 +858,7 @@ public class PlayView extends View { // 游戏页面类
 		imgLocateMap.get(Constants.PLAYER1).setImg(player2.getCurrentImage()); // 设置图片
 	}
 	
+	
 	private void updateFrame() { // 更新帧
 
 		((ImagePane) pane).update(
@@ -668,7 +885,7 @@ public class PlayView extends View { // 游戏页面类
 	
 	public void addImageLocate(String id, ImageLocate imgLocate) { // 添加图片定位
 		if(id != null && imgLocate != null) {
-			imgLocateMap.put(id, imgLocate);
+				imgLocateMap.put(id, imgLocate);
 		}
 	}
 	
@@ -685,6 +902,7 @@ public class PlayView extends View { // 游戏页面类
 			textLocateMap.put(id, textLocate);
 		}
 	}
+	
 	
 	
 	public void removeTextLocate(String id) { // 删除文本定位
@@ -740,13 +958,17 @@ public class PlayView extends View { // 游戏页面类
 	public void onUpdate(double time) {
 		frameCount++;
 		
-		// 更新实体
+		// 更新玩家实体
 		updatePlayer1(); // 更新玩家1
 //		updatePlayer2(); // 更新玩家2 // !!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
 		
 		// 解析操作队列
 //		parseQueue(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
 		parsePlayer1Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
+		
+		// 更新攻击/防御实体
+		updateAttackEntity();
+		updateDefendEntity();
 		
 		// 更新帧
 		updateFrame();

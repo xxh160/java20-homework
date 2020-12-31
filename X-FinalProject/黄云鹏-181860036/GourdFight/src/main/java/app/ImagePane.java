@@ -2,6 +2,7 @@ package app;
 
 import java.util.Collection;
 
+import gourdfight.Constants;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -46,9 +47,21 @@ public class ImagePane extends Pane { // 用于绘画的控件
 		double sh = img.getHeight();
 		
 		double dx = imgLocate.getX();
+		if(dx < 0) {
+			dx = 0;
+		}
 		double dy = imgLocate.getY();
+		if(dy < 0) {
+			dy = 0;
+		}
 		double dw = imgLocate.getW();
+		if(dx > Constants.BACKGROUND_W) {
+			dx = Constants.BACKGROUND_W;
+		}
 		double dh = imgLocate.getH();
+		if(dy > Constants.BACKGROUND_H) {
+			dx = Constants.BACKGROUND_H;
+		}
 		
 		gc.drawImage(img, 0, 0, sw, sh, dx, dy, dw, dh);
 	}

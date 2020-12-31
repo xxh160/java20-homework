@@ -28,6 +28,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String STATE1 = "state1"; // 状态1
 	public static final String STATE2 = "state2"; // 状态2
 	
+	public static final String REDBABY_ATTACKNEAR_NAME = "Normal Punch"; // 大娃近攻名称
+	public static final String REDBABY_ATTACKFAR_NAME = "Fire Punch"; // 大娃远攻名称
+	public static final String REDBABY_ATTACKKILL_NAME = "Gold Punch"; // 大娃必杀名称
+	
 	// 实体位置(注：后缀1的为自己，后缀2的为对手)
 	public static final double BACKGROUND_X = 0; // 背景x轴坐标
 	public static final double BACKGROUND_Y = 0; // 背景y轴坐标
@@ -43,6 +47,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double PLAYER1_INIT_H = 120; // 玩家1初始高度
 	public static final double PLAYER2_INIT_W = 120; // 玩家2初始宽度
 	public static final double PLAYER2_INIT_H = 120; // 玩家2初始高度
+	public static final double PLAYER1_ATTACK_W = 80; // 玩家1攻击实体宽度
+	public static final double PLAYER1_ATTACK_H = 80; // 玩家1攻击实体高度
+	public static final double PLAYER2_ATTACK_W = 80; // 玩家2攻击实体宽度
+	public static final double PLAYER2_ATTACK_H = 80; // 玩家2攻击实体高度
 	
 	// 实体状态值
 	public static final String STANDING_FORWARD = "standingForward"; // 朝正面站着
@@ -73,5 +81,12 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String BACKGROUND_INIT_IMAGE = "background_init_image"; // 初始背景图片
 	public static final String PLAYER1_INIT_IMAGE = "player1_init_image"; // 玩家1初始图片
 	public static final String PLAYER2_INIT_IMAGE = "player2_init_image"; // 玩家2初始图片
+	
+	public static final String REDBABY_ATTACKNEAR_LEFT = "leftNormalPunch"; // 大娃近攻图片(朝左)
+	public static final String REDBABY_ATTACKNEAR_RIGHT = "rightNormalPunch"; // 大娃近攻图片(朝右)
+	public static final String REDBABY_ATTACKFAR_LEFT = "leftFirePunch"; // 大娃远攻图片(朝左)
+	public static final String REDBABY_ATTACKFAR_RIGHT = "rightFirePunch"; // 大娃远攻图片(朝右)
+	public static final String REDBABY_ATTACKKILL_LEFT = "leftGoldPunch"; // 大娃必杀图片(朝左)
+	public static final String REDBABY_ATTACKKILL_RIGHT = "rightGoldPunch"; // 大娃必杀图片(朝右)
 	
 }
