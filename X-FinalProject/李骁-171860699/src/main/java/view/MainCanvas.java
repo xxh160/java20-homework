@@ -19,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.Node;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -39,6 +40,10 @@ public class MainCanvas extends Canvas {
     //private Button controller; //按Q退出的控制器
 
     public static ExecutorService exec; //线程池
+
+    public static Hero myHero; //我方小小英雄
+
+    public static Hero enemyHero; //敌方小小英雄
 
     private Thread thread = new Thread(new Runnable(){ //画图线程
     
@@ -66,17 +71,19 @@ public class MainCanvas extends Canvas {
     public MainCanvas(AnchorPane root, double width, double height) {
         super(width, height);
         this.root = root; //父面板
+
+        //初始化小小英雄
+        myHero = new Hero(true);
+        enemyHero = new Hero(false);
+        myHero.setPosition(0, 10);
+        enemyHero.setPosition(700, 10);
         
         //初始化跑道
-        /*runways = new ArrayList<Runway>();
-        for (int i = 0; i < 3; i++) {
-            runways.add(new Runway(100, 50 + 100*i, 100, 600));
-        }*/
         runwayField = new RunwayField();
 
         //线程池
         exec = Executors.newCachedThreadPool();
-        //启动葫芦娃线程
+        //启动本线程
         //exec.execute(thread);
 
         //初始化卡牌区
@@ -91,6 +98,22 @@ public class MainCanvas extends Canvas {
     }
 
     public void update() {
+
+    }
+
+    public static void addToPane(Node n) {
+        root.getChildren().add(n);
+    }
+
+    public static void removeFromPane(Node n) {
+        root.getChildren().remove(n);
+    } 
+
+    public static void iWin() {
+
+    }
+
+    public static void enemyWin() {
 
     }
 

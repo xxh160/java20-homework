@@ -29,8 +29,9 @@ public class RunwayField {
             double endY = startY;
             Line line1 = new Line(startX, startY, endX, endY);
             Line line2 = new Line(startX, startY + runway.getWidth() -10, endX, endY + runway.getWidth()-10);
-            MainCanvas.root.getChildren().addAll(line1, line2);
-
+            //MainCanvas.root.getChildren().addAll(line1, line2);
+            MainCanvas.addToPane(line1);
+            MainCanvas.addToPane(line2);
         }
     }
 

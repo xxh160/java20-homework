@@ -69,9 +69,17 @@ public abstract class DraggableCard extends Card {
                 System.out.println("释放在跑道" + runwayIndex);
                 System.out.println("价格为" + price);
                 this.runway = MainCanvas.runwayField.getRunways().get(runwayIndex); //定位跑道
-                cardAction(); // 卡牌生效
-                MainCanvas.cardField.removeCard(this); // 从卡牌区移除这张卡
-                MainCanvas.cardField.setMoney(MainCanvas.cardField.getMoney() - price); // 扣掉金币数
+                if (canReleaseOnRunway()) { //如果可以放在跑道上，默认可以
+                    cardAction(); // 卡牌生效
+                    MainCanvas.cardField.removeCard(this); // 从卡牌区移除这张卡
+                    MainCanvas.cardField.setMoney(MainCanvas.cardField.getMoney() - price); // 扣掉金币数
+                } else {
+                    // 放回原位
+                    imageView.setTranslateX(0);
+                    imageView.setTranslateY(0);
+                    // imageView.setX(initX);
+                    // imageView.setY(initY);
+                }
             } else {
                 // 放回原位
                 imageView.setTranslateX(0);
@@ -79,6 +87,11 @@ public abstract class DraggableCard extends Card {
                 // imageView.setX(initX);
                 // imageView.setY(initY);
             }
+            
         });
+    }
+
+    protected boolean canReleaseOnRunway() {
+        return true;
     }
 }

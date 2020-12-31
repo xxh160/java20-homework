@@ -51,7 +51,8 @@ public class CardField implements Runnable {
         //moneytext设置D牌
         //不是control类型无法设置事件
 
-        root.getChildren().add(moneyText);
+        //root.getChildren().add(moneyText);
+        MainCanvas.addToPane(moneyText);
 
         MainCanvas.exec.submit(this); // 线程开始
 
@@ -73,7 +74,7 @@ public class CardField implements Runnable {
                 }
                 else if (event.getCode() == KeyCode.G) {
                     System.out.println("给敌方加人");
-                    MainCanvas.runwayField.getRunways().get(1).addYourCreature(new Creature());
+                    MainCanvas.runwayField.getRunways().get(1).addToEnemyCreatures(new Creature());
                 }
             }
         });
@@ -84,8 +85,8 @@ public class CardField implements Runnable {
                 freshAllCards();
             }
         });
-        root.getChildren().add(controller);
-        
+        //root.getChildren().add(controller);
+        MainCanvas.addToPane(controller);
     }
 
     public void freshAllCards() {
@@ -102,7 +103,8 @@ public class CardField implements Runnable {
     }
 
     public void removeCard(Card card) {
-        root.getChildren().remove(card.getImageView()); // 清理掉
+        //root.getChildren().remove(card.getImageView()); // 清理掉
+        MainCanvas.removeFromPane(card.getImageView());
         synchronized (cards) {
             cards.remove(card); //O(n)
         }
@@ -111,7 +113,8 @@ public class CardField implements Runnable {
     public void removeCard(int index) {
         if (index < cards.size()) {
             Card card = cards.get(index); //O(n)
-            root.getChildren().remove(card.getImageView());
+            //root.getChildren().remove(card.getImageView());
+            MainCanvas.removeFromPane(card.getImageView());
             synchronized (cards) {
                 cards.remove(index); //O(n)
             }
@@ -141,6 +144,7 @@ public class CardField implements Runnable {
 
             card.drawCard();
             card.addToPane(root); // 添加到pane里
+            
         }
     }
 

@@ -14,6 +14,14 @@ public class CreatureCard extends DraggableCard {
 
     @Override
     protected void cardAction() {
-        runway.addMyCreature(creature);
+        runway.addToMyCreatures(creature);
+    }
+
+    @Override
+    protected boolean canReleaseOnRunway() {
+        //判断我方队尾和对方队头是否在我方末端
+        //仅考虑我方即可，对方的不用考虑
+        
+        return runway.canReleaseMyCreature();
     }
 }

@@ -51,7 +51,9 @@ public class Creature implements Runnable {
 
     protected Runway runway; // 所处的跑道
 
-    protected boolean isRunning = true;
+    protected boolean isAlive; //存活标志，放上跑道存活，离开跑道或被打死取消
+
+    protected boolean isFrozen = false; //是否未被冰冻
 
     protected Instant timeOnFreeze; // 被冰冻时的时间
 
@@ -70,14 +72,6 @@ public class Creature implements Runnable {
         this.figureSize = (int) (imageView.getFitWidth() / 2);
         this.power = 1; // TODO 别的方式初始化
         this.moveSpeed = defaultMoveSpeed = 1;
-    }
-
-    public void Die() {
-        // 死亡，停止运动，停止线程，停止计时器，移出Pane
-        isRunning = false;
-        Thread.currentThread().interrupt();
-        //freezeTimer.cancel();
-        freezeService.shutdownNow();
     }
 
     protected void loadImage(String imageName) {
@@ -103,7 +97,7 @@ public class Creature implements Runnable {
 
     @Override
     public void run() {
-        while (!Thread.interrupted() /* && isRunning */) {
+        while (!Thread.interrupted() && isAlive) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -128,7 +122,7 @@ public class Creature implements Runnable {
 
     public void freeze(long ms) {
         // 首先设置不能运动
-        isRunning = false;
+        isFrozen = true;
         timeOnFreeze = Instant.now();
         frozenTimeMs = ms;
         TimerTask thawTask = new TimerTask() {
@@ -138,7 +132,7 @@ public class Creature implements Runnable {
                 System.out.println("过去了" + timeDure);
                 if (timeDure >= frozenTimeMs) {
                     System.out.println("解冻");
-                    isRunning = true;
+                    isFrozen = false;
                 } else {
                     System.out.println("解冻时间未到");
                 }
@@ -146,43 +140,35 @@ public class Creature implements Runnable {
         };
 
         //freezeTimer.schedule(thawTask, ms);
-
-        /*Timer freezeTimer2 = new Timer();
-        freezeTimer2.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                long timeDure = Duration.between(timeOnFreeze, Instant.now()).toMillis();
-                System.out.println("过去了" + timeDure);
-                if (timeDure >= frozenTimeMs) {
-                    System.out.println("解冻");
-                    isRunning = true;
-                } else {
-                    System.out.println("解冻时间未到");
-                }
-                this.cancel();
-                freezeTimer2.cancel();
-            }
-        }, ms);*/
-        // freezeTimer.cancel();
-
         freezeService.schedule(thawTask, ms, TimeUnit.MILLISECONDS);
+    }
+
+    public void Die() {
+        // 死亡，停止运动，停止线程，停止计时器，移出Pane
+        System.out.println("生物死亡");
+        Thread.currentThread().interrupt();
+        isAlive = false;
+        //freezeTimer.cancel();
+        freezeService.shutdownNow();
     }
 
     public void update() {
         // 获取我方生物
-        ArrayList<Creature> myCreatures = (belongToMe == true) ? runway.getMyCreatures() : runway.getYourCreatures();
+        ArrayList<Creature> myCreatures = (belongToMe == true) ? runway.getMyCreatures() : runway.getEnemyCreatures();
         // 获取敌方生物
-        ArrayList<Creature> enemyCreatures = (belongToMe == true) ? runway.getYourCreatures() : runway.getMyCreatures();
+        ArrayList<Creature> enemyCreatures = (belongToMe == true) ? runway.getEnemyCreatures() : runway.getMyCreatures();
 
         // 跑出跑道就结束
-        if (posX < runway.getPosX() || posX > runway.getPosX() + runway.getLength()) {
+        if (posX < runway.getPosX() - 2*this.figureSize || posX > runway.getPosX() + runway.getLength()) {
             // TODO 别的方法跳出
             // isRunning = false;
             // Thread.currentThread().interrupt();
             if (belongToMe) {
-                runway.removeFromMyCreature(this);
+                MainCanvas.enemyHero.lossBlood(this.power);
+                runway.removeFromMyCreatures(this);
             } else {
-                runway.removeFromYourCreature(this);
+                MainCanvas.myHero.lossBlood(this.power);
+                runway.removeFromEnemyCreatures(this);
             }
         }
 
@@ -198,14 +184,14 @@ public class Creature implements Runnable {
         // 碰了也继续走，因为你的速度已经被队头改了，所以走就完事了。。
         // TODO 线程安全问题
 
-        if (isRunning == false) {
+        if (isFrozen == true) {
             return;
         }
 
         if (myCreatures.indexOf(this) == 0) {
             // 队头
             if (enemyCreatures.size() > 0 && isCollide(enemyCreatures.get(0))) {
-                if (enemyCreatures.get(0).isRunning == false) {
+                if (enemyCreatures.get(0).isFrozen == true) {
                     // 对面头被冻住了，你就别动了
                     // 不move
                     moveSpeed = 0;
@@ -228,7 +214,7 @@ public class Creature implements Runnable {
                         enemyPower = enemyPower + c.getPower();
                     }
 
-                    System.out.println("belongToME: " + belongToMe + ", myPower: " + myPower + ", enemyPower: "
+                    System.out.println("belongToMe: " + belongToMe + ", myPower: " + myPower + ", enemyPower: "
                             + enemyPower + ", 连着的兄弟有 " + myHeadCreatures.size() + " 个，敌人兄弟有 "
                             + enemyHeadCreatures.size() + " 个");
 
@@ -270,7 +256,7 @@ public class Creature implements Runnable {
 
             boolean collideFrozen = false;
             for (Creature c : myCreatures) {
-                if (isCollide(c) && (c.isRunning == false || c.moveSpeed == 0) && c != this) {
+                if (isCollide(c) && (c.isFrozen == true || c.moveSpeed == 0) && c != this) {
                     collideFrozen = true;
                     break;
                 }
@@ -400,14 +386,6 @@ public class Creature implements Runnable {
         return runway;
     }
 
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    public void setRunning(boolean isRunning) {
-        this.isRunning = isRunning;
-    }
-
     public int getPrice() {
         return price;
     }
@@ -422,5 +400,13 @@ public class Creature implements Runnable {
 
     public void setCardImage(Image cardImage) {
         this.cardImage = cardImage;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean isAlive) {
+        this.isAlive = isAlive;
     }
 }
