@@ -31,10 +31,12 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String REDBABY_ATTACKNEAR_NAME = "Normal Punch"; // 大娃近攻名称
 	public static final String REDBABY_ATTACKFAR_NAME = "Fire Punch"; // 大娃远攻名称
 	public static final String REDBABY_ATTACKKILL_NAME = "Gold Punch"; // 大娃必杀名称
+	public static final String REDBABY_DEFEND_NAME = "Defend Stone"; // 大娃防御名称
 	
 	public static final String GREENBABY_ATTACKNEAR_NAME = "Normal FireBall"; // 四娃近攻名称
 	public static final String GREENBABY_ATTACKFAR_NAME = "Long FireBall"; // 四娃远攻名称
 	public static final String GREENBABY_ATTACKKILL_NAME = "Black FireBall"; // 四娃必杀名称
+	public static final String GREENBABY_DEFEND_NAME = "Defend Wheel"; // 四娃防御名称
 	
 	// 实体位置(注：后缀1的为自己，后缀2的为对手)
 	public static final double BACKGROUND_X = 0; // 背景x轴坐标
@@ -55,6 +57,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double PLAYER1_ATTACK_H = 80; // 玩家1攻击实体高度
 	public static final double PLAYER2_ATTACK_W = 80; // 玩家2攻击实体宽度
 	public static final double PLAYER2_ATTACK_H = 80; // 玩家2攻击实体高度
+	public static final double PLAYER1_DEFEND_W = 80; // 玩家1防御实体宽度
+	public static final double PLAYER1_DEFEND_H = 80; // 玩家1防御实体高度
+	public static final double PLAYER2_DEFEND_W = 80; // 玩家2防御实体宽度
+	public static final double PLAYER2_DEFEND_H = 80; // 玩家2防御实体高度
 	
 	// 实体状态值
 	public static final String STANDING_FORWARD = "standingForward"; // 朝正面站着
@@ -92,6 +98,8 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String REDBABY_ATTACKFAR_RIGHT = "rightFirePunch"; // 大娃远攻图片(朝右)
 	public static final String REDBABY_ATTACKKILL_LEFT = "leftGoldPunch"; // 大娃必杀图片(朝左)
 	public static final String REDBABY_ATTACKKILL_RIGHT = "rightGoldPunch"; // 大娃必杀图片(朝右)
+	public static final String REDBABY_DEFEND_LEFT = "leftDefendStone"; // 大娃防御图片(朝左)
+	public static final String REDBABY_DEFEND_RIGHT = "rightDefendStone"; // 大娃防御图片(朝右)
 	
 	public static final String GREENBABY_ATTACKNEAR_LEFT = "leftNormalFireBall"; // 四娃近攻图片(朝左)
 	public static final String GREENBABY_ATTACKNEAR_RIGHT = "rightNormalFireBall"; // 四娃近攻图片(朝右)
@@ -99,5 +107,7 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String GREENBABY_ATTACKFAR_RIGHT = "rightLongFireBall"; // 四娃远攻图片(朝右)
 	public static final String GREENBABY_ATTACKKILL_LEFT = "leftBlackFireBall"; // 四娃必杀图片(朝左)
 	public static final String GREENBABY_ATTACKKILL_RIGHT = "rightBlackFireBall"; // 四娃必杀图片(朝右)
+	public static final String GREENBABY_DEFEND_LEFT = "leftDefendWheel"; // 四娃防御图片(朝左)
+	public static final String GREENBABY_DEFEND_RIGHT = "rightDefendWheel"; // 四娃防御图片(朝右)
 	
 }

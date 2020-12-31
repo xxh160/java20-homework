@@ -66,18 +66,17 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	protected double currentAttackValue; // 当前攻击值
 	protected double currentAttackDist; // 当前攻击距离
 	protected double currentAttackSpeed; // 当前攻击实体移动速度
-	private double currentAttackWidth; // 当前攻击实体宽度
-	private double currentAttackHeight; // 当前攻击实体高度
+	protected double currentAttackWidth; // 当前攻击实体宽度
+	protected double currentAttackHeight; // 当前攻击实体高度
 	
-	private String defendName; // 防御招式名称
-	private Image defendLeftImg; // 防御实体图片(朝左)
-	private Image defendRightImg; // 防御实体图片(朝右)
-	private double defendValue; // 防御值
-	private double defendDist; // 防御距离
-	private double defendSpeed; // 防御实体移动速度
-	
-	
-	private double currentDefendValue; // 当前防御值
+	protected String defendName; // 防御招式名称
+	protected Image defendLeftImg; // 防御实体图片(朝左)
+	protected Image defendRightImg; // 防御实体图片(朝右)
+	protected double defendValue; // 防御值
+	protected double defendDist; // 防御距离
+	protected double defendSpeed; // 防御实体移动速度
+	protected double defendWidth; // 防御实体宽度
+	protected double defendHeight; // 防御实体高度
 	
 	// 初始化
 	public Entity(String name) {
@@ -105,13 +104,13 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setAttackNearHeight(Constants.PLAYER1_ATTACK_H);
 		
 		setAttackFarValue(15);
-		setAttackFarDist(150);
+		setAttackFarDist(200);
 		setAttackFarSpeed(3);
 		setAttackFarWidth(Constants.PLAYER1_ATTACK_W);
 		setAttackFarHeight(Constants.PLAYER1_ATTACK_H);
 		
 		setAttackKillValue(25);
-		setAttackKillDist(100);
+		setAttackKillDist(150);
 		setAttackKillSpeed(2.5);
 		setAttackKillWidth(Constants.PLAYER1_ATTACK_W);
 		setAttackKillHeight(Constants.PLAYER1_ATTACK_H);
@@ -124,9 +123,9 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		
 		setDefendValue(5);
 		setDefendDist(20);
-		setDefendSpeed(4);
-		
-		setCurrentDefendValue(0);
+		setDefendSpeed(3);
+		setDefendWidth(Constants.PLAYER1_DEFEND_W);
+		setDefendHeight(Constants.PLAYER1_DEFEND_H);		
 		
 		setName(name);
 		setState(EntityState.STANDING_TORIGHT);
@@ -233,6 +232,11 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 				(state == EntityState.ATTACKING_KILL_TORIGHT);
 	}
 	
+	public boolean isDefending() { // 判断实体是否处于防御状态
+		return 	(state == EntityState.DEFENDING_TOLEFT) ||
+				(state == EntityState.DEFENDING_TORIGHT);
+	}
+	
 	public boolean isLeft() { // 判断当前朝向是否是朝左
 		return isLeft;
 	}
@@ -303,10 +307,42 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return currentAttackHeight;
 	}
 	
-	public double getCurrentDefendvalue() { // 获取当前防御值(用于碰撞回调)
-		return currentDefendValue;
+	public Image getCurrentDefendImg() { // 获取当前防御实体图片
+		if(isLeft) {
+			return defendLeftImg;
+		}else {
+			return defendRightImg;
+		}
 	}
-
+	
+	public double getDefendvalue() { // 获取当前防御值(用于碰撞回调)
+		return defendValue;
+	}
+	
+	public double getDefendDist() { // 获取当前防御距离
+		return defendDist;
+	}
+	
+	public double getDefendSpeed() { // 获取当前防御实体移动速度
+		return defendSpeed;
+	}
+	
+	public Image getDefendLeftImage() { // 获取防御实体图片(朝左)
+		return defendLeftImg;
+	}
+	
+	public Image getDefendRightImage() { // 获取防御实体图片(朝右)
+		return defendRightImg;
+	}
+	
+	public double getDefendWidth() { // 获取当前防御实体宽度
+		return defendWidth;
+	}
+	
+	public double getDefendHeight() { // 获取当前防御实体高度
+		return defendHeight;
+	}
+	
 	// Setter
 	public void setName(String name) { // 设置名称
 		this.name = name;
@@ -526,13 +562,17 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		defendSpeed = val;
 	}
 	
-	public void setDefendImage(Image lImg, Image rImg) { // 设置防御实体图片
-		defendLeftImg = lImg;
-		defendRightImg = rImg;
+	public void setDefendWidth(double val) { // 设置防御实体宽度
+		defendWidth = val;
 	}
 	
-	public void setCurrentDefendValue(double val) { // 设置当前防御值
-		currentDefendValue = val;
+	public void setDefendHeight(double val) { // 设置防御实体高度
+		defendHeight = val;
+	}
+	
+	public void setDefendImg(Image lImg, Image rImg) { // 设置防御实体图片
+		defendLeftImg = lImg;
+		defendRightImg = rImg;
 	}
 	
 	public void countFrame(EntityState state) { // 帧计数，并自动回退到静止状态
@@ -545,7 +585,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	// 状态切换
 	public void resetToStand() { // 返回站立的静止状态(只有在这些状态下才能响应用户操作)
 		currentAttackValue = 0;
-		currentDefendValue = 0;
 		jumpTag = 0;
 		frameCount = 0;
 		if(isLeft) {
@@ -615,7 +654,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 
 	
 	public void defend() { // 防御
-		currentDefendValue = defendValue;
 		if(isLeft) {
 			countFrame(EntityState.DEFENDING_TOLEFT);
 		}
@@ -749,7 +787,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		
 		double hurt = 0;
 		if (isDefendable()) { // 可防御
-			hurt = attackValue - currentDefendValue;
+			hurt = attackValue - defendValue;
 		}else { // 不可防御
 			hurt = attackValue;
 		}

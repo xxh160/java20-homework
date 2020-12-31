@@ -38,6 +38,12 @@ public class AttackEntity extends Entity { // 攻击实体，用于在角色实�
 	}
 	
 	@Override
+	public void setCurrentAttackName(String name) {
+		super.setCurrentAttackName(name);
+		setName(name);
+	}
+	
+	@Override
 	public void setCurrentAttackValue(double val) {
 		super.setCurrentAttackValue(val);
 		setLifeValue(val); // 攻击实体的生命值即是其攻击值，因碰撞而被消耗后死亡
