@@ -1,7 +1,7 @@
 package world;
 
 public class DefendEntity extends Entity { // 防御实体，用于在角色实体防御产生的临时实体
-
+	
 	private int endFrame; // 当攻击实体达到最大距离之后，若还没有因碰撞而消亡，则会驻留在最大距离处持续endFrame帧时
 	private int endFrameCount; // endFrame的计数器
 	
@@ -11,6 +11,7 @@ public class DefendEntity extends Entity { // 防御实体，用于在角色实�
 		deltaX = dx;
 		setMobile(true);
 		setDefendable(true); // 具有防御性
+		
 		endFrame = 10;
 		endFrameCount = 0;
 	}

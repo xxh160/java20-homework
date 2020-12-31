@@ -103,20 +103,20 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setJumpHeight(200);
 		
 		setAttackNearValue(10);
-		setAttackNearDist(35);
-		setAttackNearSpeed(2);
+		setAttackNearDist(50);
+		setAttackNearSpeed(4);
 		setAttackNearWidth(Constants.PLAYER1_ATTACK_W);
 		setAttackNearHeight(Constants.PLAYER1_ATTACK_H);
 		
 		setAttackFarValue(15);
 		setAttackFarDist(250);
-		setAttackFarSpeed(3);
+		setAttackFarSpeed(8);
 		setAttackFarWidth(Constants.PLAYER1_ATTACK_W);
 		setAttackFarHeight(Constants.PLAYER1_ATTACK_H);
 		
 		setAttackKillValue(25);
-		setAttackKillDist(100);
-		setAttackKillSpeed(2.5);
+		setAttackKillDist(150);
+		setAttackKillSpeed(6);
 		setAttackKillWidth(Constants.PLAYER1_ATTACK_W);
 		setAttackKillHeight(Constants.PLAYER1_ATTACK_H);
 		
@@ -128,7 +128,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		
 		setDefendValue(5);
 		setDefendDist(20);
-		setDefendSpeed(3);
+		setDefendSpeed(30);
 		setDefendWidth(Constants.PLAYER1_DEFEND_W);
 		setDefendHeight(Constants.PLAYER1_DEFEND_H);		
 		
@@ -454,7 +454,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	public void setAttackNearDist(double val) { // 设置近攻距离
-		attackNearDist = val;
+		attackNearDist = val; 
 	}
 	
 	public void setAttackNearWidth(double val) { // 设置近攻实体宽度
@@ -465,8 +465,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		attackNearHeight = val;
 	}
 	
-	public void setAttackNearSpeed(double val) { // 设置近攻实体移动速度
-		attackNearSpeed = val;
+	public void setAttackNearSpeed(double val) { // 设置近攻移动速度
+		attackNearSpeed = val; 
 	}
 
 	public void setAttackNearImage(Image lImg,Image rImg) { // 设置近攻实体图片
@@ -483,7 +483,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	public void setAttackFarDist(double val) { // 设置远攻距离
-		attackFarDist = val;
+		attackFarDist = val; 
 	}
 	
 	public void setAttackFarWidth(double val) { // 设置远攻实体宽度
@@ -495,7 +495,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	public void setAttackFarSpeed(double val) { // 设置远攻实体移动速度
-		attackFarSpeed = val;
+		attackFarSpeed = val; 
 	}
 	
 	public void setAttackFarImage(Image lImg, Image rImg) { // 设置远攻实体图片
@@ -569,7 +569,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	public void setDefendDist(double val) { // 设置防御距离
-		defendDist = val;
+		defendDist = val; 
 	}
 	
 	public void setDefendSpeed(double val) { // 设置防御实体移动速度
