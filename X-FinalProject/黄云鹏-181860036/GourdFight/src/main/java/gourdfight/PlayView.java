@@ -547,6 +547,220 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
+	private void collisionDetect() { // 碰撞检测
+		collisionDetectA1A2(); // 玩家1攻击实体 vs 玩家2攻击实体
+		collisionDetectA1D2(); // 玩家1攻击实体 vs 玩家2防御实体
+		collisionDetectA2D1(); // 玩家2攻击实体 vs 玩家1防御实体
+		collisionDetectA1P2(); // 玩家1攻击实体 vs 玩家2实体
+		collisionDetectA2P1(); // 玩家2攻击实体 vs 玩家1实体
+	}
+	
+	private void collisionDetectA1A2(){ // 碰撞检测：玩家1攻击实体 vs 玩家2攻击实体
+		
+		if(player1_attackEntity != null && player1_attackEntity.isActive() 
+				&& player2_attackEntity != null && player2_attackEntity.isActive()) {
+			double x1 = Constants.PLAYER1_INIT_X + player1_attackEntity.getDeltaX();
+			double y1 = Constants.PLAYER1_INIT_Y + player1_attackEntity.getDeltaY();
+			double w1 = player1_attackEntity.getWidth();
+			double h1 = player1_attackEntity.getHeight();
+			double x2 = Constants.PLAYER2_INIT_X + player2_attackEntity.getDeltaX();
+			double y2 = Constants.PLAYER2_INIT_Y + player2_attackEntity.getDeltaY();
+			double w2 = player2_attackEntity.getWidth();
+			double h2 = player2_attackEntity.getHeight();
+			
+			boolean isCollided = isCollided(x1, y1, w1, h1, x2, y2, w2, h2);
+			if(isCollided) { // 如果碰撞
+				double attackValue1 = player1_attackEntity.getCurrentAttackValue();
+				double attackValue2 = player2_attackEntity.getCurrentAttackValue();
+				player1_attackEntity.getHurt(attackValue2);
+				player2_attackEntity.getHurt(attackValue1);
+			}
+			// 检测是否死亡
+			Entity player1 = entityMap.get(Constants.PLAYER1);
+			if(!player1_attackEntity.isActive()) {
+				if(player1.isAttacking()) {
+					player1.resetToStand();
+				}
+			}
+			Entity player2 = entityMap.get(Constants.PLAYER2);
+			if(!player2_attackEntity.isActive()) {
+				if(player2.isAttacking()) {
+					player2.resetToStand();
+				}
+			}
+		}
+	}
+	
+	private void collisionDetectA1D2(){ // 碰撞检测：玩家1攻击实体 vs 玩家2防御实体
+		if(player1_attackEntity != null && player1_attackEntity.isActive() 
+				&& player2_defendEntity != null && player2_defendEntity.isActive()) {
+			double x1 = Constants.PLAYER1_INIT_X + player1_attackEntity.getDeltaX();
+			double y1 = Constants.PLAYER1_INIT_Y + player1_attackEntity.getDeltaY();
+			double w1 = player1_attackEntity.getWidth();
+			double h1 = player1_attackEntity.getHeight();
+			double x2 = Constants.PLAYER2_INIT_X + player2_defendEntity.getDeltaX();
+			double y2 = Constants.PLAYER2_INIT_Y + player2_defendEntity.getDeltaY();
+			double w2 = player2_defendEntity.getWidth();
+			double h2 = player2_defendEntity.getHeight();
+			
+			boolean isCollided = isCollided(x1, y1, w1, h1, x2, y2, w2, h2);
+			if(isCollided) { // 如果碰撞
+				double attackValue1 = player1_attackEntity.getCurrentAttackValue();
+				double defendValue2 = player2_defendEntity.getDefendValue();
+				player1_attackEntity.getHurt(defendValue2);
+				player2_defendEntity.getHurt(attackValue1);
+			}
+			// 检测是否死亡
+			Entity player1 = entityMap.get(Constants.PLAYER1);
+			if(!player1_attackEntity.isActive()) {
+				if(player1.isAttacking()) {
+					player1.resetToStand();
+				}
+			}
+			Entity player2 = entityMap.get(Constants.PLAYER2);
+			if(!player2_defendEntity.isActive()) {
+				if(player2.isDefending()) {
+					player2.resetToStand();
+				}
+			}
+		}
+	}
+	
+	private void collisionDetectA2D1(){ // 碰撞检测：玩家2攻击实体 vs 玩家1防御实体
+		if(player2_attackEntity != null && player2_attackEntity.isActive() 
+				&& player1_defendEntity != null && player1_defendEntity.isActive()) {
+			double x1 = Constants.PLAYER2_INIT_X + player2_attackEntity.getDeltaX();
+			double y1 = Constants.PLAYER2_INIT_Y + player2_attackEntity.getDeltaY();
+			double w1 = player2_attackEntity.getWidth();
+			double h1 = player2_attackEntity.getHeight();
+			double x2 = Constants.PLAYER1_INIT_X + player1_defendEntity.getDeltaX();
+			double y2 = Constants.PLAYER1_INIT_Y + player1_defendEntity.getDeltaY();
+			double w2 = player1_defendEntity.getWidth();
+			double h2 = player1_defendEntity.getHeight();
+			
+			boolean isCollided = isCollided(x1, y1, w1, h1, x2, y2, w2, h2);
+			if(isCollided) { // 如果碰撞
+				double attackValue2 = player2_attackEntity.getCurrentAttackValue();
+				double defendValue1 = player1_defendEntity.getDefendValue();
+				player2_attackEntity.getHurt(defendValue1);
+				player1_defendEntity.getHurt(attackValue2);
+			}
+			// 检测是否死亡
+			Entity player2 = entityMap.get(Constants.PLAYER2);
+			if(!player2_attackEntity.isActive()) {
+				if(player2.isAttacking()) {
+					player2.resetToStand();
+				}
+			}
+			Entity player1 = entityMap.get(Constants.PLAYER1);
+			if(!player1_defendEntity.isActive()) {
+				if(player1.isDefending()) {
+					player1.resetToStand();
+				}
+			}
+		}
+	}
+	
+	
+	private void collisionDetectA1P2(){ // 碰撞检测：玩家1攻击实体 vs 玩家2实体
+		
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		if(player1_attackEntity != null && player1_attackEntity.isActive() 
+				&& player2 != null && player2.isActive()) {
+			double x1 = Constants.PLAYER1_INIT_X + player1_attackEntity.getDeltaX();
+			double y1 = Constants.PLAYER1_INIT_Y + player1_attackEntity.getDeltaY();
+			double w1 = player1_attackEntity.getWidth();
+			double h1 = player1_attackEntity.getHeight();
+			double x2 = Constants.PLAYER2_INIT_X + player2.getDeltaX();
+			double y2 = Constants.PLAYER2_INIT_Y + player2.getDeltaY();
+			double w2 = player2.getWidth();
+			double h2 = player2.getHeight();
+			
+			boolean isCollided = isCollided(x1, y1, w1, h1, x2, y2, w2, h2);
+			if(isCollided) { // 如果碰撞
+				double attackValue1 = player1_attackEntity.getCurrentAttackValue();
+				boolean isHurt = player2.getHurt(attackValue1);
+				if(isHurt) { // 如果成功攻击到了玩家，则直接死亡
+					player1_attackEntity.setActive(false);
+				}
+			}
+			
+			// 检测是否死亡
+			if(!player1_attackEntity.isActive()) {
+				if(player1.isAttacking()) {
+					player1.resetToStand();
+				}
+			}
+			
+			if(!player2.isActive()) {
+				// 游戏结束
+			}
+		}
+	}
+	
+	
+	private void collisionDetectA2P1(){ // 碰撞检测：玩家2攻击实体 vs 玩家1实体
+		
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		if(player2_attackEntity != null && player2_attackEntity.isActive() 
+				&& player1 != null && player1.isActive()) {
+			double x1 = Constants.PLAYER2_INIT_X + player2_attackEntity.getDeltaX();
+			double y1 = Constants.PLAYER2_INIT_Y + player2_attackEntity.getDeltaY();
+			double w1 = player2_attackEntity.getWidth();
+			double h1 = player2_attackEntity.getHeight();
+			double x2 = Constants.PLAYER1_INIT_X + player1.getDeltaX();
+			double y2 = Constants.PLAYER1_INIT_Y + player1.getDeltaY();
+			double w2 = player1.getWidth();
+			double h2 = player1.getHeight();
+			
+			boolean isCollided = isCollided(x1, y1, w1, h1, x2, y2, w2, h2);
+			if(isCollided) { // 如果碰撞
+				double attackValue2 = player2_attackEntity.getCurrentAttackValue();
+				boolean isHurt = player1.getHurt(attackValue2);
+				if(isHurt) { // 如果成功攻击到了玩家，则直接死亡
+					player2_attackEntity.setActive(false);
+				}
+			}
+			
+			// 检测是否死亡
+			if(!player2_attackEntity.isActive()) {
+				if(player2.isAttacking()) {
+					player2.resetToStand();
+				}
+			}
+			
+			if(!player1.isActive()) {
+				// 游戏结束
+			}
+		}
+	}
+	
+	
+	private boolean isCollided(double x1,double y1,double w1,double h1,
+			double x2, double y2, double w2, double h2) { 
+		// 是否两个矩阵产生碰撞，用于碰撞检测
+		boolean xCollided = false; // x轴是否碰撞
+		boolean yCollided = false; // y轴是否碰撞
+		
+		if(x1 + w1 < x2 || x2 + w2 < x1) { // x轴相离
+			xCollided = false;
+		}else { // x轴相交/相切
+			xCollided = true;
+		}
+		
+		if(y1 + h1 < y2 || y2 + h2 < y1) { // y轴相离
+			yCollided = false;
+		}else { // y轴相交/相切
+			yCollided = true;
+		}
+		
+		return xCollided | yCollided; // x轴或者y轴碰撞，则两个矩形碰撞
+	}
+	
 	private void parseQueue() { // 解析操作/状态队列
 		
 		if(!sendPktQueue.isEmpty() && !receivePktQueue.isEmpty()) {
@@ -678,7 +892,7 @@ public class PlayView extends View { // 游戏页面类
 			DefendEntity defendEntity = new DefendEntity(name,isLeft,dx);
 			defendEntity.setDefendName(player1.getDefendName());
 			defendEntity.setDefendImg(player1.getDefendLeftImage(),player1.getDefendRightImage());
-			defendEntity.setDefendValue(player1.getDefendvalue());
+			defendEntity.setDefendValue(player1.getDefendValue());
 			defendEntity.setDefendDist(dist);
 			defendEntity.setDefendSpeed(player1.getDefendSpeed());
 			defendEntity.setDefendWidth(player1.getDefendWidth());
@@ -706,7 +920,7 @@ public class PlayView extends View { // 游戏页面类
 			DefendEntity defendEntity = new DefendEntity(name,isLeft,dx);
 			defendEntity.setDefendName(player1.getDefendName());
 			defendEntity.setDefendImg(player1.getDefendLeftImage(),player1.getDefendRightImage());
-			defendEntity.setDefendValue(player1.getDefendvalue());
+			defendEntity.setDefendValue(player1.getDefendValue());
 			defendEntity.setDefendDist(dist);
 			defendEntity.setDefendSpeed(player1.getDefendSpeed());
 			defendEntity.setDefendWidth(player1.getDefendWidth());
@@ -733,7 +947,7 @@ public class PlayView extends View { // 游戏页面类
 			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
 			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
 			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
 			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
@@ -760,7 +974,7 @@ public class PlayView extends View { // 游戏页面类
 			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
 			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
 			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
 			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
@@ -787,7 +1001,7 @@ public class PlayView extends View { // 游戏页面类
 			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
 			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
 			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
 			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
@@ -814,7 +1028,7 @@ public class PlayView extends View { // 游戏页面类
 			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
 			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
 			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
 			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
@@ -841,7 +1055,7 @@ public class PlayView extends View { // 游戏页面类
 			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
 			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
 			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
 			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
@@ -868,7 +1082,7 @@ public class PlayView extends View { // 游戏页面类
 			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
 			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
 			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackvalue());
+			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
 			attackEntity.setCurrentAttackDist(dist);
 			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
 			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
@@ -880,6 +1094,7 @@ public class PlayView extends View { // 游戏页面类
 		}
 		imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage()); // 设置图片
 	}
+	
 	
 	
 	private void parsePlayer2Action() { // 解析完操作队列并找到同步帧后，进而解析对手的同步帧的动作
@@ -979,6 +1194,7 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	
+	
 	private void updateFrame() { // 更新帧
 
 		((ImagePane) pane).update(
@@ -1001,6 +1217,7 @@ public class PlayView extends View { // 游戏页面类
 			entityMap.remove(id);
 		}
 	}
+	
 	
 	
 	public void addImageLocate(String id, ImageLocate imgLocate) { // 添加图片定位
@@ -1037,12 +1254,15 @@ public class PlayView extends View { // 游戏页面类
 	
 	// 生命周期管理
 	// 生命周期管理
+	
+	// 生命周期管理
 	public void onLaunch() { // 页面启动设置
 		reset(); // 先清空上一次启动时的字典
 //		setServer(true); // ！！！！！！！！！！！！！！！！！！！测试用例，应当在上层页面设置！！！！！！！！！！！！！！
 //		launchNetwork(); // ！！！！！！！！！！！！！！！！！！！测试用例，应当在上层页面调用！！！！！！！！！！！！！！
 		initEntity(); // 初始化游戏实体
 	}
+	
 	
 	
 	
@@ -1053,10 +1273,12 @@ public class PlayView extends View { // 游戏页面类
 	
 	
 	
+	
 	@Override
 	public void onEnter() {
 		super.onEnter();
 	}
+	
 	
 	
 	
@@ -1067,10 +1289,12 @@ public class PlayView extends View { // 游戏页面类
 	
 	
 	
+	
 	@Override
 	public void onStart() {
 		super.onStart();
 	}
+	
 	
 	
 	
@@ -1090,6 +1314,9 @@ public class PlayView extends View { // 游戏页面类
 		updateAttackEntity();
 		updateDefendEntity();
 		
+		// 碰撞检测
+		collisionDetect();
+		
 		// 更新帧
 		updateFrame();
 		
@@ -1097,10 +1324,12 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	
+	
 	@Override
 	public void onStop() {
 		super.onStop();
 	}
+	
 	
 
 }

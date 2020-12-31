@@ -1,8 +1,6 @@
 package world;
 
-import java.awt.font.ImageGraphicAttribute;
 import java.util.HashMap;
-
 import gourdfight.Constants;
 import javafx.scene.image.Image;
 
@@ -287,7 +285,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return currentAttackImg;
 	}
 	
-	public double getCurrentAttackvalue() { // 获取当前攻击值(用于碰撞回调)
+	public double getCurrentAttackValue() { // 获取当前攻击值(用于碰撞回调)
 		return currentAttackValue;
 	}
 	
@@ -315,7 +313,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		}
 	}
 	
-	public double getDefendvalue() { // 获取当前防御值(用于碰撞回调)
+	public double getDefendValue() { // 获取当前防御值(用于碰撞回调)
 		return defendValue;
 	}
 	
@@ -791,7 +789,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		}else { // 不可防御
 			hurt = attackValue;
 		}
-		if(hurt > 0) {
+		if(hurt > 0) { // 造成伤害
 			if(hurt > lifeValue) {
 				lifeValue  = 0;
 				setActive(false); // 生命值减为零，要么处于倒地状态，要么直接消失
