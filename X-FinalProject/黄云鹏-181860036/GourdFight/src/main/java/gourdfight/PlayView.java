@@ -103,7 +103,8 @@ public class PlayView extends View { // 游戏页面类
 		// 基本属性设置
 		Entity player1 = new Entity(Constants.PLAYER1);
 		player1.setMobile(true);
-		player1.setState(EntityState.STANDING_TORIGHT);
+		player1.setDirection(false); // 初始朝向向右
+		player1.setState(EntityState.STANDING_TORIGHT); // 初始状态向右站着
 	
 		String nameStr = "redBaby"; // 大娃测试
 		
@@ -227,7 +228,8 @@ public class PlayView extends View { // 游戏页面类
 		// 基本属性设置
 		Entity player2 = new Entity(Constants.PLAYER2);
 		player2.setMobile(true);
-		player2.setState(EntityState.STANDING_TOLEFT);
+		player2.setDirection(true); // 初始朝向向左
+		player2.setState(EntityState.STANDING_TOLEFT); // 初始状态向左站着
 	
 		String nameStr = "greenBaby"; // 四娃测试
 		
@@ -695,7 +697,7 @@ public class PlayView extends View { // 游戏页面类
 				else {  // 玩家没做任何操作，角色保持站立
 					
 					// 传递一个向左站着的状态，但不表示动作切换，而是上一个动作延续
-					Packet pkt = new Packet(frameCount,EntityState.STANDING_TOLEFT); 
+					Packet pkt = new Packet(frameCount,EntityState.STANDING_TORIGHT); 
 					receivePktQueue.add(pkt);
 					if(!isServer) {
 						server.setSendPacket(pkt);
@@ -708,7 +710,7 @@ public class PlayView extends View { // 游戏页面类
 			
 			else { // 当前正在处于非静止状态，不响应玩家操作，但是仍然要发送当前帧的状态包，保证每一帧都有记录
 				// 传递一个向左站着的状态，但不表示动作切换，而是上一个动作延续
-				Packet pkt = new Packet(frameCount,EntityState.STANDING_TOLEFT); 
+				Packet pkt = new Packet(frameCount,EntityState.STANDING_TORIGHT); 
 				receivePktQueue.add(pkt);
 				if(!isServer) {
 					server.setSendPacket(pkt);
@@ -1510,7 +1512,7 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 解析自己的动作
 		Entity player2 = entityMap.get(Constants.PLAYER2);
-		if(player2_action == EntityState.STANDING_TOLEFT) { // 保持上一个状态的延续
+		if(player2_action == EntityState.STANDING_TORIGHT) { // 保持上一个状态的延续
 			
 		}else {
 			player2.setState(player2_action); // 否则切换状态为同步帧的动作

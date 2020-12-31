@@ -102,13 +102,13 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setAttackNearHeight(Constants.PLAYER1_ATTACK_H);
 		
 		setAttackFarValue(15);
-		setAttackFarDist(200);
+		setAttackFarDist(250);
 		setAttackFarSpeed(3);
 		setAttackFarWidth(Constants.PLAYER1_ATTACK_W);
 		setAttackFarHeight(Constants.PLAYER1_ATTACK_H);
 		
 		setAttackKillValue(25);
-		setAttackKillDist(150);
+		setAttackKillDist(100);
 		setAttackKillSpeed(2.5);
 		setAttackKillWidth(Constants.PLAYER1_ATTACK_W);
 		setAttackKillHeight(Constants.PLAYER1_ATTACK_H);
@@ -373,6 +373,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public void setActive(boolean a) { // 设置实体是否活跃
 		isActive = a;
+	}
+	
+	public void setDirection(boolean d) { // 设置朝向
+		isLeft = d;
 	}
 	
 	
