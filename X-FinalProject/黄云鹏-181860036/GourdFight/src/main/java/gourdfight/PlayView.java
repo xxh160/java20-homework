@@ -103,7 +103,7 @@ public class PlayView extends View { // 游戏页面类
 		player1.setMobile(true);
 		player1.setState(EntityState.STANDING_TORIGHT);
 	
-		String nameStr = "redBaby"; // 大娃测试
+		String nameStr = "greenBaby"; // 四娃测试
 		
 		
 		// 状态图片设置
@@ -178,25 +178,25 @@ public class PlayView extends View { // 游戏页面类
 		}
 		
 		// 设置攻击实体图片
-		String lFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKNEAR_LEFT);
-		String rFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKNEAR_RIGHT);
+		String lFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKNEAR_LEFT);
+		String rFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKNEAR_RIGHT);
 		Image lImg = new Image(URL.toURL(lFilePath));
 		Image rImg = new Image(URL.toURL(rFilePath));
-		player1.setAttackNearName(Constants.REDBABY_ATTACKNEAR_NAME);
+		player1.setAttackNearName(Constants.GREENBABY_ATTACKNEAR_NAME);
 		player1.setAttackNearImage(lImg, rImg); // 近攻
 		
-		lFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKFAR_LEFT);
-		rFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKFAR_RIGHT);
+		lFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKFAR_LEFT);
+		rFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKFAR_RIGHT);
 		lImg = new Image(URL.toURL(lFilePath));
 		rImg = new Image(URL.toURL(rFilePath));
-		player1.setAttackFarName(Constants.REDBABY_ATTACKFAR_NAME);
+		player1.setAttackFarName(Constants.GREENBABY_ATTACKFAR_NAME);
 		player1.setAttackFarImage(lImg, rImg); // 远攻
 		
-		lFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKKILL_LEFT);
-		rFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKKILL_RIGHT);
+		lFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKKILL_LEFT);
+		rFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKKILL_RIGHT);
 		lImg = new Image(URL.toURL(lFilePath));
 		rImg = new Image(URL.toURL(rFilePath));
-		player1.setAttackKillName(Constants.REDBABY_ATTACKKILL_NAME);
+		player1.setAttackKillName(Constants.GREENBABY_ATTACKKILL_NAME);
 		player1.setAttackKillImage(lImg, rImg); // 必杀
 		
 		// 添加实体

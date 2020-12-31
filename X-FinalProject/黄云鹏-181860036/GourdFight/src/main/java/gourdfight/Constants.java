@@ -32,6 +32,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String REDBABY_ATTACKFAR_NAME = "Fire Punch"; // 大娃远攻名称
 	public static final String REDBABY_ATTACKKILL_NAME = "Gold Punch"; // 大娃必杀名称
 	
+	public static final String GREENBABY_ATTACKNEAR_NAME = "Normal FireBall"; // 四娃近攻名称
+	public static final String GREENBABY_ATTACKFAR_NAME = "Long FireBall"; // 四娃远攻名称
+	public static final String GREENBABY_ATTACKKILL_NAME = "Black FireBall"; // 四娃必杀名称
+	
 	// 实体位置(注：后缀1的为自己，后缀2的为对手)
 	public static final double BACKGROUND_X = 0; // 背景x轴坐标
 	public static final double BACKGROUND_Y = 0; // 背景y轴坐标
@@ -88,5 +92,12 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String REDBABY_ATTACKFAR_RIGHT = "rightFirePunch"; // 大娃远攻图片(朝右)
 	public static final String REDBABY_ATTACKKILL_LEFT = "leftGoldPunch"; // 大娃必杀图片(朝左)
 	public static final String REDBABY_ATTACKKILL_RIGHT = "rightGoldPunch"; // 大娃必杀图片(朝右)
+	
+	public static final String GREENBABY_ATTACKNEAR_LEFT = "leftNormalFireBall"; // 四娃近攻图片(朝左)
+	public static final String GREENBABY_ATTACKNEAR_RIGHT = "rightNormalFireBall"; // 四娃近攻图片(朝右)
+	public static final String GREENBABY_ATTACKFAR_LEFT = "leftLongFireBall"; // 四娃远攻图片(朝左)
+	public static final String GREENBABY_ATTACKFAR_RIGHT = "rightLongFireBall"; // 四娃远攻图片(朝右)
+	public static final String GREENBABY_ATTACKKILL_LEFT = "leftBlackFireBall"; // 四娃必杀图片(朝左)
+	public static final String GREENBABY_ATTACKKILL_RIGHT = "rightBlackFireBall"; // 四娃必杀图片(朝右)
 	
 }
