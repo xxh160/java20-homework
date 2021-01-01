@@ -47,11 +47,17 @@ public class Background extends Entity { // 背景场景类
 //		setDefendDist(Constants.DEFAULT_DEFEND_DIST);
 //		setDefendSpeed(Constants.DEFAULT_DEFEND_SPEED);
 //		setDefendWidth(Constants.PLAYER_DEFAULT_DEFEND_W);
-//		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H);		
+//		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H);	
 		
-		String[] bgs = new String[]{"door","desk","ground","hole","home"}; // 随机选择一个场景
-		
-		String filePath = URL.toPngPath("main", name,bgs[new Random().nextInt(5)]);
+		// 随机选择一个场景
+		String[] bgs = new String[]{"door","desk","ground","hole","home"}; 
+		String dirStr = "main";
+		String filePath = URL.toPngPath(dirStr, name,bgs[new Random().nextInt(5)]);
+//		String filePath = URL.toPngPath(dirStr, name,bgs[0]); // test door
+//		String filePath = URL.toPngPath(dirStr, name,bgs[1]); // test desk
+//		String filePath = URL.toPngPath(dirStr, name,bgs[2]); // test ground
+//		String filePath = URL.toPngPath(dirStr, name,bgs[3]); // test hole
+//		String filePath = URL.toPngPath(dirStr, name,bgs[4]); // test home
 		Image background_img = new Image(URL.toURL(filePath)); 
 		addImage(EntityState.STANDING_FORWARD, background_img);
 		setState(EntityState.STANDING_FORWARD);

@@ -13,6 +13,8 @@ import app.View;
 import output.URL;
 import world.AttackEntity;
 import world.Background;
+import world.Blood;
+import world.BloodBar;
 import world.BlueBaby;
 import world.Chilopod;
 import world.Crocodile;
@@ -94,6 +96,8 @@ public class PlayView extends View { // 游戏页面类
 		setPlayer1();
 		// 玩家2
 		setPlayer2();
+		// 血槽条
+		setBloodBar();
 	}
 	
 	private void setBackground() { // 初设背景
@@ -109,6 +113,74 @@ public class PlayView extends View { // 游戏页面类
 				background.getHeight());
 		
 		addImageLocate(Constants.BACKGROUND, background_imgLocate);
+	}
+	
+	private void setBloodBar() { // 初设血槽条
+		// 左血槽
+		BloodBar bloodBar1 = new BloodBar(Constants.BLOODBAR_NAME); 
+		bloodBar1.setState(EntityState.STANDING_TOLEFT);
+		
+		addEntity(Constants.BLOODBAR1, bloodBar1);
+		
+		ImageLocate bloodBar1_imgLocate = new ImageLocate(
+				bloodBar1.getCurrentImage(),
+				Constants.BLOODBAR1_X,
+				Constants.BLOODBAR1_Y,
+				bloodBar1.getWidth(),
+				bloodBar1.getHeight());
+		
+		addImageLocate(Constants.BLOODBAR1, bloodBar1_imgLocate);
+		// 右血槽
+		BloodBar bloodBar2 = new BloodBar(Constants.BLOODBAR_NAME); 
+		bloodBar2.setState(EntityState.STANDING_TORIGHT);
+		
+		addEntity(Constants.BLOODBAR2, bloodBar2);
+		
+		ImageLocate bloodBar2_imgLocate = new ImageLocate(
+				bloodBar2.getCurrentImage(),
+				Constants.BLOODBAR2_X,
+				Constants.BLOODBAR2_Y,
+				bloodBar2.getWidth(),
+				bloodBar2.getHeight());
+		
+		addImageLocate(Constants.BLOODBAR2, bloodBar2_imgLocate);
+		// 左血条
+		Blood blood1 = new Blood(Constants.BLOOD_NAME); 
+		blood1.setState(EntityState.STANDING_TOLEFT);
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		if(player1 != null) {
+			blood1.setFullLife(player1.getLifeValue());
+		}
+		
+		addEntity(Constants.BLOOD1, blood1);
+		
+		ImageLocate blood1_imgLocate = new ImageLocate(
+				blood1.getCurrentImage(),
+				Constants.BLOOD1_X,
+				Constants.BLOOD1_Y,
+				blood1.getWidth(),
+				blood1.getHeight());
+		
+		addImageLocate(Constants.BLOOD1, blood1_imgLocate);
+		// 右血条
+		Blood blood2 = new Blood(Constants.BLOOD_NAME); 
+		blood2.setState(EntityState.STANDING_TORIGHT);
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		if(player2 != null) {
+			blood2.setFullLife(player2.getLifeValue());
+		}
+		
+		addEntity(Constants.BLOOD2, blood2);
+		
+		ImageLocate blood2_imgLocate = new ImageLocate(
+				blood2.getCurrentImage(),
+				Constants.BLOOD2_X,
+				Constants.BLOOD2_Y,
+				blood2.getWidth(),
+				blood2.getHeight());
+		
+		addImageLocate(Constants.BLOOD2, blood2_imgLocate);
+		
 	}
 	
 	private void setPlayer1() { // 初设玩家1
@@ -607,6 +679,20 @@ public class PlayView extends View { // 游戏页面类
 				}
 			}
 		}
+	}
+	
+	private void updateBloodBar() { // 更新血条
+		Blood blood1 = (Blood)entityMap.get(Constants.BLOOD1);
+		Blood blood2 = (Blood)entityMap.get(Constants.BLOOD2);
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		double scale1 = player1.getLifeValue() / blood1.getFullLife(); // 左血条缩短比例
+		double scale2 = player2.getLifeValue() / blood2.getFullLife(); // 右血条缩短比例
+		
+		imgLocateMap.get(Constants.BLOOD1).setW(blood1.getWidth()*scale1);
+		imgLocateMap.get(Constants.BLOOD2).setX(Constants.BLOOD2_X + blood2.getWidth()*(1-scale2));
+		imgLocateMap.get(Constants.BLOOD2).setW(blood2.getWidth()*scale2);
 	}
 	
 	private void updatePlayer1AttackEntity() { // 更新玩家1攻击实体
@@ -1779,7 +1865,10 @@ public class PlayView extends View { // 游戏页面类
 //		System.out.println("player1's life = "+ entityMap.get(Constants.PLAYER1).getLifeValue()); // test
 //		System.out.println("player2's life = "+ entityMap.get(Constants.PLAYER2).getLifeValue()); // test
 		
-		// 更新帧
+		// 更新血条
+		updateBloodBar();
+		
+		// 更新帧图
 		updateFrame();
 		
 		super.onUpdate(time);

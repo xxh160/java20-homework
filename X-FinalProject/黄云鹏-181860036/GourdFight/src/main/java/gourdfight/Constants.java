@@ -4,8 +4,8 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 
 	// 窗口
 	public static final String WINDOW_TITLE = "GourdBaby VS Monsters"; // 游戏标题 
-	public static final int WINDOW_WIDTH = 800; // 窗口宽度
-	public static final int WINDOW_HEIGHT = 600; // 窗口高度
+	public static final int WINDOW_WIDTH = 900; // 窗口宽度
+	public static final int WINDOW_HEIGHT = 500; // 窗口高度
 	
 	// 页面
 	public static final String HOME_VIEW_KEY = "Home View"; // 主页面键值
@@ -25,8 +25,12 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String STATEBAR = "statebar"; // 状态栏
 	public static final String PLAYER1 = "player1"; // 玩家1
 	public static final String PLAYER2 = "player2"; // 玩家2
+	public static final String BLOODBAR1 = "bloodBar1"; // 血槽1
+	public static final String BLOODBAR2 = "bloodBar2"; // 血槽2
+	public static final String BLOODBAR_NAME = "bloodBar"; // 血槽名称 
 	public static final String BLOOD1 = "blood1"; // 血条1
 	public static final String BLOOD2 = "blood2"; // 血条2
+	public static final String BLOOD_NAME = "blood"; // 血条名称 
 	public static final String PROFILE1 = "profile1"; //头像1
 	public static final String PROFILE2 = "profile2"; //头像2
 	public static final String STATE1 = "state1"; // 状态1
@@ -109,17 +113,33 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double BACKGROUND_X = 0; // 背景x轴坐标
 	public static final double BACKGROUND_Y = 0; // 背景y轴坐标
 	
+	public static final double BLOODBAR1_X = 20; // 血槽1x轴坐标
+	public static final double BLOODBAR1_Y = 90; // 血槽1y轴坐标
+	public static final double BLOODBAR2_X = 570; // 血槽2x轴坐标
+	public static final double BLOODBAR2_Y = 90; // 血槽2y轴坐标
+	
+	public static final double BLOOD1_X = 82; // 血条1x轴坐标
+	public static final double BLOOD1_Y = 120; // 血条1y轴坐标
+	public static final double BLOOD2_X = 627; // 血条2x轴坐标
+	public static final double BLOOD2_Y = 120; // 血条2y轴坐标
+	
 	public static final double PLAYER1_INIT_X = 50; // 玩家1初始x轴坐标
-	public static final double PLAYER1_INIT_Y = 400; // 玩家1初始y轴坐标
-	public static final double PLAYER2_INIT_X = 600; // 玩家2初始x轴坐标
-	public static final double PLAYER2_INIT_Y = 400; // 玩家2初始y轴坐标
+	public static final double PLAYER1_INIT_Y = 300; // 玩家1初始y轴坐标
+	public static final double PLAYER2_INIT_X = 700; // 玩家2初始x轴坐标
+	public static final double PLAYER2_INIT_Y = 300; // 玩家2初始y轴坐标
 	
 	// 实体大小
 	public static final double BACKGROUND_W = WINDOW_WIDTH; // 背景宽度
 	public static final double BACKGROUND_H = WINDOW_HEIGHT; // 背景宽度
 	
-	public static final double PLAYER_DEFAULT_W = 110; // 玩家默认宽度
-	public static final double PLAYER_DEFAULT_H = 110; // 玩家默认高度
+	public static final double BLOODBAR_W = 300; // 血槽宽度
+	public static final double BLOODBAR_H = 72; // 血槽宽度
+	
+	public static final double BLOOD_W = 180; // 血条最大宽度
+	public static final double BLOOD_H = 10; // 血条高度
+	
+	public static final double PLAYER_DEFAULT_W = 100; // 玩家默认宽度
+	public static final double PLAYER_DEFAULT_H = 150; // 玩家默认高度
 	
 	public static final double PLAYER_DEFAULT_ATTACK_W = 70; // 玩家默认攻击实体宽度
 	public static final double PLAYER_DEFAULT_ATTACK_H = 70; // 玩家默认攻击实体高度

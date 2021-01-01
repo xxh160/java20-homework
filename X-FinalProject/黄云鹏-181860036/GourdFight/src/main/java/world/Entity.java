@@ -150,21 +150,27 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		for(EntityState state : EntityState.values()){
 			switch (state) {
 			case ATTACKING_NEAR_TOLEFT:
-				addFrame(state, 30);
+				addFrame(state, 50);
 				break;
 			case ATTACKING_NEAR_TORIGHT:
-				addFrame(state, 30);
+				addFrame(state, 50);
 				break;
 			case ATTACKING_FAR_TOLEFT:
-				addFrame(state, 40);
+				addFrame(state, 70);
 				break;
 			case ATTACKING_FAR_TORIGHT:
-				addFrame(state, 40);
+				addFrame(state, 70);
 				break;
 			case ATTACKING_KILL_TOLEFT:
-				addFrame(state, 60);
+				addFrame(state, 80);
 				break;
 			case ATTACKING_KILL_TORIGHT:
+				addFrame(state, 80);
+				break;
+			case DEFENDING_TOLEFT:
+				addFrame(state, 60);
+				break;
+			case DEFENDING_TORIGHT:
 				addFrame(state, 60);
 				break;
 			case JUMPING_TOLEFT:

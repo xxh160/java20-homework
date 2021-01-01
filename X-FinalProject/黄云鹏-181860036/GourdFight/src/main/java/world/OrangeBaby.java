@@ -45,7 +45,8 @@ public class OrangeBaby extends Entity { // 二娃实体类
 //		setDefendDist(Constants.DEFAULT_DEFEND_DIST);
 //		setDefendSpeed(Constants.DEFAULT_DEFEND_SPEED);
 //		setDefendWidth(Constants.PLAYER_DEFAULT_DEFEND_W);
-//		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H);		
+//		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H);	
+		// 设置招式名称
 		setAttackNearName(Constants.ORANGEBABY_ATTACKNEAR_NAME);
 		setAttackFarName(Constants.ORANGEBABY_ATTACKFAR_NAME);
 		setAttackKillName(Constants.ORANGEBABY_ATTACKKILL_NAME);
