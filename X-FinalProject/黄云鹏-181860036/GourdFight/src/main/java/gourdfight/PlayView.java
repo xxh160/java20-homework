@@ -7,15 +7,28 @@ import java.util.Random;
 
 import app.ImageLocate;
 import app.ImagePane;
-import app.ImageSet;
 import app.TextLocate;
 import app.View;
 
 import output.URL;
 import world.AttackEntity;
+import world.Background;
+import world.BlueBaby;
+import world.Chilopod;
+import world.Crocodile;
 import world.DefendEntity;
 import world.Entity;
+import world.EntityName;
 import world.EntityState;
+import world.GrandFather;
+import world.GreenBaby;
+import world.IndigoBaby;
+import world.OrangeBaby;
+import world.PurpleBaby;
+import world.RedBaby;
+import world.Scorpion;
+import world.Snake;
+import world.YellowBaby;
 import framework.*;
 import input.Key;
 
@@ -26,25 +39,28 @@ import network.TCPServer;
 
 public class PlayView extends View { // 游戏页面类
 	
-	HashMap<String, Entity> entityMap; // 游戏实体字典 
-	LinkedHashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
-	LinkedHashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
+	private HashMap<String, Entity> entityMap; // 游戏实体字典 
+	private LinkedHashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
+	private LinkedHashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
 	
-	AttackEntity player1_attackEntity; // 玩家1的攻击实体
-	AttackEntity player2_attackEntity; // 玩家2的攻击实体
-	DefendEntity player1_defendEntity; // 玩家1的防御实体
-	DefendEntity player2_defendEntity; // 玩家2的防御实体
+	private EntityName player1_name; // 玩家1的实体
+	private EntityName player2_name; // 玩家2的实体
+	
+	private AttackEntity player1_attackEntity; // 玩家1的攻击实体
+	private AttackEntity player2_attackEntity; // 玩家2的攻击实体
+	private DefendEntity player1_defendEntity; // 玩家1的防御实体
+	private DefendEntity player2_defendEntity; // 玩家2的防御实体
 	
 	private boolean isServer; // 是否作为服务器端(false 则为客户端, 默认为客户端)
 	
 	int frameCount; // 帧计数器
 	boolean mode; // 游戏模式(true为网络版本，false为单击版本)
 	
-	TCPServer server; // 服务器端
-	TCPClient client; // 客户端
+	private TCPServer server; // 服务器端
+	private TCPClient client; // 客户端
 	
-	ArrayList<Packet> sendPktQueue; // 发送包队列，即自己的操作/状态序列
-	ArrayList<Packet> receivePktQueue; // 接受包队列，即对手的操作/状态序列
+	private ArrayList<Packet> sendPktQueue; // 发送包队列，即自己的操作/状态序列
+	private ArrayList<Packet> receivePktQueue; // 接受包队列，即对手的操作/状态序列
 	int sendPktQueueIdx; // 发送包队列指针
 	int receivePktQueueIdx; // 接受包队列指针
 	
@@ -59,7 +75,7 @@ public class PlayView extends View { // 游戏页面类
 		textLocateMap = new LinkedHashMap<>();
 		
 		frameCount = 0;
-		mode = false; // !!!!!!!!!!!!!!单机版测试!!!!!!!!!!!!!!
+		mode = true; 
 		
 		isServer = false; 
 		server = new TCPServer("", Constants.PORT);
@@ -81,137 +97,68 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void setBackground() { // 初设背景
-		Entity background = new Entity(Constants.BACKGROUND);
-		
-		String[] bgs = new String[]{"door","desk","ground","hole","home"}; 
-		
-		String filePath = URL.toPngPath("main", "background",bgs[new Random().nextInt(5)]);
-		Image background_img = new Image(URL.toURL(filePath)); 
-		background.addImage(EntityState.STANDING_FORWARD, background_img);
+		Background background = new Background(Constants.BACKGROUND);
 		
 		addEntity(Constants.BACKGROUND, background);
 		
 		ImageLocate background_imgLocate = new ImageLocate(
-				background_img,
+				background.getCurrentImage(),
 				Constants.BACKGROUND_X,
 				Constants.BACKGROUND_Y,
-				Constants.BACKGROUND_W,
-				Constants.BACKGROUND_H);
+				background.getWidth(),
+				background.getHeight());
 		
 		addImageLocate(Constants.BACKGROUND, background_imgLocate);
 	}
 	
 	private void setPlayer1() { // 初设玩家1
 		
-		// 基本属性设置
-		Entity player1 = new Entity(Constants.PLAYER1);
-		player1.setMobile(true);
+		// 选择角色
+		Entity player1 = null;
+		switch (player1_name) {
+		case REDBABY:
+			player1 = new RedBaby(Constants.REDBABY_NAME);
+			break;
+		case ORANGEBABY:
+			player1 = new OrangeBaby(Constants.ORANGEBABY_NAME);
+			break;
+		case YELLOWBABY:
+			player1 = new YellowBaby(Constants.YELLOWBABY_NAME);
+			break;
+		case GREENBABY:
+			player1 = new GreenBaby(Constants.GREENBABY_NAME);
+			break;
+		case BLUEBABY:
+			player1 = new BlueBaby(Constants.BLUEBABY_NAME);
+			break;
+		case INDIGOBABY:
+			player1 = new IndigoBaby(Constants.INDIGOBABY_NAME);
+			break;
+		case PURPLEBABY:
+			player1 = new PurpleBaby(Constants.PURPLEBABY_NAME);
+			break;
+		case GRANDFATHER:
+			player1 = new GrandFather(Constants.GRANDFATHER_NAME);
+			break;
+		case SNAKE:
+			player1 = new Snake(Constants.SNAKE_NAME);
+			break;
+		case SCORPION:
+			player1 = new Scorpion(Constants.SCORPION_NAME);
+			break;
+		case CHILOPOD:
+			player1 = new Chilopod(Constants.CHILOPOD_NAME);
+			break;
+		case CROCODILE:
+			player1 = new Crocodile(Constants.CROCODILE_NAME);
+			break;
+		default:
+			player1 = new RedBaby(Constants.REDBABY_NAME);
+			break;
+		}
 		player1.setDirection(false); // 初始朝向向右
 		player1.setState(EntityState.STANDING_TORIGHT); // 初始状态向右站着
-	
-		String nameStr = "redBaby"; // 大娃测试
-		
-		// 状态图片设置
-		for(EntityState state: EntityState.values()){
-			String filePath = "";
-			switch (state) {
-			case STANDING_FORWARD:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			case STANDING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			case STANDING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
-				break;
-			case MOVING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			case MOVING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
-				break;
-			case RUNNING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			case RUNNING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
-				break;
-			case LYING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.LYING_TOLEFT);
-				break;
-			case LYING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.LYING_TORIGHT);
-				break;
-			case JUMPING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			case JUMPING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
-				break;
-			case DEFENDING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
-				break;
-			case DEFENDING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
-				break;
-			case ATTACKING_NEAR_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
-				break;
-			case ATTACKING_NEAR_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
-				break;
-			case ATTACKING_FAR_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
-				break;
-			case ATTACKING_FAR_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
-				break;
-			case ATTACKING_KILL_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
-				break;
-			case ATTACKING_KILL_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
-				break;
 
-			default:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			}
-			
-			Image img = new Image(URL.toURL(filePath));
-			player1.addImage(state,img);
-		}
-		
-		// 设置攻击实体图片
-		String lFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKNEAR_LEFT);
-		String rFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKNEAR_RIGHT);
-		Image lImg = new Image(URL.toURL(lFilePath));
-		Image rImg = new Image(URL.toURL(rFilePath));
-		player1.setAttackNearName(Constants.REDBABY_ATTACKNEAR_NAME);
-		player1.setAttackNearImage(lImg, rImg); // 近攻
-		
-		lFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKFAR_LEFT);
-		rFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKFAR_RIGHT);
-		lImg = new Image(URL.toURL(lFilePath));
-		rImg = new Image(URL.toURL(rFilePath));
-		player1.setAttackFarName(Constants.REDBABY_ATTACKFAR_NAME);
-		player1.setAttackFarImage(lImg, rImg); // 远攻
-		
-		lFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKKILL_LEFT);
-		rFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_ATTACKKILL_RIGHT);
-		lImg = new Image(URL.toURL(lFilePath));
-		rImg = new Image(URL.toURL(rFilePath));
-		player1.setAttackKillName(Constants.REDBABY_ATTACKKILL_NAME);
-		player1.setAttackKillImage(lImg, rImg); // 必杀
-		
-		// 设置防御实体图片
-		lFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_DEFEND_LEFT);
-		rFilePath = URL.toPngPath("main", nameStr, Constants.REDBABY_DEFEND_RIGHT);
-		lImg = new Image(URL.toURL(lFilePath));
-		rImg = new Image(URL.toURL(rFilePath));
-		player1.setDefendName(Constants.REDBABY_DEFEND_NAME);
-		player1.setDefendImg(lImg, rImg); 
-		
 		// 添加实体
 		addEntity(Constants.PLAYER1, player1);
 				
@@ -228,115 +175,52 @@ public class PlayView extends View { // 游戏页面类
 	
 	private void setPlayer2() { // 初设玩家2
 		
-		// 基本属性设置
-		Entity player2 = new Entity(Constants.PLAYER2);
-		player2.setMobile(true);
+		// 选择角色
+		Entity player2 = null;
+		switch (player2_name) {
+		case REDBABY:
+			player2 = new RedBaby(Constants.REDBABY_NAME);
+			break;
+		case ORANGEBABY:
+			player2 = new OrangeBaby(Constants.ORANGEBABY_NAME);
+			break;
+		case YELLOWBABY:
+			player2 = new YellowBaby(Constants.YELLOWBABY_NAME);
+			break;
+		case GREENBABY:
+			player2 = new GreenBaby(Constants.GREENBABY_NAME);
+			break;
+		case BLUEBABY:
+			player2 = new BlueBaby(Constants.BLUEBABY_NAME);
+			break;
+		case INDIGOBABY:
+			player2 = new IndigoBaby(Constants.INDIGOBABY_NAME);
+			break;
+		case PURPLEBABY:
+			player2 = new PurpleBaby(Constants.PURPLEBABY_NAME);
+			break;
+		case GRANDFATHER:
+			player2 = new GrandFather(Constants.GRANDFATHER_NAME);
+			break;
+		case SNAKE:
+			player2 = new Snake(Constants.SNAKE_NAME);
+			break;
+		case SCORPION:
+			player2 = new Scorpion(Constants.SCORPION_NAME);
+			break;
+		case CHILOPOD:
+			player2 = new Chilopod(Constants.CHILOPOD_NAME);
+			break;
+		case CROCODILE:
+			player2 = new Crocodile(Constants.CROCODILE_NAME);
+			break;
+		default:
+			player2 = new RedBaby(Constants.REDBABY_NAME);
+			break;
+		}
 		player2.setDirection(true); // 初始朝向向左
 		player2.setState(EntityState.STANDING_TOLEFT); // 初始状态向左站着
 	
-		String nameStr = "greenBaby"; // 四娃测试
-		
-		// 状态图片设置
-		for(EntityState state: EntityState.values()){
-			String filePath = "";
-			switch (state) {
-			case STANDING_FORWARD:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			case STANDING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			case STANDING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
-				break;
-			case MOVING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			case MOVING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
-				break;
-			case RUNNING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			case RUNNING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
-				break;
-			case LYING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.LYING_TOLEFT);
-				break;
-			case LYING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.LYING_TORIGHT);
-				break;
-			case JUMPING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			case JUMPING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TORIGHT);
-				break;
-			case DEFENDING_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
-				break;
-			case DEFENDING_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
-				break;
-			case ATTACKING_NEAR_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
-				break;
-			case ATTACKING_NEAR_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
-				break;
-			case ATTACKING_FAR_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
-				break;
-			case ATTACKING_FAR_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
-				break;
-			case ATTACKING_KILL_TOLEFT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TOLEFT);
-				break;
-			case ATTACKING_KILL_TORIGHT:
-				filePath = URL.toPngPath("main", nameStr, Constants.ATTACKING_TORIGHT);
-				break;
-
-			default:
-				filePath = URL.toPngPath("main", nameStr, Constants.STANDING_TOLEFT);
-				break;
-			}
-			
-			Image img = new Image(URL.toURL(filePath));
-			player2.addImage(state,img);
-		}
-		
-		// 设置攻击实体图片
-		String lFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKNEAR_LEFT);
-		String rFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKNEAR_RIGHT);
-		Image lImg = new Image(URL.toURL(lFilePath));
-		Image rImg = new Image(URL.toURL(rFilePath));
-		player2.setAttackNearName(Constants.GREENBABY_ATTACKNEAR_NAME);
-		player2.setAttackNearImage(lImg, rImg); // 近攻
-		
-		lFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKFAR_LEFT);
-		rFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKFAR_RIGHT);
-		lImg = new Image(URL.toURL(lFilePath));
-		rImg = new Image(URL.toURL(rFilePath));
-		player2.setAttackFarName(Constants.GREENBABY_ATTACKFAR_NAME);
-		player2.setAttackFarImage(lImg, rImg); // 远攻
-		
-		lFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKKILL_LEFT);
-		rFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_ATTACKKILL_RIGHT);
-		lImg = new Image(URL.toURL(lFilePath));
-		rImg = new Image(URL.toURL(rFilePath));
-		player2.setAttackKillName(Constants.GREENBABY_ATTACKKILL_NAME);
-		player2.setAttackKillImage(lImg, rImg); // 必杀
-		
-		// 设置防御实体图片
-		lFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_DEFEND_LEFT);
-		rFilePath = URL.toPngPath("main", nameStr, Constants.GREENBABY_DEFEND_RIGHT);
-		lImg = new Image(URL.toURL(lFilePath));
-		rImg = new Image(URL.toURL(rFilePath));
-		player2.setDefendName(Constants.GREENBABY_DEFEND_NAME);
-		player2.setDefendImg(lImg, rImg); 
-		
 		// 添加实体
 		addEntity(Constants.PLAYER2, player2);
 				
@@ -352,11 +236,11 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	// Setter
-	private void setServer(boolean s) { // 设置是否是服务器端
+	public void setServer(boolean s) { // 设置是否是服务器端
 		isServer = s;
 	}
 	
-	private void launchNetwork() { // ！！！！！！！！！开启网络通信，仅作测试用例，应当为上层页面调用 ！！！！！！！！！！
+	public void launchNetwork() { // ！！！！！！！！！开启网络通信，仅作测试用例，应当为上层页面调用 ！！！！！！！！！！
 		if(isServer) { // 自己为服务器端
 			server.start();
 		}
@@ -365,7 +249,7 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
-	private void setMode(boolean m) { // 设置游戏模式
+	public void setMode(boolean m) { // 设置游戏模式
 		mode = m;
 	}
 	
@@ -1073,7 +957,6 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
-	
 	private void collisionDetectA1P2(){ // 碰撞检测：玩家1攻击实体 vs 玩家2实体
 	
 		Entity player1 = entityMap.get(Constants.PLAYER1);
@@ -1116,7 +999,6 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
-	
 	private void collisionDetectA2P1(){ // 碰撞检测：玩家2攻击实体 vs 玩家1实体
 		
 		Entity player1 = entityMap.get(Constants.PLAYER1);
@@ -1158,7 +1040,6 @@ public class PlayView extends View { // 游戏页面类
 			}
 		}
 	}
-	
 	
 	private boolean isCollided(double x1,double y1,double w1,double h1,
 			double x2, double y2, double w2, double h2) { 
@@ -1233,7 +1114,6 @@ public class PlayView extends View { // 游戏页面类
 			}
 		}
 	}
-	
 	
 	private void parsePlayer1Action() { // 解析完操作队列并找到同步帧后，进而解析自己的同步帧的动作
 		if(sendPktQueue.isEmpty())
@@ -1516,8 +1396,6 @@ public class PlayView extends View { // 游戏页面类
 		imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage()); // 设置图片
 	}
 	
-	
-	
 	private void parsePlayer2Action() { // 解析完操作队列并找到同步帧后，进而解析对手的同步帧的动作
 		if(receivePktQueue.isEmpty())
 			return;
@@ -1799,8 +1677,6 @@ public class PlayView extends View { // 游戏页面类
 		imgLocateMap.get(Constants.PLAYER2).setImg(player2.getCurrentImage()); // 设置图片
 	}
 	
-	
-	
 	private void updateFrame() { // 更新帧
 
 		((ImagePane) pane).update(
@@ -1808,15 +1684,11 @@ public class PlayView extends View { // 游戏页面类
 				textLocateMap.values());
 	}
 	
-	
-	
 	public void addEntity(String id, Entity entity) { // 添加实体
 		if(id != null && entity != null) {
 			entityMap.put(id, entity);
 		}
 	}
-	
-	
 	
 	public void removeEntity(String id) { // 删除实体
 		if(id != null) {
@@ -1824,29 +1696,23 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
-	
-	
 	public void addImageLocate(String id, ImageLocate imgLocate) { // 添加图片定位
 		if(id != null && imgLocate != null) {
 				imgLocateMap.put(id, imgLocate);
 		}
 	}
 	
-	
 	public void removeImageLocate(String id) { // 删除图片定位
 		if(id != null) {
 			imgLocateMap.remove(id);
 		}
 	}
-	
-	
+
 	public void addTextLocate(String id, TextLocate textLocate) { // 添加文本定位
 		if(id != null && textLocate != null) {
 			textLocateMap.put(id, textLocate);
 		}
-	}
-	
-	
+	}	
 	
 	public void removeTextLocate(String id) { // 删除文本定位
 		if(id != null) {
@@ -1855,54 +1721,39 @@ public class PlayView extends View { // 游戏页面类
 		onLaunch();
 	}
 	
-	// 页面生命周期管理
+	public void setPlayer1Name(EntityName name) { // 设置player1的名称
+		player1_name = name;
+	}
 	
-	
-	// 生命周期管理
-	// 生命周期管理
+	public void setPlayer2Name(EntityName name) { // 设置player2的名称
+		player2_name = name;
+	}
 	
 	// 生命周期管理
 	public void onLaunch() { // 页面启动设置
 		reset(); // 先清空上一次启动时的字典
-//		setServer(true); // ！！！！！！！！！！！！！！！！！！！测试用例，应当在上层页面设置！！！！！！！！！！！！！！
-//		launchNetwork(); // ！！！！！！！！！！！！！！！！！！！测试用例，应当在上层页面调用！！！！！！！！！！！！！！
 		initEntity(); // 初始化游戏实体
 	}
-	
-	
-	
 	
 	@Override
 	public void onFinish() {
 		super.onFinish();
 	}
 	
-	
-	
-	
 	@Override
 	public void onEnter() {
 		super.onEnter();
 	}
-	
-	
-	
 	
 	@Override
 	public void onLeave() {
 		super.onLeave();
 	}
 	
-	
-	
-	
 	@Override
 	public void onStart() {
 		super.onStart();
 	}
-	
-	
-	
 	
 	@Override
 	public void onUpdate(double time) {
@@ -1913,9 +1764,9 @@ public class PlayView extends View { // 游戏页面类
 		updatePlayer2(mode); // 更新玩家2
 		
 		// 解析操作队列
-//		parseQueue(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
-		parsePlayer1Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
-		parsePlayer2Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
+		parseQueue();
+//		parsePlayer1Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
+//		parsePlayer2Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
 		
 		// 更新攻击/防御实体
 		updatePlayer1AttackEntity();
@@ -1934,13 +1785,9 @@ public class PlayView extends View { // 游戏页面类
 		super.onUpdate(time);
 	}
 	
-	
-	
 	@Override
 	public void onStop() {
 		super.onStop();
 	}
-	
-	
 
 }

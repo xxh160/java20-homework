@@ -4,11 +4,12 @@ import java.util.HashMap;
 import gourdfight.Constants;
 import javafx.beans.binding.DoubleExpression;
 import javafx.scene.image.Image;
+import output.URL;
 
 public class Entity { // 游戏实体类，所有游戏角色、道具等的父类
 	
-	private String name; // 实体名称
-	private EntityState state; // 实体状态(默认"朝右边站着")
+	protected String name; // 实体名称
+	protected EntityState state; // 实体状态(默认"朝右边站着")
 	
 	private boolean isMobile; // 是否可移动(默认不可移动)
 	private boolean isActive; // 是否活跃(默认活跃)
@@ -84,41 +85,20 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	// 初始化
 	public Entity(String name) {
+		// 实体必要设置
+		setName(name);
+		setState(EntityState.STANDING_TORIGHT);
 		imageMap = new HashMap<>();
 		textMap = new HashMap<>();
 		frameMap = new HashMap<>();
-		initFrame();
-		
-		setWidth(Constants.PLAYER1_INIT_W);
-		setHeight(Constants.PLAYER1_INIT_H);
-		
 		deltaX = 0;
 		deltaY = 0;
 		frameCount = 0;
 		
-		setLifeValue(100);
-		setMoveSpeed(5);
-		setRunSpeed(12);
-		setJumpSpeed(5);
-		setJumpHeight(200);
-		
-		setAttackNearValue(10);
-		setAttackNearDist(50);
-		setAttackNearSpeed(4);
-		setAttackNearWidth(Constants.PLAYER1_ATTACK_W);
-		setAttackNearHeight(Constants.PLAYER1_ATTACK_H);
-		
-		setAttackFarValue(15);
-		setAttackFarDist(250);
-		setAttackFarSpeed(8);
-		setAttackFarWidth(Constants.PLAYER1_ATTACK_W);
-		setAttackFarHeight(Constants.PLAYER1_ATTACK_H);
-		
-		setAttackKillValue(25);
-		setAttackKillDist(150);
-		setAttackKillSpeed(6);
-		setAttackKillWidth(Constants.PLAYER1_ATTACK_W);
-		setAttackKillHeight(Constants.PLAYER1_ATTACK_H);
+		initFrame();
+		initStateImg();
+		initAttackImg();
+		initDefendImg();
 		
 		setCurrentAttackValue(0);
 		setCurrentAttackDist(0);
@@ -126,21 +106,47 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setCurrentAttackWidth(0);
 		setCurrentAttackHeight(0);
 		
-		setDefendValue(5);
-		setDefendDist(20);
-		setDefendSpeed(30);
-		setDefendWidth(Constants.PLAYER1_DEFEND_W);
-		setDefendHeight(Constants.PLAYER1_DEFEND_H);		
-		
-		setName(name);
-		setState(EntityState.STANDING_TORIGHT);
+		// 实体其他设置(以下均为默认值，子类实例择取覆盖设置)
 		setMobile(false);
 		setActive(true);
 		setAttackable(false);
 		setDefendable(false);
+		
+		setWidth(Constants. PLAYER_DEFAULT_W);
+		setHeight(Constants. PLAYER_DEFAULT_H);
+		
+		setLifeValue(Constants.DEFAULT_LIFE_VALUE);
+		setMoveSpeed(Constants.DEFAULT_MOVE_SPEED);
+		setRunSpeed(Constants.DEFAULT_RUN_SPEED);
+		setJumpSpeed(Constants.DEFAULT_JUMP_SPEED);
+		setJumpHeight(Constants.DEFAULT_JUMP_HEIGHT);
+		
+		setAttackNearValue(Constants.DEFAULT_ATTACK_NEAR_VALUE);
+		setAttackNearDist(Constants.DEFAULT_ATTACK_NEAR_DIST);
+		setAttackNearSpeed(Constants.DEFAULT_ATTACK_NEAR_SPEED);
+		setAttackNearWidth(Constants.PLAYER_DEFAULT_ATTACK_W);
+		setAttackNearHeight(Constants.PLAYER_DEFAULT_ATTACK_H);
+		
+		setAttackFarValue(Constants.DEFAULT_ATTACK_FAR_VALUE);
+		setAttackFarDist(Constants.DEFAULT_ATTACK_FAR_DIST);
+		setAttackFarSpeed(Constants.DEFAULT_ATTACK_FAR_SPEED);
+		setAttackFarWidth(Constants.PLAYER_DEFAULT_ATTACK_W);
+		setAttackFarHeight(Constants.PLAYER_DEFAULT_ATTACK_H);
+		
+		setAttackKillValue(Constants.DEFAULT_ATTACK_KILL_VALUE);
+		setAttackKillDist(Constants.DEFAULT_ATTACK_KILL_DIST);
+		setAttackKillSpeed(Constants.DEFAULT_ATTACK_KILL_SPEED);
+		setAttackKillWidth(Constants.PLAYER_DEFAULT_ATTACK_W);
+		setAttackKillHeight(Constants.PLAYER_DEFAULT_ATTACK_H);
+		
+		setDefendValue(Constants.DEFAULT_DEFEND_VALUE);
+		setDefendDist(Constants.DEFAULT_DEFEND_DIST);
+		setDefendSpeed(Constants.DEFAULT_DEFEND_SPEED);
+		setDefendWidth(Constants.PLAYER_DEFAULT_DEFEND_W);
+		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H);		
 	}
 	
-	public void initFrame() { // 初始化帧计数
+	private void initFrame() { // 初始化帧计数
 		for(EntityState state : EntityState.values()){
 			switch (state) {
 			case ATTACKING_NEAR_TOLEFT:
@@ -174,6 +180,109 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		}
 	}
 	
+	private void initStateImg() { 	// 设置状态图片
+		String dirStr = Constants.MAIN_DIRECOTRY;
+		for(EntityState state: EntityState.values()){
+			String filePath = "";
+			switch (state) {
+			case STANDING_FORWARD:
+				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TOLEFT);
+				break;
+			case STANDING_TOLEFT:
+				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TOLEFT);
+				break;
+			case STANDING_TORIGHT:
+				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TORIGHT);
+				break;
+			case MOVING_TOLEFT:
+				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TOLEFT);
+				break;
+			case MOVING_TORIGHT:
+				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TORIGHT);
+				break;
+			case RUNNING_TOLEFT:
+				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TOLEFT);
+				break;
+			case RUNNING_TORIGHT:
+				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TORIGHT);
+				break;
+			case LYING_TOLEFT:
+				filePath = URL.toPngPath(dirStr, name, Constants.LYING_TOLEFT);
+				break;
+			case LYING_TORIGHT:
+				filePath = URL.toPngPath(dirStr, name, Constants.LYING_TORIGHT);
+				break;
+			case JUMPING_TOLEFT:
+				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TOLEFT);
+				break;
+			case JUMPING_TORIGHT:
+				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TORIGHT);
+				break;
+			case DEFENDING_TOLEFT:
+				filePath = URL.toPngPath(dirStr, name, Constants.ATTACKING_TOLEFT);
+				break;
+			case DEFENDING_TORIGHT:
+				filePath = URL.toPngPath(dirStr, name, Constants.ATTACKING_TORIGHT);
+				break;
+			case ATTACKING_NEAR_TOLEFT:
+				filePath = URL.toPngPath(dirStr, name, Constants.ATTACKING_TOLEFT);
+				break;
+			case ATTACKING_NEAR_TORIGHT:
+				filePath = URL.toPngPath(dirStr, name, Constants.ATTACKING_TORIGHT);
+				break;
+			case ATTACKING_FAR_TOLEFT:
+				filePath = URL.toPngPath(dirStr, name, Constants.ATTACKING_TOLEFT);
+				break;
+			case ATTACKING_FAR_TORIGHT:
+				filePath = URL.toPngPath(dirStr, name, Constants.ATTACKING_TORIGHT);
+				break;
+			case ATTACKING_KILL_TOLEFT:
+				filePath = URL.toPngPath(dirStr, name, Constants.ATTACKING_TOLEFT);
+				break;
+			case ATTACKING_KILL_TORIGHT:
+				filePath = URL.toPngPath(dirStr, name, Constants.ATTACKING_TORIGHT);
+				break;
+
+			default:
+				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TOLEFT);
+				break;
+			}
+			Image img = new Image(URL.toURL(filePath));
+			addImage(state,img);
+		}
+	}
+	
+	private void initAttackImg() { // 设置攻击实体图片
+		
+		String dirStr = Constants.MAIN_DIRECOTRY;
+		String lFilePath = URL.toPngPath(dirStr, name, EntityState.ATTACKING_NEAR_TOLEFT.getState());
+		String rFilePath = URL.toPngPath(dirStr, name, EntityState.ATTACKING_NEAR_TORIGHT.getState());
+		Image lImg = new Image(URL.toURL(lFilePath));
+		Image rImg = new Image(URL.toURL(rFilePath));
+		setAttackNearImage(lImg, rImg); // 近攻
+		
+		lFilePath = URL.toPngPath(dirStr, name, EntityState.ATTACKING_FAR_TOLEFT.getState());
+		rFilePath = URL.toPngPath(dirStr, name, EntityState.ATTACKING_FAR_TORIGHT.getState());
+		lImg = new Image(URL.toURL(lFilePath));
+		rImg = new Image(URL.toURL(rFilePath));
+		setAttackFarImage(lImg, rImg); // 远攻
+		
+		lFilePath = URL.toPngPath(dirStr, name, EntityState.ATTACKING_KILL_TOLEFT.getState());
+		rFilePath = URL.toPngPath(dirStr, name, EntityState.ATTACKING_KILL_TORIGHT.getState());
+		lImg = new Image(URL.toURL(lFilePath));
+		rImg = new Image(URL.toURL(rFilePath));
+		setAttackKillImage(lImg, rImg); // 必杀
+	}
+
+	private void initDefendImg() { // 设置防御实体图片
+		String dirStr = Constants.MAIN_DIRECOTRY;
+		String lFilePath = URL.toPngPath(dirStr, name, EntityState.DEFENDING_TOLEFT.getState());
+		String rFilePath = URL.toPngPath(dirStr, name, EntityState.DEFENDING_TORIGHT.getState());
+		Image lImg = new Image(URL.toURL(lFilePath));
+		Image rImg = new Image(URL.toURL(rFilePath));
+		setDefendImg(lImg, rImg); 
+	}
+
 	// Getter
 	public String getName() { // 获取名称
 		return name;

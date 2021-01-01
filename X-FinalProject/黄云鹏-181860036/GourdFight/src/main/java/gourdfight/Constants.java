@@ -13,6 +13,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String STACK_PANE = "Stack Pane"; //栈控件
 	public static final String IMAGE_PANE = "Image Pane"; // 图片控件
 	
+	// 资源文件
+	public static final String MAIN_DIRECOTRY = "main"; // 主资源
+	public static final String TEST_DIRECOTRY = "test"; // 测试资源
+	
 	// 网络
 	public static final int PORT = 8001; // 端口号
 	
@@ -28,39 +32,100 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String STATE1 = "state1"; // 状态1
 	public static final String STATE2 = "state2"; // 状态2
 	
-	public static final String REDBABY_ATTACKNEAR_NAME = "Normal Punch"; // 大娃近攻名称
-	public static final String REDBABY_ATTACKFAR_NAME = "Fire Punch"; // 大娃远攻名称
-	public static final String REDBABY_ATTACKKILL_NAME = "Gold Punch"; // 大娃必杀名称
-	public static final String REDBABY_DEFEND_NAME = "Defend Stone"; // 大娃防御名称
+	public static final String REDBABY_NAME = "redBaby"; // 大娃实体名称
+	public static final String REDBABY_ATTACKNEAR_NAME = "Normal Punch"; // 大娃近攻招式名称
+	public static final String REDBABY_ATTACKFAR_NAME = "Fire Punch"; // 大娃远攻招式名称
+	public static final String REDBABY_ATTACKKILL_NAME = "Gold Punch"; // 大娃必杀招式名称
+	public static final String REDBABY_DEFEND_NAME = "Defend Stone"; // 大娃防御招式名称
 	
-	public static final String GREENBABY_ATTACKNEAR_NAME = "Normal FireBall"; // 四娃近攻名称
-	public static final String GREENBABY_ATTACKFAR_NAME = "Long FireBall"; // 四娃远攻名称
-	public static final String GREENBABY_ATTACKKILL_NAME = "Black FireBall"; // 四娃必杀名称
-	public static final String GREENBABY_DEFEND_NAME = "Fire Wheel"; // 四娃防御名称
+	public static final String ORANGEBABY_NAME = "orangeBaby"; // 二娃实体名称
+	public static final String ORANGEBABY_ATTACKNEAR_NAME = "Normal Punch"; // 二娃近攻招式名称
+	public static final String ORANGEBABY_ATTACKFAR_NAME = "Fire Punch"; // 二娃远攻招式名称
+	public static final String ORANGEBABY_ATTACKKILL_NAME = "Gold Punch"; // 二娃必杀招式名称
+	public static final String ORANGEBABY_DEFEND_NAME = "Defend Stone"; // 二娃防御招式名称
+	
+	public static final String YELLOWBABY_NAME = "yellowBaby"; // 三娃实体名称
+	public static final String YELLOWBABY_ATTACKNEAR_NAME = "Normal Punch"; // 三娃近攻招式名称
+	public static final String YELLOWBABY_ATTACKFAR_NAME = "Fire Punch"; // 三娃远攻招式名称
+	public static final String YELLOWBABY_ATTACKKILL_NAME = "Gold Punch"; // 三娃必杀招式名称
+	public static final String YELLOWBABY_DEFEND_NAME = "Defend Stone"; // 三娃防御招式名称
+	
+	public static final String GREENBABY_NAME = "greenBaby"; // 四娃实体名称
+	public static final String GREENBABY_ATTACKNEAR_NAME = "Normal FireBall"; // 四娃近攻招式名称
+	public static final String GREENBABY_ATTACKFAR_NAME = "Long FireBall"; // 四娃远攻招式名称
+	public static final String GREENBABY_ATTACKKILL_NAME = "Black FireBall"; // 四娃必杀招式名称
+	public static final String GREENBABY_DEFEND_NAME = "Fire Wheel"; // 四娃防御招式名称
+	
+	public static final String BLUEBABY_NAME = "blueBaby"; // 五娃实体名称
+	public static final String BLUEBABY_ATTACKNEAR_NAME = "Normal Punch"; // 五娃近攻招式名称
+	public static final String BLUEBABY_ATTACKFAR_NAME = "Fire Punch"; // 五娃远攻招式名称
+	public static final String BLUEBABY_ATTACKKILL_NAME = "Gold Punch"; // 五娃必杀招式名称
+	public static final String BLUEBABY_DEFEND_NAME = "Defend Stone"; // 五娃防御招式名称
+	
+	public static final String INDIGOBABY_NAME = "indigoBaby"; // 六娃实体名称
+	public static final String INDIGOBABY_ATTACKNEAR_NAME = "Normal Punch"; // 六娃近攻招式名称
+	public static final String INDIGOBABY_ATTACKFAR_NAME = "Fire Punch"; // 六娃远攻招式名称
+	public static final String INDIGOBABY_ATTACKKILL_NAME = "Gold Punch"; // 六娃必杀招式名称
+	public static final String INDIGOBABY_DEFEND_NAME = "Defend Stone"; // 六娃防御招式名称
+	
+	public static final String PURPLEBABY_NAME = "purpleBaby"; // 七娃实体名称
+	public static final String PURPLEBABY_ATTACKNEAR_NAME = "Normal Punch"; // 七娃近攻招式名称
+	public static final String PURPLEBABY_ATTACKFAR_NAME = "Fire Punch"; // 七娃远攻招式名称
+	public static final String PURPLEBABY_ATTACKKILL_NAME = "Gold Punch"; // 七娃必杀招式名称
+	public static final String PURPLEBABY_DEFEND_NAME = "Defend Stone"; // 七娃防御招式名称
+	
+	public static final String GRANDFATHER_NAME = "grandfather"; // 爷爷实体名称
+	public static final String GRANDFATHER_ATTACKNEAR_NAME = "Normal Punch"; // 爷爷近攻招式名称
+	public static final String GRANDFATHER_ATTACKFAR_NAME = "Fire Punch"; // 爷爷远攻招式名称
+	public static final String GRANDFATHER_ATTACKKILL_NAME = "Gold Punch"; // 爷爷必杀招式名称
+	public static final String GRANDFATHER_DEFEND_NAME = "Defend Stone"; // 爷爷防御招式名称
+	
+	public static final String SNAKE_NAME = "snake"; // 蛇精实体名称
+	public static final String SNAKE_ATTACKNEAR_NAME = "Normal Punch"; // 蛇精近攻招式名称
+	public static final String SNAKE_ATTACKFAR_NAME = "Fire Punch"; // 蛇精远攻招式名称
+	public static final String SNAKE_ATTACKKILL_NAME = "Gold Punch"; // 蛇精必杀招式名称
+	public static final String SNAKE_DEFEND_NAME = "Defend Stone"; // 蛇精防御招式名称
+	
+	public static final String SCORPION_NAME = "scorpion"; // 蝎子精实体名称
+	public static final String SCORPION_ATTACKNEAR_NAME = "Normal Punch"; // 蝎子精近攻招式名称
+	public static final String SCORPION_ATTACKFAR_NAME = "Fire Punch"; // 蝎子精远攻招式名称
+	public static final String SCORPION_ATTACKKILL_NAME = "Gold Punch"; // 蝎子精必杀招式名称
+	public static final String SCORPION_DEFEND_NAME = "Defend Stone"; // 蝎子精防御招式名称
+	
+	public static final String CHILOPOD_NAME = "chilopod"; // 蜈蚣精实体名称
+	public static final String CHILOPOD_ATTACKNEAR_NAME = "Normal Punch"; // 蜈蚣精近攻招式名称
+	public static final String CHILOPOD_ATTACKFAR_NAME = "Fire Punch"; // 蜈蚣精远攻招式名称
+	public static final String CHILOPOD_ATTACKKILL_NAME = "Gold Punch"; // 蜈蚣精必杀招式名称
+	public static final String CHILOPOD_DEFEND_NAME = "Defend Stone"; // 蜈蚣精防御招式名称
+	
+	public static final String CROCODILE_NAME = "crocodile"; // 鳄鱼精实体名称
+	public static final String CROCODILE_ATTACKNEAR_NAME = "Normal Punch"; // 鳄鱼精近攻招式名称
+	public static final String CROCODILE_ATTACKFAR_NAME = "Fire Punch"; // 鳄鱼精远攻招式名称
+	public static final String CROCODILE_ATTACKKILL_NAME = "Gold Punch"; // 鳄鱼精必杀招式名称
+	public static final String CROCODILE_DEFEND_NAME = "Defend Stone"; // 鳄鱼精防御招式名称
+	
 	
 	// 实体位置(注：后缀1的为自己，后缀2的为对手)
 	public static final double BACKGROUND_X = 0; // 背景x轴坐标
 	public static final double BACKGROUND_Y = 0; // 背景y轴坐标
+	
 	public static final double PLAYER1_INIT_X = 50; // 玩家1初始x轴坐标
 	public static final double PLAYER1_INIT_Y = 400; // 玩家1初始y轴坐标
-	public static final double PLAYER2_INIT_X = 400; // 玩家2初始x轴坐标
+	public static final double PLAYER2_INIT_X = 600; // 玩家2初始x轴坐标
 	public static final double PLAYER2_INIT_Y = 400; // 玩家2初始y轴坐标
 	
-	// 实体大小(注：后缀1的为自己，后缀2的为对手)
+	// 实体大小
 	public static final double BACKGROUND_W = WINDOW_WIDTH; // 背景宽度
 	public static final double BACKGROUND_H = WINDOW_HEIGHT; // 背景宽度
-	public static final double PLAYER1_INIT_W = 120; // 玩家1初始宽度
-	public static final double PLAYER1_INIT_H = 120; // 玩家1初始高度
-	public static final double PLAYER2_INIT_W = 120; // 玩家2初始宽度
-	public static final double PLAYER2_INIT_H = 120; // 玩家2初始高度
-	public static final double PLAYER1_ATTACK_W = 80; // 玩家1攻击实体宽度
-	public static final double PLAYER1_ATTACK_H = 80; // 玩家1攻击实体高度
-	public static final double PLAYER2_ATTACK_W = 80; // 玩家2攻击实体宽度
-	public static final double PLAYER2_ATTACK_H = 80; // 玩家2攻击实体高度
-	public static final double PLAYER1_DEFEND_W = 80; // 玩家1防御实体宽度
-	public static final double PLAYER1_DEFEND_H = 80; // 玩家1防御实体高度
-	public static final double PLAYER2_DEFEND_W = 80; // 玩家2防御实体宽度
-	public static final double PLAYER2_DEFEND_H = 80; // 玩家2防御实体高度
+	
+	public static final double PLAYER_DEFAULT_W = 110; // 玩家默认宽度
+	public static final double PLAYER_DEFAULT_H = 110; // 玩家默认高度
+	
+	public static final double PLAYER_DEFAULT_ATTACK_W = 70; // 玩家默认攻击实体宽度
+	public static final double PLAYER_DEFAULT_ATTACK_H = 70; // 玩家默认攻击实体高度
+	
+	public static final double PLAYER_DEFAULT_DEFEND_W = 70; // 玩家默认防御实体宽度
+	public static final double PLAYER_DEFAULT_DEFEND_H = 70; // 玩家默认防御实体高度
 	
 	// 实体状态值
 	public static final String STANDING_FORWARD = "standingForward"; // 朝正面站着
@@ -83,31 +148,32 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String DEFENDING_TOLEFT = "defendingToLeft"; // 朝左边防御
 	public static final String DEFENDING_TORIGHT = "defendingToRight"; // 朝右边防御
 	
+	// 辅助状态值
 	public static final String ATTACKING_TOLEFT = "attackingToLeft"; // 朝左边进攻
 	public static final String ATTACKING_TORIGHT = "attackingToRight"; // 朝右边进攻
 	
+	// 实体其他属性
+	public static final double DEFAULT_LIFE_VALUE = 100; // 默认生命值
+	public static final double DEFAULT_MOVE_SPEED = 5; // 默认移动速度
+	public static final double DEFAULT_RUN_SPEED = 12; // 默认冲刺速度
+	public static final double DEFAULT_JUMP_SPEED = 5; // 默认跳跃速度
+	public static final double DEFAULT_JUMP_HEIGHT = 200; // 默认跳跃高度
 	
-	// 实体图片(注：后缀1的为自己，后缀2的为对手)
-	public static final String BACKGROUND_INIT_IMAGE = "background_init_image"; // 初始背景图片
-	public static final String PLAYER1_INIT_IMAGE = "player1_init_image"; // 玩家1初始图片
-	public static final String PLAYER2_INIT_IMAGE = "player2_init_image"; // 玩家2初始图片
+	public static final double DEFAULT_ATTACK_NEAR_VALUE = 10; // 默认近攻攻击值
+	public static final double DEFAULT_ATTACK_NEAR_DIST = 50; // 默认近攻距离
+	public static final double DEFAULT_ATTACK_NEAR_SPEED = 4; // 默认近攻实体移动速度
 	
-	public static final String REDBABY_ATTACKNEAR_LEFT = "leftNormalPunch"; // 大娃近攻图片(朝左)
-	public static final String REDBABY_ATTACKNEAR_RIGHT = "rightNormalPunch"; // 大娃近攻图片(朝右)
-	public static final String REDBABY_ATTACKFAR_LEFT = "leftFirePunch"; // 大娃远攻图片(朝左)
-	public static final String REDBABY_ATTACKFAR_RIGHT = "rightFirePunch"; // 大娃远攻图片(朝右)
-	public static final String REDBABY_ATTACKKILL_LEFT = "leftGoldPunch"; // 大娃必杀图片(朝左)
-	public static final String REDBABY_ATTACKKILL_RIGHT = "rightGoldPunch"; // 大娃必杀图片(朝右)
-	public static final String REDBABY_DEFEND_LEFT = "leftDefendStone"; // 大娃防御图片(朝左)
-	public static final String REDBABY_DEFEND_RIGHT = "rightDefendStone"; // 大娃防御图片(朝右)
+	public static final double DEFAULT_ATTACK_FAR_VALUE = 15; // 默认远攻攻击值
+	public static final double DEFAULT_ATTACK_FAR_DIST = 250; // 默认远攻距离
+	public static final double DEFAULT_ATTACK_FAR_SPEED = 8; // 默认远攻实体移动速度
 	
-	public static final String GREENBABY_ATTACKNEAR_LEFT = "leftNormalFireBall"; // 四娃近攻图片(朝左)
-	public static final String GREENBABY_ATTACKNEAR_RIGHT = "rightNormalFireBall"; // 四娃近攻图片(朝右)
-	public static final String GREENBABY_ATTACKFAR_LEFT = "leftLongFireBall"; // 四娃远攻图片(朝左)
-	public static final String GREENBABY_ATTACKFAR_RIGHT = "rightLongFireBall"; // 四娃远攻图片(朝右)
-	public static final String GREENBABY_ATTACKKILL_LEFT = "leftBlackFireBall"; // 四娃必杀图片(朝左)
-	public static final String GREENBABY_ATTACKKILL_RIGHT = "rightBlackFireBall"; // 四娃必杀图片(朝右)
-	public static final String GREENBABY_DEFEND_LEFT = "leftFireWheel"; // 四娃防御图片(朝左)
-	public static final String GREENBABY_DEFEND_RIGHT = "rightFireWheel"; // 四娃防御图片(朝右)
+	public static final double DEFAULT_ATTACK_KILL_VALUE = 25; // 默认必杀攻击值
+	public static final double DEFAULT_ATTACK_KILL_DIST = 150; // 默认必杀距离
+	public static final double DEFAULT_ATTACK_KILL_SPEED = 6; // 默认必杀实体移动速度
+	
+	public static final double DEFAULT_DEFEND_VALUE = 5; // 默认防御值
+	public static final double DEFAULT_DEFEND_DIST = 20; // 默认防御距离
+	public static final double DEFAULT_DEFEND_SPEED = 3; // 默认防御实体移动速度
+	
 	
 }

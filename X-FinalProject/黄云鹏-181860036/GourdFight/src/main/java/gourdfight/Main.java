@@ -2,6 +2,7 @@ package gourdfight;
 
 import app.Game;
 import framework.Framework;
+import world.EntityName;
 
 public class Main extends Game { // 主函数类，程序入口
 	public static void main(String[] args) {
@@ -20,6 +21,14 @@ public class Main extends Game { // 主函数类，程序入口
 		Framework.app.regView(Constants.HOME_VIEW_KEY, new HomeView()); // 主页面
 		Framework.app.regView(Constants.PLAY_VIEW_KEY, new PlayView()); // 游戏界面
 		Framework.app.gotoView(Constants.HOME_VIEW_KEY);
+		
+		// test!!!!!!!!!!!!!!!!!!!!!!
+//		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setMode(true); // 网络版测试
+//		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setServer(true); // 服务器端测试
+//		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).launchNetwork(); // 开启网络
+		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setMode(false); // 单机版测试
+		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setPlayer1Name(EntityName.REDBABY); // 大娃测试
+		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setPlayer2Name(EntityName.GREENBABY); // 四娃测试
 	}
 	
 	@Override
