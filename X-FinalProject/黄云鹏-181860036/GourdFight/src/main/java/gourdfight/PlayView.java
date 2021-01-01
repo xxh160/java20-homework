@@ -58,9 +58,9 @@ public class PlayView extends View { // 游戏页面类
 	private boolean isServer; // 是否作为服务器端(false 则为客户端, 默认为客户端)
 	
 	int frameCount; // 帧计数器
+	int endFrame; // 末尾帧数(默认3秒)
+	int endFrameCount; // 末尾帧计数器(计数一局游戏结束后的末尾帧)
 	boolean mode; // 游戏模式(true为网络版本，false为单击版本)
-	
-	boolean isStart; // 是否开始游戏(false则进入游戏倒计时)
 	
 	private TCPServer server; // 服务器端
 	private TCPClient client; // 客户端
@@ -70,8 +70,12 @@ public class PlayView extends View { // 游戏页面类
 	int sendPktQueueIdx; // 发送包队列指针
 	int receivePktQueueIdx; // 接受包队列指针
 	
-	boolean player1Hurt = false; // 玩家1被攻击中(防止攻击实体在生命周期中连续攻击玩家)
-	boolean player2Hurt = false; // 玩家2被攻击中(防止攻击实体在生命周期中连续攻击玩家)
+	boolean isStart; // 是否开始游戏(false则进入游戏倒计时)
+	boolean isGameOver; // 是否一局游戏结束
+	boolean player1Hurt; // 玩家1被攻击中(防止攻击实体在生命周期中连续攻击玩家)
+	boolean player2Hurt; // 玩家2被攻击中(防止攻击实体在生命周期中连续攻击玩家)
+	int round; // 游戏局数(默认是3)
+	int roundCount; // 游戏局数计数器
 	
 	// 初始化
 	public PlayView() {
@@ -81,8 +85,15 @@ public class PlayView extends View { // 游戏页面类
 		textLocateMap = new LinkedHashMap<>();
 		
 		frameCount = 0;
+		roundCount = 0;
+		endFrame = 180;
+		endFrameCount = 0;
 		mode = true; 
 		isStart = false;
+		isGameOver = false;
+		player1Hurt = false;
+		player2Hurt = false;
+		setRound(3);
 		
 		isServer = false; 
 		server = new TCPServer("", Constants.PORT);
@@ -352,7 +363,11 @@ public class PlayView extends View { // 游戏页面类
 		mode = m;
 	}
 	
-	private void reset() { // 重置游戏
+	public void setRound(int r) { // 设置游戏局数
+		round = r;
+	}
+	
+	private void reset() { // 重置游戏局
 		entityMap.clear();
 		imgLocateMap.clear();
 		textLocateMap.clear();
@@ -361,7 +376,9 @@ public class PlayView extends View { // 游戏页面类
 		player1_defendEntity = null;
 		player2_defendEntity = null;
 		frameCount = 0;
+		endFrameCount = 0;
 		isStart = false;
+		isGameOver = false;
 		
 		// 存档之后！！！！！！！！！！！！！！
 		sendPktQueue.clear(); sendPktQueueIdx = 0;
@@ -393,6 +410,26 @@ public class PlayView extends View { // 游戏页面类
 			}
 			else {
 				imgLocateMap.get(Constants.COUNTDOWN).setImg(img);
+			}
+		}
+	}
+	
+	private void updateGameOver() { // 检测一局游戏是否结束并进行相应的设置或跳转
+		if(isGameOver) { // 游戏结束一局
+			endFrameCount++;
+			if(endFrameCount < endFrame) { // 游戏末尾帧计数
+				return;
+			}
+			
+			roundCount++;
+			if(roundCount >= round) { // 游戏全部结束
+				// 跳转到GameOverView页面
+//				Framework.app.gotoView(Constants.GAMEOVER_VIEW_KEY);
+				System.out.println("go to GameOverView"); // test!!!!!!!!!!!!!!!!!
+			}
+			else { 
+				// 重新启动游戏
+				onLaunch();
 			}
 		}
 	}
@@ -1145,8 +1182,15 @@ public class PlayView extends View { // 游戏页面类
 				}
 			}
 			
-			if(!player2.isActive()) {
-				// 游戏结束
+			if(!player2.isActive() && !isGameOver) { // 玩家2刚刚死亡，游戏结束
+				
+				if(player2.isLeft()) {
+					player2.setState(EntityState.LYING_TOLEFT);
+				}else {
+					player2.setState(EntityState.LYING_TORIGHT);
+				}
+				
+				isGameOver = true;
 			}
 		}
 	}
@@ -1196,8 +1240,15 @@ public class PlayView extends View { // 游戏页面类
 				}
 			}
 			
-			if(!player1.isActive()) {
-				// 游戏结束
+			if(!player1.isActive()  && !isGameOver) { // 玩家1刚刚死亡，游戏结束
+				
+				if(player1.isLeft()) {
+					player1.setState(EntityState.LYING_TOLEFT);
+				}else {
+					player1.setState(EntityState.LYING_TORIGHT);
+				}
+				
+				isGameOver = true;
 			}
 		}
 	}
@@ -1343,6 +1394,26 @@ public class PlayView extends View { // 游戏页面类
 			double deltaY = player1.getDeltaY();
 			
 			imgLocateMap.get(Constants.PLAYER1).setY(Constants.PLAYER1_INIT_Y + deltaY);
+		}break;
+		case LYING_TOLEFT: // 向左倒地
+		{
+			player1.lieDown();
+			double deltaY = player1.getDeltaY();
+			deltaY -= (player1.getWidth() - player1.getHeight());
+			
+			imgLocateMap.get(Constants.PLAYER1).setY(Constants.PLAYER1_INIT_Y + deltaY);
+			imgLocateMap.get(Constants.PLAYER1).setW(player1.getHeight());
+			imgLocateMap.get(Constants.PLAYER1).setH(player1.getWidth());
+		}break;
+		case LYING_TORIGHT: // 向右倒地
+		{
+			player1.lieDown();
+			double deltaY = player1.getDeltaY();
+			deltaY -= (player1.getWidth() - player1.getHeight());
+			
+			imgLocateMap.get(Constants.PLAYER1).setY(Constants.PLAYER1_INIT_Y + deltaY);
+			imgLocateMap.get(Constants.PLAYER1).setW(player1.getHeight());
+			imgLocateMap.get(Constants.PLAYER1).setH(player1.getWidth());
 		}break;
 		case DEFENDING_TOLEFT: // 向左防御
 		{
@@ -1632,6 +1703,26 @@ public class PlayView extends View { // 游戏页面类
 			double deltaY = player2.getDeltaY();
 			
 			imgLocateMap.get(Constants.PLAYER2).setY(Constants.PLAYER2_INIT_Y + deltaY);
+		}break;
+		case LYING_TOLEFT: // 向左倒地
+		{
+			player2.lieDown();
+			double deltaY = player2.getDeltaY();
+			deltaY -= (player2.getWidth() - player2.getHeight());
+			
+			imgLocateMap.get(Constants.PLAYER2).setY(Constants.PLAYER2_INIT_Y + deltaY);
+			imgLocateMap.get(Constants.PLAYER2).setW(player2.getHeight());
+			imgLocateMap.get(Constants.PLAYER2).setH(player2.getWidth());
+		}break;
+		case LYING_TORIGHT: // 向右倒地
+		{
+			player2.lieDown();
+			double deltaY = player2.getDeltaY();
+			deltaY -= (player2.getWidth() - player2.getHeight());
+			
+			imgLocateMap.get(Constants.PLAYER2).setY(Constants.PLAYER2_INIT_Y + deltaY);
+			imgLocateMap.get(Constants.PLAYER2).setW(player2.getHeight());
+			imgLocateMap.get(Constants.PLAYER2).setH(player2.getWidth());
 		}break;
 		case DEFENDING_TOLEFT: // 向左防御
 		{
@@ -1969,9 +2060,12 @@ public class PlayView extends View { // 游戏页面类
 
 		// 更新帧图
 		updateFrame();
-		
 		super.onUpdate(time);
-	}
+		
+		// 检测游戏是否结束
+		updateGameOver();
+		
+}
 	
 	@Override
 	public void onStop() {

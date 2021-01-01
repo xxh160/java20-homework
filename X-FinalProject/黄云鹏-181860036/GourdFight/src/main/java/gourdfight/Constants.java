@@ -10,8 +10,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final int WINDOW_HEIGHT = 500; // 窗口高度
 	
 	// 页面
-	public static final String HOME_VIEW_KEY = "Home View"; // 主页面键值
-	public static final String PLAY_VIEW_KEY = "Play View"; // 游戏页面键值
+	public static final String HOME_VIEW_KEY = "Home View"; // 主页面
+	public static final String PLAY_VIEW_KEY = "Play View"; // 游戏页面
+	public static final String GAMEOVER_VIEW_KEY = "Gameover View"; // 游戏结束页面
 	public static final String STACK_PANE = "Stack Pane"; //栈控件
 	public static final String IMAGE_PANE = "Image Pane"; // 图片控件
 	

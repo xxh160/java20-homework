@@ -18,6 +18,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	protected boolean isLeft; // 朝向左边(false 则朝向右边, 默认朝向左边)
 	protected boolean isBack; // 是否在倒推
 	private int jumpTag; // 跳跃标记(0:没有起跳,1:正在上升,2:正在下落,3:落地)
+	private int lieDownTag; // 倒地标记(原理同跳跃标记) 
 	
 	private double width; // 实体宽度
 	private double height; // 实体高度
@@ -39,6 +40,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private double jumpSpeed; // 跳跃初速度
 	private double jumpHeight; // 跳跃高度
 	private double jumpAcceleration; // 重力加速度
+	double speedScale = 0.8; // 倒地时的初速和跳跃初速的缩放率
 	
 	private String attackNearName; // 近攻招式名称
 	private Image attackNearLeftImg; // 近攻实体图片(朝左)
@@ -95,6 +97,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		deltaX = 0;
 		deltaY = 0;
 		frameCount = 0;
+		jumpTag = 0;
+		lieDownTag = 0;
 		
 		initFrame();
 		initStateImg();
@@ -181,6 +185,12 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 			case JUMPING_TORIGHT:
 				addFrame(state, (int)(2*jumpHeight / jumpSpeed));
 				break;
+//			case LYING_TOLEFT:
+//				addFrame(state, (int)(2*jumpHeight*speedScale / jumpSpeed));
+//				break;
+//			case LYING_TORIGHT:
+//				addFrame(state, (int)(2*jumpHeight*speedScale / jumpSpeed));
+//				break;
 			default:
 				addFrame(state, 20);
 				break;
@@ -725,6 +735,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	public void resetToStand() { // 返回站立的静止状态(只有在这些状态下才能响应用户操作)
 		currentAttackValue = 0;
 		jumpTag = 0;
+		lieDownTag = 0;
 		frameCount = 0;
 		setBack(false);
 		if(isLeft) {
@@ -810,6 +821,28 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 		
 
+	public void lyingUp() { // 倒地时向上移动(竖直向下为正方向)
+		if(isMobile()) {
+			double v0 = -jumpSpeed * speedScale; // 初速度
+			double v = v0 + jumpAcceleration * frameCount; // 末速度
+			if(v <= 0) {
+				lieDownTag = 2;
+			}
+			deltaY = (v*v - v0*v0) / (2*jumpAcceleration); // 位移
+		}
+	}
+	
+	public void lyingDown() { // 倒地时向下移动(竖直向下为正方向)
+		if(isMobile()) {
+			double v0 = -jumpSpeed * speedScale; // 初速度
+			double v = v0 + jumpAcceleration * frameCount; // 末速度
+			if(v >= -v0) { // 已经落地
+				lieDownTag = 3;
+			}
+			deltaY = (v*v - v0*v0) / (2*jumpAcceleration); // 位移
+		}
+	}
+	
 	
 	public void defend() { // 防御
 		if(isLeft) {
@@ -939,6 +972,35 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 				countFrame(EntityState.JUMPING_TORIGHT);
 			}
 		}
+	}
+	
+	public void lieDown() { // 倒地
+		if(lieDownTag == 0) { // 尚未起跳
+			lyingUp();
+			lieDownTag = 1;
+		}
+		else if (lieDownTag == 1) { // 正在上升
+			if(deltaY <= -jumpHeight*speedScale*speedScale) { // 达到最大高度
+				deltaY = -jumpHeight*speedScale*speedScale;
+				lieDownTag = 2;
+			}
+			else {
+				lyingUp();
+			}
+		}
+		else if(lieDownTag == 2) { // 正在下落
+			if(deltaY >= 0) { // 落到地面
+				deltaY = 0;
+				lieDownTag = 3;
+			}
+			else {
+				lyingDown();
+			}
+		}
+		else if(lieDownTag == 3) { // 已经落地，但帧数没有计数完(正常情况下应该不会发生)
+			
+		}
+		frameCount++;
 	}
 	
 	public boolean getHurt(double attackValue) { // 计算伤害，并返回是否受伤
