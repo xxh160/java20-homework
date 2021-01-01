@@ -16,6 +16,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private boolean isAttackable; // 是否具有攻击性(用于碰撞检测, 默认不具有攻击性)
 	private boolean isDefendable; // 是否具有防御性(用于碰撞检测，默认不具有防御性)
 	protected boolean isLeft; // 朝向左边(false 则朝向右边, 默认朝向左边)
+	protected boolean isBack; // 是否在倒推
 	private int jumpTag; // 跳跃标记(0:没有起跳,1:正在上升,2:正在下落,3:落地)
 	
 	private double width; // 实体宽度
@@ -111,6 +112,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setActive(true);
 		setAttackable(false);
 		setDefendable(false);
+		setBack(false);
 		
 		setWidth(Constants. PLAYER_DEFAULT_W);
 		setHeight(Constants. PLAYER_DEFAULT_H);
@@ -334,6 +336,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return isDefendable;
 	}
 	
+	public boolean isBack() { // 是否在倒推
+		return isBack;
+	}
+	
 	public boolean isStanding() { // 判断实体是否处于站着的状态
 		// 只有处于站着的状态才能响应用户下一个操作
 		return (state == EntityState.STANDING_TOLEFT || 
@@ -509,6 +515,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public void setDefendable(boolean d) { // 设置实体是否具有防御性
 		isDefendable = d;
+	}
+	
+	public void setBack(boolean b) { // 设置实体是否处于倒推状态
+		isBack = b;
 	}
 	
 	
@@ -716,6 +726,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		currentAttackValue = 0;
 		jumpTag = 0;
 		frameCount = 0;
+		setBack(false);
 		if(isLeft) {
 			setState(EntityState.STANDING_TOLEFT);
 		}

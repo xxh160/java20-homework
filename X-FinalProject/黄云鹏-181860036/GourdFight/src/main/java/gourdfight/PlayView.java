@@ -1122,6 +1122,15 @@ public class PlayView extends View { // 游戏页面类
 				boolean isHurt = player2.getHurt(attackValue1);
 				if(isHurt) { 
 					player2Hurt = true;
+					boolean opposite = player1.isLeft() ^ player2.isLeft();
+					if(opposite) // 如果面对面，则玩家2后退几步，否则玩家2前进几步
+						player2.setBack(true);
+					
+					if(player2.isLeft()) {
+						player2.setState(EntityState.MOVING_TOLEFT);
+					}else {
+						player2.setState(EntityState.MOVING_TORIGHT);
+					}
 				}
 			}
 			if(player2Hurt) { // 如果成功攻击到了玩家, 则直接进入倒计时(若本身达到最大距离，则加速)
@@ -1164,6 +1173,15 @@ public class PlayView extends View { // 游戏页面类
 				boolean isHurt = player1.getHurt(attackValue2);
 				if(isHurt) { 
 					player1Hurt = true;
+					boolean opposite = player1.isLeft() ^ player2.isLeft();
+					if(opposite) // 如果面对面，则玩家1后退几步，否则玩家1前进几步
+						player1.setBack(true);
+					
+					if(player1.isLeft()) {
+						player1.setState(EntityState.MOVING_TOLEFT);
+					}else {
+						player1.setState(EntityState.MOVING_TORIGHT);
+					}
 				}
 			}
 			if(player1Hurt) { // 如果成功攻击到了玩家, 则直接进入倒计时(若本身达到最大距离，则加速)
@@ -1276,14 +1294,24 @@ public class PlayView extends View { // 游戏页面类
 		switch (player1_state) {
 		case MOVING_TOLEFT: // 向左移动
 		{
-			player1.moveLeft();
+			if(player1.isBack()) { // 倒推
+				player1.moveRight();
+			}else {
+				player1.moveLeft();
+			}
+			
 			double deltaX = player1.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_X + deltaX);
 		}break;
 		case MOVING_TORIGHT: // 向右移动
 		{
-			player1.moveRight();
+			if(player1.isBack()) { // 倒推
+				player1.moveLeft();
+			}else {
+				player1.moveRight();
+			}
+		
 			double deltaX = player1.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER1).setX(Constants.PLAYER1_INIT_X + deltaX);
@@ -1557,14 +1585,22 @@ public class PlayView extends View { // 游戏页面类
 		switch (player2_state) {
 		case MOVING_TOLEFT: // 向左移动
 		{
-			player2.moveLeft();
+			if(player2.isBack()) { // 倒推
+				player2.moveRight();
+			}else {
+				player2.moveLeft();
+			}
 			double deltaX = player2.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER2).setX(Constants.PLAYER2_INIT_X + deltaX);
 		}break;
 		case MOVING_TORIGHT: // 向右移动
 		{
-			player2.moveRight();
+			if(player2.isBack()) { // 倒推
+				player2.moveLeft();
+			}else {
+				player2.moveRight();
+			}
 			double deltaX = player2.getDeltaX();
 			
 			imgLocateMap.get(Constants.PLAYER2).setX(Constants.PLAYER2_INIT_X + deltaX);

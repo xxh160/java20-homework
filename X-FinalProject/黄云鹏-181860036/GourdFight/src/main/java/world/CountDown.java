@@ -6,7 +6,7 @@ import output.URL;
 
 public class CountDown extends Entity { // 倒计时实体类
 
-	private int count;
+	private int count; // 倒计时(单位:秒)
 	
 	public CountDown(String name) {
 		super(name);
