@@ -30,4 +30,15 @@ public class URL { // URL转化类，提供简单的将包路径转化成URL/Ima
 		
 		return s + c + d + c + r + c + p + c + f + z;
 	}
+
+	public static String toMP3Path(String d, String p, String f) { // 拼接成mp3文件的包路径
+		// d = main/test, p为包名，f为png文件名
+		String s = "src";
+		String c = "/";
+		String r = "resources";
+		String z = ".mp3";
+		
+		return s + c + d + c + r + c + p + c + f + z;
+	}
+
 }

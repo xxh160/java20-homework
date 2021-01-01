@@ -3,8 +3,6 @@ package gourdfight;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Random;
-import java.util.concurrent.CountDownLatch;
 
 import app.ImageLocate;
 import app.ImagePane;
@@ -35,7 +33,6 @@ import world.Snake;
 import world.YellowBaby;
 import framework.*;
 import input.Key;
-import javafx.application.ConditionalFeature;
 import javafx.scene.image.Image;
 import network.Packet;
 import network.TCPClient;
@@ -1349,10 +1346,11 @@ public class PlayView extends View { // 游戏页面类
 		}
 		
 		EntityState player1_state = player1.getState();
-		removeText(); // 删除文本
+		removeText1(); // 删除文本
+		
 		switch (player1_state) {
 		case MOVING_TOLEFT: // 向左移动
-		{
+		{	
 			if(player1.isBack()) { // 倒推
 				player1.moveRight();
 			}else {
@@ -1502,6 +1500,8 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 解析自己的动作
 		Entity player2 = entityMap.get(Constants.PLAYER2);
+		removeText2(); // 删除文本
+		
 		if(player2_action == EntityState.STANDING_TORIGHT) { // 保持上一个状态的延续
 			
 		}else {
@@ -1878,11 +1878,14 @@ public class PlayView extends View { // 游戏页面类
 		addImageLocate(attackName,imgLocate);
 	}
 	
-	private void removeText() { // 删除招式文本
+	private void removeText1() { // 删除玩家1招式文本
 		Entity player1 = entityMap.get(Constants.PLAYER1);
-		Entity player2 = entityMap.get(Constants.PLAYER2);
 		removeImageLocate(player1.getDefendName()+Constants.TEXT);
 		removeImageLocate(player1.getCurrentAttackName()+Constants.TEXT);
+	}
+	
+	private void removeText2() { // 删除玩家2招式文本
+		Entity player2 = entityMap.get(Constants.PLAYER2);
 		removeImageLocate(player2.getDefendName()+Constants.TEXT);
 		removeImageLocate(player2.getCurrentAttackName()+Constants.TEXT);
 	}
@@ -1899,6 +1902,7 @@ public class PlayView extends View { // 游戏页面类
 	public void onLaunch() { // 页面启动设置
 		reset(); // 先清空上一次启动时的字典
 		initEntity(); // 初始化游戏实体
+		
 	}
 	
 	@Override
