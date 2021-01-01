@@ -36,6 +36,7 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String BLOOD_NAME = "blood"; // 血条名称 
 	public static final String PK = "pk"; // PK图标
 	public static final String COUNTDOWN = "countDown"; // 倒计时
+	public static final String TEXT = " Text"; // 招式文本
 	public static final String PROFILE1 = "profile1"; //头像1
 	public static final String PROFILE2 = "profile2"; //头像2
 	public static final String STATE1 = "state1"; // 状态1
@@ -137,6 +138,8 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double ROUND_X = 350; // round图标x轴坐标
 	public static final double ROUND_Y = 290; // round 图标y轴坐标
 	
+	public static final double TEXT_DELTAY = -80; // 招式文本相对于玩家头顶的y轴位移
+	
 	public static final double PLAYER1_INIT_X = 50; // 玩家1初始x轴坐标
 	public static final double PLAYER1_INIT_Y = 300; // 玩家1初始y轴坐标
 	public static final double PLAYER2_INIT_X = 700; // 玩家2初始x轴坐标
@@ -160,6 +163,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	
 	public static final double ROUND_W = 550; // round图标宽度
 	public static final double ROUND_H = 200; // round图标高度
+	
+	public static final double TEXT_W = 120; // 招式文本宽度
+	public static final double TEXT_H = 30; // 招式文本高度
 	
 	public static final double PLAYER_DEFAULT_W = 100; // 玩家默认宽度
 	public static final double PLAYER_DEFAULT_H = 150; // 玩家默认高度
@@ -217,6 +223,5 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double DEFAULT_DEFEND_VALUE = 5; // 默认防御值
 	public static final double DEFAULT_DEFEND_DIST = 20; // 默认防御距离
 	public static final double DEFAULT_DEFEND_SPEED = 3; // 默认防御实体移动速度
-	
 	
 }

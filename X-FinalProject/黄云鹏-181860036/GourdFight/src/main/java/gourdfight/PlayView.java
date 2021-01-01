@@ -1349,6 +1349,7 @@ public class PlayView extends View { // 游戏页面类
 		}
 		
 		EntityState player1_state = player1.getState();
+		removeText(); // 删除文本
 		switch (player1_state) {
 		case MOVING_TOLEFT: // 向左移动
 		{
@@ -1425,9 +1426,13 @@ public class PlayView extends View { // 游戏页面类
 		case DEFENDING_TOLEFT: // 向左防御
 		{
 			player1.defend();
+			// 防御招式名称图片显示
+			addDefendText1();
+			// 如果上一个防御实体还没有消失，则不能发射下一个防御
 			if(player1_defendEntity != null && player1_defendEntity.isActive()) {
-				break; // 如果上一个防御实体还没有消失，则不能发射下一个防御
+				break; 
 			}
+			// 否则添加新防御实体
 			String name = player1.getDefendName();
 			boolean isLeft = player1.isLeft();
 			double dx = player1.getDeltaX();
@@ -1453,6 +1458,8 @@ public class PlayView extends View { // 游戏页面类
 		case DEFENDING_TORIGHT: // 向右防御
 		{
 			player1.defend();
+			// 防御招式名称图片显示
+			addDefendText1();
 			if(player1_defendEntity != null && player1_defendEntity.isActive()) {
 				break; // 如果上一个防御实体还没有消失，则不能发射下一个防御
 			}
@@ -1480,6 +1487,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_NEAR_TOLEFT: // 向左近攻
 		{
 			player1.attackNear();
+			// 攻击招式名称图片显示
+			addAttackText1();
 			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1507,6 +1516,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_NEAR_TORIGHT: // 向右近攻
 		{
 			player1.attackNear();
+			// 攻击招式名称图片显示
+			addAttackText1();
 			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1534,6 +1545,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_FAR_TOLEFT: // 向左远攻
 		{
 			player1.attackFar();
+			// 攻击招式名称图片显示
+			addAttackText1();
 			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1561,6 +1574,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_FAR_TORIGHT: // 向右远攻
 		{
 			player1.attackFar();
+			// 攻击招式名称图片显示
+			addAttackText1();
 			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1588,6 +1603,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
 			player1.attackKill();
+			// 攻击招式名称图片显示
+			addAttackText1();
 			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1615,6 +1632,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_KILL_TORIGHT: // 向右必杀
 		{
 			player1.attackKill();
+			// 攻击招式名称图片显示
+			addAttackText1();
 			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1734,6 +1753,8 @@ public class PlayView extends View { // 游戏页面类
 		case DEFENDING_TOLEFT: // 向左防御
 		{
 			player2.defend();
+			// 防御招式名称图片显示
+			addDefendText2();
 			if(player2_defendEntity != null && player2_defendEntity.isActive()) {
 				break; // 如果上一个防御实体还没有消失，则不能发射下一个防御
 			}
@@ -1762,6 +1783,8 @@ public class PlayView extends View { // 游戏页面类
 		case DEFENDING_TORIGHT: // 向右防御
 		{
 			player2.defend();
+			// 防御招式名称图片显示
+			addDefendText2();
 			if(player2_defendEntity != null && player2_defendEntity.isActive()) {
 				break; // 如果上一个防御实体还没有消失，则不能发射下一个防御
 			}
@@ -1789,6 +1812,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_NEAR_TOLEFT: // 向左近攻
 		{
 			player2.attackNear();
+			// 攻击招式名称图片显示
+			addAttackText2();
 			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1816,6 +1841,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_NEAR_TORIGHT: // 向右近攻
 		{
 			player2.attackNear();
+			// 攻击招式名称图片显示
+			addAttackText2();
 			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1843,6 +1870,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_FAR_TOLEFT: // 向左远攻
 		{
 			player2.attackFar();
+			// 攻击招式名称图片显示
+			addAttackText2();
 			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1870,6 +1899,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_FAR_TORIGHT: // 向右远攻
 		{
 			player2.attackFar();
+			// 攻击招式名称图片显示
+			addAttackText2();
 			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1897,6 +1928,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
 			player2.attackKill();
+			// 攻击招式名称图片显示
+			addAttackText2();
 			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1924,6 +1957,8 @@ public class PlayView extends View { // 游戏页面类
 		case ATTACKING_KILL_TORIGHT: // 向右必杀
 		{
 			player2.attackKill();
+			// 攻击招式名称图片显示
+			addAttackText2();
 			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
 				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
 			}
@@ -1996,6 +2031,83 @@ public class PlayView extends View { // 游戏页面类
 			textLocateMap.remove(id);
 		}
 		onLaunch();
+	}
+	
+	private void addDefendText1() { // 为玩家1添加防御文本
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		String defendName = player1.getDefendName()+Constants.TEXT;
+		String dirStr = "main";
+		String filePath = URL.toPngPath(dirStr, player1.getName(),defendName); 
+		Image img = new Image(URL.toURL(filePath)); 
+		ImageLocate imgLocate = new ImageLocate(
+				img,
+				Constants.PLAYER1_INIT_X + player1.getDeltaX(),
+				Constants.PLAYER1_INIT_Y + player1.getDeltaY()
+				+ Constants.TEXT_DELTAY,
+				Constants.TEXT_W,
+				Constants.TEXT_H);
+		
+		addImageLocate(defendName,imgLocate);
+	}
+	
+	private void addDefendText2() { // 为玩家2添加防御文本
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		String defendName = player2.getDefendName()+Constants.TEXT;
+		String dirStr = "main";
+		String filePath = URL.toPngPath(dirStr, player2.getName(),defendName); 
+		Image img = new Image(URL.toURL(filePath)); 
+		ImageLocate imgLocate = new ImageLocate(
+				img,
+				Constants.PLAYER2_INIT_X + player2.getDeltaX(),
+				Constants.PLAYER2_INIT_Y + player2.getDeltaY()
+				+ Constants.TEXT_DELTAY,
+				Constants.TEXT_W,
+				Constants.TEXT_H);
+		
+		addImageLocate(defendName,imgLocate);
+	}
+	
+	private void addAttackText1() { // 为玩家1添加攻击文本
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		String attackName = player1.getCurrentAttackName()+Constants.TEXT;
+		String dirStr = "main";
+		String filePath = URL.toPngPath(dirStr, player1.getName(),attackName); 
+		Image img = new Image(URL.toURL(filePath)); 
+		ImageLocate imgLocate = new ImageLocate(
+				img,
+				Constants.PLAYER1_INIT_X + player1.getDeltaX(),
+				Constants.PLAYER1_INIT_Y + player1.getDeltaY()
+				+ Constants.TEXT_DELTAY,
+				Constants.TEXT_W,
+				Constants.TEXT_H);
+		
+		addImageLocate(attackName,imgLocate);
+	}
+	
+	private void addAttackText2() { // 为玩家2添加攻击文本
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		String attackName = player2.getCurrentAttackName()+Constants.TEXT;
+		String dirStr = "main";
+		String filePath = URL.toPngPath(dirStr, player2.getName(),attackName); 
+		Image img = new Image(URL.toURL(filePath)); 
+		ImageLocate imgLocate = new ImageLocate(
+				img,
+				Constants.PLAYER2_INIT_X + player2.getDeltaX(),
+				Constants.PLAYER2_INIT_Y + player2.getDeltaY()
+				+ Constants.TEXT_DELTAY,
+				Constants.TEXT_W,
+				Constants.TEXT_H);
+		
+		addImageLocate(attackName,imgLocate);
+	}
+	
+	private void removeText() { // 删除招式文本
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		removeImageLocate(player1.getDefendName()+Constants.TEXT);
+		removeImageLocate(player1.getCurrentAttackName()+Constants.TEXT);
+		removeImageLocate(player2.getDefendName()+Constants.TEXT);
+		removeImageLocate(player2.getCurrentAttackName()+Constants.TEXT);
 	}
 	
 	public void setPlayer1Name(EntityName name) { // 设置player1的名称
