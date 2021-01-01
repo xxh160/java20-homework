@@ -33,7 +33,7 @@ import world.Snake;
 import world.YellowBaby;
 import framework.*;
 import input.Key;
-
+import javafx.application.ConditionalFeature;
 import javafx.scene.image.Image;
 import network.Packet;
 import network.TCPClient;
@@ -101,6 +101,7 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void setBackground() { // 初设背景
+		// 场景
 		Background background = new Background(Constants.BACKGROUND);
 		
 		addEntity(Constants.BACKGROUND, background);
@@ -113,6 +114,27 @@ public class PlayView extends View { // 游戏页面类
 				background.getHeight());
 		
 		addImageLocate(Constants.BACKGROUND, background_imgLocate);
+		// PK图标
+		Background pk = new Background(Constants.BACKGROUND);
+		pk.setWidth(Constants.PK_W);
+		pk.setHeight(Constants.PK_H);
+		
+		String dirStr = "main";
+		String filePath = URL.toPngPath(dirStr, pk.getName(),Constants.PK);
+		Image img = new Image(URL.toURL(filePath)); 
+		pk.addImage(EntityState.STANDING_TORIGHT, img);
+		pk.setState(EntityState.STANDING_TORIGHT);
+		
+		addEntity(Constants.PK, pk);
+		
+		ImageLocate pk_imgLocate = new ImageLocate(
+				pk.getCurrentImage(),
+				Constants.PK_X,
+				Constants.PK_Y,
+				pk.getWidth(),
+				pk.getHeight());
+		
+		addImageLocate(Constants.PK, pk_imgLocate);
 	}
 	
 	private void setBloodBar() { // 初设血槽条

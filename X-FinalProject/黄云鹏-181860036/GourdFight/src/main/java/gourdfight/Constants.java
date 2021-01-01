@@ -31,6 +31,7 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String BLOOD1 = "blood1"; // 血条1
 	public static final String BLOOD2 = "blood2"; // 血条2
 	public static final String BLOOD_NAME = "blood"; // 血条名称 
+	public static final String PK = "pk"; // PK图标
 	public static final String PROFILE1 = "profile1"; //头像1
 	public static final String PROFILE2 = "profile2"; //头像2
 	public static final String STATE1 = "state1"; // 状态1
@@ -123,6 +124,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double BLOOD2_X = 627; // 血条2x轴坐标
 	public static final double BLOOD2_Y = 120; // 血条2y轴坐标
 	
+	public static final double PK_X = 410; // PK图标x轴坐标
+	public static final double PK_Y = 90; // PK图标y轴坐标
+	
 	public static final double PLAYER1_INIT_X = 50; // 玩家1初始x轴坐标
 	public static final double PLAYER1_INIT_Y = 300; // 玩家1初始y轴坐标
 	public static final double PLAYER2_INIT_X = 700; // 玩家2初始x轴坐标
@@ -137,6 +141,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	
 	public static final double BLOOD_W = 180; // 血条最大宽度
 	public static final double BLOOD_H = 10; // 血条高度
+	
+	public static final double PK_W = 80; // PK图标宽度
+	public static final double PK_H = 80; // PK图标宽度
 	
 	public static final double PLAYER_DEFAULT_W = 100; // 玩家默认宽度
 	public static final double PLAYER_DEFAULT_H = 150; // 玩家默认高度
