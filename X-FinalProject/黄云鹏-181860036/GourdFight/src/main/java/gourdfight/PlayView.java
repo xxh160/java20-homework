@@ -389,6 +389,7 @@ public class PlayView extends View { // 游戏页面类
 
 		if(!entityMap.containsKey(Constants.COUNTDOWN)) { // 创建倒计时实体类
 			CountDown countDown = new CountDown(Constants.COUNTDOWN);
+			countDown.setRound(roundCount+1);
 			addEntity(Constants.COUNTDOWN, countDown);
 			
 			ImageLocate countDown_imgLocate = new ImageLocate(
@@ -409,6 +410,12 @@ public class PlayView extends View { // 游戏页面类
 				isStart = true;
 			}
 			else {
+				if(countDown.isRound()) { // 进入round显示
+					imgLocateMap.get(Constants.COUNTDOWN).setX(Constants.ROUND_X);
+					imgLocateMap.get(Constants.COUNTDOWN).setY(Constants.ROUND_Y);
+					imgLocateMap.get(Constants.COUNTDOWN).setW(Constants.ROUND_W);
+					imgLocateMap.get(Constants.COUNTDOWN).setW(Constants.ROUND_H);
+				}
 				imgLocateMap.get(Constants.COUNTDOWN).setImg(img);
 			}
 		}

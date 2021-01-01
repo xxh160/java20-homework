@@ -2,9 +2,10 @@ package app;
 
 public class TextLocate { // 文本定位类，封装文本绘制的内容、位置、属性等
 
-	String text; // 文本内容
-	double dx; // 目标左上角x轴坐标
-	double dy; // 目标左上角y轴坐标
+	private String text; // 文本内容
+	private double dx; // 目标左上角x轴坐标
+	private double dy; // 目标左上角y轴坐标
+	private double fontSize; // 目标字体大小
 	
 	
 	// 初始化
@@ -27,9 +28,17 @@ public class TextLocate { // 文本定位类，封装文本绘制的内容、位
 		return dy;
 	}
 	
+	public double getSize() { // 获取字体大小
+		return fontSize;
+	}
+	
 	// Setter
 	public void setText(String text) { // 设置文本内容
 		this.text = text;
+	}
+	
+	public void setSize(double s) { // 设置字体大小
+		fontSize = s;
 	}
 	
 	public void setX(double dx) { // 设置目标左上角x轴坐标

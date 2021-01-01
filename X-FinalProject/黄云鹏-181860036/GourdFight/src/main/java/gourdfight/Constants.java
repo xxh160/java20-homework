@@ -134,6 +134,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double COUNTDOWN_X = 380; // 倒计时图标x轴坐标
 	public static final double COUNTDOWN_Y = 290; // 倒计时图标y轴坐标
 	
+	public static final double ROUND_X = 350; // round图标x轴坐标
+	public static final double ROUND_Y = 290; // round 图标y轴坐标
+	
 	public static final double PLAYER1_INIT_X = 50; // 玩家1初始x轴坐标
 	public static final double PLAYER1_INIT_Y = 300; // 玩家1初始y轴坐标
 	public static final double PLAYER2_INIT_X = 700; // 玩家2初始x轴坐标
@@ -154,6 +157,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	
 	public static final double COUNTDOWN_W = 120; // 倒计时图标宽度
 	public static final double COUNTDOWN_H = 120; // 倒计时图标宽度
+	
+	public static final double ROUND_W = 550; // round图标宽度
+	public static final double ROUND_H = 200; // round图标高度
 	
 	public static final double PLAYER_DEFAULT_W = 100; // 玩家默认宽度
 	public static final double PLAYER_DEFAULT_H = 150; // 玩家默认高度
