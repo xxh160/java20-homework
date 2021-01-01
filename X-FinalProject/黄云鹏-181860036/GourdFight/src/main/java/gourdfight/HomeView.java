@@ -19,6 +19,7 @@ public class HomeView extends View { // 主页面类
 	
 	public HomeView() {
 		super(Constants.STACK_PANE);
+		bgmFileStr = Constants.HOME_VIEW_BGM; // 设置背景音频文件
 	}
 	
 	// 生命周期管理

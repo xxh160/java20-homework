@@ -16,9 +16,14 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String STACK_PANE = "Stack Pane"; //栈控件
 	public static final String IMAGE_PANE = "Image Pane"; // 图片控件
 	
-	// 资源文件
+	// 资源文件夹
 	public static final String MAIN_DIRECOTRY = "main"; // 主资源
 	public static final String TEST_DIRECOTRY = "test"; // 测试资源
+	
+	// 背景音频
+	public static final String BGM = "BGM"; // 背景音频文件夹名
+	public static final String HOME_VIEW_BGM = "Home View BGM"; // 主页面背景音频名
+	public static final String PLAY_VIEW_BGM = "Play View BGM"; // 游戏页面背景音频文件名
 	
 	// 网络
 	public static final int PORT = 8001; // 端口号

@@ -1,11 +1,9 @@
 package app;
 
-import java.util.Collection;
-
+import framework.Framework;
 import gourdfight.Constants;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -32,6 +30,9 @@ public abstract class View { // 游戏页面抽象类，子类为页面实例
 	
 	protected Pane pane; // 根容器
 	
+	protected String bgmDirStr; // 页面背景音频文件夹名称
+	protected String bgmFileStr; // 页面背景音频文件名称
+	
 	// 初始化
 	public View(String type) {
 		if(type.equals(Constants.STACK_PANE)) {
@@ -40,7 +41,7 @@ public abstract class View { // 游戏页面抽象类，子类为页面实例
 		else if (type.equals(Constants.IMAGE_PANE)) {
 			pane = new ImagePane();
 		}
-		
+		bgmDirStr = Constants.BGM;
 		// pane.setBackground(Background.EMPTY); // 设置根容器的背景为空
 	}
 	
@@ -54,6 +55,13 @@ public abstract class View { // 游戏页面抽象类，子类为页面实例
 	}
 	
 	// Setter
+	public void playBGM() { // 播放背景音频
+		Framework.audio.playBGM(bgmDirStr, bgmFileStr);
+	}
+	
+	public void stopBGM() { // 停止播放背景音频
+		Framework.audio.stopBGM();
+	}
 	
 	// 页面生命周期管理
 	public abstract void onLaunch(); // 启动页面管理，子类必须实现
@@ -64,6 +72,7 @@ public abstract class View { // 游戏页面抽象类，子类为页面实例
 	
 	public void onEnter() { 
 		// 进入页面管理，子类选择实现
+		playBGM();
 	}
 	
 	public void onStart() {
@@ -80,6 +89,7 @@ public abstract class View { // 游戏页面抽象类，子类为页面实例
 	
 	public void onLeave() { 
 		// 退出页面管理，子类选择实现
+		stopBGM();
 	}
 	
 }

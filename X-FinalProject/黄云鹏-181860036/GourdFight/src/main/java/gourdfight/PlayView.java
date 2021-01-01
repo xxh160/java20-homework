@@ -77,6 +77,7 @@ public class PlayView extends View { // 游戏页面类
 	// 初始化
 	public PlayView() {
 		super(Constants.IMAGE_PANE);
+		
 		entityMap = new HashMap<>();
 		imgLocateMap = new LinkedHashMap<>();
 		textLocateMap = new LinkedHashMap<>();
@@ -100,6 +101,8 @@ public class PlayView extends View { // 游戏页面类
 		receivePktQueue = new ArrayList<>();
 		sendPktQueueIdx = 0;
 		receivePktQueueIdx = 0;
+		
+		bgmFileStr = Constants.PLAY_VIEW_BGM;
 	}
 	
 	private void initEntity() { // 初始创建一些必要实体
