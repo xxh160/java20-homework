@@ -1428,31 +1428,8 @@ public class PlayView extends View { // 游戏页面类
 			player1.defend();
 			// 防御招式名称图片显示
 			addDefendText1();
-			// 如果上一个防御实体还没有消失，则不能发射下一个防御
-			if(player1_defendEntity != null && player1_defendEntity.isActive()) {
-				break; 
-			}
-			// 否则添加新防御实体
-			String name = player1.getDefendName();
-			boolean isLeft = player1.isLeft();
-			double dx = player1.getDeltaX();
-			double dist = player1.getDefendDist();
-			if(isLeft) {
-				dx -= player1.getDefendWidth();
-				dist -= dx;
-			}else {
-				dx += player1.getWidth(); 
-				dist += dx;
-			}
-			DefendEntity defendEntity = new DefendEntity(name,isLeft,dx);
-			defendEntity.setDefendName(player1.getDefendName());
-			defendEntity.setDefendImg(player1.getDefendLeftImage(),player1.getDefendRightImage());
-			defendEntity.setDefendValue(player1.getDefendValue());
-			defendEntity.setDefendDist(dist);
-			defendEntity.setDefendSpeed(player1.getDefendSpeed());
-			defendEntity.setDefendWidth(player1.getDefendWidth());
-			defendEntity.setDefendHeight(player1.getDefendHeight());
-			player1_defendEntity = defendEntity;
+			// 设置防御实体
+			setDefendEntity1();
 			
 		}break;
 		case DEFENDING_TORIGHT: // 向右防御
@@ -1460,203 +1437,56 @@ public class PlayView extends View { // 游戏页面类
 			player1.defend();
 			// 防御招式名称图片显示
 			addDefendText1();
-			if(player1_defendEntity != null && player1_defendEntity.isActive()) {
-				break; // 如果上一个防御实体还没有消失，则不能发射下一个防御
-			}
-			String name = player1.getDefendName();
-			boolean isLeft = player1.isLeft();
-			double dx = player1.getDeltaX();
-			double dist = player1.getDefendDist();
-			if(isLeft) {
-				dx -= player1.getDefendWidth();
-				dist -= dx;
-			}else {
-				dx += player1.getWidth(); 
-				dist += dx;
-			}
-			DefendEntity defendEntity = new DefendEntity(name,isLeft,dx);
-			defendEntity.setDefendName(player1.getDefendName());
-			defendEntity.setDefendImg(player1.getDefendLeftImage(),player1.getDefendRightImage());
-			defendEntity.setDefendValue(player1.getDefendValue());
-			defendEntity.setDefendDist(dist);
-			defendEntity.setDefendSpeed(player1.getDefendSpeed());
-			defendEntity.setDefendWidth(player1.getDefendWidth());
-			defendEntity.setDefendHeight(player1.getDefendHeight());
-			player1_defendEntity = defendEntity;
+			// 设置防御实体
+			setDefendEntity1();
 		}break;
 		case ATTACKING_NEAR_TOLEFT: // 向左近攻
 		{
 			player1.attackNear();
 			// 攻击招式名称图片显示
 			addAttackText1();
-			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player1.getCurrentAttackName();
-			boolean isLeft = player1.isLeft();
-			double dx = player1.getDeltaX();
-			double dist = player1.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player1.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player1.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
-			player1_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity1();
 		}break;
 		case ATTACKING_NEAR_TORIGHT: // 向右近攻
 		{
 			player1.attackNear();
 			// 攻击招式名称图片显示
 			addAttackText1();
-			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player1.getCurrentAttackName();
-			boolean isLeft = player1.isLeft();
-			double dx = player1.getDeltaX();
-			double dist = player1.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player1.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player1.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
-			player1_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity1();
 		}break;
 		case ATTACKING_FAR_TOLEFT: // 向左远攻
 		{
 			player1.attackFar();
 			// 攻击招式名称图片显示
 			addAttackText1();
-			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player1.getCurrentAttackName();
-			boolean isLeft = player1.isLeft();
-			double dx = player1.getDeltaX();
-			double dist = player1.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player1.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player1.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
-			player1_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity1();
 		}break;
 		case ATTACKING_FAR_TORIGHT: // 向右远攻
 		{
 			player1.attackFar();
 			// 攻击招式名称图片显示
 			addAttackText1();
-			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player1.getCurrentAttackName();
-			boolean isLeft = player1.isLeft();
-			double dx = player1.getDeltaX();
-			double dist = player1.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player1.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player1.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
-			player1_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity1();
 		}break;
 		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
 			player1.attackKill();
 			// 攻击招式名称图片显示
 			addAttackText1();
-			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player1.getCurrentAttackName();
-			boolean isLeft = player1.isLeft();
-			double dx = player1.getDeltaX();
-			double dist = player1.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player1.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player1.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
-			player1_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity1();
 		}break;
 		case ATTACKING_KILL_TORIGHT: // 向右必杀
 		{
 			player1.attackKill();
 			// 攻击招式名称图片显示
 			addAttackText1();
-			if(player1_attackEntity != null && player1_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player1.getCurrentAttackName();
-			boolean isLeft = player1.isLeft();
-			double dx = player1.getDeltaX();
-			double dist = player1.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player1.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player1.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
-			player1_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity1();
 		}break;
 		default:
 			break;
@@ -1755,233 +1585,64 @@ public class PlayView extends View { // 游戏页面类
 			player2.defend();
 			// 防御招式名称图片显示
 			addDefendText2();
-			if(player2_defendEntity != null && player2_defendEntity.isActive()) {
-				break; // 如果上一个防御实体还没有消失，则不能发射下一个防御
-			}
-			String name = player2.getDefendName();
-			boolean isLeft = player2.isLeft();
-			double dx = player2.getDeltaX();
-			double dist = player2.getDefendDist();
-			if(isLeft) {
-				dx -= player2.getDefendWidth();
-				dist -= dx;
-			}else {
-				dx += player2.getWidth(); 
-				dist += dx;
-			}
-			DefendEntity defendEntity = new DefendEntity(name,isLeft,dx);
-			defendEntity.setDefendName(player2.getDefendName());
-			defendEntity.setDefendImg(player2.getDefendLeftImage(),player2.getDefendRightImage());
-			defendEntity.setDefendValue(player2.getDefendValue());
-			defendEntity.setDefendDist(dist);
-			defendEntity.setDefendSpeed(player2.getDefendSpeed());
-			defendEntity.setDefendWidth(player2.getDefendWidth());
-			defendEntity.setDefendHeight(player2.getDefendHeight());
-			player2_defendEntity = defendEntity;
-			
+			// 设置防御实体
+			setDefendEntity2();
 		}break;
 		case DEFENDING_TORIGHT: // 向右防御
 		{
 			player2.defend();
 			// 防御招式名称图片显示
 			addDefendText2();
-			if(player2_defendEntity != null && player2_defendEntity.isActive()) {
-				break; // 如果上一个防御实体还没有消失，则不能发射下一个防御
-			}
-			String name = player2.getDefendName();
-			boolean isLeft = player2.isLeft();
-			double dx = player2.getDeltaX();
-			double dist = player2.getDefendDist();
-			if(isLeft) {
-				dx -= player2.getDefendWidth();
-				dist -= dx;
-			}else {
-				dx += player2.getWidth(); 
-				dist += dx;
-			}
-			DefendEntity defendEntity = new DefendEntity(name,isLeft,dx);
-			defendEntity.setDefendName(player2.getDefendName());
-			defendEntity.setDefendImg(player2.getDefendLeftImage(),player2.getDefendRightImage());
-			defendEntity.setDefendValue(player2.getDefendValue());
-			defendEntity.setDefendDist(dist);
-			defendEntity.setDefendSpeed(player2.getDefendSpeed());
-			defendEntity.setDefendWidth(player2.getDefendWidth());
-			defendEntity.setDefendHeight(player2.getDefendHeight());
-			player2_defendEntity = defendEntity;
+			// 设置防御实体
+			setDefendEntity2();
 		}break;
 		case ATTACKING_NEAR_TOLEFT: // 向左近攻
 		{
 			player2.attackNear();
 			// 攻击招式名称图片显示
 			addAttackText2();
-			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player2.getCurrentAttackName();
-			boolean isLeft = player2.isLeft();
-			double dx = player2.getDeltaX();
-			double dist = player2.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player2.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player2.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player2.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player2.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player2.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player2.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player2.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player2.getCurrentAttackHeight());
-			player2_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity2();
 		}break;
 		case ATTACKING_NEAR_TORIGHT: // 向右近攻
 		{
 			player2.attackNear();
 			// 攻击招式名称图片显示
 			addAttackText2();
-			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player2.getCurrentAttackName();
-			boolean isLeft = player2.isLeft();
-			double dx = player2.getDeltaX();
-			double dist = player2.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player2.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player2.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player2.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player2.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player2.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player2.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player2.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player2.getCurrentAttackHeight());
-			player2_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity2();
 		}break;
 		case ATTACKING_FAR_TOLEFT: // 向左远攻
 		{
 			player2.attackFar();
 			// 攻击招式名称图片显示
 			addAttackText2();
-			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player2.getCurrentAttackName();
-			boolean isLeft = player2.isLeft();
-			double dx = player2.getDeltaX();
-			double dist = player2.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player2.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player2.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player2.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player2.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player2.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player2.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player2.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player2.getCurrentAttackHeight());
-			player2_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity2();
 		}break;
 		case ATTACKING_FAR_TORIGHT: // 向右远攻
 		{
 			player2.attackFar();
 			// 攻击招式名称图片显示
 			addAttackText2();
-			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player2.getCurrentAttackName();
-			boolean isLeft = player2.isLeft();
-			double dx = player2.getDeltaX();
-			double dist = player2.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player2.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player2.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player2.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player2.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player2.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player2.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player2.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player2.getCurrentAttackHeight());
-			player2_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity2();
 		}break;
 		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
 			player2.attackKill();
 			// 攻击招式名称图片显示
 			addAttackText2();
-			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player2.getCurrentAttackName();
-			boolean isLeft = player2.isLeft();
-			double dx = player2.getDeltaX();
-			double dist = player2.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player2.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player2.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player2.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player2.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player2.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player2.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player2.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player2.getCurrentAttackHeight());
-			player2_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity2();
 		}break;
 		case ATTACKING_KILL_TORIGHT: // 向右必杀
 		{
 			player2.attackKill();
 			// 攻击招式名称图片显示
 			addAttackText2();
-			if(player2_attackEntity != null && player2_attackEntity.isActive()) {
-				break; // 如果上一个攻击实体还没有消失，则不能发射下一个攻击
-			}
-			String name = player2.getCurrentAttackName();
-			boolean isLeft = player2.isLeft();
-			double dx = player2.getDeltaX();
-			double dist = player2.getCurrentAttackDist();
-			if(isLeft) {
-				dx -= player2.getCurrentAttackWidth();
-				dist -= dx;
-			}else {
-				dx += player2.getWidth();
-				dist += dx;
-			}
-			AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
-			attackEntity.setCurrentAttackName(player2.getCurrentAttackName());
-			attackEntity.setCurrentAttackImg(player2.getCurrentAttackImg());
-			attackEntity.setCurrentAttackValue(player2.getCurrentAttackValue());
-			attackEntity.setCurrentAttackDist(dist);
-			attackEntity.setCurrentAttackSpeed(player2.getCurrentAttackSpeed());
-			attackEntity.setCurrentAttackWidth(player2.getCurrentAttackWidth());
-			attackEntity.setCurrentAttackHeight(player2.getCurrentAttackHeight());
-			player2_attackEntity = attackEntity;
+			// 设置攻击实体
+			setAttackEntity2();
 		}break;
 		default:
 			break;
@@ -2031,6 +1692,122 @@ public class PlayView extends View { // 游戏页面类
 			textLocateMap.remove(id);
 		}
 		onLaunch();
+	}
+	
+	private void setDefendEntity1() { // 为玩家1设置防御实体
+		// 如果上一个防御实体还没有消失，则不能发射下一个防御
+		if(player1_defendEntity != null && player1_defendEntity.isActive()) {
+			return; 
+		}
+		// 否则添加新防御实体
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		String name = player1.getDefendName();
+		boolean isLeft = player1.isLeft();
+		double dx = player1.getDeltaX();
+		double dist = player1.getDefendDist();
+		if(isLeft) {
+			dx -= player1.getDefendWidth();
+			dist -= dx;
+		}else {
+			dx += player1.getWidth(); 
+			dist += dx;
+		}
+		DefendEntity defendEntity = new DefendEntity(name,isLeft,dx);
+		defendEntity.setDefendName(player1.getDefendName());
+		defendEntity.setDefendImg(player1.getDefendLeftImage(),player1.getDefendRightImage());
+		defendEntity.setDefendValue(player1.getDefendValue());
+		defendEntity.setDefendDist(dist);
+		defendEntity.setDefendSpeed(player1.getDefendSpeed());
+		defendEntity.setDefendWidth(player1.getDefendWidth());
+		defendEntity.setDefendHeight(player1.getDefendHeight());
+		player1_defendEntity = defendEntity;
+	}
+	
+	private void setDefendEntity2() { // 为玩家2设置防御实体
+		// 如果上一个防御实体还没有消失，则不能发射下一个防御
+		if(player2_defendEntity != null && player2_defendEntity.isActive()) {
+			return; 
+		}
+		// 否则设置新防御实体
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		String name = player2.getDefendName();
+		boolean isLeft = player2.isLeft();
+		double dx = player2.getDeltaX();
+		double dist = player2.getDefendDist();
+		if(isLeft) {
+			dx -= player2.getDefendWidth();
+			dist -= dx;
+		}else {
+			dx += player2.getWidth(); 
+			dist += dx;
+		}
+		DefendEntity defendEntity = new DefendEntity(name,isLeft,dx);
+		defendEntity.setDefendName(player2.getDefendName());
+		defendEntity.setDefendImg(player2.getDefendLeftImage(),player2.getDefendRightImage());
+		defendEntity.setDefendValue(player2.getDefendValue());
+		defendEntity.setDefendDist(dist);
+		defendEntity.setDefendSpeed(player2.getDefendSpeed());
+		defendEntity.setDefendWidth(player2.getDefendWidth());
+		defendEntity.setDefendHeight(player2.getDefendHeight());
+		player2_defendEntity = defendEntity;
+	}
+	
+	private void setAttackEntity1() { // 为玩家1设置攻击实体
+		// 如果上一个攻击实体还没有消失，则不能发射下一个攻击
+		if(player1_attackEntity != null && player1_attackEntity.isActive()) {
+			return; 
+		}
+		// 否则添加新攻击实体
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		String name = player1.getCurrentAttackName();
+		boolean isLeft = player1.isLeft();
+		double dx = player1.getDeltaX();
+		double dist = player1.getCurrentAttackDist();
+		if(isLeft) {
+			dx -= player1.getCurrentAttackWidth();
+			dist -= dx;
+		}else {
+			dx += player1.getWidth();
+			dist += dx;
+		}
+		AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
+		attackEntity.setCurrentAttackName(player1.getCurrentAttackName());
+		attackEntity.setCurrentAttackImg(player1.getCurrentAttackImg());
+		attackEntity.setCurrentAttackValue(player1.getCurrentAttackValue());
+		attackEntity.setCurrentAttackDist(dist);
+		attackEntity.setCurrentAttackSpeed(player1.getCurrentAttackSpeed());
+		attackEntity.setCurrentAttackWidth(player1.getCurrentAttackWidth());
+		attackEntity.setCurrentAttackHeight(player1.getCurrentAttackHeight());
+		player1_attackEntity = attackEntity;
+	}
+	
+	private void setAttackEntity2() { // 为玩家2设置攻击实体
+		// 如果上一个攻击实体还没有消失，则不能发射下一个攻击
+		if(player2_attackEntity != null && player2_attackEntity.isActive()) {
+			return; 
+		}
+		// 否则设置新攻击实体
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		String name = player2.getCurrentAttackName();
+		boolean isLeft = player2.isLeft();
+		double dx = player2.getDeltaX();
+		double dist = player2.getCurrentAttackDist();
+		if(isLeft) {
+			dx -= player2.getCurrentAttackWidth();
+			dist -= dx;
+		}else {
+			dx += player2.getWidth();
+			dist += dx;
+		}
+		AttackEntity attackEntity = new AttackEntity(name,isLeft,dx);
+		attackEntity.setCurrentAttackName(player2.getCurrentAttackName());
+		attackEntity.setCurrentAttackImg(player2.getCurrentAttackImg());
+		attackEntity.setCurrentAttackValue(player2.getCurrentAttackValue());
+		attackEntity.setCurrentAttackDist(dist);
+		attackEntity.setCurrentAttackSpeed(player2.getCurrentAttackSpeed());
+		attackEntity.setCurrentAttackWidth(player2.getCurrentAttackWidth());
+		attackEntity.setCurrentAttackHeight(player2.getCurrentAttackHeight());
+		player2_attackEntity = attackEntity;
 	}
 	
 	private void addDefendText1() { // 为玩家1添加防御文本
