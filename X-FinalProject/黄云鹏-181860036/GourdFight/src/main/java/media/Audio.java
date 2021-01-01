@@ -1,5 +1,6 @@
 package media;
 
+import java.io.File;
 import java.util.HashMap;
 
 import javafx.scene.media.AudioClip;
@@ -20,6 +21,10 @@ public class Audio { // 音频播放类，用于播放游戏背景音频，以�
 		
 		String dirStr = "main";
 		String filePath = URL.toMP3Path(dirStr, d, f);
+		File file = new File(filePath);
+		if(!file.exists()) { // 文件不存在则直接返回，以免播放异常
+			return;
+		}
 		String source = URL.toURL(filePath);
 		
 		AudioClip audioClip = clipMap.get(source);

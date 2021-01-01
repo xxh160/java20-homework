@@ -1,6 +1,8 @@
 package world;
 
 import java.util.HashMap;
+
+import framework.Framework;
 import gourdfight.Constants;
 import javafx.beans.binding.DoubleExpression;
 import javafx.scene.image.Image;
@@ -502,6 +504,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		else if (state == EntityState.MOVING_TORIGHT) { // 只有右向移动能切换朝向
 			isLeft = false;
 		}
+		play(); // 播放切换后的状态的效果音
 	}
 	
 	
@@ -1025,4 +1028,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	
+	private void play() { // 播放效果音
+		String d = name;
+		String f = state.getState();
+		Framework.audio.playClip(d, f);
+	}
+
 }
