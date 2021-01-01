@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Random;
+import java.util.concurrent.CountDownLatch;
 
 import app.ImageLocate;
 import app.ImagePane;
@@ -17,6 +18,7 @@ import world.Blood;
 import world.BloodBar;
 import world.BlueBaby;
 import world.Chilopod;
+import world.CountDown;
 import world.Crocodile;
 import world.DefendEntity;
 import world.Entity;
@@ -58,6 +60,8 @@ public class PlayView extends View { // 游戏页面类
 	int frameCount; // 帧计数器
 	boolean mode; // 游戏模式(true为网络版本，false为单击版本)
 	
+	boolean isStart; // 是否开始游戏(false则进入游戏倒计时)
+	
 	private TCPServer server; // 服务器端
 	private TCPClient client; // 客户端
 	
@@ -78,6 +82,7 @@ public class PlayView extends View { // 游戏页面类
 		
 		frameCount = 0;
 		mode = true; 
+		isStart = false;
 		
 		isServer = false; 
 		server = new TCPServer("", Constants.PORT);
@@ -356,10 +361,40 @@ public class PlayView extends View { // 游戏页面类
 		player1_defendEntity = null;
 		player2_defendEntity = null;
 		frameCount = 0;
+		isStart = false;
 		
 		// 存档之后！！！！！！！！！！！！！！
 		sendPktQueue.clear(); sendPktQueueIdx = 0;
 		receivePktQueue.clear(); receivePktQueueIdx = 0;
+	}
+	
+	private void countDown() { // 游戏进入倒计时
+
+		if(!entityMap.containsKey(Constants.COUNTDOWN)) { // 创建倒计时实体类
+			CountDown countDown = new CountDown(Constants.COUNTDOWN);
+			addEntity(Constants.COUNTDOWN, countDown);
+			
+			ImageLocate countDown_imgLocate = new ImageLocate(
+					countDown.getCurrentImage(),
+					Constants.COUNTDOWN_X,
+					Constants.COUNTDOWN_Y,
+					countDown.getWidth(),
+					countDown.getHeight());
+			
+			addImageLocate(Constants.COUNTDOWN, countDown_imgLocate);
+		}
+		else {
+			CountDown countDown = (CountDown)entityMap.get(Constants.COUNTDOWN);
+			Image img = countDown.getCurrentImage();
+			if(img == null) { // 倒计时结束
+				removeEntity(Constants.COUNTDOWN);
+				removeImageLocate(Constants.COUNTDOWN);
+				isStart = true;
+			}
+			else {
+				imgLocateMap.get(Constants.COUNTDOWN).setImg(img);
+			}
+		}
 	}
 	
 	private void updatePlayer1() { // 更新玩家1
@@ -1867,29 +1902,35 @@ public class PlayView extends View { // 游戏页面类
 	public void onUpdate(double time) {
 		frameCount++;
 		
-		// 更新玩家实体
-		updatePlayer1(); // 更新玩家1
-		updatePlayer2(mode); // 更新玩家2
+		if(!isStart) { // 未开始则进入游戏倒计时
+			countDown();
+		}
+		else {
+			// 更新玩家实体
+			updatePlayer1(); // 更新玩家1
+			updatePlayer2(mode); // 更新玩家2
+			
+			// 解析操作队列
+			parseQueue();
+//			parsePlayer1Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
+//			parsePlayer2Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
+			
+			// 更新攻击/防御实体
+			updatePlayer1AttackEntity();
+			updatePlayer2AttackEntity();
+			updatePlayer1DefendEntity();
+			updatePlayer2DefendEntity();
+			
+			// 碰撞检测
+			collisionDetect();
+//			System.out.println("player1's life = "+ entityMap.get(Constants.PLAYER1).getLifeValue()); // test
+//			System.out.println("player2's life = "+ entityMap.get(Constants.PLAYER2).getLifeValue()); // test
+			
+			// 更新血条
+			updateBloodBar();
+		}
 		
-		// 解析操作队列
-		parseQueue();
-//		parsePlayer1Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
-//		parsePlayer2Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
-		
-		// 更新攻击/防御实体
-		updatePlayer1AttackEntity();
-		updatePlayer2AttackEntity();
-		updatePlayer1DefendEntity();
-		updatePlayer2DefendEntity();
-		
-		// 碰撞检测
-		collisionDetect();
-//		System.out.println("player1's life = "+ entityMap.get(Constants.PLAYER1).getLifeValue()); // test
-//		System.out.println("player2's life = "+ entityMap.get(Constants.PLAYER2).getLifeValue()); // test
-		
-		// 更新血条
-		updateBloodBar();
-		
+
 		// 更新帧图
 		updateFrame();
 		

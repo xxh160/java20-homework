@@ -1,5 +1,7 @@
 package gourdfight;
 
+import org.omg.CORBA.FieldNameHelper;
+
 public class Constants { // 常量类，提供游戏中所有需要的常量
 
 	// 窗口
@@ -32,6 +34,7 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String BLOOD2 = "blood2"; // 血条2
 	public static final String BLOOD_NAME = "blood"; // 血条名称 
 	public static final String PK = "pk"; // PK图标
+	public static final String COUNTDOWN = "countDown"; // 倒计时
 	public static final String PROFILE1 = "profile1"; //头像1
 	public static final String PROFILE2 = "profile2"; //头像2
 	public static final String STATE1 = "state1"; // 状态1
@@ -127,6 +130,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double PK_X = 410; // PK图标x轴坐标
 	public static final double PK_Y = 90; // PK图标y轴坐标
 	
+	public static final double COUNTDOWN_X = 380; // 倒计时图标x轴坐标
+	public static final double COUNTDOWN_Y = 290; // 倒计时图标y轴坐标
+	
 	public static final double PLAYER1_INIT_X = 50; // 玩家1初始x轴坐标
 	public static final double PLAYER1_INIT_Y = 300; // 玩家1初始y轴坐标
 	public static final double PLAYER2_INIT_X = 700; // 玩家2初始x轴坐标
@@ -144,6 +150,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	
 	public static final double PK_W = 80; // PK图标宽度
 	public static final double PK_H = 80; // PK图标宽度
+	
+	public static final double COUNTDOWN_W = 120; // 倒计时图标宽度
+	public static final double COUNTDOWN_H = 120; // 倒计时图标宽度
 	
 	public static final double PLAYER_DEFAULT_W = 100; // 玩家默认宽度
 	public static final double PLAYER_DEFAULT_H = 150; // 玩家默认高度
