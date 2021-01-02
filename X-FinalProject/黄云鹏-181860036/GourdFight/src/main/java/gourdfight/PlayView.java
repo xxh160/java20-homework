@@ -10,6 +10,9 @@ import app.TextLocate;
 import app.View;
 
 import output.URL;
+import thread.ThreadHandler;
+import thread.ThreadPool;
+import thread.ThreadTask;
 import world.AttackEntity;
 import world.Background;
 import world.Blood;
@@ -79,6 +82,8 @@ public class PlayView extends View { // 游戏页面类
 	double currentEnergy1; // 玩家1当前能量值
 	double currentEnergy2; // 玩家2当前能量值
 	
+	ThreadPool threadPool; // 线程池
+	
 	// 初始化
 	public PlayView() {
 		super(Constants.IMAGE_PANE);
@@ -86,6 +91,7 @@ public class PlayView extends View { // 游戏页面类
 		entityMap = new HashMap<>();
 		imgLocateMap = new LinkedHashMap<>();
 		textLocateMap = new LinkedHashMap<>();
+		threadPool = null;
 		
 		frameCount = 0;
 		roundCount = 0;
@@ -2115,25 +2121,23 @@ public class PlayView extends View { // 游戏页面类
 			countDown();
 		}
 		else {
-			// 更新玩家实体
+			// 更新玩家实体(单线程)
 			updatePlayer1(); // 更新玩家1
 			updatePlayer2(mode); // 更新玩家2
 			
 			// 解析操作队列
 			parseQueue();
-//			parsePlayer1Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
-//			parsePlayer2Action(); // !!!!!!!!!!!!!!!!!!test!!!!!!!!!!!!!!!!
 			
-			// 更新攻击/防御实体
+			// 更新攻击实体(单线程)
 			updatePlayer1AttackEntity();
 			updatePlayer2AttackEntity();
+			
+			// 更新防御实体(单线程)
 			updatePlayer1DefendEntity();
 			updatePlayer2DefendEntity();
 			
 			// 碰撞检测
 			collisionDetect();
-//			System.out.println("player1's life = "+ entityMap.get(Constants.PLAYER1).getLifeValue()); // test
-//			System.out.println("player2's life = "+ entityMap.get(Constants.PLAYER2).getLifeValue()); // test
 			
 			// 更新血条
 			updateBloodBar();
@@ -2142,7 +2146,6 @@ public class PlayView extends View { // 游戏页面类
 			updateEnergyBar();
 		}
 		
-
 		// 更新帧图
 		updateFrame();
 		super.onUpdate(time);
