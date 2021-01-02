@@ -1473,7 +1473,16 @@ public class PlayView extends View { // 游戏页面类
 		Entity player1 = entityMap.get(Constants.PLAYER1);
 		if(player1_action == EntityState.STANDING_TOLEFT) { // 保持上一个状态的延续
 			
-		}else {
+		}
+		else if(player1_action == EntityState.ATTACKING_KILL_TOLEFT || player1_action
+				== EntityState.ATTACKING_KILL_TORIGHT) { // 如果是想使用必杀技
+			if(currentEnergy1 < player1.getFullEnergy()) { // 但是能量值不足
+				
+			}else{
+				player1.setState(player1_action); // 否则切换状态为同步帧的动作
+			}
+		}
+		else {
 			player1.setState(player1_action); // 否则切换状态为同步帧的动作
 		}
 		

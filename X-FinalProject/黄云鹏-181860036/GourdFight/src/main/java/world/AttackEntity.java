@@ -14,7 +14,7 @@ public class AttackEntity extends Entity { // 攻击实体，用于在角色实�
 		setMobile(true);
 		setAttackable(true); // 具有可攻击性
 	
-		endFrame = 10;
+		endFrame = 5;
 		endFrameCount = 0;
 		isCounting = false;
 	}

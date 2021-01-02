@@ -159,28 +159,28 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		for(EntityState state : EntityState.values()){
 			switch (state) {
 			case ATTACKING_NEAR_TOLEFT:
-				addFrame(state, 50);
+				addFrame(state, 60);
 				break;
 			case ATTACKING_NEAR_TORIGHT:
-				addFrame(state, 50);
+				addFrame(state, 60);
 				break;
 			case ATTACKING_FAR_TOLEFT:
-				addFrame(state, 70);
+				addFrame(state, 90);
 				break;
 			case ATTACKING_FAR_TORIGHT:
-				addFrame(state, 70);
+				addFrame(state, 90);
 				break;
 			case ATTACKING_KILL_TOLEFT:
-				addFrame(state, 80);
+				addFrame(state, 100);
 				break;
 			case ATTACKING_KILL_TORIGHT:
-				addFrame(state, 80);
+				addFrame(state, 100);
 				break;
 			case DEFENDING_TOLEFT:
-				addFrame(state, 60);
+				addFrame(state, 80);
 				break;
 			case DEFENDING_TORIGHT:
-				addFrame(state, 60);
+				addFrame(state, 80);
 				break;
 			case JUMPING_TOLEFT:
 				addFrame(state, (int)(2*jumpHeight / jumpSpeed));
@@ -502,6 +502,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	
 	public void setState(EntityState state) { // 设置实体状态
+		if(state != EntityState.STANDING_TOLEFT && state != EntityState.STANDING_TORIGHT)
+			stop(); // 如果不是回到静止状态，说明即将开启新状态，应该停止切换前的状态的效果音
 		this.state = state;
 		if(state == EntityState.MOVING_TOLEFT) { // 只有左向移动能切换朝向
 			isLeft = true;
@@ -1040,6 +1042,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		String d = name;
 		String f = state.getState();
 		Framework.audio.playClip(d, f);
+	}
+	
+	private void stop() { // 停止播放效果音
+		if(state != null) {
+			String d = name;
+			String f = state.getState();
+			Framework.audio.stopClip(d, f);
+		}
 	}
 
 }

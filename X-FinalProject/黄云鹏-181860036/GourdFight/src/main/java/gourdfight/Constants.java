@@ -78,10 +78,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String GREENBABY_DEFEND_NAME = "Fire Wheel"; // 四娃防御招式名称
 	
 	public static final String BLUEBABY_NAME = "blueBaby"; // 五娃实体名称
-	public static final String BLUEBABY_ATTACKNEAR_NAME = "Normal Punch"; // 五娃近攻招式名称
-	public static final String BLUEBABY_ATTACKFAR_NAME = "Fire Punch"; // 五娃远攻招式名称
-	public static final String BLUEBABY_ATTACKKILL_NAME = "Gold Punch"; // 五娃必杀招式名称
-	public static final String BLUEBABY_DEFEND_NAME = "Defend Stone"; // 五娃防御招式名称
+	public static final String BLUEBABY_ATTACKNEAR_NAME = "Water Shark"; // 五娃近攻招式名称
+	public static final String BLUEBABY_ATTACKFAR_NAME = "Water Bullet"; // 五娃远攻招式名称
+	public static final String BLUEBABY_ATTACKKILL_NAME = "Water Dragon"; // 五娃必杀招式名称
+	public static final String BLUEBABY_DEFEND_NAME = "Water Wall"; // 五娃防御招式名称
 	
 	public static final String INDIGOBABY_NAME = "indigoBaby"; // 六娃实体名称
 	public static final String INDIGOBABY_ATTACKNEAR_NAME = "Normal Punch"; // 六娃近攻招式名称
