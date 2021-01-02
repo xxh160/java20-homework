@@ -70,6 +70,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	private double attackKillSpeed; // 必杀实体移动速度
 	private double attackKillWidth; // 必杀实体宽度
 	private double attackKillHeight; // 必杀实体高度
+	private double fullEnergy; // 满能量阈值(用于必杀技的启动)
 	
 	protected String currentAttackName; // 当前攻击招式名称
 	protected Image currentAttackImg; // 当前攻击实体图片
@@ -446,6 +447,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return currentAttackHeight;
 	}
 	
+	public double getFullEnergy() { // 获取满能量阈值
+		return fullEnergy;
+	}
+	
 	public Image getCurrentDefendImg() { // 获取当前防御实体图片
 		if(isLeft) {
 			return defendLeftImg;
@@ -588,7 +593,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	public void setAttackNearValue(double val) { // 设置近攻攻击值
-		attackNearValue = val;
+		attackNearValue = val; 
 	}
 	
 	public void setAttackNearDist(double val) { // 设置近攻距离
@@ -646,7 +651,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	public void setAttackKillValue(double val) { // 设置必杀攻击值
-		attackKillValue = val;
+		attackKillValue = val; // 必杀攻击值
+		setFullEnergy(val * Constants.ENERGY_THRESHOLD_SCALE); // 自动设置怒气值
 	}
 	
 	public void setAttackKillDist(double val) { // 设置必杀距离
@@ -663,6 +669,10 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	public void setAttackKillSpeed(double val) { // 设置必杀实体移动速度
 		attackKillSpeed = val;
+	}
+	
+	public void setFullEnergy(double val) { // 设置必杀能量阈值
+		fullEnergy = val;
 	}
 	
 	public void setAttackKillImage(Image lImg, Image rImg) { // 设置必杀实体图片
@@ -901,7 +911,11 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	
-	public void attackKill() { // 必杀
+	public boolean attackKill(double currentEnergy) { // 必杀
+		if(currentEnergy < fullEnergy) { // 如果当前能量值不满能量阈值
+			resetToStand(); // 不能开启必杀，返回静止状态
+			return false;
+		}
 		setCurrentAttackName(attackKillName);
 		if(isLeft) {
 			setCurrentAttackImg(attackKillLeftImg);
@@ -920,17 +934,11 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		else {
 			countFrame(EntityState.ATTACKING_KILL_TORIGHT);
 		}
+		return true;
 	}
 	
-	// 动作
-	
-	public void collided(double attackValue) { // 被其他实体碰撞
-		boolean isHurt = getHurt(attackValue);
-		if(isHurt) {
-			
-		}
-	}
-	
+	// 动作	
+
 	public void jump() { // 跳跃
 		
 		if(jumpTag == 0) { // 尚未起跳
@@ -1006,7 +1014,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		frameCount++;
 	}
 	
-	public boolean getHurt(double attackValue) { // 计算伤害，并返回是否受伤
+	public double getHurt(double attackValue) { // 计算伤害，并返回是否受伤
 		
 		double hurt = 0;
 		if (isDefendable()) { // 可防御
@@ -1022,9 +1030,9 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 			else {
 				lifeValue -= hurt;
 			}
-			return true;
+			return hurt;
 		}
-		return false;
+		return 0;
 	}
 	
 	

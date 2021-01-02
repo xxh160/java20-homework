@@ -19,6 +19,8 @@ import world.Chilopod;
 import world.CountDown;
 import world.Crocodile;
 import world.DefendEntity;
+import world.Energy;
+import world.EnergyBar;
 import world.Entity;
 import world.EntityName;
 import world.EntityState;
@@ -74,6 +76,9 @@ public class PlayView extends View { // 游戏页面类
 	int round; // 游戏局数(默认是3)
 	int roundCount; // 游戏局数计数器
 	
+	double currentEnergy1; // 玩家1当前能量值
+	double currentEnergy2; // 玩家2当前能量值
+	
 	// 初始化
 	public PlayView() {
 		super(Constants.IMAGE_PANE);
@@ -86,6 +91,8 @@ public class PlayView extends View { // 游戏页面类
 		roundCount = 0;
 		endFrame = 180;
 		endFrameCount = 0;
+		currentEnergy1 = 0;
+		currentEnergy2 = 0;
 		mode = true; 
 		isStart = false;
 		isGameOver = false;
@@ -114,6 +121,8 @@ public class PlayView extends View { // 游戏页面类
 		setPlayer2();
 		// 血槽条
 		setBloodBar();
+		// 能量条
+		setEnergyBar();
 	}
 	
 	private void setBackground() { // 初设背景
@@ -218,6 +227,73 @@ public class PlayView extends View { // 游戏页面类
 				blood2.getHeight());
 		
 		addImageLocate(Constants.BLOOD2, blood2_imgLocate);
+		
+	}
+	
+	private void setEnergyBar() { // 初设能量槽条
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		// 左能量槽
+		EnergyBar energyBar1 = new EnergyBar(Constants.ENERGYBAR_NAME); 
+		energyBar1.setState(EntityState.STANDING_TOLEFT);
+		
+		addEntity(Constants.ENERGYBAR1, energyBar1);
+		
+		ImageLocate energyBar1_imgLocate = new ImageLocate(
+				energyBar1.getCurrentImage(),
+				Constants.PLAYER1_INIT_X + player1.getDeltaX(),
+				Constants.PLAYER1_INIT_Y + player1.getDeltaY()
+				+ Constants.ENERGYBAR_DELTAY,
+				energyBar1.getWidth(),
+				energyBar1.getHeight());
+		
+		addImageLocate(Constants.ENERGYBAR1,energyBar1_imgLocate);
+		// 右能量槽
+		EnergyBar energyBar2 = new EnergyBar(Constants.ENERGYBAR_NAME); 
+		energyBar2.setState(EntityState.STANDING_TOLEFT);
+		
+		addEntity(Constants.ENERGYBAR2, energyBar2);
+		
+		ImageLocate energyBar2_imgLocate = new ImageLocate(
+				energyBar2.getCurrentImage(),
+				Constants.PLAYER2_INIT_X + player2.getDeltaX(),
+				Constants.PLAYER2_INIT_Y + player2.getDeltaY()
+				+ Constants.ENERGYBAR_DELTAY,
+				energyBar2.getWidth(),
+				energyBar2.getHeight());
+		
+		addImageLocate(Constants.ENERGYBAR2, energyBar2_imgLocate);
+		// 左能量条
+		Energy energy1 = new Energy(Constants.ENERGY_NAME); 
+		energy1.setState(EntityState.STANDING_TOLEFT);
+		
+		addEntity(Constants.ENERGY1, energy1);
+		
+		ImageLocate energy1_imgLocate = new ImageLocate(
+				energy1.getCurrentImage(),
+				Constants.PLAYER1_INIT_X + player1.getDeltaX(),
+				Constants.PLAYER1_INIT_Y + player1.getDeltaY()
+				+ Constants.ENERGY_DELTAY,
+				energy1.getWidth() * (currentEnergy1  / player1.getFullEnergy()),
+				energy1.getHeight());
+		
+		addImageLocate(Constants.ENERGY1, energy1_imgLocate);
+		// 右能量条
+		Energy energy2 = new Energy(Constants.ENERGY_NAME); 
+		energy2.setState(EntityState.STANDING_TOLEFT);
+		
+		addEntity(Constants.ENERGY2, energy2);
+		
+		ImageLocate energy2_imgLocate = new ImageLocate(
+				energy2.getCurrentImage(),
+				Constants.PLAYER2_INIT_X + player2.getDeltaX(),
+				Constants.PLAYER2_INIT_Y + player2.getDeltaY()
+				+ Constants.ENERGY_DELTAY,
+				energy2.getWidth() * (currentEnergy2  / player2.getFullEnergy()),
+				energy2.getHeight());
+		
+		addImageLocate(Constants.ENERGY2, energy2_imgLocate);
 		
 	}
 	
@@ -377,6 +453,8 @@ public class PlayView extends View { // 游戏页面类
 		player2_defendEntity = null;
 		frameCount = 0;
 		endFrameCount = 0;
+		currentEnergy1 = 0;
+		currentEnergy2 = 0;
 		isStart = false;
 		isGameOver = false;
 		
@@ -782,7 +860,7 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
-	private void updateBloodBar() { // 更新血条
+	private void updateBloodBar() { // 更新血条/血槽
 		Blood blood1 = (Blood)entityMap.get(Constants.BLOOD1);
 		Blood blood2 = (Blood)entityMap.get(Constants.BLOOD2);
 		Entity player1 = entityMap.get(Constants.PLAYER1);
@@ -794,6 +872,55 @@ public class PlayView extends View { // 游戏页面类
 		imgLocateMap.get(Constants.BLOOD1).setW(blood1.getWidth()*scale1);
 		imgLocateMap.get(Constants.BLOOD2).setX(Constants.BLOOD2_X + blood2.getWidth()*(1-scale2));
 		imgLocateMap.get(Constants.BLOOD2).setW(blood2.getWidth()*scale2);
+	}
+	
+	private void updateEnergyBar() { // 更新能量条/能量槽
+		
+		Energy energy1 = (Energy)entityMap.get(Constants.ENERGY1);
+		Energy energy2 = (Energy)entityMap.get(Constants.ENERGY2);
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		if(player1.isActive()) {
+			currentEnergy1++;
+		}else {
+			currentEnergy1 = 0;
+		}
+		if(player2.isActive()) {
+			currentEnergy2++;
+		}else {
+			currentEnergy2 = 0;
+		}
+		
+		double scale1 = currentEnergy1 / player1.getFullEnergy(); // 左能量条增长比例
+		double scale2 = currentEnergy2 / player2.getFullEnergy(); // 右能量条增长比例
+		
+		// 限制在[0,1]
+		if(scale1 >= 1) 
+			scale1 = 1;
+		if(scale2 >= 1)
+			scale2 = 1;
+		
+		// 更新能量槽
+		imgLocateMap.get(Constants.ENERGYBAR1).setX(Constants.PLAYER1_INIT_X+player1.getDeltaX());
+		imgLocateMap.get(Constants.ENERGYBAR1).setY(Constants.PLAYER1_INIT_Y+player1.getDeltaY()
+		+ Constants.ENERGYBAR_DELTAY);
+		
+		imgLocateMap.get(Constants.ENERGYBAR2).setX(Constants.PLAYER2_INIT_X+player2.getDeltaX());
+		imgLocateMap.get(Constants.ENERGYBAR2).setY(Constants.PLAYER2_INIT_Y+player2.getDeltaY()
+		+ Constants.ENERGYBAR_DELTAY);
+		
+		// 更新能量条
+		imgLocateMap.get(Constants.ENERGY1).setX(Constants.PLAYER1_INIT_X+player1.getDeltaX());
+		imgLocateMap.get(Constants.ENERGY1).setY(Constants.PLAYER1_INIT_Y+player1.getDeltaY()
+		+ Constants.ENERGY_DELTAY);
+		
+		imgLocateMap.get(Constants.ENERGY2).setX(Constants.PLAYER2_INIT_X+player2.getDeltaX());
+		imgLocateMap.get(Constants.ENERGY2).setY(Constants.PLAYER2_INIT_Y+player2.getDeltaY()
+		+ Constants.ENERGY_DELTAY);
+		
+		imgLocateMap.get(Constants.ENERGY1).setW(energy1.getWidth()*scale1);
+		imgLocateMap.get(Constants.ENERGY2).setW(energy2.getWidth()*scale2);
 	}
 	
 	private void updatePlayer1AttackEntity() { // 更新玩家1攻击实体
@@ -1163,9 +1290,10 @@ public class PlayView extends View { // 游戏页面类
 			boolean isCollided = isCollided(x1, y1, w1, h1, x2, y2, w2, h2);
 			if(isCollided && !player2Hurt) { // 如果是第一次碰撞
 				double attackValue1 = player1_attackEntity.getCurrentAttackValue();
-				boolean isHurt = player2.getHurt(attackValue1);
-				if(isHurt) { 
+				double hurt = player2.getHurt(attackValue1);
+				if(hurt > 0) { 
 					player2Hurt = true;
+					currentEnergy2 += hurt*Constants.ENERGY_HURT_SCALE; // 如果玩家2受伤，则能量值激增
 					boolean opposite = player1.isLeft() ^ player2.isLeft();
 					if(opposite) // 如果面对面，则玩家2后退几步，否则玩家2前进几步
 						player2.setBack(true);
@@ -1221,9 +1349,10 @@ public class PlayView extends View { // 游戏页面类
 			boolean isCollided = isCollided(x1, y1, w1, h1, x2, y2, w2, h2);
 			if(isCollided && !player1Hurt) { // 如果是第一次碰撞
 				double attackValue2 = player2_attackEntity.getCurrentAttackValue();
-				boolean isHurt = player1.getHurt(attackValue2);
-				if(isHurt) { 
+				double hurt = player1.getHurt(attackValue2);
+				if(hurt > 0) { 
 					player1Hurt = true;
+					currentEnergy1 += hurt * Constants.ENERGY_HURT_SCALE; // 如果玩家1受伤，则能量值激增
 					boolean opposite = player1.isLeft() ^ player2.isLeft();
 					if(opposite) // 如果面对面，则玩家1后退几步，否则玩家1前进几步
 						player1.setBack(true);
@@ -1475,7 +1604,10 @@ public class PlayView extends View { // 游戏页面类
 		}break;
 		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
-			player1.attackKill();
+			boolean isKilled = player1.attackKill(currentEnergy1);
+			if(!isKilled) // 如果不满阈值，则不能开启必杀技
+				break;
+			currentEnergy1 = 0; // 否则能量条归零，开启必杀技
 			// 攻击招式名称图片显示
 			addAttackText1();
 			// 设置攻击实体
@@ -1483,7 +1615,10 @@ public class PlayView extends View { // 游戏页面类
 		}break;
 		case ATTACKING_KILL_TORIGHT: // 向右必杀
 		{
-			player1.attackKill();
+			boolean isKilled = player1.attackKill(currentEnergy1);
+			if(!isKilled) // 如果不满阈值，则不能开启必杀技
+				break;
+			currentEnergy1 = 0; // 否则能量条归零，开启必杀技
 			// 攻击招式名称图片显示
 			addAttackText1();
 			// 设置攻击实体
@@ -1633,7 +1768,10 @@ public class PlayView extends View { // 游戏页面类
 		}break;
 		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
-			player2.attackKill();
+			boolean isKilled = player2.attackKill(currentEnergy2);
+			if(!isKilled) // 如果不满阈值，则不能开启必杀技
+				break;
+			currentEnergy2 = 0; // 否则能量条归零，开启必杀技
 			// 攻击招式名称图片显示
 			addAttackText2();
 			// 设置攻击实体
@@ -1641,7 +1779,10 @@ public class PlayView extends View { // 游戏页面类
 		}break;
 		case ATTACKING_KILL_TORIGHT: // 向右必杀
 		{
-			player2.attackKill();
+			boolean isKilled = player2.attackKill(currentEnergy2);
+			if(!isKilled) // 如果不满阈值，则不能开启必杀技
+				break;
+			currentEnergy2 = 0; // 否则能量条归零，开启必杀技
 			// 攻击招式名称图片显示
 			addAttackText2();
 			// 设置攻击实体
@@ -1958,6 +2099,9 @@ public class PlayView extends View { // 游戏页面类
 			
 			// 更新血条
 			updateBloodBar();
+			
+			// 更新能量条
+			updateEnergyBar();
 		}
 		
 

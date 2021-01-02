@@ -39,6 +39,12 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String BLOOD1 = "blood1"; // 血条1
 	public static final String BLOOD2 = "blood2"; // 血条2
 	public static final String BLOOD_NAME = "blood"; // 血条名称 
+	public static final String ENERGYBAR1 = "energyBar1"; // 能量槽1
+	public static final String ENERGYBAR2 = "energyBar2"; // 能量槽2
+	public static final String ENERGYBAR_NAME = "energyBar"; // 能量槽名称 
+	public static final String ENERGY1 = "energy1"; // 能量条1
+	public static final String ENERGY2 = "energy2"; // 能量条2
+	public static final String ENERGY_NAME = "energy"; // 血条名称 
 	public static final String PK = "pk"; // PK图标
 	public static final String COUNTDOWN = "countDown"; // 倒计时
 	public static final String TEXT = " Text"; // 招式文本
@@ -134,6 +140,9 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double BLOOD2_X = 627; // 血条2x轴坐标
 	public static final double BLOOD2_Y = 120; // 血条2y轴坐标
 	
+	public static final double ENERGYBAR_DELTAY = -22; // 能量槽相对于玩家头顶的y轴位移
+	public static final double ENERGY_DELTAY = -20; // 能量条相对于玩家头顶的y轴位移
+	
 	public static final double PK_X = 410; // PK图标x轴坐标
 	public static final double PK_Y = 90; // PK图标y轴坐标
 	
@@ -159,6 +168,12 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	
 	public static final double BLOOD_W = 180; // 血条最大宽度
 	public static final double BLOOD_H = 10; // 血条高度
+	
+	public static final double ENERGYBAR_W = 90; // 能量槽宽度
+	public static final double ENERGYBAR_H = 10; // 能量槽宽度
+	
+	public static final double ENERGY_W = 88; // 能量条最大宽度
+	public static final double ENERGY_H = 6; // 能量条高度
 	
 	public static final double PK_W = 80; // PK图标宽度
 	public static final double PK_H = 80; // PK图标宽度
@@ -224,6 +239,8 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final double DEFAULT_ATTACK_KILL_VALUE = 25; // 默认必杀攻击值
 	public static final double DEFAULT_ATTACK_KILL_DIST = 150; // 默认必杀距离
 	public static final double DEFAULT_ATTACK_KILL_SPEED = 6; // 默认必杀实体移动速度
+	public static final double ENERGY_THRESHOLD_SCALE = 30; // 满能量阈值和必杀攻击值的比例
+	public static final double ENERGY_HURT_SCALE = 5; // 能量增值和伤害值的比例
 	
 	public static final double DEFAULT_DEFEND_VALUE = 5; // 默认防御值
 	public static final double DEFAULT_DEFEND_DIST = 20; // 默认防御距离

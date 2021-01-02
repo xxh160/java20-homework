@@ -2,12 +2,9 @@ package world;
 
 import gourdfight.Constants;
 
-public class Blood extends Entity { // 血条实体类
+public class EnergyBar extends Entity { // 能量槽实体类
 
-	private double fullLife; // 满血值
-	
-	// 初始化
-	public Blood(String name) {
+	public EnergyBar(String name) {
 		super(name);
 		// 子类特殊设置
 //		setMobile(false);
@@ -15,8 +12,8 @@ public class Blood extends Entity { // 血条实体类
 //		setAttackable(false);
 //		setDefendable(false);
 //		
-		setWidth(Constants.BLOOD_W);
-		setHeight(Constants.BLOOD_H);
+		setWidth(Constants.ENERGYBAR_W);
+		setHeight(Constants.ENERGYBAR_H);
 //		
 //		setLifeValue(Constants.DEFAULT_LIFE_VALUE);
 //		setMoveSpeed(Constants.DEFAULT_MOVE_SPEED);
@@ -47,17 +44,7 @@ public class Blood extends Entity { // 血条实体类
 //		setDefendSpeed(Constants.DEFAULT_DEFEND_SPEED);
 //		setDefendWidth(Constants.PLAYER_DEFAULT_DEFEND_W);
 //		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H);	
-		fullLife = 0;
-	}
-
-	// Getter
-	public double getFullLife() { // 获取满血值
-		return fullLife;
-	}
 	
-	// Setter
-	public void setFullLife(double val) { // 设置满血值
-		fullLife = val;
 	}
 
 }
