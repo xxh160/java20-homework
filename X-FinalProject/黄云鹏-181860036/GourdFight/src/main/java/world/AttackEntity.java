@@ -20,14 +20,16 @@ public class AttackEntity extends Entity { // 攻击实体，用于在角色实�
 	}
 	
 	// 动作
-	public void countEndFrame() { // 计数endFrame
+	public boolean countEndFrame() { // 计数endFrame
 		endFrameCount++;
 		isCounting = true;
 		if(endFrameCount >= endFrame) { // 死亡，并复位计数器
 			setActive(false);
 			endFrameCount = 0;
 			isCounting = false;
+			return true;
 		}
+		return false;
 	}
 	
 	@Override

@@ -1604,10 +1604,15 @@ public class PlayView extends View { // 游戏页面类
 		}break;
 		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
-			boolean isKilled = player1.attackKill(currentEnergy1);
+			boolean isKilled = false;
+			if(player1_attackEntity != null && player1_attackEntity.isActive())
+				isKilled = player1.attackKill(player1.getFullEnergy());
+			else {
+				isKilled = player1.attackKill(currentEnergy1);
+			}
 			if(!isKilled) // 如果不满阈值，则不能开启必杀技
 				break;
-			currentEnergy1 = 0; // 否则能量条归零，开启必杀技
+			currentEnergy1 = 0;
 			// 攻击招式名称图片显示
 			addAttackText1();
 			// 设置攻击实体
@@ -1615,10 +1620,15 @@ public class PlayView extends View { // 游戏页面类
 		}break;
 		case ATTACKING_KILL_TORIGHT: // 向右必杀
 		{
-			boolean isKilled = player1.attackKill(currentEnergy1);
+			boolean isKilled = false;
+			if(player1_attackEntity != null && player1_attackEntity.isActive())
+				isKilled = player1.attackKill(player1.getFullEnergy());
+			else {
+				isKilled = player1.attackKill(currentEnergy1);
+			}
 			if(!isKilled) // 如果不满阈值，则不能开启必杀技
 				break;
-			currentEnergy1 = 0; // 否则能量条归零，开启必杀技
+			currentEnergy1 = 0;
 			// 攻击招式名称图片显示
 			addAttackText1();
 			// 设置攻击实体
@@ -1768,10 +1778,15 @@ public class PlayView extends View { // 游戏页面类
 		}break;
 		case ATTACKING_KILL_TOLEFT: // 向左必杀
 		{
-			boolean isKilled = player2.attackKill(currentEnergy2);
+			boolean isKilled = false;
+			if(player2_attackEntity != null && player2_attackEntity.isActive())
+				isKilled = player2.attackKill(player2.getFullEnergy());
+			else {
+				isKilled = player2.attackKill(currentEnergy2);
+			}
 			if(!isKilled) // 如果不满阈值，则不能开启必杀技
 				break;
-			currentEnergy2 = 0; // 否则能量条归零，开启必杀技
+			currentEnergy2 = 0;
 			// 攻击招式名称图片显示
 			addAttackText2();
 			// 设置攻击实体
@@ -1779,10 +1794,15 @@ public class PlayView extends View { // 游戏页面类
 		}break;
 		case ATTACKING_KILL_TORIGHT: // 向右必杀
 		{
-			boolean isKilled = player2.attackKill(currentEnergy2);
+			boolean isKilled = false;
+			if(player2_attackEntity != null && player2_attackEntity.isActive())
+				isKilled = player2.attackKill(player2.getFullEnergy());
+			else {
+				isKilled = player2.attackKill(currentEnergy2);
+			}
 			if(!isKilled) // 如果不满阈值，则不能开启必杀技
 				break;
-			currentEnergy2 = 0; // 否则能量条归零，开启必杀技
+			currentEnergy2 = 0;
 			// 攻击招式名称图片显示
 			addAttackText2();
 			// 设置攻击实体
