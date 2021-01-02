@@ -44,8 +44,8 @@ public class RedBaby extends Entity { // 大娃实体类
 //		setDefendValue(Constants.DEFAULT_DEFEND_VALUE);
 //		setDefendDist(Constants.DEFAULT_DEFEND_DIST);
 //		setDefendSpeed(Constants.DEFAULT_DEFEND_SPEED);
-		setDefendWidth(Constants.PLAYER_DEFAULT_DEFEND_W - 10);
-		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H + 30);	
+		setDefendWidth(Constants.PLAYER_DEFAULT_DEFEND_W);
+		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H + 60);	
 		// 设置招式名称
 		setAttackNearName(Constants.REDBABY_ATTACKNEAR_NAME);
 		setAttackFarName(Constants.REDBABY_ATTACKFAR_NAME);

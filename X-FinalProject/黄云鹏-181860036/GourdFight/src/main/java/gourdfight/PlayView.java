@@ -1672,7 +1672,6 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 解析自己的动作
 		Entity player2 = entityMap.get(Constants.PLAYER2);
-		removeText2(); // 删除文本
 		
 		if(player2_action == EntityState.STANDING_TORIGHT) { // 保持上一个状态的延续
 			
@@ -1690,6 +1689,8 @@ public class PlayView extends View { // 游戏页面类
 		}
 		
 		EntityState player2_state = player2.getState();
+		removeText2(); // 删除文本
+		
 		switch (player2_state) {
 		case MOVING_TOLEFT: // 向左移动
 		{
@@ -2130,18 +2131,18 @@ public class PlayView extends View { // 游戏页面类
 			countDown();
 		}
 		else {
-			// 更新玩家实体(单线程)
+			// 更新玩家实体
 			updatePlayer1(); // 更新玩家1
 			updatePlayer2(mode); // 更新玩家2
 			
 			// 解析操作队列
 			parseQueue();
 			
-			// 更新攻击实体(单线程)
+			// 更新攻击实体
 			updatePlayer1AttackEntity();
 			updatePlayer2AttackEntity();
 			
-			// 更新防御实体(单线程)
+			// 更新防御实体
 			updatePlayer1DefendEntity();
 			updatePlayer2DefendEntity();
 			

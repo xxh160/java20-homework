@@ -159,28 +159,28 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		for(EntityState state : EntityState.values()){
 			switch (state) {
 			case ATTACKING_NEAR_TOLEFT:
-				addFrame(state, 60);
+				addFrame(state, 40);
 				break;
 			case ATTACKING_NEAR_TORIGHT:
-				addFrame(state, 60);
+				addFrame(state, 40);
 				break;
 			case ATTACKING_FAR_TOLEFT:
-				addFrame(state, 90);
+				addFrame(state, 60);
 				break;
 			case ATTACKING_FAR_TORIGHT:
-				addFrame(state, 90);
+				addFrame(state, 60);
 				break;
 			case ATTACKING_KILL_TOLEFT:
-				addFrame(state, 100);
+				addFrame(state, 80);
 				break;
 			case ATTACKING_KILL_TORIGHT:
-				addFrame(state, 120);
+				addFrame(state, 80);
 				break;
 			case DEFENDING_TOLEFT:
-				addFrame(state, 80);
+				addFrame(state, 70);
 				break;
 			case DEFENDING_TORIGHT:
-				addFrame(state, 80);
+				addFrame(state, 70);
 				break;
 			case JUMPING_TOLEFT:
 				addFrame(state, (int)(2*jumpHeight / jumpSpeed));
@@ -273,7 +273,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		}
 	}
 	
-	private void initAttackImg() { // 设置攻击实体图片
+	protected void initAttackImg() { // 设置攻击实体图片
 		
 		String dirStr = Constants.MAIN_DIRECOTRY;
 		String lFilePath = URL.toPngPath(dirStr, name, EntityState.ATTACKING_NEAR_TOLEFT.getState());
@@ -295,7 +295,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setAttackKillImage(lImg, rImg); // 必杀
 	}
 
-	private void initDefendImg() { // 设置防御实体图片
+	protected void initDefendImg() { // 设置防御实体图片
 		String dirStr = Constants.MAIN_DIRECOTRY;
 		String lFilePath = URL.toPngPath(dirStr, name, EntityState.DEFENDING_TOLEFT.getState());
 		String rFilePath = URL.toPngPath(dirStr, name, EntityState.DEFENDING_TORIGHT.getState());
@@ -1039,14 +1039,14 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	
 	private void play() { // 播放效果音
-		String d = name;
+		String d = getName();
 		String f = state.getState();
 		Framework.audio.playClip(d, f);
 	}
 	
 	private void stop() { // 停止播放效果音
 		if(state != null) {
-			String d = name;
+			String d = getName();
 			String f = state.getState();
 			Framework.audio.stopClip(d, f);
 		}

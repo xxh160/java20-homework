@@ -38,7 +38,8 @@ public class Audio { // 音频播放类，用于播放游戏背景音频，以�
 		}
 		else { 
 			if(audioClip.isPlaying()) { // 该音频文件正在播放
-				return;
+//				return;
+				audioClip.play();
 			}else { // 该音频文件曾被播放过
 				audioClip.play();
 			}
