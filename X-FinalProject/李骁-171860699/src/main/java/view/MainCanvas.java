@@ -29,8 +29,6 @@ public class MainCanvas extends Canvas {
 
     public static AnchorPane root; //父面板
 
-    //public static ArrayList<Runway> runways; //跑道区
-
     public static RunwayField runwayField; //跑道区
 
     public static CardField cardField; //卡牌区
