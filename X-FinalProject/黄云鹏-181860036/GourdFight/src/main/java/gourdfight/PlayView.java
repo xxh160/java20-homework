@@ -351,8 +351,8 @@ public class PlayView extends View { // 游戏页面类
 		// 添加图片定位器
 		ImageLocate player1_imgLocate = new ImageLocate(
 				player1.getCurrentImage(),
-				Constants.PLAYER1_INIT_X,
-				Constants.PLAYER1_INIT_Y,
+				Constants.PLAYER1_INIT_X + player1.getDeltaX(),
+				Constants.PLAYER1_INIT_Y + player1.getDeltaY(),
 				player1.getWidth(),
 				player1.getHeight());
 		
@@ -413,8 +413,8 @@ public class PlayView extends View { // 游戏页面类
 		// 添加图片定位器
 		ImageLocate player2_imgLocate = new ImageLocate(
 				player2.getCurrentImage(),
-				Constants.PLAYER2_INIT_X,
-				Constants.PLAYER2_INIT_Y,
+				Constants.PLAYER2_INIT_X + player2.getDeltaX(),
+				Constants.PLAYER2_INIT_Y + player2.getDeltaY(),
 				player2.getWidth(),
 				player2.getHeight());
 		
@@ -1661,7 +1661,16 @@ public class PlayView extends View { // 游戏页面类
 		
 		if(player2_action == EntityState.STANDING_TORIGHT) { // 保持上一个状态的延续
 			
-		}else {
+		}
+		else if(player2_action == EntityState.ATTACKING_KILL_TOLEFT || player2_action
+				== EntityState.ATTACKING_KILL_TORIGHT) { // 如果是想使用必杀技
+			if(currentEnergy2 < player2.getFullEnergy()) { // 但是能量值不足
+				
+			}else{
+				player2.setState(player2_action); // 否则切换状态为同步帧的动作
+			}
+		}
+		else {
 			player2.setState(player2_action); // 否则切换状态为同步帧的动作
 		}
 		

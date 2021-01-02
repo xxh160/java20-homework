@@ -84,10 +84,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String BLUEBABY_DEFEND_NAME = "Water Wall"; // 五娃防御招式名称
 	
 	public static final String INDIGOBABY_NAME = "indigoBaby"; // 六娃实体名称
-	public static final String INDIGOBABY_ATTACKNEAR_NAME = "Normal Punch"; // 六娃近攻招式名称
-	public static final String INDIGOBABY_ATTACKFAR_NAME = "Fire Punch"; // 六娃远攻招式名称
-	public static final String INDIGOBABY_ATTACKKILL_NAME = "Gold Punch"; // 六娃必杀招式名称
-	public static final String INDIGOBABY_DEFEND_NAME = "Defend Stone"; // 六娃防御招式名称
+	public static final String INDIGOBABY_ATTACKNEAR_NAME = "Empty Punch"; // 六娃近攻招式名称
+	public static final String INDIGOBABY_ATTACKFAR_NAME = "Empty Bang"; // 六娃远攻招式名称
+	public static final String INDIGOBABY_ATTACKKILL_NAME = "Empty Range"; // 六娃必杀招式名称
+	public static final String INDIGOBABY_DEFEND_NAME = "Empty Shield"; // 六娃防御招式名称
 	
 	public static final String PURPLEBABY_NAME = "purpleBaby"; // 七娃实体名称
 	public static final String PURPLEBABY_ATTACKNEAR_NAME = "Normal Punch"; // 七娃近攻招式名称
@@ -108,10 +108,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String SNAKE_DEFEND_NAME = "Defend Stone"; // 蛇精防御招式名称
 	
 	public static final String SCORPION_NAME = "scorpion"; // 蝎子精实体名称
-	public static final String SCORPION_ATTACKNEAR_NAME = "Normal Punch"; // 蝎子精近攻招式名称
-	public static final String SCORPION_ATTACKFAR_NAME = "Fire Punch"; // 蝎子精远攻招式名称
-	public static final String SCORPION_ATTACKKILL_NAME = "Gold Punch"; // 蝎子精必杀招式名称
-	public static final String SCORPION_DEFEND_NAME = "Defend Stone"; // 蝎子精防御招式名称
+	public static final String SCORPION_ATTACKNEAR_NAME = "Rotate Ball"; // 蝎子精近攻招式名称
+	public static final String SCORPION_ATTACKFAR_NAME = "Rotate Sword"; // 蝎子精远攻招式名称
+	public static final String SCORPION_ATTACKKILL_NAME = "Black Ball"; // 蝎子精必杀招式名称
+	public static final String SCORPION_DEFEND_NAME = "Bud Wall"; // 蝎子精防御招式名称
 	
 	public static final String CHILOPOD_NAME = "chilopod"; // 蜈蚣精实体名称
 	public static final String CHILOPOD_ATTACKNEAR_NAME = "Normal Punch"; // 蜈蚣精近攻招式名称

@@ -27,7 +27,7 @@ public class Main extends Game { // 主函数类，程序入口
 //		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setServer(true); // 服务器端测试
 //		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).launchNetwork(); // 开启网络
 		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setMode(false); // 单机版测试
-		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setPlayer1Name(EntityName.ORANGEBABY); // 五娃测试
+		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setPlayer1Name(EntityName.SCORPION); // 五娃测试
 		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setPlayer2Name(EntityName.GREENBABY); // 四娃测试
 	}
 	
