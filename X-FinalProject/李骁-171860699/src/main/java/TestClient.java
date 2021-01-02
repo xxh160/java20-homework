@@ -6,7 +6,7 @@ public class TestClient {
     @Test
     public static void main(String[] args) {
         try {
-            new SocketClient("localhost", 8080); // IP地址为本机，端口为8080
+            new GameClient("localhost", 28080); // IP地址为本机，端口为8080
         } catch (Exception e) {
             System.out.println("测试客户端连接出错：" + e.getMessage());
         }

@@ -14,7 +14,10 @@ public class CreatureCard extends DraggableCard {
 
     @Override
     protected void cardAction() {
+        //添加我方生物，告诉敌方
         runway.addToMyCreatures(creature);
+        //TODO 改统一的发包
+        MainCanvas.server.sendMessage("add0");
     }
 
     @Override

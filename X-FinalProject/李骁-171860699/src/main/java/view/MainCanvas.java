@@ -16,6 +16,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import net.GameClient;
+import net.GameServer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -24,6 +26,8 @@ import javafx.scene.Node;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import javafx.scene.input.MouseEvent;
 
 public class MainCanvas extends Canvas {
 
@@ -42,6 +46,14 @@ public class MainCanvas extends Canvas {
     public static Hero myHero; //我方小小英雄
 
     public static Hero enemyHero; //敌方小小英雄
+
+    public static GameServer server = null;
+
+    public static GameClient client = null;
+
+    private Button btnSetServer;
+
+    private Button btnSetClient;
 
     private Thread thread = new Thread(new Runnable(){ //画图线程
     
@@ -89,6 +101,37 @@ public class MainCanvas extends Canvas {
         cardField.removeAllCards();
         cardField.fillCards();
 
+        //初始化启动服务器按钮
+        btnSetServer = new Button("设置并启动服务器");
+        btnSetServer.setLayoutX(40);
+        btnSetServer.setLayoutY(550);
+        btnSetServer.setPrefWidth(100);
+        btnSetServer.setPrefHeight(40);
+        //点击启动服务器
+        btnSetServer.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                server = new GameServer(28080);
+                server.start();
+            }
+        });
+        addToPane(btnSetServer);
+
+        //初始化启动客户端按钮
+        btnSetClient = new Button("设置并启动客户端");
+        btnSetClient.setLayoutX(200);
+        btnSetClient.setLayoutY(550);
+        btnSetClient.setPrefWidth(100);
+        btnSetClient.setPrefHeight(40);
+        //点击启动服务器
+        btnSetClient.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                client = new GameClient("127.0.0.1", 28080);
+                client.start();
+            }
+        });
+        addToPane(btnSetClient);
     }
 
     public void draw() {
@@ -113,6 +156,19 @@ public class MainCanvas extends Canvas {
 
     public static void enemyWin() {
 
+    }
+
+    public static void close() {
+        System.out.println("窗口关闭");
+        exec.shutdown();
+        runwayField.getRunways().forEach(runway -> runway.removeAllCreatures()); // 关闭计时器线程
+        if (server != null) {
+            server.close();
+        }
+        if (client != null) {
+            client.close();
+        }
+        System.out.println("关完了");
     }
 
 }

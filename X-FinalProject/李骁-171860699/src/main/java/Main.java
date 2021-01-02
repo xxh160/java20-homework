@@ -42,6 +42,13 @@ public class Main extends Application {
             public void handle(WindowEvent event) {
                 MainCanvas.exec.shutdownNow();
                 MainCanvas.runwayField.getRunways().forEach(runway -> runway.removeAllCreatures()); // 关闭计时器线程
+                if (MainCanvas.server != null) {
+                    MainCanvas.server.close();
+                }
+                if (MainCanvas.client != null) {
+                    MainCanvas.client.close();
+                }
+                //MainCanvas.close();
             }
         });
 
