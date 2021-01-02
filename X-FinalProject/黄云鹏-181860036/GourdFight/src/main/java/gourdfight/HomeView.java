@@ -14,7 +14,8 @@ import input.Mouse;
 
 public class HomeView extends View { // 主页面类
 
-	private Button playBtn; // 开启游戏按钮
+	private Button newGameBtn; // 新游戏按钮
+	private Button playBackBtn; // 游戏回放按钮
 	private Button exitBtn; // 退出游戏按钮
 	
 	public HomeView() {
@@ -25,16 +26,25 @@ public class HomeView extends View { // 主页面类
 	// 生命周期管理
 	@Override
 	public void onLaunch() {
-		// 页面启动管理测试
-		playBtn = new Button("Play"); 
-		playBtn.setOnAction(new EventHandler<ActionEvent>() {
-			
+		// 页面启动设置
+		newGameBtn = new Button("New Game"); 
+		newGameBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				// 切换到游戏页面
 				Framework.app.gotoView(Constants.PLAY_VIEW_KEY);
 			}
 		});
+		
+		playBackBtn = new Button("Play Back"); 
+		playBackBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// 切换到游戏页面
+				Framework.app.gotoView(Constants.PLAY_VIEW_KEY);
+			}
+		});
+		
 		
 		exitBtn = new Button("Exit");
 		exitBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -47,7 +57,7 @@ public class HomeView extends View { // 主页面类
 			
 		});
 		
-		VBox box = new VBox(playBtn,exitBtn); // 纵向布局
+		VBox box = new VBox(newGameBtn,playBackBtn,exitBtn); // 纵向布局
 		box.setAlignment(Pos.CENTER); // 对齐设置
 		box.setSpacing(20); // 设置间距
 		

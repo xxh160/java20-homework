@@ -18,8 +18,8 @@ public class Main extends Game { // 主函数类，程序入口
 		Framework.app.setResizeable(false); // 设置窗口不可改变大小
 				
 		// 注册页面
-		Framework.app.regView(Constants.HOME_VIEW_KEY, new HomeView()); // 主页面
 		Framework.app.regView(Constants.PLAY_VIEW_KEY, new PlayView()); // 游戏界面
+		Framework.app.regView(Constants.HOME_VIEW_KEY, new HomeView()); // 主页面
 		Framework.app.gotoView(Constants.HOME_VIEW_KEY);
 		
 		// test!!!!!!!!!!!!!!!!!!!!!!
@@ -27,7 +27,7 @@ public class Main extends Game { // 主函数类，程序入口
 //		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setServer(true); // 服务器端测试
 //		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).launchNetwork(); // 开启网络
 		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setMode(false); // 单机版测试
-		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setPlayer1Name(EntityName.SNAKE); // 五娃测试
+		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setPlayer1Name(EntityName.CHILOPOD); // 五娃测试
 		((PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY)).setPlayer2Name(EntityName.GREENBABY); // 四娃测试
 	}
 	

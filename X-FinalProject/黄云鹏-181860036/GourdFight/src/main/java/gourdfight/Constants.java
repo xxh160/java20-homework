@@ -114,10 +114,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String SCORPION_DEFEND_NAME = "Bud Wall"; // 蝎子精防御招式名称
 	
 	public static final String CHILOPOD_NAME = "chilopod"; // 蜈蚣精实体名称
-	public static final String CHILOPOD_ATTACKNEAR_NAME = "Normal Punch"; // 蜈蚣精近攻招式名称
-	public static final String CHILOPOD_ATTACKFAR_NAME = "Fire Punch"; // 蜈蚣精远攻招式名称
-	public static final String CHILOPOD_ATTACKKILL_NAME = "Gold Punch"; // 蜈蚣精必杀招式名称
-	public static final String CHILOPOD_DEFEND_NAME = "Defend Stone"; // 蜈蚣精防御招式名称
+	public static final String CHILOPOD_ATTACKNEAR_NAME = "Chilopod Tooth"; // 蜈蚣精近攻招式名称
+	public static final String CHILOPOD_ATTACKFAR_NAME = "Poisoned Punch"; // 蜈蚣精远攻招式名称
+	public static final String CHILOPOD_ATTACKKILL_NAME = "Chilopod Body"; // 蜈蚣精必杀招式名称
+	public static final String CHILOPOD_DEFEND_NAME = "Bond Shield"; // 蜈蚣精防御招式名称
 	
 	public static final String CROCODILE_NAME = "crocodile"; // 鳄鱼精实体名称
 	public static final String CROCODILE_ATTACKNEAR_NAME = "Normal Punch"; // 鳄鱼精近攻招式名称

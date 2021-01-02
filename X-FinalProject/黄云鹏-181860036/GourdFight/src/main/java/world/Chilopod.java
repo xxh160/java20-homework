@@ -12,8 +12,8 @@ public class Chilopod extends Entity { // 蜈蚣精实体类
 //		setAttackable(false);
 //		setDefendable(false);
 //		
-//		setWidth(Constants. PLAYER_DEFAULT_W);
-//		setHeight(Constants. PLAYER_DEFAULT_H);
+		setWidth(Constants. PLAYER_DEFAULT_W + 20);
+		setHeight(Constants. PLAYER_DEFAULT_H);
 //		
 //		setLifeValue(Constants.DEFAULT_LIFE_VALUE);
 //		setMoveSpeed(Constants.DEFAULT_MOVE_SPEED);
@@ -24,26 +24,27 @@ public class Chilopod extends Entity { // 蜈蚣精实体类
 //		setAttackNearValue(Constants.DEFAULT_ATTACK_NEAR_VALUE);
 //		setAttackNearDist(Constants.DEFAULT_ATTACK_NEAR_DIST);
 //		setAttackNearSpeed(Constants.DEFAULT_ATTACK_NEAR_SPEED);
-//		setAttackNearWidth(Constants.PLAYER_DEFAULT_ATTACK_W);
-//		setAttackNearHeight(Constants.PLAYER_DEFAULT_ATTACK_H);
+		setAttackNearWidth(Constants.PLAYER_DEFAULT_ATTACK_W + 20);
+		setAttackNearHeight(Constants.PLAYER_DEFAULT_ATTACK_H + 20);
 //		
 //		setAttackFarValue(Constants.DEFAULT_ATTACK_FAR_VALUE);
 //		setAttackFarDist(Constants.DEFAULT_ATTACK_FAR_DIST);
 //		setAttackFarSpeed(Constants.DEFAULT_ATTACK_FAR_SPEED);
-//		setAttackFarWidth(Constants.PLAYER_DEFAULT_ATTACK_W);
-//		setAttackFarHeight(Constants.PLAYER_DEFAULT_ATTACK_H);
+		setAttackFarWidth(Constants.PLAYER_DEFAULT_ATTACK_W + 20);
+		setAttackFarHeight(Constants.PLAYER_DEFAULT_ATTACK_H + 40);
 //		
 //		setAttackKillValue(Constants.DEFAULT_ATTACK_KILL_VALUE);
 //		setAttackKillDist(Constants.DEFAULT_ATTACK_KILL_DIST);
 //		setAttackKillSpeed(Constants.DEFAULT_ATTACK_KILL_SPEED);
-//		setAttackKillWidth(Constants.PLAYER_DEFAULT_ATTACK_W);
-//		setAttackKillHeight(Constants.PLAYER_DEFAULT_ATTACK_H);
+		setAttackKillWidth(Constants.PLAYER_DEFAULT_ATTACK_W + 80);
+		setAttackKillHeight(Constants.PLAYER_DEFAULT_ATTACK_H + 40);
 //		
 //		setDefendValue(Constants.DEFAULT_DEFEND_VALUE);
 //		setDefendDist(Constants.DEFAULT_DEFEND_DIST);
 //		setDefendSpeed(Constants.DEFAULT_DEFEND_SPEED);
-//		setDefendWidth(Constants.PLAYER_DEFAULT_DEFEND_W);
-//		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H);	
+		setDefendWidth(Constants.PLAYER_DEFAULT_DEFEND_W + 20);
+		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H + 80);	
+		// 设置招式名称
 		setAttackNearName(Constants.CHILOPOD_ATTACKNEAR_NAME);
 		setAttackFarName(Constants.CHILOPOD_ATTACKFAR_NAME);
 		setAttackKillName(Constants.CHILOPOD_ATTACKKILL_NAME);

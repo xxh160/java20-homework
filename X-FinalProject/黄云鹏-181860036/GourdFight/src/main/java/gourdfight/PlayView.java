@@ -62,16 +62,19 @@ public class PlayView extends View { // 游戏页面类
 	int frameCount; // 帧计数器
 	int endFrame; // 末尾帧数(默认3秒)
 	int endFrameCount; // 末尾帧计数器(计数一局游戏结束后的末尾帧)
-	boolean mode; // 游戏模式(true为网络版本，false为单击版本)
 	
 	private TCPServer server; // 服务器端
 	private TCPClient client; // 客户端
 	
+	private ArrayList<ArrayList<Packet>> roundSendPktQueues; // 每局发送包队列的存储数组
+	private ArrayList<ArrayList<Packet>> roundReceivePktQueues; // 每局接受包队列的存储数组
 	private ArrayList<Packet> sendPktQueue; // 发送包队列，即自己的操作/状态序列
 	private ArrayList<Packet> receivePktQueue; // 接受包队列，即对手的操作/状态序列
 	int sendPktQueueIdx; // 发送包队列指针
 	int receivePktQueueIdx; // 接受包队列指针
 	
+	boolean mode; // 游戏模式(true为网络版本，false为单击版本)
+	boolean isPlayBack; // 是否为回放模式
 	boolean isStart; // 是否开始游戏(false则进入游戏倒计时)
 	boolean isGameOver; // 是否一局游戏结束
 	boolean player1Hurt; // 玩家1被攻击中(防止攻击实体在生命周期中连续攻击玩家)
@@ -99,17 +102,19 @@ public class PlayView extends View { // 游戏页面类
 		endFrameCount = 0;
 		currentEnergy1 = 0;
 		currentEnergy2 = 0;
+		setRound(3);
 		mode = true; 
 		isStart = false;
 		isGameOver = false;
 		player1Hurt = false;
 		player2Hurt = false;
-		setRound(3);
 		
 		isServer = false; 
 		server = new TCPServer("", Constants.PORT);
 		client = new TCPClient("", Constants.PORT);
 		
+		roundSendPktQueues = new ArrayList<ArrayList<Packet>>();
+		roundReceivePktQueues = new ArrayList<ArrayList<Packet>>();
 		sendPktQueue = new ArrayList<>();
 		receivePktQueue = new ArrayList<>();
 		sendPktQueueIdx = 0;
@@ -443,6 +448,10 @@ public class PlayView extends View { // 游戏页面类
 	
 	public void setMode(boolean m) { // 设置游戏模式
 		mode = m;
+	}
+	
+	public void setPlayBack(boolean p) { // 设置是否回放游戏
+		isPlayBack = p;
 	}
 	
 	public void setRound(int r) { // 设置游戏局数
