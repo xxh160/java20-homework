@@ -85,6 +85,11 @@ public class Creature implements Runnable {
         cardImage = new Image(url.toString()); // TODO 改掉
     }
 
+    public void flipImage() {
+        //敌方人物生成时需要翻转图片
+        imageView.setScaleX(-1);
+    }
+
     public void move() {
         // if (isRunning) {
         if (belongToMe) {

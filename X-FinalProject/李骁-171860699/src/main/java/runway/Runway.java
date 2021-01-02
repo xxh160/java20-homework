@@ -40,6 +40,7 @@ public class Runway {
 
     public void addToEnemyCreatures(Creature creature) {
         // 将一个生物插入到敌方阵营，并设置位置，方向，加入pane，启动线程
+        creature.flipImage(); //敌人的话要翻转图片
         creature.setPosX(posX + length);
         creature.setPosY(posY);
         creature.setBelongToMe(false);
