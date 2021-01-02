@@ -9,6 +9,9 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import creature.Creature;
+import view.MainCanvas;
+
 public class GameClient implements Runnable { // Socket客户端
 	private String host; // IP地址
 	private int port; // 端口号
@@ -29,6 +32,23 @@ public class GameClient implements Runnable { // Socket客户端
 
 	public void start() {
 		exec.submit(this);
+	}
+
+	public void sendMessage(String msg) {
+		out.println(msg);
+	}
+
+	public void executeMessage(String msg) {
+		System.out.println("客户端处理信息" + msg);
+		if (msg.equals("add0")) {
+			// TODO 改掉
+			System.out.println("添加敌方人物");
+			MainCanvas.runwayField.getRunways().get(0).addToEnemyCreatures(new Creature());
+		} else {
+			// 不识别
+			System.out.println("无法识别的消息");
+			MainCanvas.runwayField.getRunways().get(0).addToEnemyCreatures(new Creature());
+		}
 	}
 
 	@Override
@@ -85,7 +105,11 @@ public class GameClient implements Runnable { // Socket客户端
 				*/
 				System.out.println("等待服务器数据...");
 				String info = in.readLine(); // 从服务器读取字符串
-				System.out.println("服务器信息：" + info);// 显示从服务器发送来的数据
+				if (info == null) {
+					done = true;
+				}
+				System.out.println("服务器发来信息：[" + info + "]");// 显示从服务器发送来的数据
+				executeMessage(info);
 				if (!done)
 					System.out.println("请输入>");
 			}

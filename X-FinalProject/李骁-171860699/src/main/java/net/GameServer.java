@@ -77,11 +77,13 @@ public class GameServer implements Runnable {
 	}
 
 	public void sendMessage(String msg) {
+		System.out.println("服务器发送：" + msg);
 		out.println(msg);
 	}
 
 	public void executeMessage(String msg) {
-		if (msg == "add,huluwa,0") {
+		System.out.println("服务器处理信息" + msg);
+		if (msg == "add1") {
 			// TODO 改掉
 			MainCanvas.runwayField.getRunways().get(0).addToEnemyCreatures(new Creature());
 		} else {
@@ -95,13 +97,14 @@ public class GameServer implements Runnable {
 			// System.out.println("line : "+line);
 			if (line == null)
 				done = true;
-			else {
+			//else {
 				System.out.println("客户端传来的内容： " + line);
-				String message = infoUpperCase(line);// 变成大写再传回客户端去
-				out.println("从服务器端口发送的内容 " + message); // --该处的print要加ln，否则就会无法往客户端传递消息
-				if (line.trim().equals("exit")) // 退出判断
-					done = true;
-			}
+				executeMessage(line);
+				//String message = infoUpperCase(line);// 变成大写再传回客户端去
+				//out.println("从服务器端口发送的内容 " + message); // --该处的print要加ln，否则就会无法往客户端传递消息
+				//if (line.trim().equals("exit")) // 退出判断
+				//	done = true;
+			//}
 		} catch (IOException e) {
 			System.out.println("服务器接收消息错误：" + e.getMessage());
 		}
