@@ -174,7 +174,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 				addFrame(state, 100);
 				break;
 			case ATTACKING_KILL_TORIGHT:
-				addFrame(state, 100);
+				addFrame(state, 120);
 				break;
 			case DEFENDING_TOLEFT:
 				addFrame(state, 80);

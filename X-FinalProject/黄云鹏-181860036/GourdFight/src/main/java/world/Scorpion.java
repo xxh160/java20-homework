@@ -51,8 +51,8 @@ public class Scorpion extends Entity { // 蝎子精实体类
 	}
 	
 	@Override
-		public double getDeltaY() {
-			return super.getDeltaY() - 70;
-		}
+	public double getDeltaY() {
+		return super.getDeltaY() - 70;
+	}
 
 }

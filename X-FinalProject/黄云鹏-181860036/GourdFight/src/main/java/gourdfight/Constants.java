@@ -102,10 +102,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String GRANDFATHER_DEFEND_NAME = "Defend Stone"; // 爷爷防御招式名称
 	
 	public static final String SNAKE_NAME = "snake"; // 蛇精实体名称
-	public static final String SNAKE_ATTACKNEAR_NAME = "Normal Punch"; // 蛇精近攻招式名称
-	public static final String SNAKE_ATTACKFAR_NAME = "Fire Punch"; // 蛇精远攻招式名称
-	public static final String SNAKE_ATTACKKILL_NAME = "Gold Punch"; // 蛇精必杀招式名称
-	public static final String SNAKE_DEFEND_NAME = "Defend Stone"; // 蛇精防御招式名称
+	public static final String SNAKE_ATTACKNEAR_NAME = "Grass Sword"; // 蛇精近攻招式名称
+	public static final String SNAKE_ATTACKFAR_NAME = "Snake Hand"; // 蛇精远攻招式名称
+	public static final String SNAKE_ATTACKKILL_NAME = "Ghost Kill"; // 蛇精必杀招式名称
+	public static final String SNAKE_DEFEND_NAME = "Sand Relive"; // 蛇精防御招式名称
 	
 	public static final String SCORPION_NAME = "scorpion"; // 蝎子精实体名称
 	public static final String SCORPION_ATTACKNEAR_NAME = "Rotate Ball"; // 蝎子精近攻招式名称
