@@ -78,7 +78,7 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String GREENBABY_DEFEND_NAME = "Fire Wheel"; // 四娃防御招式名称
 	
 	public static final String BLUEBABY_NAME = "blueBaby"; // 五娃实体名称
-	public static final String BLUEBABY_ATTACKNEAR_NAME = "Water Shark"; // 五娃近攻招式名称
+	public static final String BLUEBABY_ATTACKNEAR_NAME = "Fish Knife"; // 五娃近攻招式名称
 	public static final String BLUEBABY_ATTACKFAR_NAME = "Water Bullet"; // 五娃远攻招式名称
 	public static final String BLUEBABY_ATTACKKILL_NAME = "Water Dragon"; // 五娃必杀招式名称
 	public static final String BLUEBABY_DEFEND_NAME = "Water Wall"; // 五娃防御招式名称
@@ -120,10 +120,10 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	public static final String CHILOPOD_DEFEND_NAME = "Bond Shield"; // 蜈蚣精防御招式名称
 	
 	public static final String CROCODILE_NAME = "crocodile"; // 鳄鱼精实体名称
-	public static final String CROCODILE_ATTACKNEAR_NAME = "Normal Punch"; // 鳄鱼精近攻招式名称
-	public static final String CROCODILE_ATTACKFAR_NAME = "Fire Punch"; // 鳄鱼精远攻招式名称
-	public static final String CROCODILE_ATTACKKILL_NAME = "Gold Punch"; // 鳄鱼精必杀招式名称
-	public static final String CROCODILE_DEFEND_NAME = "Defend Stone"; // 鳄鱼精防御招式名称
+	public static final String CROCODILE_ATTACKNEAR_NAME = "Water Shark"; // 鳄鱼精近攻招式名称
+	public static final String CROCODILE_ATTACKFAR_NAME = "Water Wind"; // 鳄鱼精远攻招式名称
+	public static final String CROCODILE_ATTACKKILL_NAME = "Shark Bullet"; // 鳄鱼精必杀招式名称
+	public static final String CROCODILE_DEFEND_NAME = "Defend Shell"; // 鳄鱼精防御招式名称
 	
 	
 	// 实体位置(注：后缀1的为自己，后缀2的为对手)

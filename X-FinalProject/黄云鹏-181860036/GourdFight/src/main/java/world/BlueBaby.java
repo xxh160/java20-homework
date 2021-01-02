@@ -26,7 +26,7 @@ public class BlueBaby extends Entity { // 五娃实体类
 //		setAttackNearValue(Constants.DEFAULT_ATTACK_NEAR_VALUE);
 //		setAttackNearDist(Constants.DEFAULT_ATTACK_NEAR_DIST);
 //		setAttackNearSpeed(Constants.DEFAULT_ATTACK_NEAR_SPEED);
-		setAttackNearWidth(Constants.PLAYER_DEFAULT_ATTACK_W + 100);
+		setAttackNearWidth(Constants.PLAYER_DEFAULT_ATTACK_W + 50);
 		setAttackNearHeight(Constants.PLAYER_DEFAULT_ATTACK_H);
 //		
 //		setAttackFarValue(Constants.DEFAULT_ATTACK_FAR_VALUE);
