@@ -1436,14 +1436,17 @@ public class PlayView extends View { // 游戏页面类
 				if(hurt > 0) { 
 					player2Hurt = true;
 					currentEnergy2 += hurt*Constants.ENERGY_HURT_SCALE; // 如果玩家2受伤，则能量值激增
-					boolean opposite = player1.isLeft() ^ player2.isLeft();
-					if(opposite) // 如果面对面，则玩家2后退几步，否则玩家2前进几步
-						player2.setBack(true);
 					
-					if(player2.isLeft()) {
-						player2.setState(EntityState.MOVING_TOLEFT);
-					}else {
-						player2.setState(EntityState.MOVING_TORIGHT);
+					if(player2.isStanding()) { // 如果受伤时玩家2处于静止状态，则让其退几步
+						boolean opposite = player1.isLeft() ^ player2.isLeft();
+						if(opposite) // 如果面对面，则玩家2后退几步，否则玩家2前进几步
+							player2.setBack(true);
+						
+						if(player2.isLeft()) {
+							player2.setState(EntityState.MOVING_TOLEFT);
+						}else {
+							player2.setState(EntityState.MOVING_TORIGHT);
+						}
 					}
 				}
 			}
@@ -1496,14 +1499,16 @@ public class PlayView extends View { // 游戏页面类
 				if(hurt > 0) { 
 					player1Hurt = true;
 					currentEnergy1 += hurt * Constants.ENERGY_HURT_SCALE; // 如果玩家1受伤，则能量值激增
-					boolean opposite = player1.isLeft() ^ player2.isLeft();
-					if(opposite) // 如果面对面，则玩家1后退几步，否则玩家1前进几步
-						player1.setBack(true);
-					
-					if(player1.isLeft()) {
-						player1.setState(EntityState.MOVING_TOLEFT);
-					}else {
-						player1.setState(EntityState.MOVING_TORIGHT);
+					if(player1.isStanding()) { // 如果受伤时玩家1处于静止状态，则让其退几步
+						boolean opposite = player1.isLeft() ^ player2.isLeft();
+						if(opposite) // 如果面对面，则玩家1后退几步，否则玩家1前进几步
+							player1.setBack(true);
+						
+						if(player1.isLeft()) {
+							player1.setState(EntityState.MOVING_TOLEFT);
+						}else {
+							player1.setState(EntityState.MOVING_TORIGHT);
+						}
 					}
 				}
 			}
