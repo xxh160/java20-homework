@@ -273,3 +273,10 @@ java -jar huluwa.jar server
 先写个简单的测试，
 
 回放
+
+包格式
+addEnemyCreature 0
+clearRunway 0
+freezeRunway 0
+killEnemyHead 0
+costAddN 1

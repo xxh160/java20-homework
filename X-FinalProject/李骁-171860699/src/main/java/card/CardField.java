@@ -26,7 +26,7 @@ public class CardField implements Runnable {
 
     private final int cardFieldSize = 5;
 
-    private int money = 10; // 拥有的金钱
+    private int money = 20; // 拥有的金钱
 
     private Text moneyText; // 金钱的文字显示
 
@@ -187,7 +187,8 @@ public class CardField implements Runnable {
     }
 
     public void update() {
-        money = money + 1;
+        //TODO 暂时不加了
+        //money = money + 1;
     }
 
     public List<Card> getCards() {

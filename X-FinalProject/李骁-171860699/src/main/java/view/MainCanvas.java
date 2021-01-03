@@ -148,7 +148,19 @@ public class MainCanvas extends Canvas {
 
     public static void removeFromPane(Node n) {
         root.getChildren().remove(n);
-    } 
+    }
+
+    public static void sendMessage(String msg) {
+        if (server != null) {
+            server.sendMessage(msg);
+        }
+        else if (client != null) {
+            client.sendMessage(msg);
+        }
+        else {
+            System.out.print("发送失败：" + msg);
+        }
+    }
 
     public static void iWin() {
 
@@ -158,7 +170,7 @@ public class MainCanvas extends Canvas {
 
     }
 
-    public static void close() {
+    /*public static void close() {
         System.out.println("窗口关闭");
         exec.shutdown();
         runwayField.getRunways().forEach(runway -> runway.removeAllCreatures()); // 关闭计时器线程
@@ -169,6 +181,6 @@ public class MainCanvas extends Canvas {
             client.close();
         }
         System.out.println("关完了");
-    }
+    }*/
 
 }

@@ -12,6 +12,7 @@ public class PropCardClearRunway extends DraggableCard {
     @Override
     protected void cardAction() {
         runway.removeAllCreatures();
+        MainCanvas.sendMessage("clearRunway," + runway.getId());
     }
     
 }

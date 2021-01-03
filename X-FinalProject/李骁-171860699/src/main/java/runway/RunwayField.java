@@ -15,7 +15,7 @@ public class RunwayField {
     public RunwayField() {
         runways = new ArrayList<Runway>();
         for (int i = 0; i < runwayFieldSize; i++) {
-            runways.add(new Runway(100, 50 + 100*i, 100, 600));
+            runways.add(new Runway(100, 50 + 100*i, 100, 600, i));
         }
         draw();
     }

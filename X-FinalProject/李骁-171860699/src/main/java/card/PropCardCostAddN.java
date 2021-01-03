@@ -16,6 +16,7 @@ public class PropCardCostAddN extends ClickableCard {
         //TODO 给对方发包，然后让他调用他的cardField的cardsCostPlus(1)方法
         //TODO 先试试自己的，等会删掉
         System.out.println("costAddN");
-        MainCanvas.cardField.cardsCostPlusN(n);
+        //MainCanvas.cardField.cardsCostPlusN(n);
+        MainCanvas.sendMessage("costAddN," + n);
     }
 }

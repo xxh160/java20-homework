@@ -19,6 +19,7 @@ import java.time.Instant;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javafx.application.Platform;
 
 import runway.Runway;
 import view.MainCanvas;
@@ -151,7 +152,7 @@ public class Creature implements Runnable {
     public void Die() {
         // 死亡，停止运动，停止线程，停止计时器，移出Pane
         System.out.println("生物死亡");
-        Thread.currentThread().interrupt();
+        //Thread.currentThread().interrupt();
         isAlive = false;
         //freezeTimer.cancel();
         freezeService.shutdownNow();
@@ -296,11 +297,27 @@ public class Creature implements Runnable {
     }
 
     public void addToPane(Pane pane) {
-        pane.getChildren().add(imageView);
+        System.out.println("addToPane begin");
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                pane.getChildren().add(imageView);
+            }
+        });
+        //pane.getChildren().add(imageView);
+        System.out.println("addToPane end");
     }
 
     public void removeFromPane(Pane pane) {
-        pane.getChildren().remove(imageView);
+        System.out.println("removeFromPane begin");
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                pane.getChildren().remove(imageView);
+            }
+        });
+        //pane.getChildren().remove(imageView);
+        System.out.println("removeFromPane end");
     }
 
     public int getPosX() {

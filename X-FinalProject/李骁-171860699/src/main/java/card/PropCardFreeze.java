@@ -13,5 +13,6 @@ public class PropCardFreeze extends DraggableCard {
     protected void cardAction() {
         //TODO 发包给对面
         runway.freezeEnemyCreatures();
+        MainCanvas.sendMessage("freezeRunway," + runway.getId());
     }
 }

@@ -15,13 +15,16 @@ public class Runway {
 
     private int width, length;
 
+    private int id; //跑道编号
+
     // private ImageView imageView; //跑道图片
 
-    public Runway(int posX, int posY, int width, int length) {
+    public Runway(int posX, int posY, int width, int length, int id) {
         this.posX = posX;
         this.posY = posY;
         this.width = width;
         this.length = length;
+        this.id = id;
         myCreatures = new ArrayList<Creature>();
         enemyCreatures = new ArrayList<Creature>();
     }
@@ -40,15 +43,25 @@ public class Runway {
 
     public void addToEnemyCreatures(Creature creature) {
         // 将一个生物插入到敌方阵营，并设置位置，方向，加入pane，启动线程
+        //System.out.println("addToEnemyCreatures begin");
         creature.flipImage(); //敌人的话要翻转图片
+        //System.out.println("addToEnemyCreatures 1");
         creature.setPosX(posX + length);
+        //System.out.println("addToEnemyCreatures 2");
         creature.setPosY(posY);
+        //System.out.println("addToEnemyCreatures 3");
         creature.setBelongToMe(false);
+        //System.out.println("addToEnemyCreatures 4");
         creature.setAlive(true);
+        //System.out.println("addToEnemyCreatures 5");
         enemyCreatures.add(creature);
+        //System.out.println("addToEnemyCreatures 6");
         creature.setRunway(this);
+        //System.out.println("addToEnemyCreatures 7");
         creature.addToPane(MainCanvas.root);
+        //System.out.println("addToEnemyCreatures 8");
         MainCanvas.exec.submit(creature);
+        //System.out.println("addToEnemyCreatures end");
     }
 
     public void removeFromMyCreatures(Creature creature) {
@@ -75,6 +88,17 @@ public class Runway {
         synchronized (enemyCreatures) {
             for (int i = enemyCreatures.size() - 1; i >= 0; i--) {
                 removeFromEnemyCreatures(enemyCreatures.get(i));
+            }
+        }
+    }
+
+    public void killMyHead() {
+        synchronized (myCreatures) {
+            if (myCreatures.size() > 0) {
+                System.out.println("击杀我方队头");
+                removeFromMyCreatures(myCreatures.get(0));
+            } else {
+                System.out.println("我方无队头");
             }
         }
     }
@@ -129,6 +153,10 @@ public class Runway {
 
     public int getLength() {
         return length;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public ArrayList<Creature> getEnemyCreatures() {

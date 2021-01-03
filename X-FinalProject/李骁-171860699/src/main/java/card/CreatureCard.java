@@ -17,12 +17,7 @@ public class CreatureCard extends DraggableCard {
         //添加我方生物，告诉敌方
         runway.addToMyCreatures(creature);
         //TODO 改统一的发包
-        if (MainCanvas.server != null) {
-        MainCanvas.server.sendMessage("add0");
-        }
-        else if (MainCanvas.client != null) {
-            MainCanvas.client.sendMessage("add1");
-        }
+        MainCanvas.sendMessage("addEnemyCreature," + runway.getId());
     }
 
     @Override
