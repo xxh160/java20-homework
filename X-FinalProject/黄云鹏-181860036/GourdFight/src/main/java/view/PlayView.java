@@ -1,18 +1,14 @@
-package gourdfight;
+package view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import app.ImageLocate;
 import app.ImagePane;
-import app.TextLocate;
 import app.View;
 
 import output.URL;
-import thread.ThreadHandler;
 import thread.ThreadPool;
-import thread.ThreadTask;
 import world.AttackEntity;
 import world.Background;
 import world.Blood;
@@ -37,6 +33,8 @@ import world.Scorpion;
 import world.Snake;
 import world.YellowBaby;
 import framework.*;
+import helper.ImageLocate;
+import helper.TextLocate;
 import input.Key;
 import javafx.scene.image.Image;
 import network.Packet;
@@ -49,8 +47,8 @@ public class PlayView extends View { // 游戏页面类
 	private LinkedHashMap<String, ImageLocate> imgLocateMap; // 游戏实体图片定位字典
 	private LinkedHashMap<String, TextLocate> textLocateMap; // 游戏实体文本定位字典
 	
-	private EntityName player1_name; // 玩家1的实体
-	private EntityName player2_name; // 玩家2的实体
+	private EntityName player1_name; // 玩家1的实体名称
+	private EntityName player2_name; // 玩家2的实体名称
 	
 	private AttackEntity player1_attackEntity; // 玩家1的攻击实体
 	private AttackEntity player2_attackEntity; // 玩家2的攻击实体
@@ -68,6 +66,7 @@ public class PlayView extends View { // 游戏页面类
 	
 	private ArrayList<ArrayList<Packet>> roundSendPktQueues; // 每局发送包队列的存储数组
 	private ArrayList<ArrayList<Packet>> roundReceivePktQueues; // 每局接受包队列的存储数组
+	
 	private ArrayList<Packet> sendPktQueue; // 发送包队列，即自己的操作/状态序列
 	private ArrayList<Packet> receivePktQueue; // 接受包队列，即对手的操作/状态序列
 	int sendPktQueueIdx; // 发送包队列指针
@@ -77,10 +76,13 @@ public class PlayView extends View { // 游戏页面类
 	boolean isPlayBack; // 是否为回放模式
 	boolean isStart; // 是否开始游戏(false则进入游戏倒计时)
 	boolean isGameOver; // 是否一局游戏结束
+	boolean isWinner; // 判断自己是不是胜者
 	boolean player1Hurt; // 玩家1被攻击中(防止攻击实体在生命周期中连续攻击玩家)
 	boolean player2Hurt; // 玩家2被攻击中(防止攻击实体在生命周期中连续攻击玩家)
 	int round; // 游戏局数(默认是3)
 	int roundCount; // 游戏局数计数器
+	int player1WinCount; // 玩家1所赢局数
+	int player2WinCount; // 玩家2所赢局数
 	
 	double currentEnergy1; // 玩家1当前能量值
 	double currentEnergy2; // 玩家2当前能量值
@@ -90,6 +92,8 @@ public class PlayView extends View { // 游戏页面类
 	// 初始化
 	public PlayView() {
 		super(Constants.IMAGE_PANE);
+		autoPlay = true;
+		autoStop = true;
 		
 		entityMap = new HashMap<>();
 		imgLocateMap = new LinkedHashMap<>();
@@ -102,10 +106,14 @@ public class PlayView extends View { // 游戏页面类
 		endFrameCount = 0;
 		currentEnergy1 = 0;
 		currentEnergy2 = 0;
+		player1WinCount = 0;
+		player2WinCount = 0;
 		setRound(3);
 		mode = true; 
 		isStart = false;
 		isGameOver = false;
+		isWinner = false;
+		isPlayBack = false;
 		player1Hurt = false;
 		player2Hurt = false;
 		
@@ -174,6 +182,13 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void setBloodBar() { // 初设血槽条
+		Entity player1 = entityMap.get(Constants.PLAYER1);
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		if(player1 == null || player2 == null) {
+			return;
+		}
+		
 		// 左血槽
 		BloodBar bloodBar1 = new BloodBar(Constants.BLOODBAR_NAME); 
 		bloodBar1.setState(EntityState.STANDING_TOLEFT);
@@ -205,7 +220,7 @@ public class PlayView extends View { // 游戏页面类
 		// 左血条
 		Blood blood1 = new Blood(Constants.BLOOD_NAME); 
 		blood1.setState(EntityState.STANDING_TOLEFT);
-		Entity player1 = entityMap.get(Constants.PLAYER1);
+		
 		if(player1 != null) {
 			blood1.setFullLife(player1.getLifeValue());
 		}
@@ -223,7 +238,6 @@ public class PlayView extends View { // 游戏页面类
 		// 右血条
 		Blood blood2 = new Blood(Constants.BLOOD_NAME); 
 		blood2.setState(EntityState.STANDING_TORIGHT);
-		Entity player2 = entityMap.get(Constants.PLAYER2);
 		if(player2 != null) {
 			blood2.setFullLife(player2.getLifeValue());
 		}
@@ -244,6 +258,10 @@ public class PlayView extends View { // 游戏页面类
 	private void setEnergyBar() { // 初设能量槽条
 		Entity player1 = entityMap.get(Constants.PLAYER1);
 		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		if(player1 == null || player2 == null) {
+			return;
+		}
 		
 		// 左能量槽
 		EnergyBar energyBar1 = new EnergyBar(Constants.ENERGYBAR_NAME); 
@@ -312,6 +330,9 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 选择角色
 		Entity player1 = null;
+		if(player1_name == null) {
+			return;
+		}
 		switch (player1_name) {
 		case REDBABY:
 			player1 = new RedBaby(Constants.REDBABY_NAME);
@@ -374,6 +395,9 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 选择角色
 		Entity player2 = null;
+		if(player2_name == null) {
+			return;
+		}
 		switch (player2_name) {
 		case REDBABY:
 			player2 = new RedBaby(Constants.REDBABY_NAME);
@@ -432,7 +456,75 @@ public class PlayView extends View { // 游戏页面类
 		addImageLocate(Constants.PLAYER2, player2_imgLocate);
 	}
 	
+	// Getter
+	public Entity getEntity(String name) { // 获取实体
+		return entityMap.get(name);
+	}
+	
+	public String getPlayer1Name() { // 获取玩家1的角色名称
+		return player1_name.getName();
+	}
+	
+	public String getPlayer2Name() { // 获取玩家2的角色名称
+		return player2_name.getName();
+	}
+	
+	public boolean isWinner() { // 判断自己是否胜利
+		return isWinner;
+	}
+	
+	public ArrayList<ArrayList<Packet>> getPlayer1Record(){ // 获取玩家1游戏记录
+		return roundSendPktQueues;
+	}
+	
+	public ArrayList<ArrayList<Packet>> getPlayer2Record(){ // 获取玩家2游戏记录
+		return roundReceivePktQueues;
+	}
+	
 	// Setter
+	public void clear() { // 清空所有信息
+		entityMap.clear();
+		imgLocateMap.clear();
+		textLocateMap.clear();
+		threadPool = null;
+		
+		frameCount = 0;
+		roundCount = 0;
+		endFrame = 180;
+		endFrameCount = 0;
+		currentEnergy1 = 0;
+		currentEnergy2 = 0;
+		player1WinCount = 0;
+		player2WinCount = 0;
+		setRound(3);
+		mode = true; 
+		isStart = false;
+		isGameOver = false;
+		isWinner = false;
+		isPlayBack = false;
+		player1Hurt = false;
+		player2Hurt = false;
+		
+		isServer = false; 
+		server = new TCPServer("", Constants.PORT);
+		client = new TCPClient("", Constants.PORT);
+		
+		roundSendPktQueues.clear();
+		roundReceivePktQueues.clear();
+		sendPktQueue.clear();
+		receivePktQueue.clear();
+		sendPktQueueIdx = 0;
+		receivePktQueueIdx = 0;
+	}
+	
+	public void addPlayer1Record(ArrayList<Packet> pktList) { // 添加发送包队列
+		roundSendPktQueues.add(new ArrayList<Packet>(pktList));
+	}
+	
+	public void addPlayer2Record(ArrayList<Packet>pktList) { // 添加接收包队列
+		roundReceivePktQueues.add(new ArrayList<Packet>(pktList));
+	}
+	
 	public void setServer(boolean s) { // 设置是否是服务器端
 		isServer = s;
 	}
@@ -473,7 +565,12 @@ public class PlayView extends View { // 游戏页面类
 		isStart = false;
 		isGameOver = false;
 		
-		// 存档之后！！！！！！！！！！！！！！
+		// 存档到队列数组中
+		if(!sendPktQueue.isEmpty())
+			roundSendPktQueues.add(new ArrayList<Packet>(sendPktQueue));
+		if(!receivePktQueue.isEmpty())
+			roundReceivePktQueues.add(new ArrayList<Packet>(receivePktQueue));
+		
 		sendPktQueue.clear(); sendPktQueueIdx = 0;
 		receivePktQueue.clear(); receivePktQueueIdx = 0;
 	}
@@ -504,6 +601,23 @@ public class PlayView extends View { // 游戏页面类
 			}
 			else {
 				if(countDown.isRound()) { // 进入round显示
+					String d = Constants.COUNTDOWN;
+					String f = "";
+					switch (roundCount) {
+					case 0:
+						f = "round_1";
+						break;
+					case 1:
+						f = "round_2";
+						break;
+					case 2:
+						f = "round_3";
+						break;
+					default:
+						break;
+					}
+					Framework.audio.setCutting(false);
+					Framework.audio.playClip(d, f);
 					imgLocateMap.get(Constants.COUNTDOWN).setX(Constants.ROUND_X);
 					imgLocateMap.get(Constants.COUNTDOWN).setY(Constants.ROUND_Y);
 					imgLocateMap.get(Constants.COUNTDOWN).setW(Constants.ROUND_W);
@@ -516,16 +630,29 @@ public class PlayView extends View { // 游戏页面类
 	
 	private void updateGameOver() { // 检测一局游戏是否结束并进行相应的设置或跳转
 		if(isGameOver) { // 游戏结束一局
+			
+			if(endFrameCount == 0) {
+				String d = Constants.BGM;
+				String f = "ko";
+				Framework.audio.playClip(d, f);
+			}
 			endFrameCount++;
 			if(endFrameCount < endFrame) { // 游戏末尾帧计数
 				return;
 			}
 			
 			roundCount++;
-			if(roundCount >= round) { // 游戏全部结束
+			if(roundCount >= round || player1WinCount >= round/2 + 1
+					|| player2WinCount >= round/2 + 1 ) { // 游戏全部结束
+				if(player1WinCount > player2WinCount)
+					isWinner = true;
+				// 记录最后一局游戏
+				if(!sendPktQueue.isEmpty())
+					roundSendPktQueues.add(new ArrayList<Packet>(sendPktQueue));
+				if(!receivePktQueue.isEmpty())
+					roundReceivePktQueues.add(new ArrayList<Packet>(receivePktQueue));
 				// 跳转到GameOverView页面
-//				Framework.app.gotoView(Constants.GAMEOVER_VIEW_KEY);
-				System.out.println("go to GameOverView"); // test!!!!!!!!!!!!!!!!!
+				Framework.app.gotoView(Constants.GAMEOVER_VIEW_KEY);
 			}
 			else { 
 				// 重新启动游戏
@@ -1341,6 +1468,7 @@ public class PlayView extends View { // 游戏页面类
 				}
 				
 				isGameOver = true;
+				player1WinCount++;
 			}
 		}
 	}
@@ -1400,6 +1528,7 @@ public class PlayView extends View { // 游戏页面类
 				}
 				
 				isGameOver = true;
+				player2WinCount++;
 			}
 		}
 	}
@@ -2111,6 +2240,8 @@ public class PlayView extends View { // 游戏页面类
 	@Override
 	public void onEnter() {
 		super.onEnter();
+		reset(); // 先清空上一次启动时的字典
+		initEntity(); // 初始化游戏实体
 	}
 	
 	@Override
@@ -2130,10 +2261,20 @@ public class PlayView extends View { // 游戏页面类
 		if(!isStart) { // 未开始则进入游戏倒计时
 			countDown();
 		}
-		else {
+		else { 
+			Framework.audio.setCutting(true); // 允许切歌
 			// 更新玩家实体
-			updatePlayer1(); // 更新玩家1
-			updatePlayer2(mode); // 更新玩家2
+			if(!isPlayBack) { // 非回放模式
+				updatePlayer1(); // 更新玩家1
+				updatePlayer2(mode); // 更新玩家2
+			}
+			else { // 回放模式,从包队列记录数组中提取每一局游戏的包队列
+				if(sendPktQueue.isEmpty())
+					sendPktQueue = roundSendPktQueues.get(roundCount);
+				if(receivePktQueue.isEmpty())
+					receivePktQueue = roundReceivePktQueues.get(roundCount);
+			}
+			
 			
 			// 解析操作队列
 			parseQueue();

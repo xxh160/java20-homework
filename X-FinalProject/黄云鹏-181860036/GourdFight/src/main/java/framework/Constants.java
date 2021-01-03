@@ -1,6 +1,4 @@
-package gourdfight;
-
-import org.omg.CORBA.FieldNameHelper;
+package framework;
 
 public class Constants { // 常量类，提供游戏中所有需要的常量
 
@@ -11,19 +9,38 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	
 	// 页面
 	public static final String HOME_VIEW_KEY = "Home View"; // 主页面
+	public static final double HOME_VIEW_BUTTON_W = 150; // 主页面按钮宽度
+	
+	public static final String MODE_VIEW_KEY = "Mode View"; // 模式选择页面
+	public static final String NET_VIEW_KEY = "Net View"; // 网络端选择页面
+	public static final String ROLE1_VIEW_KEY = "Role1 View"; // 玩家1角色选择页面
+	public static final String ROLE2_VIEW_KEY = "Role2 View"; // 玩家2角色选择页面
 	public static final String PLAY_VIEW_KEY = "Play View"; // 游戏页面
+	
 	public static final String GAMEOVER_VIEW_KEY = "Gameover View"; // 游戏结束页面
+	public static final double GAMEOVER_IMAGEVIEW_W = 300; // 游戏结束页面图片显示器宽度
+	public static final double GAMEOVER_IMAGEVIEW_H = 500; // 游戏结束页面图片显示器宽度
+	public static final double GAMEOVER_BUTTON_W = 100; // 游戏结束页面按钮宽度
+	
+	
+	
 	public static final String STACK_PANE = "Stack Pane"; //栈控件
 	public static final String IMAGE_PANE = "Image Pane"; // 图片控件
 	
 	// 资源文件夹
-	public static final String MAIN_DIRECOTRY = "main"; // 主资源
-	public static final String TEST_DIRECOTRY = "test"; // 测试资源
+	public static final String MAIN_DIRECTORY = "main"; // 主资源
+	public static final String TEST_DIRECTORY = "test"; // 测试资源
+	public static final String BACKGROUND_DIRECTORY = "background"; // 页面背景图片资源
 	
 	// 背景音频
 	public static final String BGM = "BGM"; // 背景音频文件夹名
 	public static final String HOME_VIEW_BGM = "Home View BGM"; // 主页面背景音频名
+	public static final String MODE_VIEW_BGM = "Home View BGM"; // 模式选择页面背景音频名
+	public static final String NET_VIEW_BGM = "Home View BGM"; // 网络端选择页面背景音频名
+	public static final String ROLE_VIEW_BGM = "Home View BGM"; // 角色选择页面背景音频名
 	public static final String PLAY_VIEW_BGM = "Play View BGM"; // 游戏页面背景音频文件名
+	public static final String GAMEOVER_VIEW_BGM = "GameOver View BGM"; // 游戏结束页面背景音频文件名
+	
 	
 	// 网络
 	public static final int PORT = 8001; // 端口号
@@ -220,6 +237,8 @@ public class Constants { // 常量类，提供游戏中所有需要的常量
 	// 辅助状态值
 	public static final String ATTACKING_TOLEFT = "attackingToLeft"; // 朝左边进攻
 	public static final String ATTACKING_TORIGHT = "attackingToRight"; // 朝右边进攻
+	public static final String WINNER = "winner"; // 游戏胜利
+	public static final String LOSER = "loser"; // 游戏失败
 	
 	// 实体其他属性
 	public static final double DEFAULT_LIFE_VALUE = 100; // 默认生命值

@@ -1,4 +1,4 @@
-package app;
+package helper;
 
 import javafx.scene.image.Image;
 

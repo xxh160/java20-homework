@@ -1,6 +1,6 @@
 package world;
 
-import gourdfight.Constants;
+import framework.Constants;
 
 public class Chilopod extends Entity { // 蜈蚣精实体类
 

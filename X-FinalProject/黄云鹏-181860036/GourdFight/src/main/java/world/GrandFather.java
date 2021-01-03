@@ -1,6 +1,6 @@
 package world;
 
-import gourdfight.Constants;
+import framework.Constants;
 
 public class GrandFather extends Entity { // 爷爷实体类
 

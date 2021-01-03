@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import media.Audio;
+import output.Log;
 import framework.*;
 import input.KeyInput;
 import input.MouseInput;
@@ -58,6 +59,8 @@ public class App {
 	
 	private final Audio audio; // 音频播放器
 	
+	private final Log log; // 文件记录器
+	
 	OnLaunch onLaunch; // 窗口启动管理接口
 	OnFinish onFinish; // 窗口关闭管理接口
 	OnExit onExit; // 窗口退出许可管理接口
@@ -69,6 +72,7 @@ public class App {
 		Framework.keyInput = this.keyInput;
 		Framework.mouseInput = this.mouseInput;
 		Framework.audio = this.audio;
+		Framework.log = this.log;
 	}
 	
 	private final void initApp() { // 初始化应用
@@ -181,6 +185,8 @@ public class App {
 		mouseInput = new MouseInput();
 		
 		audio = new Audio();
+		
+		log = new Log();
 		
 		initFramework();
 		initApp();

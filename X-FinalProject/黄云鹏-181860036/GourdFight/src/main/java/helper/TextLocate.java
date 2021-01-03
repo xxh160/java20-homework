@@ -1,4 +1,4 @@
-package app;
+package helper;
 
 public class TextLocate { // 文本定位类，封装文本绘制的内容、位置、属性等
 

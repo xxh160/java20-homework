@@ -1,6 +1,6 @@
 package world;
 
-import gourdfight.Constants;
+import framework.Constants;
 
 public class Energy extends Entity { // 能量条实体类
 	

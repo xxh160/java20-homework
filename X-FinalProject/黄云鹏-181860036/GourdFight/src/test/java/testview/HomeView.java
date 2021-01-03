@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 import framework.*;
-import gourdfight.Constants;
 import input.Key;
 import input.KeyInput;
 import input.Mouse;

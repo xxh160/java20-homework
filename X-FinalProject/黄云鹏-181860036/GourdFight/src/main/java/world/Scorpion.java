@@ -1,6 +1,6 @@
 package world;
 
-import gourdfight.Constants;
+import framework.Constants;
 
 public class Scorpion extends Entity { // 蝎子精实体类
 

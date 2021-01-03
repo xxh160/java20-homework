@@ -1,6 +1,6 @@
 package world;
 
-import gourdfight.Constants;
+import framework.Constants;
 
 public class Blood extends Entity { // 血条实体类
 

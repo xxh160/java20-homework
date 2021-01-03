@@ -5,6 +5,7 @@ import app.Engine;
 import input.KeyInput;
 import input.MouseInput;
 import media.Audio;
+import output.Log;
 import world.Entity;
 
 /**
@@ -28,4 +29,6 @@ public class Framework { // 全局框架类，存放全局静态模块对象
 	public static MouseInput mouseInput; // 鼠标输入模块
 
 	public static Audio audio; // 音频播放器
+	
+	public static Log log; // 文件记录器
 }

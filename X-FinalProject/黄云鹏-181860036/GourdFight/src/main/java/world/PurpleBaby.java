@@ -2,7 +2,7 @@ package world;
 
 import java.util.Random;
 
-import gourdfight.Constants;
+import framework.Constants;
 import javafx.scene.image.Image;
 import output.URL;
 
@@ -38,7 +38,7 @@ public class PurpleBaby extends Entity { // 七娃实体类
 //		setAttackable(false);
 //		setDefendable(false);
 //		
-//		setWidth(Constants. PLAYER_DEFAULT_W);
+		setWidth(Constants. PLAYER_DEFAULT_W + 20);
 //		setHeight(Constants. PLAYER_DEFAULT_H);
 //		
 //		setLifeValue(Constants.DEFAULT_LIFE_VALUE);
@@ -64,7 +64,7 @@ public class PurpleBaby extends Entity { // 七娃实体类
 		setAttackNearWidth(brother1.getCurrentAttackWidth());
 		setAttackNearHeight(brother1.getCurrentAttackHeight());
 		setAttackNearName(brother1.getCurrentAttackName());
-		String dirStr = Constants.MAIN_DIRECOTRY;
+		String dirStr = Constants.MAIN_DIRECTORY;
 		String lFilePath = URL.toPngPath(dirStr, brother1.getName(), EntityState.ATTACKING_NEAR_TOLEFT.getState());
 		String rFilePath = URL.toPngPath(dirStr, brother1.getName(), EntityState.ATTACKING_NEAR_TORIGHT.getState());
 		Image lImg = new Image(URL.toURL(lFilePath));
@@ -116,7 +116,7 @@ public class PurpleBaby extends Entity { // 七娃实体类
 		setDefendHeight(brother1.getDefendHeight());	
 		setDefendName(brother1.getDefendName());
 
-		String dirStr = Constants.MAIN_DIRECOTRY;
+		String dirStr = Constants.MAIN_DIRECTORY;
 		String lFilePath = URL.toPngPath(dirStr, brother1.getName(), EntityState.DEFENDING_TOLEFT.getState());
 		String rFilePath = URL.toPngPath(dirStr, brother1.getName(), EntityState.DEFENDING_TORIGHT.getState());
 		Image lImg = new Image(URL.toURL(lFilePath));

@@ -2,7 +2,7 @@ package world;
 
 import java.util.Random;
 
-import gourdfight.Constants;
+import framework.Constants;
 import javafx.scene.image.Image;
 import output.URL;
 

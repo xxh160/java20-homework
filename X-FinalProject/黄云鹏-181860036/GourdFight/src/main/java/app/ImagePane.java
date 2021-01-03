@@ -2,7 +2,9 @@ package app;
 
 import java.util.Collection;
 
-import gourdfight.Constants;
+import framework.Constants;
+import helper.ImageLocate;
+import helper.TextLocate;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

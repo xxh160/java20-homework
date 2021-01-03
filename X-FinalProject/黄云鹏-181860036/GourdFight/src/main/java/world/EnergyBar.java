@@ -1,6 +1,6 @@
 package world;
 
-import gourdfight.Constants;
+import framework.Constants;
 
 public class EnergyBar extends Entity { // 能量槽实体类
 

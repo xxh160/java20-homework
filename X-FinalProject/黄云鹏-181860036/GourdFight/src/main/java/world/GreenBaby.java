@@ -1,6 +1,6 @@
 package world;
 
-import gourdfight.Constants;
+import framework.Constants;
 import javafx.scene.image.Image;
 import output.URL;
 

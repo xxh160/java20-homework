@@ -14,12 +14,21 @@ public class Audio { // 音频播放类，用于播放游戏背景音频，以�
 	HashMap<String, Media> bgmMap; // 背景音频字典
 	MediaPlayer bgmPlayer; // 背景音播放器
 	
+	private boolean cutting; // 是否切歌
+	
 	// 初始化
 	public Audio() {
 		clipMap = new HashMap<>();
 		bgmMap = new HashMap<>();
+		cutting = true;
+	}
+
+	// Setter
+	public void setCutting(boolean c) {
+		cutting = c;
 	}
 	
+	// 播放功能
 	public void playClip(String d, String f) { // 播放效果音频
 		
 		String dirStr = "main";
@@ -38,8 +47,11 @@ public class Audio { // 音频播放类，用于播放游戏背景音频，以�
 		}
 		else { 
 			if(audioClip.isPlaying()) { // 该音频文件正在播放
-//				return;
-				audioClip.play();
+				if(cutting)
+					audioClip.play(); 
+				else
+					return;
+				
 			}else { // 该音频文件曾被播放过
 				audioClip.play();
 			}

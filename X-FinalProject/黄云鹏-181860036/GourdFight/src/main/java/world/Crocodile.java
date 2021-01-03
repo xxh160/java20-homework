@@ -1,6 +1,6 @@
 package world;
 
-import gourdfight.Constants;
+import framework.Constants;
 
 public class Crocodile extends Entity { // 鳄鱼精实体类
 

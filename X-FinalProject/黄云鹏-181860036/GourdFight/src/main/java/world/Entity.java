@@ -2,8 +2,8 @@ package world;
 
 import java.util.HashMap;
 
+import framework.Constants;
 import framework.Framework;
-import gourdfight.Constants;
 import javafx.beans.binding.DoubleExpression;
 import javafx.scene.image.Image;
 import output.URL;
@@ -121,8 +121,8 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		setDefendable(false);
 		setBack(false);
 		
-		setWidth(Constants. PLAYER_DEFAULT_W);
-		setHeight(Constants. PLAYER_DEFAULT_H);
+		setWidth(Constants.PLAYER_DEFAULT_W);
+		setHeight(Constants.PLAYER_DEFAULT_H);
 		
 		setLifeValue(Constants.DEFAULT_LIFE_VALUE);
 		setMoveSpeed(Constants.DEFAULT_MOVE_SPEED);
@@ -202,7 +202,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	private void initStateImg() { 	// 设置状态图片
-		String dirStr = Constants.MAIN_DIRECOTRY;
+		String dirStr = Constants.MAIN_DIRECTORY;
 		for(EntityState state: EntityState.values()){
 			String filePath = "";
 			switch (state) {
@@ -263,6 +263,12 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 			case ATTACKING_KILL_TORIGHT:
 				filePath = URL.toPngPath(dirStr, name, Constants.ATTACKING_TORIGHT);
 				break;
+			case WINNER:
+				filePath = URL.toPngPath(dirStr, name, Constants.WINNER);
+				break;
+			case LOSER:
+				filePath = URL.toPngPath(dirStr, name, Constants.LOSER);
+				break;
 
 			default:
 				filePath = URL.toPngPath(dirStr, name, Constants.STANDING_TOLEFT);
@@ -275,7 +281,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	
 	protected void initAttackImg() { // 设置攻击实体图片
 		
-		String dirStr = Constants.MAIN_DIRECOTRY;
+		String dirStr = Constants.MAIN_DIRECTORY;
 		String lFilePath = URL.toPngPath(dirStr, name, EntityState.ATTACKING_NEAR_TOLEFT.getState());
 		String rFilePath = URL.toPngPath(dirStr, name, EntityState.ATTACKING_NEAR_TORIGHT.getState());
 		Image lImg = new Image(URL.toURL(lFilePath));
@@ -296,7 +302,7 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 
 	protected void initDefendImg() { // 设置防御实体图片
-		String dirStr = Constants.MAIN_DIRECOTRY;
+		String dirStr = Constants.MAIN_DIRECTORY;
 		String lFilePath = URL.toPngPath(dirStr, name, EntityState.DEFENDING_TOLEFT.getState());
 		String rFilePath = URL.toPngPath(dirStr, name, EntityState.DEFENDING_TORIGHT.getState());
 		Image lImg = new Image(URL.toURL(lFilePath));

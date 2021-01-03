@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 import framework.*;
-import gourdfight.Constants;
 
 public class PlayView extends View { // 游戏页面测试类
 

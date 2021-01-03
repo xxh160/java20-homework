@@ -1,6 +1,6 @@
 package world;
 
-import gourdfight.Constants;
+import framework.Constants;
 
 public enum EntityState { // 实体状态枚举类，用于判断实体当前的状态，以便调用相应的图片(序列)进行渲染
 	
@@ -26,6 +26,9 @@ public enum EntityState { // 实体状态枚举类，用于判断实体当前的
 	ATTACKING_FAR_TORIGHT(Constants.ATTACKING_FAR_TORIGHT), // 朝右边远攻
 	ATTACKING_KILL_TOLEFT(Constants.ATTACKING_KILL_TOLEFT), // 朝左边必杀
 	ATTACKING_KILL_TORIGHT(Constants.ATTACKING_KILL_TORIGHT), // 朝右边必杀
+	
+	WINNER(Constants.WINNER), // 游戏胜利
+	LOSER(Constants.LOSER) // 游戏失败
 	;
 	
 	private String state;

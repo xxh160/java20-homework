@@ -1,7 +1,7 @@
 package app;
 
+import framework.Constants;
 import framework.Framework;
-import gourdfight.Constants;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -33,6 +33,9 @@ public abstract class View { // 游戏页面抽象类，子类为页面实例
 	protected String bgmDirStr; // 页面背景音频文件夹名称
 	protected String bgmFileStr; // 页面背景音频文件名称
 	
+	protected boolean autoPlay = false; // 是否自动播放背景音乐
+	protected boolean autoStop = false; // 是否自动关闭
+	
 	// 初始化
 	public View(String type) {
 		if(type.equals(Constants.STACK_PANE)) {
@@ -43,6 +46,7 @@ public abstract class View { // 游戏页面抽象类，子类为页面实例
 		}
 		bgmDirStr = Constants.BGM;
 		// pane.setBackground(Background.EMPTY); // 设置根容器的背景为空
+		
 	}
 	
 	// Getter
@@ -56,11 +60,13 @@ public abstract class View { // 游戏页面抽象类，子类为页面实例
 	
 	// Setter
 	public void playBGM() { // 播放背景音频
-		Framework.audio.playBGM(bgmDirStr, bgmFileStr);
+		if(autoPlay)
+			Framework.audio.playBGM(bgmDirStr, bgmFileStr);
 	}
 	
 	public void stopBGM() { // 停止播放背景音频
-		Framework.audio.stopBGM();
+		if(autoStop)
+			Framework.audio.stopBGM();
 	}
 	
 	// 页面生命周期管理
