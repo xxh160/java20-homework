@@ -264,19 +264,27 @@ D牌需要的钱增加
 
 网络通信:
 
-运行jar包时指定
-java -jar huluwa.jar client 2.2.2.2 8080
-
-java -jar huluwa.jar server
-或者在开始界面选择自己的身份是服务器还是客户端，服务器的话会提示ip，然后按开始就进入accept()等待，如果是客户端的话就提示设置服务器的ip
-
-先写个简单的测试，
-
 回放
 
-包格式
+1.3
+
+包格式String
 addEnemyCreature 0
 clearRunway 0
 freezeRunway 0
-killEnemyHead 0
+killMyHead 0
 costAddN 1
+
+添加多种人物，区分不同阵营的D牌，在人物上方显示人物力量值1-3格
+现在是
+大娃
+火娃
+水娃
+爷爷（考虑去掉）
+穿山甲
+
+蝎子精
+蛇精
+蜈蚣精
+小喽啰1
+小喽啰2

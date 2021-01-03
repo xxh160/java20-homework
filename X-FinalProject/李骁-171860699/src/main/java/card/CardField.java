@@ -1,6 +1,7 @@
 package card;
 
 import creature.Creature;
+import creature.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class CardField implements Runnable {
 
     private final int cardFieldSize = 5;
 
-    private int money = 20; // 拥有的金钱
+    private int money = 30; // 拥有的金钱
 
     private Text moneyText; // 金钱的文字显示
 
@@ -74,7 +75,7 @@ public class CardField implements Runnable {
                 }
                 else if (event.getCode() == KeyCode.G) {
                     System.out.println("给敌方加人");
-                    MainCanvas.runwayField.getRunways().get(1).addToEnemyCreatures(new Creature());
+                    MainCanvas.runwayField.getRunways().get(1).addToEnemyCreatures(new Dawa());
                 }
             }
         });
@@ -135,7 +136,7 @@ public class CardField implements Runnable {
         System.out.println("卡牌需要填充" + Integer.toString(empty) + "张");
         if (empty == 0)
             return;
-        // 补充消耗的卡，TODO 随机
+        // 补充消耗的卡，TODO 随机、根据阵营
         for (int i = 0; i < empty; i++) {
             Card card = Card.createRandomCard();
             //Card card = new PropCardClearRunway();

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javafx.application.Platform;
 
-import creature.Creature;
+import creature.*;
 import view.MainCanvas;
 
 public class GameServer implements Runnable {
@@ -87,8 +88,24 @@ public class GameServer implements Runnable {
 		if (commands.length == 2) {
 			String cmd = commands[0];
 			int n = Integer.parseInt(commands[1]);
-			if (cmd.equals("addEnemyCreature")) {
-				MainCanvas.runwayField.getRunways().get(n).addToEnemyCreatures(new Creature());
+			if (cmd.startsWith("add")) {
+				String className = cmd.substring(3, cmd.length());
+				System.out.println("添加敌人类型：" + className);
+				Creature creature = null;
+				if (className.equals(Chuanshanjia.class.getSimpleName())) {
+					creature = new Chuanshanjia();
+				}
+				else if (className.equals(Dawa.class.getSimpleName())) {
+					creature = new Dawa();
+				}
+				//TODO 增加更多类型
+					
+				if (creature != null) {
+					MainCanvas.runwayField.getRunways().get(n).addToEnemyCreatures(creature);
+				}
+				else {
+					System.out.println("添加失败：" + className);
+				}
 			}
 			else if (cmd.equals("clearRunway")) {
 				MainCanvas.runwayField.getRunways().get(n).removeAllCreatures();

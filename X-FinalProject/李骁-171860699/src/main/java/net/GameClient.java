@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javafx.application.Platform;
 
-import creature.Creature;
+import creature.*;
 import view.MainCanvas;
 
 public class GameClient implements Runnable { // Socket客户端
@@ -46,7 +46,7 @@ public class GameClient implements Runnable { // Socket客户端
 			String cmd = commands[0];
 			int n = Integer.parseInt(commands[1]);
 			if (cmd.equals("addEnemyCreature")) {
-				MainCanvas.runwayField.getRunways().get(n).addToEnemyCreatures(new Creature());
+				MainCanvas.runwayField.getRunways().get(n).addToEnemyCreatures(new Dawa());
 			}
 			else if (cmd.equals("clearRunway")) {
 				MainCanvas.runwayField.getRunways().get(n).removeAllCreatures();

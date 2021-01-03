@@ -4,7 +4,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
+import creature.Chuanshanjia;
 import creature.Creature;
+import creature.Dawa;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -45,10 +47,10 @@ public abstract class Card {
     public static Card createRandomCard() {
         Random rand = new Random();
         Card card;
-        switch (rand.nextInt(6)) {
+        switch (rand.nextInt(7)) {
             case 0:
-                card = new CreatureCard(new Creature());
-                break; // TODO 改实际生物
+                card = new PropCardFreeze();
+                break;
             case 1:
                 card = new PropCardCostAddN(1);
                 break;
@@ -62,7 +64,10 @@ public abstract class Card {
                 card = new PropCardKillEnemyHead();
                 break;
             case 5:
-                card = new PropCardFreeze();
+                card = new CreatureCard(new Dawa());
+                break;
+            case 6:
+                card = new CreatureCard(new Chuanshanjia());
                 break;
             default:
                 card = new PropCardClearRunway();

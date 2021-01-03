@@ -55,6 +55,8 @@ public class MainCanvas extends Canvas {
 
     private Button btnSetClient;
 
+    public static boolean useHuluwa = true;
+
     private Thread thread = new Thread(new Runnable(){ //画图线程
     
         @Override
@@ -97,9 +99,9 @@ public class MainCanvas extends Canvas {
         //exec.execute(thread);
 
         //初始化卡牌区
-        cardField = new CardField(root);
+        /*cardField = new CardField(root);
         cardField.removeAllCards();
-        cardField.fillCards();
+        cardField.fillCards();*/
 
         //初始化启动服务器按钮
         btnSetServer = new Button("设置并启动服务器");
@@ -111,8 +113,18 @@ public class MainCanvas extends Canvas {
         btnSetServer.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                //启动服务器
                 server = new GameServer(28080);
                 server.start();
+                //设置使用葫芦娃
+                useHuluwa = true;
+                //初始化卡牌区
+                cardField = new CardField(root);
+                cardField.removeAllCards();
+                cardField.fillCards();
+                //禁用启动客户端按钮
+                btnSetServer.setOnMouseClicked(null);
+                btnSetClient.setOnMouseClicked(null);
             }
         });
         addToPane(btnSetServer);
@@ -127,8 +139,18 @@ public class MainCanvas extends Canvas {
         btnSetClient.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                //启动客户端
                 client = new GameClient("127.0.0.1", 28080);
                 client.start();
+                //设置使用妖怪
+                useHuluwa = false;
+                //初始化卡牌区
+                cardField = new CardField(root);
+                cardField.removeAllCards();
+                cardField.fillCards();
+                //禁用启动服务器按钮
+                btnSetServer.setOnMouseClicked(null);
+                btnSetClient.setOnMouseClicked(null);
             }
         });
         addToPane(btnSetClient);

@@ -24,7 +24,7 @@ import javafx.application.Platform;
 import runway.Runway;
 import view.MainCanvas;
 
-public class Creature implements Runnable {
+public abstract class Creature implements Runnable {
 
     protected int power;
 
@@ -48,7 +48,7 @@ public class Creature implements Runnable {
 
     protected ImageView imageView;
 
-    protected Image cardImage; // 位于卡牌区时的卡
+    protected Image cardImage; // 位于卡牌区时的卡外观
 
     protected Runway runway; // 所处的跑道
 
@@ -68,8 +68,9 @@ public class Creature implements Runnable {
 
     public Creature() {
         imageView = new ImageView();
-        loadImage("huluwa.png");
-
+        name = getClass().getSimpleName();
+        loadImage(name + ".png");
+        loadCardImage(name + "Card.png");
         this.figureSize = (int) (imageView.getFitWidth() / 2);
         this.power = 1; // TODO 别的方式初始化
         this.moveSpeed = defaultMoveSpeed = 1;
@@ -83,6 +84,10 @@ public class Creature implements Runnable {
         imageView.setImage(image);
         imageView.setFitWidth(50);
         imageView.setPreserveRatio(true); // 保持比例，但fitheight由于没设置，会是0！
+    }
+
+    protected void loadCardImage(String imageName) {
+        URL url = getClass().getClassLoader().getResource(imageName);
         cardImage = new Image(url.toString()); // TODO 改掉
     }
 
