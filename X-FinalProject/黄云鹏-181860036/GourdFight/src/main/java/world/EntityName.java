@@ -2,6 +2,18 @@ package world;
 
 import framework.Constants;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.25
+ * @inherit 
+ * @functions 实体名称枚举类，用于判断游戏实体名称
+ * @properties ...
+ * @methods  
+ * 		getName: 获取名称枚举的原始字符串
+ * 		find: 通过字符串获取名称枚举
+ */
+
 public enum EntityName { // 实体名称枚举类，用于判断游戏实体名称
 	
 	REDBABY(Constants.REDBABY_NAME), // 大娃

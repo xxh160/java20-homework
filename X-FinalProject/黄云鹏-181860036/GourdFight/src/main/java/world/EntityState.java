@@ -2,7 +2,19 @@ package world;
 
 import framework.Constants;
 
-public enum EntityState { // 实体状态枚举类，用于判断实体当前的状态，以便调用相应的图片(序列)进行渲染
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.25
+ * @inherit 
+ * @functions 实体状态枚举类，用于判断实体当前的状态，以便调用相应的图片(序列)进行渲染
+ * @properties ...
+ * @methods  
+ * 		getState: 获取状态枚举的原始字符串
+ * 		find: 通过字符串获取状态枚举
+ */
+
+public enum EntityState { // 实体状态枚举类
 	
 	// 实体运动状态
 	STANDING_FORWARD(Constants.STANDING_FORWARD), // 朝正面站着

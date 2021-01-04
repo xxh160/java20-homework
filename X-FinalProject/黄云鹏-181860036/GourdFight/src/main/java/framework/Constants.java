@@ -1,5 +1,15 @@
 package framework;
 
+/**
+ * 
+ * @author 王浩天
+ * @version	2020.12.22
+ * @inherit 
+ * @functions 为游戏框架提供一些重要的全局静态常量，如长宽、坐标、名称等，方便随时调用
+ * @properties 
+ * @methods  	
+ */
+
 public class Constants { // 常量类，提供游戏中所有需要的常量
 
 	// 窗口

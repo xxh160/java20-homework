@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 
 /**
  * 
- * @author 黄云鹏
+ * @author 王浩天
  * @version	2020.12.24
  * @inherit Mouse
  * @functions 框架鼠标输入模块类，提供鼠标输入事件的响应

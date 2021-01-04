@@ -4,6 +4,16 @@ import framework.Constants;
 import javafx.scene.image.Image;
 import output.URL;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.27
+ * @inherit Entity
+ * @functions 二娃的实体类
+ * @properties 全部继承自父类
+ * @methods  全部继承自父类
+ */
+
 public class OrangeBaby extends Entity { // 二娃实体类
 	
 	public OrangeBaby(String name) {

@@ -2,6 +2,18 @@ package network;
 
 import world.EntityState;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2021.1.1
+ * @inherit 
+ * @functions 网络协议数据包，封装了玩家双方交换游戏的数据结构
+ * @properties frame action
+ * @methods  
+ * 		String send(): 发送包
+ * 		receive(String line): 接收包
+ */
+
 public class Packet { // 数据包，定义服务器和客户端交互的数据结构
 
 	int frame; // 帧数

@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 
 /**
  * 
- * @author 黄云鹏
+ * @author 王浩天
  * @version	2020.12.23
  * @inherit Key
  * @functions 框架键盘输入模块类，提供键盘输入事件的响应

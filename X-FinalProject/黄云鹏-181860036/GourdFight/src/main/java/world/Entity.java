@@ -8,6 +8,23 @@ import javafx.beans.binding.DoubleExpression;
 import javafx.scene.image.Image;
 import output.URL;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.26
+ * @inherit 
+ * @functions 所有游戏元素的父类，提供游戏元素如何绘制、如何运动等的参数和方法
+ * @properties name state lifeValue attackValue defendValue imgMap...
+ * @methods  	
+ * 		Setter: 设置游戏实体的各种参数
+ * 		Getter: 获取游戏实体的各种参数
+ * 		moveLetft/moveRight/runLeft/runRight: 游戏实体移动方法
+ * 		jump/lieDown:游戏实体跳跃、倒地方法
+ * 		attackNear/attackFar/attackKill: 攻击方法
+ * 		defend: 防御方法
+ * 		getHurt: 伤害计算方法
+ */
+
 public class Entity { // 游戏实体类，所有游戏角色、道具等的父类
 	
 	protected String name; // 实体名称
@@ -392,7 +409,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return imageMap.get(state);
 	}
 	
-	
 	public String getText(EntityState state) { // 获取文本
 		return textMap.get(state);
 	}
@@ -405,12 +421,9 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		return deltaX;
 	}
 	
-	
 	public double getDeltaY() { // 获取y轴位移
 		return deltaY;
 	}
-	
-	
 	
 	public double getWidth() { // 获取实体宽度
 		return width;
@@ -506,7 +519,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		height = val;
 	}
 	
-	
 	public void setState(EntityState state) { // 设置实体状态
 		if(state != EntityState.STANDING_TOLEFT && state != EntityState.STANDING_TORIGHT)
 			stop(); // 如果不是回到静止状态，说明即将开启新状态，应该停止切换前的状态的效果音
@@ -520,11 +532,9 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		play(); // 播放切换后的状态的效果音
 	}
 	
-	
 	public void setMobile(boolean m) { // 设置实体是否可移动
 		isMobile = m;
 	}
-	
 	
 	public void setActive(boolean a) { // 设置实体是否活跃
 		isActive = a;
@@ -533,7 +543,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	public void setDirection(boolean d) { // 设置朝向
 		isLeft = d;
 	}
-	
 	
 	public void setAttackable(boolean a) { // 设置实体是否具有攻击性
 		isAttackable = a;
@@ -547,13 +556,11 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		isBack = b;
 	}
 	
-	
 	public void addImage(EntityState state, Image img) { // 添加状态图片
 		if(img != null) {
 			imageMap.put(state, img);
 		}
 	}
-	
 	
 	public void addText(EntityState state, String text) { // 添加状态文本
 		if(text != null) {
@@ -561,9 +568,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		}
 	}
 		
-	
-	// 状态切换
-
 	public void addFrame(EntityState state, int frm) { // 添加帧计数
 		frameMap.put(state, frm);
 	}
@@ -946,7 +950,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 	}
 	
 	// 动作	
-
 	public void jump() { // 跳跃
 		
 		if(jumpTag == 0) { // 尚未起跳
@@ -1042,7 +1045,6 @@ public class Entity { // 游戏实体类，所有游戏角色、道具等的父�
 		}
 		return 0;
 	}
-	
 	
 	private void play() { // 播放效果音
 		String d = getName();

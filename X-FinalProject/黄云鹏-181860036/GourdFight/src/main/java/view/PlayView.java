@@ -67,12 +67,12 @@ public class PlayView extends View { // 游戏页面类
 	private ArrayList<ArrayList<Packet>> roundSendPktQueues; // 每局发送包队列的存储数组
 	private ArrayList<ArrayList<Packet>> roundReceivePktQueues; // 每局接受包队列的存储数组
 	
-	volatile public ArrayList<Packet> sendPktQueue; // 发送包队列，即自己的操作/状态序列
-	volatile public ArrayList<Packet> receivePktQueue; // 接受包队列，即对手的操作/状态序列
-	volatile public int sendPktQueueIdx; // 发送包队列指针(本地)
-	volatile public int receivePktQueueIdx; // 接受包队列指针(本地)
-	volatile public int sendIdx; // 发送包队列指针(用于发送给远端)
-	volatile public int receiveIdx; // 接收包队列指针(用于从远端接收)
+	public ArrayList<Packet> sendPktQueue; // 发送包队列，即自己的操作/状态序列
+	public ArrayList<Packet> receivePktQueue; // 接受包队列，即对手的操作/状态序列
+	public int sendPktQueueIdx; // 发送包队列指针(本地)
+	public int receivePktQueueIdx; // 接受包队列指针(本地)
+	public int sendIdx; // 发送包队列指针(用于发送给远端)
+	public int receiveIdx; // 接收包队列指针(用于从远端接收)
 	
 	boolean mode; // 游戏模式(true为网络版本，false为单击版本)
 	boolean isPlayBack; // 是否为回放模式
@@ -727,17 +727,9 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
-	synchronized private void updatePlayer1() { // 更新玩家1
+	private void updatePlayer1() { // 更新玩家1
 		
 		Entity player1 = entityMap.get(Constants.PLAYER1);
-		
-//		if(sendPktQueue.isEmpty()) {
-//			// 发送自己的创建信息
-//			Role1View roleView = (Role1View)Framework.app.getView(Constants.ROLE1_VIEW_KEY);
-//			Packet pkt = new Packet(0, roleView.currentChoise);
-//			sendPktQueue.add(pkt);
-//			return;
-//		}
 		
 		// 只有处于站着的静止状态才能响应用户的下一个输入
 		// 有些状态虽然统一传递朝向左的动作，但是实际操作应该按照当时的朝向来定
@@ -829,7 +821,7 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
-	synchronized private void updatePlayer2(boolean mode) { // 更新玩家2
+	private void updatePlayer2(boolean mode) { // 更新玩家2
 		if(mode) { // 网络版本
 			// 由客户端线程负责发送
 		}
@@ -933,9 +925,6 @@ public class PlayView extends View { // 游戏页面类
 		Entity player1 = entityMap.get(Constants.PLAYER1);
 		Entity player2 = entityMap.get(Constants.PLAYER2);
 		
-		if(blood1 == null || blood2 == null || player1 == null || player2 == null)
-			return;
-		
 		double scale1 = player1.getLifeValue() / blood1.getFullLife(); // 左血条缩短比例
 		double scale2 = player2.getLifeValue() / blood2.getFullLife(); // 右血条缩短比例
 		
@@ -950,9 +939,6 @@ public class PlayView extends View { // 游戏页面类
 		Energy energy2 = (Energy)entityMap.get(Constants.ENERGY2);
 		Entity player1 = entityMap.get(Constants.PLAYER1);
 		Entity player2 = entityMap.get(Constants.PLAYER2);
-		
-		if(energy1 == null || energy2 == null || player1 == null || player2 == null)
-			return;
 		
 		if(player1.isActive()) {
 			currentEnergy1++;
@@ -1491,11 +1477,59 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void parseQueue() { // 解析操作/状态队列
-		parsePlayer1Action();
-		parsePlayer2Action();
+		if(!sendPktQueue.isEmpty() && !receivePktQueue.isEmpty()) {
+			int player1_frame = sendPktQueue.get(sendPktQueueIdx).getFrame(); // 自己队列中的最小帧
+			int player2_frame = receivePktQueue.get(receivePktQueueIdx).getFrame(); // 对手队列中的最小帧
+			
+			if(player1_frame > player2_frame) { // 说明对手的同步帧非该最小帧
+				
+				// 寻找对手的同步帧
+				while(player1_frame > player2_frame && receivePktQueueIdx < receivePktQueue.size()-1) {
+					receivePktQueueIdx++;
+					player2_frame = receivePktQueue.get(receivePktQueueIdx).getFrame();
+				}
+				
+				if(player1_frame > player2_frame) { // 对手的同步帧还未到，直接返回，等待
+					return;
+				}
+				else if(player1_frame < player2_frame) { // 对手的最近帧已经超过自己，说明中间丢包，只能寻找自己的同步帧
+					// 注意，由于自己的包是一定同步的，因此一定能匹配到对手的最近帧
+					while(player1_frame < player2_frame && sendPktQueueIdx < sendPktQueue.size()-1) {
+						sendPktQueueIdx++;
+						player1_frame = sendPktQueue.get(sendPktQueueIdx).getFrame();
+					}
+					if(player1_frame == player2_frame) { // 帧已经同步
+						parsePlayer1Action();
+						parsePlayer2Action();
+					}
+				}
+				else { // 帧已经同步
+					parsePlayer1Action();
+					parsePlayer2Action();
+				}
+				
+			}
+			else if(player1_frame < player2_frame) { // 自己的最小帧非同步帧
+				// 寻找自己的同步帧
+				// 注意，由于自己的包是一定同步的，因此一定能匹配到对手的同步帧
+				while(player1_frame < player2_frame && sendPktQueueIdx < sendPktQueue.size()-1) {
+					sendPktQueueIdx++;
+					player1_frame = sendPktQueue.get(sendPktQueueIdx).getFrame();
+				}
+				if(player1_frame == player2_frame) { // 帧已经同步
+					parsePlayer1Action();
+					parsePlayer2Action();
+				}
+			}
+			else { // 帧已经同步
+				parsePlayer1Action();
+				parsePlayer2Action();
+			}
+		}
+
 	}
 	
-	synchronized private void parsePlayer1Action() { // 解析完操作队列并找到同步帧后，进而解析自己的同步帧的动作
+	private void parsePlayer1Action() { // 解析完操作队列并找到同步帧后，进而解析自己的同步帧的动作
 		if(sendPktQueue.isEmpty())
 			return;
 		EntityState player1_action = sendPktQueue.get(sendPktQueueIdx).getAction(); // 自己的同步帧动作
@@ -1503,12 +1537,6 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 解析自己的动作
 		Entity player1 = entityMap.get(Constants.PLAYER1);
-//		if(player1_action.isChosen()) {
-//			setPlayer1();
-//			setBloodBar1();
-//			setEnergyBar1();
-//			return;
-//		}
 		if(player1_action == EntityState.STANDING_TOLEFT) { // 保持上一个状态的延续
 			
 		}
@@ -1687,7 +1715,7 @@ public class PlayView extends View { // 游戏页面类
 		imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage()); // 设置图片
 	}
 	
-	synchronized private void parsePlayer2Action() { // 解析完操作队列并找到同步帧后，进而解析对手的同步帧的动作
+	private void parsePlayer2Action() { // 解析完操作队列并找到同步帧后，进而解析对手的同步帧的动作
 		if(receivePktQueue.isEmpty())
 			return;
 		EntityState player2_action = receivePktQueue.get(receivePktQueueIdx).getAction(); // 对手的同步帧动作
@@ -1695,53 +1723,6 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 解析自己的动作
 		Entity player2 = entityMap.get(Constants.PLAYER2);
-		
-//		// 设置玩家2的角色
-//		if(player2_action.isChosen()) {
-//			
-//			switch (player2_action) {
-//			case CHOSEN_REDBABY:
-//				setPlayer2Name(EntityName.REDBABY);
-//				break;
-//			case CHOSEN_ORANGEBABY:
-//				setPlayer2Name(EntityName.ORANGEBABY);
-//				break;
-//			case CHOSEN_YELLOWBABY:
-//				setPlayer2Name(EntityName.YELLOWBABY);
-//				break;
-//			case CHOSEN_GREENBABY:
-//				setPlayer2Name(EntityName.GREENBABY);
-//				break;
-//			case CHOSEN_BLUEBABY:
-//				setPlayer2Name(EntityName.BLUEBABY);
-//				break;
-//			case CHOSEN_INDIGOBABY:
-//				setPlayer2Name(EntityName.INDIGOBABY);
-//				break;
-//			case CHOSEN_PURPLEBABY:
-//				setPlayer2Name(EntityName.PURPLEBABY);
-//				break;
-//			case CHOSEN_SNAKE:
-//				setPlayer2Name(EntityName.SNAKE);
-//				break;
-//			case CHOSEN_SCORPION:
-//				setPlayer2Name(EntityName.SCORPION);
-//				break;
-//			case CHOSEN_CHILOPOD:
-//				setPlayer2Name(EntityName.CHILOPOD);
-//				break;
-//			case CHOSEN_CROCODILE:
-//				setPlayer2Name(EntityName.CROCODILE);
-//				break;
-//			default:
-//				setPlayer2Name(EntityName.REDBABY);
-//				break;
-//			}
-//			setPlayer2();
-//			setBloodBar2();
-//			setEnergyBar2();
-//			return;
-//		}
 		
 		if(player2_action == EntityState.STANDING_TORIGHT) { // 保持上一个状态的延续
 			
@@ -2198,10 +2179,6 @@ public class PlayView extends View { // 游戏页面类
 	@Override
 	public void onUpdate(double time) {
 		frameCount++;
-		
-//		// 客户端交互数据
-//		Framework.client.sendPkt();
-//		Framework.client.receivePkt();
 		
 		if(!isStart) { // 未开始则进入游戏倒计时
 			countDown();

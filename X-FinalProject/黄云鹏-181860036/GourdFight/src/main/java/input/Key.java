@@ -4,7 +4,7 @@ import javafx.scene.input.KeyCode;
 
 /**
  * 
- * @author 黄云鹏
+ * @author 王浩天
  * @version	2020.12.23
  * @inherit 
  * @functions 键盘按键枚举类，提供常用的键盘上常用键的枚举

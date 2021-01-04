@@ -2,13 +2,10 @@ package junit;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.swing.text.html.parser.Entity;
-
 import org.junit.Test;
 
 import view.PlayView;
 import world.BlueBaby;
-import world.EntityState;
 import world.RedBaby;
 
 public class JunitTest {

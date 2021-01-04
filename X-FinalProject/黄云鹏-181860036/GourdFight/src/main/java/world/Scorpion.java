@@ -2,6 +2,16 @@ package world;
 
 import framework.Constants;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.27
+ * @inherit Entity
+ * @functions 蝎子精的实体类
+ * @properties 全部继承自父类
+ * @methods  重写getDletaY()方法
+ */
+
 public class Scorpion extends Entity { // 蝎子精实体类
 
 	public Scorpion(String name) {

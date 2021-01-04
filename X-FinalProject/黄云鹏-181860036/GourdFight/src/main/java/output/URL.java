@@ -2,7 +2,18 @@ package output;
 
 import java.io.File;
 
-import javafx.scene.image.Image;
+/**
+ * 
+ * @author 王浩天
+ * @version	2020.12.25
+ * @inherit BufferedReader, FileChooser...
+ * @functions 为游戏提供游戏文件记录的功能
+ * @properties 
+ * @methods 
+ * 		toURL(String filePath): 将文件名转化为URL格式
+ * 		toPngPath(String d, String p,String f):将指定位置的图片文件拼接成完整的png文件路径
+ 		toMP3Path(String d, String p, String f):将指定位置的音频文件拼接成完整的mp3文件路径
+ */
 
 public class URL { // URL转化类，提供简单的将包路径转化成URL/Image的功能
 

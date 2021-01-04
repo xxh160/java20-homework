@@ -12,6 +12,19 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * 
+ * @author 王浩天
+ * @version	2020.12.23
+ * @inherit 
+ * @functions 用于绘图的控件，提供一块画布，以及在画布上绘制图片和文本的方法
+ * @properties pane、ImageLocate
+ * @methods 
+ * 		drawImage(ImageLocate imgLocate): 在指定位置绘制指定大小的图片
+ * 		drawText(TextLocate textLocate): 在指定位置绘制指定大小的文本
+ * 		update(Collection<ImageLocate> imgLocates, Collection<TextLocate> textLocates):更新一系列图片和文本
+ */
+
 public class ImagePane extends Pane { // 用于绘画的控件
 	
 	Canvas canvas; // 画布

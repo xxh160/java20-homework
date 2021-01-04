@@ -17,6 +17,18 @@ import network.Packet;
 import view.PlayView;
 import world.EntityName;
 
+/**
+ * 
+ * @author 王浩天
+ * @version	2020.12.25
+ * @inherit BufferedReader, FileChooser...
+ * @functions 为游戏提供游戏文件记录的功能
+ * @properties 
+ * @methods 
+ * 		openGame(): 打开游戏存档文件
+ * 		saveGame(): 保存游戏到文件指定文件中
+ */
+
 public class Log { // 文件记录类，用于保存游戏记录和打开游戏记录，并在PlayView中回放
 	
 	public Log() {

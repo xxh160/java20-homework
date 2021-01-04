@@ -11,11 +11,24 @@ import view.PlayView;
 import view.Role1View;
 import view.Role2View;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.22
+ * @inherit Game
+ * @functions 提供主函数作为游戏的入口，以及创建所有的游戏界面
+ * @properties
+ * @methods  	
+ * 		main(String[] args):主函数
+ * 		onLaunch(): 创建所有的游戏界面
+ */
+
 public class Main extends Game { // 主函数类，程序入口
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	// 游戏生命周期管理
 	@Override
 	public void onLaunch() {
 		// 游戏启动设置

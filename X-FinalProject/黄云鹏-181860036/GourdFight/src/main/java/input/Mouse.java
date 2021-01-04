@@ -4,7 +4,7 @@ import javafx.scene.input.MouseButton;
 
 /**
  * 
- * @author 黄云鹏
+ * @author 王浩天
  * @version	2020.12.24
  * @inherit MouseButton
  * @functions 鼠标按键枚举类，提供鼠标上的三个按键枚举

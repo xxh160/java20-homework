@@ -8,6 +8,18 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import output.URL;
 
+/**
+ * 
+ * @author 王浩天
+ * @version	2020.12.26
+ * @inherit 
+ * @functions 为游戏提供播放效果音频或者背景音频的功能
+ * @properties clipMap、bgmMap
+ * @methods  	
+ * 		playClip / stopClip(String d, String f): （停止）播放效果音频
+ * 		playBGM / stopBGM(String d, String f): （停止）播放背景音频
+ */
+
 public class Audio { // 音频播放类，用于播放游戏背景音频，以及游戏人物效果音频
 
 	HashMap<String, AudioClip> clipMap; // 效果音频字典

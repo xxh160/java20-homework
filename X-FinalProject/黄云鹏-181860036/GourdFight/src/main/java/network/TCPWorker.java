@@ -10,6 +10,18 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2021.1.1
+ * @inherit 
+ * @functions 服务器端工作线程，用于和客户进行数据交互
+ * @properties socket
+ * @methods  
+ * 		receivePacket(BufferedReader br): 从输入流中获取数据包
+ * 		sendPacket(DataOutputStream dos): 在输出流中发送数据包
+ */
+
 public class TCPWorker implements Runnable { // TCP工作线程类，用于交互服务器和客户端之间的数据
 	
 	Socket socket; // 套接字

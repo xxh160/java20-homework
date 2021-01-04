@@ -2,6 +2,16 @@ package world;
 
 import framework.Constants;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.27
+ * @inherit Entity
+ * @functions 鳄鱼精的实体类
+ * @properties 全部继承自父类
+ * @methods  重写getDletaY()方法
+ */
+
 public class Crocodile extends Entity { // 鳄鱼精实体类
 
 	public Crocodile(String name) {

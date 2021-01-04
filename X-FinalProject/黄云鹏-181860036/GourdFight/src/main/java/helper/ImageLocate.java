@@ -2,6 +2,16 @@ package helper;
 
 import javafx.scene.image.Image;
 
+/**
+ * 
+ * @author 王浩天
+ * @version	2020.12.24
+ * @inherit 
+ * @functions 提供图片以及图片应该绘制的位置和大小信息
+ * @properties Image、dx、dy、dw、dh
+ * @methods  	
+ */
+
 public class ImageLocate { // 图片定位类，用于封装图片应该放置的位置和大小
 	
 	private Image img; // 图片

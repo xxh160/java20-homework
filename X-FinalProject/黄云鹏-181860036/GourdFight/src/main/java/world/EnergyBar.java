@@ -2,6 +2,16 @@ package world;
 
 import framework.Constants;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.27
+ * @inherit Entity
+ * @functions 能量槽的实体类
+ * @properties 全部继承自父类
+ * @methods  全部继承自父类
+ */
+
 public class EnergyBar extends Entity { // 能量槽实体类
 
 	public EnergyBar(String name) {

@@ -2,6 +2,17 @@ package world;
 
 import framework.Constants;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.27
+ * @inherit Entity
+ * @functions 血条的实体类
+ * @properties fullLife
+ * @methods  
+ * 		Getter/Setter: 设置/获取血值
+ */
+
 public class Blood extends Entity { // 血条实体类
 
 	private double fullLife; // 满血值

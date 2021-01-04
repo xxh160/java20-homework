@@ -2,6 +2,16 @@ package world;
 
 import framework.Constants;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.27
+ * @inherit Entity
+ * @functions 蛇精的实体类
+ * @properties 全部继承自父类
+ * @methods  重写getDletaY()方法
+ */
+
 public class Snake extends Entity { // 蛇精实体类
 
 	public Snake(String name) {

@@ -14,6 +14,17 @@ import view.NetView;
 import view.PlayView;
 import view.Role1View;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2021.1.1
+ * @inherit 
+ * @functions 用于建立客户端
+ * @properties socket
+ * @methods  
+ * 		start: 开启客户端
+ */
+
 public class TCPClient { // TCP客户端类
 	
 	private Socket socket;

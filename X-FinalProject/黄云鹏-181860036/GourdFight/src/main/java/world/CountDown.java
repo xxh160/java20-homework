@@ -4,6 +4,16 @@ import framework.Constants;
 import javafx.scene.image.Image;
 import output.URL;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.27
+ * @inherit Entity
+ * @functions 倒计时的实体类
+ * @properties count、round
+ * @methods
+ */
+
 public class CountDown extends Entity { // 倒计时实体类
 
 	private int count; // 倒计时(单位:秒)

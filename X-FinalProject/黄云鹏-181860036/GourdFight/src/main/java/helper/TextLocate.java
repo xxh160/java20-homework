@@ -1,5 +1,15 @@
 package helper;
 
+/**
+ * 
+ * @author 王浩天
+ * @version	2020.12.24
+ * @inherit 
+ * @functions 提供文本以及文本应该绘制的位置和大小信息
+ * @properties text、dx、dy、fontSize
+ * @methods  	
+ */
+
 public class TextLocate { // 文本定位类，封装文本绘制的内容、位置、属性等
 
 	private String text; // 文本内容

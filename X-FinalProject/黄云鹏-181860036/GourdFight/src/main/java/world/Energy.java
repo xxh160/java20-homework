@@ -2,6 +2,17 @@ package world;
 
 import framework.Constants;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2020.12.27
+ * @inherit Entity
+ * @functions 血条的实体类
+ * @properties currentEnergy
+ * @methods  
+ * 		Getter/Setter: 设置/获取能量值
+ */
+
 public class Energy extends Entity { // 能量条实体类
 	
 	private double currentEnergy; // 当前能量值

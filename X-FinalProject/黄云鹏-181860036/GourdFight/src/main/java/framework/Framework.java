@@ -8,7 +8,6 @@ import media.Audio;
 import network.TCPClient;
 import network.TCPServer;
 import output.Log;
-import world.Entity;
 
 /**
  * 
@@ -16,7 +15,7 @@ import world.Entity;
  * @version	2020.12.22
  * @inherit 
  * @functions 为游戏框架提供一些重要的全局静态对象，方便随时调用
- * @properties app、engine、keyInput、mouseInput
+ * @properties app、engine、keyInput、mouseInput、audio、log、server、client
  * @methods  	
  */
 

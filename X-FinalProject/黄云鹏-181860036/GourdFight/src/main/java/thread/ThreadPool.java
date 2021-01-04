@@ -3,6 +3,17 @@ package thread;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2021.12.28
+ * @inherit 
+ * @functions 线程池类，创建线程池，调度线程任务
+ * @properties exeuctor nThread
+ * @methods  
+ * 		submit(ThreadTask task): 提交线程任务
+ */
+
 public class ThreadPool { // 线程池类
 		
 	private ThreadPoolExecutor executor; // 线程池执行器

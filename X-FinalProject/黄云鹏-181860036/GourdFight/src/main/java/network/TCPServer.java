@@ -5,6 +5,18 @@ import java.net.*;
 
 import framework.Constants;
 
+/**
+ * 
+ * @author 黄云鹏
+ * @version	2021.1.1
+ * @inherit 
+ * @functions 用于建立服务器端
+ * @properties serverSocket
+ * @methods  
+ * 		start: 开启服务器
+ * 		shutDown: 关闭服务器
+ */
+
 public class TCPServer { // TCP服务器类
 	
 	ServerSocket serverSocket; // 服务器总套接字
