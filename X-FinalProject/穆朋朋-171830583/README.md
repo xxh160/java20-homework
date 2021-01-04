@@ -1,7 +1,8 @@
 # JavaFinalProject
 ## 作者：穆朋朋 171830583，单人实现。
 ### 联系方式：1282807292@qq.com
-
+由于submodule方法会在不是我的文件夹的地方添加.gitmodule文件，有点不方便，所以直接从我的项目：https://github.com/stnjumu/JavaFinalProject
+复制而来。
 ## 使用说明：
 ### 编译：
 代码使用Maven管理，在pom.xml所在目录可直接运行命令
