@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vBox" alignment="CENTER" prefHeight="116.0" prefWidth="263.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.edu.nju.main.LoadingController">
+   <children>
+      <ProgressIndicator fx:id="indicator">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin></ProgressIndicator>
+      <Label fx:id="loadingLabel" ellipsisString="......" text="等待他人加入..." textFill="#3119c9">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+         <font>
+            <Font name="Segoe UI" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>
