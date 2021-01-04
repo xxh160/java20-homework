@@ -1,2 +1,0 @@
-12 i addDawa 2
-3000 enemy addXiezijing 1
