@@ -20,13 +20,11 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 3. 每回合可移动的距离高亮显示在地图中，技能可达范围同样如此
 4. 左侧一长条的空白处是显示战斗信息的，例如：“大娃使用了大荒星陨，效果拔群！”
 
-![image-20210104153614491](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104153614491.png)
+![siw3cj.png](https://s3.ax1x.com/2021/01/04/siw3cj.png)
 
 ### 大场景地图+各种地图要素
 
 6v2回合制不对称竞技，人妖分立在地图两侧，战场中央为各种障碍物，丰富了游戏策略性
-
-![image-20210104153305412](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104153305412.png)
 
 ### 丰富的伤害机制
 
@@ -38,21 +36,21 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 
 1. 普通攻击，造成基于武力值的物理伤害
 
-![image-20210104153535003](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104153535003.png)
+![siwl9g.png](https://s3.ax1x.com/2021/01/04/siwl9g.png)
 
 2. 防御姿态，减少接下来受到的所有伤害
 
-![image-20210104154443552](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104154443552.png)
+![sidHtU.png](https://s3.ax1x.com/2021/01/04/sidHtU.png)
 
 3. 大荒星陨，牺牲自己的技能，位移致目标位置，并对周围一格的敌人造成大量伤害
 
-   ![image-20210104154536777](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104154536777.png)
+[![sid7kT.png](https://s3.ax1x.com/2021/01/04/sid7kT.png)](https://imgchr.com/i/sid7kT)
 
    
 
 4.伪·罗玄剑，射程及其远的技能
 
-![image-20210104154636215](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104154636215.png)
+[![sidbhF.png](https://s3.ax1x.com/2021/01/04/sidbhF.png)](https://imgchr.com/i/sidbhF)
 
 此外还有32个技能限于篇幅就不一一介绍了，到游戏中体验吧。
 
@@ -64,21 +62,21 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 
 1. 闪现特效
 
-   ![image-20210104155458649](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104155458649.png)
+   [![sidxn1.png](https://s3.ax1x.com/2021/01/04/sidxn1.png)](https://imgchr.com/i/sidxn1)
 
    
 
 2. 毒雾特效
 
-![image-20210104155432365](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104155432365.png)
+[![sidjXR.png](https://s3.ax1x.com/2021/01/04/sidjXR.png)](https://imgchr.com/i/sidjXR)
 
 3. 寸劲·开天 特效
 
-![image-20210104155529310](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104155529310.png)
+[![sidz0x.png](https://s3.ax1x.com/2021/01/04/sidz0x.png)](https://imgchr.com/i/sidz0x)
 
 4. 炎爆术 特效
 
-![image-20210104155549150](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104155549150.png)
+[![siw9AK.png](https://s3.ax1x.com/2021/01/04/siw9AK.png)](https://imgchr.com/i/siw9AK)
 
 ### 智能寻路
 
@@ -88,7 +86,7 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 
 自动搜索同一局域网下的游戏玩家，不用再繁杂的输入IP啦！当然，可能由于虚拟机等问题造成搜索不到，也可以人工输入主机IP来匹配。
 
-![image-20210104160247963](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104160247963.png)
+[![siwPhD.png](https://s3.ax1x.com/2021/01/04/siwPhD.png)](https://imgchr.com/i/siwPhD)
 
 
 
@@ -96,7 +94,7 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 
 拒绝闪现式移动，人物拥有四个方向的移动动作
 
-![image-20210104160057744](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104160057744.png)
+[![siwS76.png](https://s3.ax1x.com/2021/01/04/siwS76.png)](https://imgchr.com/i/siwS76)
 
 ### 支持多次游玩
 
@@ -104,7 +102,7 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 
 失败画面：
 
-![image-20210104170606906](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104170606906.png)
+[![siwZnI.png](https://s3.ax1x.com/2021/01/04/siwZnI.png)](https://imgchr.com/i/siwZnI)
 
 
 
@@ -128,14 +126,13 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 
 6. 双击target文件夹中的UHLW-2.0.jar，程序将会运行；若运行失败，可尝试命令行运行
 
-   ```cmd
-   cd target
-   java -jar UHLW-2.0.jar
-   ```
-
+```cmd
+cd target
+java -jar UHLW-2.0.jar
+```
 7. 出现以下界面即为运行成功
 
-   ![image-20210104161826015](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104161826015.png)
+   ![siwmHP.png](https://s3.ax1x.com/2021/01/04/siwmHP.png)
 
 8. 可以在一台电脑上同时操作对战双方，也可以使用处在同一局域网（同时连接同一个热点或路由器，即要求处于同一网段）下的两台电脑进行对战。一般情况下无需配置IP。
 
@@ -147,11 +144,11 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 
    4. 等待界面如下：
 
-      ![image-20210104160247963](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104160247963.png)
+      ![siwPhD.png](https://s3.ax1x.com/2021/01/04/siwPhD.png)
 
 9. 显示如下界面即可成功开始对战
 
-   ![image-20210104162906421](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104162906421.png)
+   ![siw3cj.png](https://s3.ax1x.com/2021/01/04/siw3cj.png)
 
 10. 创建游戏的一方将操纵葫芦娃，而另一方将操作妖怪。
 
@@ -167,23 +164,23 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 
 12. 在双方各自进行了一些回合后，一方无可操纵人物，游戏结束，失败一方显示界面如下：
 
-    ![image-20210104170606906](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104170606906.png)
+    ![siwZnI.png](https://s3.ax1x.com/2021/01/04/siwZnI.png)
 
 13. 在点击“菜”字样后将会回到主界面，您可以在主界面再来一局游戏，或是观看录像
 
 14. 要想观看录像，点击主界面的加载回放按钮
 
-    ![image-20210104170805214](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104170805214.png)
+    [![siweBt.png](https://s3.ax1x.com/2021/01/04/siweBt.png)](https://imgchr.com/i/siweBt)
 
 15. 选择record目录下的任一文件均可进行观看，文件名称按录制开始时间排序，注意，最多支持100份录像。
 
 16. 选中一个文件，并点击打开，进入录像界面
 
-    ![image-20210104170942457](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104170942457.png)
+    [![siwuAf.png](https://s3.ax1x.com/2021/01/04/siwuAf.png)](https://imgchr.com/i/siwuAf)
 
 17. 录像将会自动播放，在该界面中无法操纵任何人物，所有按钮都将变灰，录像播放完成后将会显示如下界面
 
-    ![image-20210104171045311](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104171045311.png)
+    [![siwKN8.png](https://s3.ax1x.com/2021/01/04/siwKN8.png)](https://imgchr.com/i/siwKN8)
 
 18. 点击“完”字样，可以回到主界面。
 
@@ -217,7 +214,9 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 
 ### 自动寻找同一网段下的游戏主机
 
-首先，将通过一定的技术手段查找本机的可通信IP地址，得到该IP地址后，对最后一段遍历1到255，尝试对暗号“UHLW”,对暗号成功则进行游戏界面。这里的“技术手段”引用了网络上的https://blog.csdn.net/u011809209/article/details/77236602，然而并不能够稳定的获得想要的网段。翻阅资料后发现这是由于一些电脑安装了虚拟机，从而会拥有一些虚拟网卡，导致IP地址找到的实际上是虚拟机的IP，由于时间关系，这个问题并没有得到解决，而是紧急加入了手动配置的方法---在jar包的同一目录下新建一个名为`webConfig.txt`的txt文件，在其中输入主机的IP，即可用主机IP网段进行查找。
+首先，将通过一定的技术手段查找本机的可通信IP地址，得到该IP地址后，对最后一段遍历1到255，尝试对暗号“UHLW”,对暗号成功则进行游戏界面。这里的“技术手段”引用了网络上的https://blog.csdn.net/u011809209/article/details/77236602
+
+然而并不能够稳定的获得想要的网段。翻阅资料后发现这是由于一些电脑安装了虚拟机，从而会拥有一些虚拟网卡，导致IP地址找到的实际上是虚拟机的IP，由于时间关系，这个问题并没有得到解决，而是紧急加入了手动配置的方法---在jar包的同一目录下新建一个名为`webConfig.txt`的txt文件，在其中输入主机的IP，即可用主机IP网段进行查找。
 
 注意，查找过程需要一定时间，通常不会超过10s。
 
@@ -235,7 +234,7 @@ Designed By 计算机科学与技术系 171860524 李思勉 2021.1.4
 
 在寻找网络主机的过程中，界面并不是卡死的，这里将一直播放类似下方图示一样的动画：
 
-![image-20210104160247963](C:\Users\25085\AppData\Roaming\Typora\typora-user-images\image-20210104160247963.png)
+![siwPhD.png](https://s3.ax1x.com/2021/01/04/siwPhD.png)
 
 要做到这一点只需让网络通信相关代码逻辑在另一个线程中跑，并在完成时通知Apllication线程即可。这里主要利用了javaFX中`Task`的观念，Task可以定义一个多线程任务，并在此过程中设置update信息用于提示其他线程，于是只需要把完成信号与Apllication绑定即可。
 
