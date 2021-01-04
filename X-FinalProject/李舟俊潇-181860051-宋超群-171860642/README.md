@@ -62,6 +62,8 @@
 
 3. 游戏界面中下方为一个`(5+5)x7`的二维空间战场，左上角为己方所有角色的头像和血条，中上方为某一回合己方已选的五个操作的展示及`确认选择`按钮；玩家可通过如下操作进行某一步操作的选择：①直接拖动战场中的角色到其他坐标，中上方即自动出现该角色头像及`移动`操作的图标；②先点选左上角某个角色的头像，此时中上方即出现该角色的头像，再按分别按下键盘上的`Q`、`W`或`E`，中上方即出现`攻击`、`大招`或`回复`的图标；完成选择后，点击`确认选择`按钮即可将本回合选择的操作（字符串）发送给服务器。
 
+   <img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display3.jpg" style="zoom:50%;" />
+   
    <img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display7.jpg" style="zoom: 50%;" /><img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display6.jpg" alt="display6" style="zoom:50%;" />
 
 4. 在本地中对双方的操作进行复现，1. 若双方角色没有全部阵亡，则进行下一回合的操作。
