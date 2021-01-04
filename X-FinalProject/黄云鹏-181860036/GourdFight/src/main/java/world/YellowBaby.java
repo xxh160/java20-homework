@@ -17,33 +17,37 @@ public class YellowBaby extends Entity { // 三娃实体类
 //		setWidth(Constants. PLAYER_DEFAULT_W);
 //		setHeight(Constants. PLAYER_DEFAULT_H);
 //		
-//		setLifeValue(Constants.DEFAULT_LIFE_VALUE);
-//		setMoveSpeed(Constants.DEFAULT_MOVE_SPEED);
-//		setRunSpeed(Constants.DEFAULT_RUN_SPEED);
-//		setJumpSpeed(Constants.DEFAULT_JUMP_SPEED);
-//		setJumpHeight(Constants.DEFAULT_JUMP_HEIGHT);
+		setLifeValue(Constants.DEFAULT_LIFE_VALUE+30);
+		setMoveSpeed(Constants.DEFAULT_MOVE_SPEED-1);
+		setRunSpeed(Constants.DEFAULT_RUN_SPEED-2);
+		setJumpSpeed(Constants.DEFAULT_JUMP_SPEED-2);
+		setJumpHeight(Constants.DEFAULT_JUMP_HEIGHT-20);
 //		
-//		setAttackNearValue(Constants.DEFAULT_ATTACK_NEAR_VALUE);
-//		setAttackNearDist(Constants.DEFAULT_ATTACK_NEAR_DIST);
-//		setAttackNearSpeed(Constants.DEFAULT_ATTACK_NEAR_SPEED);
+		setAttackNearValue(Constants.DEFAULT_ATTACK_NEAR_VALUE+2);
+		setAttackNearDist(Constants.DEFAULT_ATTACK_NEAR_DIST-5);
+		setAttackNearSpeed(Constants.DEFAULT_ATTACK_NEAR_SPEED);
+
 		setAttackNearWidth(Constants.PLAYER_DEFAULT_ATTACK_W + 30);
 		setAttackNearHeight(Constants.PLAYER_DEFAULT_ATTACK_H + 30);
 //		
-//		setAttackFarValue(Constants.DEFAULT_ATTACK_FAR_VALUE);
-//		setAttackFarDist(Constants.DEFAULT_ATTACK_FAR_DIST);
-//		setAttackFarSpeed(Constants.DEFAULT_ATTACK_FAR_SPEED);
+		setAttackFarValue(Constants.DEFAULT_ATTACK_FAR_VALUE-5);
+		setAttackFarDist(Constants.DEFAULT_ATTACK_FAR_DIST-20);
+		setAttackFarSpeed(Constants.DEFAULT_ATTACK_FAR_SPEED-1);
+
 		setAttackFarWidth(Constants.PLAYER_DEFAULT_ATTACK_W + 120);
 		setAttackFarHeight(Constants.PLAYER_DEFAULT_ATTACK_H - 10);
 //		
-//		setAttackKillValue(Constants.DEFAULT_ATTACK_KILL_VALUE);
-//		setAttackKillDist(Constants.DEFAULT_ATTACK_KILL_DIST);
-//		setAttackKillSpeed(Constants.DEFAULT_ATTACK_KILL_SPEED);
+		setAttackKillValue(Constants.DEFAULT_ATTACK_KILL_VALUE);
+		setAttackKillDist(Constants.DEFAULT_ATTACK_KILL_DIST);
+		setAttackKillSpeed(Constants.DEFAULT_ATTACK_KILL_SPEED);
+
 		setAttackKillWidth(Constants.PLAYER_DEFAULT_ATTACK_W + 120);
 		setAttackKillHeight(Constants.PLAYER_DEFAULT_ATTACK_H - 20);
 //		
-//		setDefendValue(Constants.DEFAULT_DEFEND_VALUE);
-//		setDefendDist(Constants.DEFAULT_DEFEND_DIST);
-//		setDefendSpeed(Constants.DEFAULT_DEFEND_SPEED);
+		setDefendValue(Constants.DEFAULT_DEFEND_VALUE+3);
+		setDefendDist(Constants.DEFAULT_DEFEND_DIST+10);
+		setDefendSpeed(Constants.DEFAULT_DEFEND_SPEED+2);
+
 		setDefendWidth(Constants.PLAYER_DEFAULT_DEFEND_W + 30);
 		setDefendHeight(Constants.PLAYER_DEFAULT_DEFEND_H + 30);		
 		// 设置招式名称

@@ -4,6 +4,7 @@ import framework.Constants;
 
 public enum EntityState { // 实体状态枚举类，用于判断实体当前的状态，以便调用相应的图片(序列)进行渲染
 	
+	// 实体运动状态
 	STANDING_FORWARD(Constants.STANDING_FORWARD), // 朝正面站着
 	STANDING_TOLEFT(Constants.STANDING_TOLEFT),// 朝左边站着
 	STANDING_TORIGHT(Constants.STANDING_TORIGHT), // 朝右边站着
@@ -27,6 +28,20 @@ public enum EntityState { // 实体状态枚举类，用于判断实体当前的
 	ATTACKING_KILL_TOLEFT(Constants.ATTACKING_KILL_TOLEFT), // 朝左边必杀
 	ATTACKING_KILL_TORIGHT(Constants.ATTACKING_KILL_TORIGHT), // 朝右边必杀
 	
+	// 实体创建状态
+	CHOSEN_REDBABY(Constants.REDBABY_NAME), // 选择大娃
+	CHOSEN_ORANGEBABY(Constants.ORANGEBABY_NAME), // 选择二娃
+	CHOSEN_YELLOWBABY(Constants.YELLOWBABY_NAME), // 选择三娃
+	CHOSEN_GREENBABY(Constants.GREENBABY_NAME), // 选择四娃
+	CHOSEN_BLUEBABY(Constants.BLUEBABY_NAME), // 选择五娃
+	CHOSEN_INDIGOBABY(Constants.INDIGOBABY_NAME), // 选择六娃
+	CHOSEN_PURPLEBABY(Constants.PURPLEBABY_NAME), // 选择七娃
+	CHOSEN_SNAKE(Constants.SNAKE_NAME), // 选择蛇精
+	CHOSEN_SCORPION(Constants.SCORPION_NAME), // 选择蝎子精
+	CHOSEN_CHILOPOD(Constants.CHILOPOD_NAME), // 选择蜈蚣精
+	CHOSEN_CROCODILE(Constants.CROCODILE_NAME), // 选择鳄鱼精
+	
+	// 实体胜负状态
 	WINNER(Constants.WINNER), // 游戏胜利
 	LOSER(Constants.LOSER) // 游戏失败
 	;
@@ -52,4 +67,17 @@ public enum EntityState { // 实体状态枚举类，用于判断实体当前的
 		return null;
 	}
 	
+	public boolean isChosen() { // 判断包的类型是否为实体创建类型
+		return this == EntityState.CHOSEN_REDBABY ||
+				this == EntityState.CHOSEN_ORANGEBABY ||
+						this == EntityState.CHOSEN_YELLOWBABY ||
+								this == EntityState.CHOSEN_GREENBABY ||
+										this == EntityState.CHOSEN_BLUEBABY ||
+												this == EntityState.CHOSEN_INDIGOBABY ||
+														this == EntityState.CHOSEN_PURPLEBABY ||
+																this == EntityState.CHOSEN_SNAKE ||
+																		this == EntityState.CHOSEN_SCORPION ||
+																				this == EntityState.CHOSEN_CHILOPOD ||
+																						this == EntityState.CHOSEN_CROCODILE;
+		}
 }

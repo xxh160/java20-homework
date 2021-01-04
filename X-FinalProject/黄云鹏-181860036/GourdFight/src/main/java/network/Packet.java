@@ -29,6 +29,20 @@ public class Packet { // 数据包，定义服务器和客户端交互的数据�
 		return frame;
 	}
 	
+	public boolean isChosen() { // 判断包的类型是否为实体创建类型
+		return action == EntityState.CHOSEN_REDBABY ||
+			action == EntityState.CHOSEN_ORANGEBABY ||
+			action == EntityState.CHOSEN_YELLOWBABY ||
+			action == EntityState.CHOSEN_GREENBABY ||
+			action == EntityState.CHOSEN_BLUEBABY ||
+			action == EntityState.CHOSEN_INDIGOBABY ||
+			action == EntityState.CHOSEN_PURPLEBABY ||
+			action == EntityState.CHOSEN_SNAKE ||
+			action == EntityState.CHOSEN_SCORPION ||
+			action == EntityState.CHOSEN_CHILOPOD ||
+			action == EntityState.CHOSEN_CROCODILE;
+	}
+	
 	public EntityState getAction() { // 获取动作
 		return action;
 	}
@@ -43,8 +57,7 @@ public class Packet { // 数据包，定义服务器和客户端交互的数据�
 		String frameString = "" + frame + " ";
 		String actionString = action.getState() + System.lineSeparator();
 		String sendString = frameString + actionString;
-		
-		sendReady = false; // 每发送一次后自动撤销发送允许
+		System.out.println(sendString);
 		
 		return sendString;
 	}

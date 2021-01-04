@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import javax.crypto.Cipher;
+
 import app.ImagePane;
 import app.View;
 
@@ -55,22 +57,22 @@ public class PlayView extends View { // 游戏页面类
 	private DefendEntity player1_defendEntity; // 玩家1的防御实体
 	private DefendEntity player2_defendEntity; // 玩家2的防御实体
 	
-	private boolean isServer; // 是否作为服务器端(false 则为客户端, 默认为客户端)
+	public boolean isServer; // 是否作为服务器端(false 则为客户端, 默认为客户端)
 	
 	int frameCount; // 帧计数器
 	int endFrame; // 末尾帧数(默认3秒)
 	int endFrameCount; // 末尾帧计数器(计数一局游戏结束后的末尾帧)
-	
-	private TCPServer server; // 服务器端
-	private TCPClient client; // 客户端
+
 	
 	private ArrayList<ArrayList<Packet>> roundSendPktQueues; // 每局发送包队列的存储数组
 	private ArrayList<ArrayList<Packet>> roundReceivePktQueues; // 每局接受包队列的存储数组
 	
-	private ArrayList<Packet> sendPktQueue; // 发送包队列，即自己的操作/状态序列
-	private ArrayList<Packet> receivePktQueue; // 接受包队列，即对手的操作/状态序列
-	int sendPktQueueIdx; // 发送包队列指针
-	int receivePktQueueIdx; // 接受包队列指针
+	volatile public ArrayList<Packet> sendPktQueue; // 发送包队列，即自己的操作/状态序列
+	volatile public ArrayList<Packet> receivePktQueue; // 接受包队列，即对手的操作/状态序列
+	volatile public int sendPktQueueIdx; // 发送包队列指针(本地)
+	volatile public int receivePktQueueIdx; // 接受包队列指针(本地)
+	volatile public int sendIdx; // 发送包队列指针(用于发送给远端)
+	volatile public int receiveIdx; // 接收包队列指针(用于从远端接收)
 	
 	boolean mode; // 游戏模式(true为网络版本，false为单击版本)
 	boolean isPlayBack; // 是否为回放模式
@@ -118,8 +120,8 @@ public class PlayView extends View { // 游戏页面类
 		player2Hurt = false;
 		
 		isServer = false; 
-		server = new TCPServer("", Constants.PORT);
-		client = new TCPClient("", Constants.PORT);
+//		server = new TCPServer("", Constants.PORT);
+//		client = new TCPClient("", Constants.PORT);
 		
 		roundSendPktQueues = new ArrayList<ArrayList<Packet>>();
 		roundReceivePktQueues = new ArrayList<ArrayList<Packet>>();
@@ -139,9 +141,11 @@ public class PlayView extends View { // 游戏页面类
 		// 玩家2
 		setPlayer2();
 		// 血槽条
-		setBloodBar();
+		setBloodBar1();
+		setBloodBar2();
 		// 能量条
-		setEnergyBar();
+		setEnergyBar1();
+		setEnergyBar2();
 	}
 	
 	private void setBackground() { // 初设背景
@@ -181,11 +185,10 @@ public class PlayView extends View { // 游戏页面类
 		addImageLocate(Constants.PK, pk_imgLocate);
 	}
 	
-	private void setBloodBar() { // 初设血槽条
+	private void setBloodBar1() { // 初设血槽条
 		Entity player1 = entityMap.get(Constants.PLAYER1);
-		Entity player2 = entityMap.get(Constants.PLAYER2);
 		
-		if(player1 == null || player2 == null) {
+		if(player1 == null) {
 			return;
 		}
 		
@@ -203,20 +206,6 @@ public class PlayView extends View { // 游戏页面类
 				bloodBar1.getHeight());
 		
 		addImageLocate(Constants.BLOODBAR1, bloodBar1_imgLocate);
-		// 右血槽
-		BloodBar bloodBar2 = new BloodBar(Constants.BLOODBAR_NAME); 
-		bloodBar2.setState(EntityState.STANDING_TORIGHT);
-		
-		addEntity(Constants.BLOODBAR2, bloodBar2);
-		
-		ImageLocate bloodBar2_imgLocate = new ImageLocate(
-				bloodBar2.getCurrentImage(),
-				Constants.BLOODBAR2_X,
-				Constants.BLOODBAR2_Y,
-				bloodBar2.getWidth(),
-				bloodBar2.getHeight());
-		
-		addImageLocate(Constants.BLOODBAR2, bloodBar2_imgLocate);
 		// 左血条
 		Blood blood1 = new Blood(Constants.BLOOD_NAME); 
 		blood1.setState(EntityState.STANDING_TOLEFT);
@@ -235,6 +224,30 @@ public class PlayView extends View { // 游戏页面类
 				blood1.getHeight());
 		
 		addImageLocate(Constants.BLOOD1, blood1_imgLocate);
+		
+	}
+	
+	private void setBloodBar2() { // 初设血槽条
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		if(player2 == null) {
+			return;
+		}
+		
+		// 右血槽
+		BloodBar bloodBar2 = new BloodBar(Constants.BLOODBAR_NAME); 
+		bloodBar2.setState(EntityState.STANDING_TORIGHT);
+		
+		addEntity(Constants.BLOODBAR2, bloodBar2);
+		
+		ImageLocate bloodBar2_imgLocate = new ImageLocate(
+				bloodBar2.getCurrentImage(),
+				Constants.BLOODBAR2_X,
+				Constants.BLOODBAR2_Y,
+				bloodBar2.getWidth(),
+				bloodBar2.getHeight());
+		
+		addImageLocate(Constants.BLOODBAR2, bloodBar2_imgLocate);
 		// 右血条
 		Blood blood2 = new Blood(Constants.BLOOD_NAME); 
 		blood2.setState(EntityState.STANDING_TORIGHT);
@@ -255,11 +268,10 @@ public class PlayView extends View { // 游戏页面类
 		
 	}
 	
-	private void setEnergyBar() { // 初设能量槽条
+	private void setEnergyBar1() { // 初设能量槽条
 		Entity player1 = entityMap.get(Constants.PLAYER1);
-		Entity player2 = entityMap.get(Constants.PLAYER2);
 		
-		if(player1 == null || player2 == null) {
+		if(player1 == null) {
 			return;
 		}
 		
@@ -278,21 +290,7 @@ public class PlayView extends View { // 游戏页面类
 				energyBar1.getHeight());
 		
 		addImageLocate(Constants.ENERGYBAR1,energyBar1_imgLocate);
-		// 右能量槽
-		EnergyBar energyBar2 = new EnergyBar(Constants.ENERGYBAR_NAME); 
-		energyBar2.setState(EntityState.STANDING_TOLEFT);
-		
-		addEntity(Constants.ENERGYBAR2, energyBar2);
-		
-		ImageLocate energyBar2_imgLocate = new ImageLocate(
-				energyBar2.getCurrentImage(),
-				Constants.PLAYER2_INIT_X + player2.getDeltaX(),
-				Constants.PLAYER2_INIT_Y + player2.getDeltaY()
-				+ Constants.ENERGYBAR_DELTAY,
-				energyBar2.getWidth(),
-				energyBar2.getHeight());
-		
-		addImageLocate(Constants.ENERGYBAR2, energyBar2_imgLocate);
+
 		// 左能量条
 		Energy energy1 = new Energy(Constants.ENERGY_NAME); 
 		energy1.setState(EntityState.STANDING_TOLEFT);
@@ -308,6 +306,30 @@ public class PlayView extends View { // 游戏页面类
 				energy1.getHeight());
 		
 		addImageLocate(Constants.ENERGY1, energy1_imgLocate);
+	}
+	
+	private void setEnergyBar2() { // 初设能量槽条
+		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		if(player2 == null) {
+			return;
+		}
+		
+		// 右能量槽
+		EnergyBar energyBar2 = new EnergyBar(Constants.ENERGYBAR_NAME); 
+		energyBar2.setState(EntityState.STANDING_TOLEFT);
+		
+		addEntity(Constants.ENERGYBAR2, energyBar2);
+		
+		ImageLocate energyBar2_imgLocate = new ImageLocate(
+				energyBar2.getCurrentImage(),
+				Constants.PLAYER2_INIT_X + player2.getDeltaX(),
+				Constants.PLAYER2_INIT_Y + player2.getDeltaY()
+				+ Constants.ENERGYBAR_DELTAY,
+				energyBar2.getWidth(),
+				energyBar2.getHeight());
+		
+		addImageLocate(Constants.ENERGYBAR2, energyBar2_imgLocate);
 		// 右能量条
 		Energy energy2 = new Energy(Constants.ENERGY_NAME); 
 		energy2.setState(EntityState.STANDING_TOLEFT);
@@ -469,6 +491,27 @@ public class PlayView extends View { // 游戏页面类
 		return player2_name.getName();
 	}
 	
+	public String getServerIP() { // 获取服务器端IP
+		if(isServer)
+			return Framework.server.getServerIP();
+		else
+			return Framework.client.getServerIP();
+	}
+	
+	public String getClientIP() { // 获取客户端IP
+		if(isServer)
+			return Framework.server.getClientIP();
+		else
+			return Framework.client.getClientIP();
+	}
+	
+	public boolean isConnected() { // 判断网络是否连接成功
+		if(isServer)
+			return Framework.server.isAccept();
+		else 
+			return Framework.client.isConnected();
+	}
+	
 	public boolean isWinner() { // 判断自己是否胜利
 		return isWinner;
 	}
@@ -506,8 +549,8 @@ public class PlayView extends View { // 游戏页面类
 		player2Hurt = false;
 		
 		isServer = false; 
-		server = new TCPServer("", Constants.PORT);
-		client = new TCPClient("", Constants.PORT);
+//		server = new TCPServer("", Constants.PORT);
+//		client = new TCPClient("", Constants.PORT);
 		
 		roundSendPktQueues.clear();
 		roundReceivePktQueues.clear();
@@ -529,15 +572,38 @@ public class PlayView extends View { // 游戏页面类
 		isServer = s;
 	}
 	
-	public void launchNetwork() { // ！！！！！！！！！开启网络通信，仅作测试用例，应当为上层页面调用 ！！！！！！！！！！
-		if(isServer) { // 自己为服务器端
-			server.start();
+	public void setServerIP(String ip) { // 为客户端设置服务器IP
+		if(!isServer)
+			Framework.client.setServerIP(ip);
+	}
+	
+	public void setSendPacket(Packet p) { // 设置发送包
+		if(isServer) {
+			Framework.server.setSendPacket(p);
 		}
-		else { // 自己为客户端
-			client.start();
+		else {
+			Framework.client.setSendPacket(p);
 		}
 	}
 	
+	public Packet getReceivePakcet() { // 获取接收包
+		if(isServer) {
+			return Framework.server.getReceivePakcet();
+		}
+		else {
+			return Framework.client.getReceivePakcet();
+		}
+	}
+	
+	public void launchNetwork() { // 开启网络通信
+		if(isServer) { // 自己为服务器端
+			Framework.server.start();
+		}
+		else { // 自己为客户端
+			Framework.client.start();
+		}
+	}
+
 	public void setMode(boolean m) { // 设置游戏模式
 		mode = m;
 	}
@@ -661,9 +727,17 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
-	private void updatePlayer1() { // 更新玩家1
+	synchronized private void updatePlayer1() { // 更新玩家1
 		
 		Entity player1 = entityMap.get(Constants.PLAYER1);
+		
+//		if(sendPktQueue.isEmpty()) {
+//			// 发送自己的创建信息
+//			Role1View roleView = (Role1View)Framework.app.getView(Constants.ROLE1_VIEW_KEY);
+//			Packet pkt = new Packet(0, roleView.currentChoise);
+//			sendPktQueue.add(pkt);
+//			return;
+//		}
 		
 		// 只有处于站着的静止状态才能响应用户的下一个输入
 		// 有些状态虽然统一传递朝向左的动作，但是实际操作应该按照当时的朝向来定
@@ -672,23 +746,11 @@ public class PlayView extends View { // 游戏页面类
 				
 				Packet pkt = new Packet(frameCount,EntityState.MOVING_TOLEFT);
 				sendPktQueue.add(pkt);
-				if(isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
 			}
 			else if(Framework.keyInput.isTyped(Key.D)) { // 向右移动
 				
 				Packet pkt = new Packet(frameCount,EntityState.MOVING_TORIGHT);
 				sendPktQueue.add(pkt);
-				if(isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
 				
 			}
 			else if(Framework.keyInput.isTyped(Key.S)) { // 冲刺
@@ -700,12 +762,6 @@ public class PlayView extends View { // 游戏页面类
 				}
 				
 				sendPktQueue.add(pkt);
-				if(isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
 			}
 			else if(Framework.keyInput.isTyped(Key.W)) { // 跳跃
 				Packet pkt = null;
@@ -716,12 +772,6 @@ public class PlayView extends View { // 游戏页面类
 				}
 				
 				sendPktQueue.add(pkt);
-				if(isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
 				
 			}
 			else if(Framework.keyInput.isTyped(Key.K)) { // 防御
@@ -733,12 +783,6 @@ public class PlayView extends View { // 游戏页面类
 				}
 				
 				sendPktQueue.add(pkt);
-				if(isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
 			}
 			else if(Framework.keyInput.isTyped(Key.J)) { // 近攻
 				Packet pkt = null;
@@ -749,12 +793,6 @@ public class PlayView extends View { // 游戏页面类
 				}
 				
 				sendPktQueue.add(pkt);
-				if(isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
 			}
 			else if(Framework.keyInput.isTyped(Key.L)) { // 远攻
 				Packet pkt = null;
@@ -765,12 +803,6 @@ public class PlayView extends View { // 游戏页面类
 				}
 				
 				sendPktQueue.add(pkt);
-				if(isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
 			}
 			else if(Framework.keyInput.isTyped(Key.I)) { // 必杀
 				Packet pkt = null;
@@ -781,24 +813,12 @@ public class PlayView extends View { // 游戏页面类
 				}
 				
 				sendPktQueue.add(pkt);
-				if(isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
 			}
 			else {  // 玩家没做任何操作，角色保持站立
 				
 				// 传递一个向左站着的状态，但不表示动作切换，而是上一个动作延续
 				Packet pkt = new Packet(frameCount,EntityState.STANDING_TOLEFT); 
 				sendPktQueue.add(pkt);
-				if(isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
 			}
 		}
 		
@@ -806,47 +826,12 @@ public class PlayView extends View { // 游戏页面类
 			// 传递一个向左站着的状态，但不表示动作切换，而是上一个动作延续
 			Packet pkt = new Packet(frameCount,EntityState.STANDING_TOLEFT); 
 			sendPktQueue.add(pkt);
-			if(isServer) {
-				server.setSendPacket(pkt);
-			}
-			else {
-				client.setSendPacket(pkt);
-			}
 		}
 	}
 	
-	private void updatePlayer2(boolean mode) { // 更新玩家2
+	synchronized private void updatePlayer2(boolean mode) { // 更新玩家2
 		if(mode) { // 网络版本
-			if(isServer) {
-				Packet pkt = server.getReceivePakcet();
-				if(pkt == null) {
-					return;
-				}
-				if (receivePktQueue.isEmpty()) { // 若未曾接收过包，则pkt一定是新包
-					receivePktQueue.add(pkt);
-				}
-				else {
-					int lastFrame = receivePktQueue.get(receivePktQueue.size()-1).getFrame();
-					if(pkt.getFrame() > lastFrame) { // 帧数大于队列的最后一帧，则为新包
-						receivePktQueue.add(pkt);
-					}
-				}
-			}
-			else {
-				Packet pkt = client.getReceivePakcet();
-				if(pkt == null) {
-					return;
-				}
-				if (receivePktQueue.isEmpty()) { // 若未曾接收过包，则pkt一定是新包
-					receivePktQueue.add(pkt);
-				}
-				else {
-					int lastFrame = receivePktQueue.get(receivePktQueue.size()-1).getFrame();
-					if(pkt.getFrame() > lastFrame) { // 帧数大于队列的最后一帧，则为新包
-						receivePktQueue.add(pkt);
-					}
-				}
-			}
+			// 由客户端线程负责发送
 		}
 		else { // 单机版本
 			Entity player2 = entityMap.get(Constants.PLAYER2);
@@ -858,23 +843,11 @@ public class PlayView extends View { // 游戏页面类
 					
 					Packet pkt = new Packet(frameCount,EntityState.MOVING_TOLEFT);
 					receivePktQueue.add(pkt);
-					if(!isServer) {
-						server.setSendPacket(pkt);
-					}
-					else {
-						client.setSendPacket(pkt);
-					}
 				}
 				else if(Framework.keyInput.isTyped(Key.RIGHT)) { // 向右移动
 					
 					Packet pkt = new Packet(frameCount,EntityState.MOVING_TORIGHT);
 					receivePktQueue.add(pkt);
-					if(!isServer) {
-						server.setSendPacket(pkt);
-					}
-					else {
-						client.setSendPacket(pkt);
-					}
 					
 				}
 				else if(Framework.keyInput.isTyped(Key.DOWN)) { // 冲刺
@@ -886,12 +859,6 @@ public class PlayView extends View { // 游戏页面类
 					}
 					
 					receivePktQueue.add(pkt);
-					if(!isServer) {
-						server.setSendPacket(pkt);
-					}
-					else {
-						client.setSendPacket(pkt);
-					}
 				}
 				else if(Framework.keyInput.isTyped(Key.UP)) { // 跳跃
 					Packet pkt = null;
@@ -902,12 +869,6 @@ public class PlayView extends View { // 游戏页面类
 					}
 					
 					receivePktQueue.add(pkt);
-					if(!isServer) {
-						server.setSendPacket(pkt);
-					}
-					else {
-						client.setSendPacket(pkt);
-					}
 					
 				}
 				else if(Framework.keyInput.isTyped(Key.B)) { // 防御
@@ -919,12 +880,6 @@ public class PlayView extends View { // 游戏页面类
 					}
 					
 					receivePktQueue.add(pkt);
-					if(!isServer) {
-						server.setSendPacket(pkt);
-					}
-					else {
-						client.setSendPacket(pkt);
-					}
 				}
 				else if(Framework.keyInput.isTyped(Key.V)) { // 近攻
 					Packet pkt = null;
@@ -935,12 +890,6 @@ public class PlayView extends View { // 游戏页面类
 					}
 					
 					receivePktQueue.add(pkt);
-					if(!isServer) {
-						server.setSendPacket(pkt);
-					}
-					else {
-						client.setSendPacket(pkt);
-					}
 				}
 				else if(Framework.keyInput.isTyped(Key.N)) { // 远攻
 					Packet pkt = null;
@@ -951,12 +900,6 @@ public class PlayView extends View { // 游戏页面类
 					}
 					
 					receivePktQueue.add(pkt);
-					if(!isServer) {
-						server.setSendPacket(pkt);
-					}
-					else {
-						client.setSendPacket(pkt);
-					}
 				}
 				else if(Framework.keyInput.isTyped(Key.G)) { // 必杀
 					Packet pkt = null;
@@ -967,24 +910,12 @@ public class PlayView extends View { // 游戏页面类
 					}
 					
 					receivePktQueue.add(pkt);
-					if(!isServer) {
-						server.setSendPacket(pkt);
-					}
-					else {
-						client.setSendPacket(pkt);
-					}
 				}
 				else {  // 玩家没做任何操作，角色保持站立
 					
 					// 传递一个向左站着的状态，但不表示动作切换，而是上一个动作延续
 					Packet pkt = new Packet(frameCount,EntityState.STANDING_TORIGHT); 
 					receivePktQueue.add(pkt);
-					if(!isServer) {
-						server.setSendPacket(pkt);
-					}
-					else {
-						client.setSendPacket(pkt);
-					}
 				}
 			}
 			
@@ -992,12 +923,6 @@ public class PlayView extends View { // 游戏页面类
 				// 传递一个向左站着的状态，但不表示动作切换，而是上一个动作延续
 				Packet pkt = new Packet(frameCount,EntityState.STANDING_TORIGHT); 
 				receivePktQueue.add(pkt);
-				if(!isServer) {
-					server.setSendPacket(pkt);
-				}
-				else {
-					client.setSendPacket(pkt);
-				}
 			}
 		}
 	}
@@ -1007,6 +932,9 @@ public class PlayView extends View { // 游戏页面类
 		Blood blood2 = (Blood)entityMap.get(Constants.BLOOD2);
 		Entity player1 = entityMap.get(Constants.PLAYER1);
 		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		if(blood1 == null || blood2 == null || player1 == null || player2 == null)
+			return;
 		
 		double scale1 = player1.getLifeValue() / blood1.getFullLife(); // 左血条缩短比例
 		double scale2 = player2.getLifeValue() / blood2.getFullLife(); // 右血条缩短比例
@@ -1022,6 +950,9 @@ public class PlayView extends View { // 游戏页面类
 		Energy energy2 = (Energy)entityMap.get(Constants.ENERGY2);
 		Entity player1 = entityMap.get(Constants.PLAYER1);
 		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+		if(energy1 == null || energy2 == null || player1 == null || player2 == null)
+			return;
 		
 		if(player1.isActive()) {
 			currentEnergy1++;
@@ -1560,59 +1491,11 @@ public class PlayView extends View { // 游戏页面类
 	}
 	
 	private void parseQueue() { // 解析操作/状态队列
-		
-		if(!sendPktQueue.isEmpty() && !receivePktQueue.isEmpty()) {
-			int player1_frame = sendPktQueue.get(sendPktQueueIdx).getFrame(); // 自己队列中的最小帧
-			int player2_frame = receivePktQueue.get(receivePktQueueIdx).getFrame(); // 对手队列中的最小帧
-			
-			if(player1_frame > player2_frame) { // 说明对手的同步帧非该最小帧
-				
-				// 寻找对手的同步帧
-				while(player1_frame > player2_frame && receivePktQueueIdx < receivePktQueue.size()-1) {
-					receivePktQueueIdx++;
-					player2_frame = receivePktQueue.get(receivePktQueueIdx).getFrame();
-				}
-				
-				if(player1_frame > player2_frame) { // 对手的同步帧还未到，直接返回，等待
-					return;
-				}
-				else if(player1_frame < player2_frame) { // 对手的最近帧已经超过自己，说明中间丢包，只能寻找自己的同步帧
-					// 注意，由于自己的包是一定同步的，因此一定能匹配到对手的最近帧
-					while(player1_frame < player2_frame && sendPktQueueIdx < sendPktQueue.size()-1) {
-						sendPktQueueIdx++;
-						player1_frame = sendPktQueue.get(sendPktQueueIdx).getFrame();
-					}
-					if(player1_frame == player2_frame) { // 帧已经同步
-						parsePlayer1Action();
-						parsePlayer2Action();
-					}
-				}
-				else { // 帧已经同步
-					parsePlayer1Action();
-					parsePlayer2Action();
-				}
-				
-			}
-			else if(player1_frame < player2_frame) { // 自己的最小帧非同步帧
-				// 寻找自己的同步帧
-				// 注意，由于自己的包是一定同步的，因此一定能匹配到对手的同步帧
-				while(player1_frame < player2_frame && sendPktQueueIdx < sendPktQueue.size()-1) {
-					sendPktQueueIdx++;
-					player1_frame = sendPktQueue.get(sendPktQueueIdx).getFrame();
-				}
-				if(player1_frame == player2_frame) { // 帧已经同步
-					parsePlayer1Action();
-					parsePlayer2Action();
-				}
-			}
-			else { // 帧已经同步
-				parsePlayer1Action();
-				parsePlayer2Action();
-			}
-		}
+		parsePlayer1Action();
+		parsePlayer2Action();
 	}
 	
-	private void parsePlayer1Action() { // 解析完操作队列并找到同步帧后，进而解析自己的同步帧的动作
+	synchronized private void parsePlayer1Action() { // 解析完操作队列并找到同步帧后，进而解析自己的同步帧的动作
 		if(sendPktQueue.isEmpty())
 			return;
 		EntityState player1_action = sendPktQueue.get(sendPktQueueIdx).getAction(); // 自己的同步帧动作
@@ -1620,6 +1503,12 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 解析自己的动作
 		Entity player1 = entityMap.get(Constants.PLAYER1);
+//		if(player1_action.isChosen()) {
+//			setPlayer1();
+//			setBloodBar1();
+//			setEnergyBar1();
+//			return;
+//		}
 		if(player1_action == EntityState.STANDING_TOLEFT) { // 保持上一个状态的延续
 			
 		}
@@ -1798,7 +1687,7 @@ public class PlayView extends View { // 游戏页面类
 		imgLocateMap.get(Constants.PLAYER1).setImg(player1.getCurrentImage()); // 设置图片
 	}
 	
-	private void parsePlayer2Action() { // 解析完操作队列并找到同步帧后，进而解析对手的同步帧的动作
+	synchronized private void parsePlayer2Action() { // 解析完操作队列并找到同步帧后，进而解析对手的同步帧的动作
 		if(receivePktQueue.isEmpty())
 			return;
 		EntityState player2_action = receivePktQueue.get(receivePktQueueIdx).getAction(); // 对手的同步帧动作
@@ -1806,6 +1695,53 @@ public class PlayView extends View { // 游戏页面类
 		
 		// 解析自己的动作
 		Entity player2 = entityMap.get(Constants.PLAYER2);
+		
+//		// 设置玩家2的角色
+//		if(player2_action.isChosen()) {
+//			
+//			switch (player2_action) {
+//			case CHOSEN_REDBABY:
+//				setPlayer2Name(EntityName.REDBABY);
+//				break;
+//			case CHOSEN_ORANGEBABY:
+//				setPlayer2Name(EntityName.ORANGEBABY);
+//				break;
+//			case CHOSEN_YELLOWBABY:
+//				setPlayer2Name(EntityName.YELLOWBABY);
+//				break;
+//			case CHOSEN_GREENBABY:
+//				setPlayer2Name(EntityName.GREENBABY);
+//				break;
+//			case CHOSEN_BLUEBABY:
+//				setPlayer2Name(EntityName.BLUEBABY);
+//				break;
+//			case CHOSEN_INDIGOBABY:
+//				setPlayer2Name(EntityName.INDIGOBABY);
+//				break;
+//			case CHOSEN_PURPLEBABY:
+//				setPlayer2Name(EntityName.PURPLEBABY);
+//				break;
+//			case CHOSEN_SNAKE:
+//				setPlayer2Name(EntityName.SNAKE);
+//				break;
+//			case CHOSEN_SCORPION:
+//				setPlayer2Name(EntityName.SCORPION);
+//				break;
+//			case CHOSEN_CHILOPOD:
+//				setPlayer2Name(EntityName.CHILOPOD);
+//				break;
+//			case CHOSEN_CROCODILE:
+//				setPlayer2Name(EntityName.CROCODILE);
+//				break;
+//			default:
+//				setPlayer2Name(EntityName.REDBABY);
+//				break;
+//			}
+//			setPlayer2();
+//			setBloodBar2();
+//			setEnergyBar2();
+//			return;
+//		}
 		
 		if(player2_action == EntityState.STANDING_TORIGHT) { // 保持上一个状态的延续
 			
@@ -2262,6 +2198,10 @@ public class PlayView extends View { // 游戏页面类
 	@Override
 	public void onUpdate(double time) {
 		frameCount++;
+		
+//		// 客户端交互数据
+//		Framework.client.sendPkt();
+//		Framework.client.receivePkt();
 		
 		if(!isStart) { // 未开始则进入游戏倒计时
 			countDown();

@@ -14,8 +14,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import network.Packet;
 import output.URL;
 import world.EntityName;
+import world.EntityState;
 
 public class Role1View extends View { // 玩家1角色选择页面
 	
@@ -38,11 +40,14 @@ public class Role1View extends View { // 玩家1角色选择页面
 	private Button crocodileBtn; // 鳄鱼精选择按钮
 	
 	private boolean mode = false; // 模式(false为单机版，true为双击版)
+	
+	public EntityState currentChoise; // 当前选中的角色
 
 	// 初始化
 	public Role1View() {
 		super(Constants.STACK_PANE);
 		bgmFileStr = Constants.ROLE_VIEW_BGM; // 设置背景音频文件
+		currentChoise = EntityState.STANDING_FORWARD;
 	}
 	
 	// Setter
@@ -73,7 +78,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 			@Override
 			public void handle(ActionEvent event) {
 				Framework.audio.playClip(d, f);
-				// 切换到游戏页面
+				// 选择好后，切换到游戏页面
 				Framework.app.gotoView(Constants.PLAY_VIEW_KEY);
 			}
 		});
@@ -114,6 +119,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.REDBABY);
+					currentChoise = EntityState.CHOSEN_REDBABY;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}
@@ -144,6 +150,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.ORANGEBABY);
+					currentChoise = EntityState.CHOSEN_ORANGEBABY;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}
@@ -174,6 +181,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.YELLOWBABY);
+					currentChoise = EntityState.CHOSEN_YELLOWBABY;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}
@@ -204,6 +212,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.GREENBABY);
+					currentChoise = EntityState.CHOSEN_GREENBABY;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}
@@ -234,6 +243,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.BLUEBABY);
+					currentChoise = EntityState.CHOSEN_BLUEBABY;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}
@@ -264,6 +274,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.INDIGOBABY);
+					currentChoise = EntityState.CHOSEN_INDIGOBABY;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}
@@ -294,6 +305,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.PURPLEBABY);
+					currentChoise = EntityState.CHOSEN_PURPLEBABY;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}
@@ -324,6 +336,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.SNAKE);
+					currentChoise = EntityState.CHOSEN_SNAKE;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}
@@ -354,6 +367,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.SCORPION);
+					currentChoise = EntityState.CHOSEN_SCORPION;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}
@@ -384,6 +398,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.CHILOPOD);
+					currentChoise = EntityState.CHOSEN_CHILOPOD;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}
@@ -414,6 +429,7 @@ public class Role1View extends View { // 玩家1角色选择页面
 					Framework.audio.playClip(d, f);
 					PlayView playView = (PlayView)Framework.app.getView(Constants.PLAY_VIEW_KEY);
 					playView.setPlayer1Name(EntityName.CROCODILE);
+					currentChoise = EntityState.CHOSEN_CROCODILE;
 					if(mode) { // 网络版
 						playBtn.setDisable(false);
 					}

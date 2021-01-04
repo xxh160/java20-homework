@@ -3,10 +3,16 @@ package network;
 import java.io.IOException;
 import java.net.*;
 
+import framework.Constants;
+
 public class TCPServer { // TCP服务器类
 	
 	ServerSocket serverSocket; // 服务器总套接字
-	private TCPWorker worker; // 工作线程
+	
+	private TCPWorker worker1; // 与玩家1交互的工作线程
+	private TCPWorker worker2; // 与玩家2交互的工作线程
+	
+	private int clientNum = 0; // 客户端数量 
 	
 	private String serverIP; // 服务器IP地址
 	private String clientIP; // 客户端IP地址
@@ -23,7 +29,9 @@ public class TCPServer { // TCP服务器类
 		this.serverPort = serverPort;
 		this.isAccept = false;
 		
-		this.worker = null;
+		this.worker1 = null;
+		this.worker2 = null;
+
 	}
 	
 	// Getter
@@ -47,10 +55,11 @@ public class TCPServer { // TCP服务器类
 		return isAccept;
 	}
 	
-	public Packet getReceivePakcet() { // 获取接受包
-		if(worker != null) {
-			return worker.getReceivePacket();
-		}
+	public Packet getReceivePakcet() { // 获取接收包
+//		if(worker != null) {
+//			return worker.getReceivePacket();
+//		}
+		
 		return null;
 	}
 	
@@ -64,25 +73,33 @@ public class TCPServer { // TCP服务器类
 	}
 	
 	public void setSendPacket(Packet p) { // 设置发送包
-		if(worker != null) {
-			worker.setSendPacket(p);
-		}
+//		if(worker != null) {
+//			worker.setSendPacket(p);
+//		}
 	}
 	
 	// 启动服务器
 	public void start() {
 		try {
-			serverSocket = new ServerSocket(serverPort);
-			serverIP = serverSocket.getInetAddress().getHostAddress(); // 自动配置服务器IP
+			serverSocket = new ServerSocket(Constants.PORT);
 			
-			Socket socket = serverSocket.accept(); // 等待客户端连接上(阻塞状态)
-			clientIP = socket.getInetAddress().getHostAddress(); // 自动配置客户端IP
-			
-			isAccept = true; // 客户端已经连接上
-			
-			worker = new TCPWorker(socket);
-			
-			new Thread(worker).start(); // 启动工作线程
+			while(clientNum < 2) {
+				Socket socket = serverSocket.accept(); // 等待客户端连接上(阻塞状态)
+				System.out.println("Connected to the Client"+clientNum);
+				
+				isAccept = true; // 客户端已经连接上
+				
+				if(clientNum == 0)
+				{
+					worker1 = new TCPWorker(socket, 0);
+					new Thread(worker1).start(); // 启动工作线程
+				}
+				else if(clientNum == 1) {
+					worker2 = new TCPWorker(socket, 1);
+					new Thread(worker2).start(); // 启动工作线程
+				}
+				clientNum++;
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();

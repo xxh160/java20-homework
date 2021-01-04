@@ -41,8 +41,8 @@ public class PurpleBaby extends Entity { // 七娃实体类
 		setWidth(Constants. PLAYER_DEFAULT_W + 20);
 //		setHeight(Constants. PLAYER_DEFAULT_H);
 //		
-//		setLifeValue(Constants.DEFAULT_LIFE_VALUE);
-//		setMoveSpeed(Constants.DEFAULT_MOVE_SPEED);
+		setLifeValue(Constants.DEFAULT_LIFE_VALUE-10);
+		setMoveSpeed(Constants.DEFAULT_MOVE_SPEED+1);
 //		setRunSpeed(Constants.DEFAULT_RUN_SPEED);
 //		setJumpSpeed(Constants.DEFAULT_JUMP_SPEED);
 //		setJumpHeight(Constants.DEFAULT_JUMP_HEIGHT);	

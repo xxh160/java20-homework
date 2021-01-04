@@ -20,6 +20,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import media.Audio;
+import network.TCPServer;
+import network.TCPClient;
 import output.Log;
 import framework.*;
 import input.KeyInput;
@@ -59,6 +61,9 @@ public class App {
 	
 	private final Audio audio; // 音频播放器
 	
+	private final TCPServer server;
+	private final TCPClient client;
+	
 	private final Log log; // 文件记录器
 	
 	OnLaunch onLaunch; // 窗口启动管理接口
@@ -73,6 +78,8 @@ public class App {
 		Framework.mouseInput = this.mouseInput;
 		Framework.audio = this.audio;
 		Framework.log = this.log;
+		Framework.server = this.server;
+		Framework.client = this.client;
 	}
 	
 	private final void initApp() { // 初始化应用
@@ -185,6 +192,9 @@ public class App {
 		mouseInput = new MouseInput();
 		
 		audio = new Audio();
+		
+		server = new TCPServer("", Constants.PORT);
+		client = new TCPClient("", Constants.PORT);
 		
 		log = new Log();
 		
