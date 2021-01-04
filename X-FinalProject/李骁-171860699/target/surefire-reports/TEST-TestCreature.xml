@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="1" failures="0" name="TestCreature" time="8.218" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="java.vm.version" value="10.0.1+10"/>
+    <property name="sun.boot.library.path" value="D:\java\jdk\bin"/>
+    <property name="maven.multiModuleProjectDirectory" value="D:\JavaRepos\java20-homework\X-FinalProject\李骁-171860699"/>
+    <property name="java.vm.vendor" value="&quot;Oracle Corporation&quot;"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=";"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="D:\JavaRepos\java20-homework\X-FinalProject\李骁-171860699"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="java.runtime.version" value="10.0.1+10"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\hp\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="classworlds.conf" value="D:\Maven\apache-maven-3.6.3\bin\..\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.library.path" value="D:\java\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;;D:\java\jdk\bin;D:\java\jdk\jre\bin;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;F:\Latex相关\CTEX\UserData\miktex\bin;F;\Latex相关\CTEX\MiKTeX\miktex\bin;F;\Latex相关\CTEX\CTeX\ctex\bin;F;\Latex相关\CTEX\CTeX\cct\bin;F;\Latex相关\CTEX\CTeX\ty\bin;F;\Latex相关\CTEX\Ghostscript\gs9.05\bin;F;\Latex相关\CTEX\GSview\gsview;F;\Latex相关\CTEX\WinEdt;;;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Prince\engine\bin;E:\Qt5.9\5.9\mingw53_32\bin;C:\Program Files\dotnet\;F:\texlive\2019\bin\win32;F:\mingw64\bin;F:\StrawberryPerl\c\bin;F:\StrawberryPerl\perl\site\bin;F:\StrawberryPerl\perl\bin;%\MAVEN_HOME%\bin;D:\Maven\apache-maven-3.6.3\bin;C:\WINDOWS\SysWOW64;C:\Program Files (x86)\Google\Chrome\Application;C:\Users\hp\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\hp\AppData\Local\Programs\Python\Python36\;f:\bin;F:\Tools\WinNT;F:\MSDev98\Bin;F:\Tools;F:\VC98\bin;C:\Users\hp\AppData\Local\Microsoft\WindowsApps;F:\Microsoft VS Code\bin;C:\Users\hp\AppData\Roaming\npm;C:\Users\hp\AppData\Local\Pandoc\;E:\Qt5.9\5.9\mingw53_32\bin;C:\Users\hp\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\bin;;C:\Program Files\JetBrains\PyCharm Community Edition 2019.3.3\bin;;F:\nasm;F:\nasm\nasm.exe;;."/>
+    <property name="maven.conf" value="D:\Maven\apache-maven-3.6.3\bin\../conf"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="java.class.version" value="54.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="library.jansi.path" value="D:\Maven\apache-maven-3.6.3\bin\..\lib\jansi-native"/>
+    <property name="user.home" value="C:\Users\hp"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="file.encoding" value="GBK"/>
+    <property name="java.specification.version" value="10"/>
+    <property name="user.name" value="hp"/>
+    <property name="java.class.path" value="D:\Maven\apache-maven-3.6.3\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="10"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher package"/>
+    <property name="java.home" value="D:\java\jdk"/>
+    <property name="user.language" value="zh"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="10.0.1"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="sun.stderr.encoding" value="ms936"/>
+    <property name="maven.home" value="D:\Maven\apache-maven-3.6.3\bin\.."/>
+    <property name="file.separator" value="\"/>
+    <property name="java.version.date" value="2018-04-17"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.java.com/bugreport/"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="java.vendor.version" value="18.3"/>
+    <property name="sun.stdout.encoding" value="ms936"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="TestCreature" name="testCollide" time="8.218"/>
+</testsuite>
