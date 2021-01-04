@@ -54,19 +54,24 @@
 
 1. 在游戏开始界面中点击`开始游戏`，进入到联机界面。
 
-   ![]()
+   <img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display1.jpg" style="zoom: 50%;" />
 
 2. 在联机界面输入所在局域网的`ip地址`和将要操纵的`阵营(0为葫芦娃阵营，1为妖精阵营)`，若所在局域网中有自己所选择的阵营不同的用户，则建立连接，进入到游戏界面。
 
-   ![]()
+   <img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display2.jpg" style="zoom:50%;" />
 
 3. 游戏界面中下方为一个`(5+5)x7`的二维空间战场，左上角为己方所有角色的头像和血条，中上方为某一回合己方已选的五个操作的展示及`确认选择`按钮；玩家可通过如下操作进行某一步操作的选择：①直接拖动战场中的角色到其他坐标，中上方即自动出现该角色头像及`移动`操作的图标；②先点选左上角某个角色的头像，此时中上方即出现该角色的头像，再按分别按下键盘上的`Q`、`W`或`E`，中上方即出现`攻击`、`大招`或`回复`的图标；完成选择后，点击`确认选择`按钮即可将本回合选择的操作（字符串）发送给服务器。
 
-   ![]()
+   <img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display7.jpg" style="zoom: 50%;" /><img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display6.jpg" alt="display6" style="zoom:50%;" />
 
-4. 在本地中对双方的操作进行复现，若双方角色没有全部阵亡，则进行下一回合的操作。
+4. 在本地中对双方的操作进行复现，1. 若双方角色没有全部阵亡，则进行下一回合的操作。
 
-   ![]()
+   <img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display4.jpg" style="zoom: 50%;" /><img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display5.jpg" alt="display5" style="zoom:50%;" />
+
+   <img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display9.jpg" style="zoom:33%;" /><img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display8.jpg" alt="display9" style="zoom:33%;" />
+
+   <img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display10.jpg" style="zoom: 50%;" /><img src="https://github.com/Mr-Nan05/java20-homework/blob/master/X-FinalProject/%E6%9D%8E%E8%88%9F%E4%BF%8A%E6%BD%87-181860051-%E5%AE%8B%E8%B6%85%E7%BE%A4-171860642/CalabashBrothers/src/main/java/com/cbsl/app/client/view/images/display11.jpg" alt="display11" style="zoom: 50%;" />
+
 
 
 
