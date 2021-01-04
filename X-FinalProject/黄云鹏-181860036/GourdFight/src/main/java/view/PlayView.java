@@ -1469,7 +1469,7 @@ public class PlayView extends View { // 游戏页面类
 		}
 	}
 	
-	private boolean isCollided(double x1,double y1,double w1,double h1,
+	public boolean isCollided(double x1,double y1,double w1,double h1,
 			double x2, double y2, double w2, double h2) { 
 		// 是否两个矩阵产生碰撞，用于碰撞检测
 		boolean xCollided = false; // x轴是否碰撞
