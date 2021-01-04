@@ -9,6 +9,7 @@ public class CreatureCard extends DraggableCard {
 
     public CreatureCard(Creature creature) {
         this.creature = creature;
+        this.price = creature.getPrice();
         loadImage(creature.getCardImage());
     }
 

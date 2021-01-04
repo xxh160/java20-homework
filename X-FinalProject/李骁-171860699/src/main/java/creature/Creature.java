@@ -44,11 +44,15 @@ public abstract class Creature implements Runnable {
 
     protected String name;
 
-    protected Image image;
+    protected Image image; //人物外观
 
-    protected ImageView imageView;
+    protected ImageView imageView; //人物外观的imageView
 
     protected Image cardImage; // 位于卡牌区时的卡外观
+
+    protected Image powerImage; //显示力量的图片
+
+    protected ImageView powerImageView; //显示力量的imageView
 
     protected Runway runway; // 所处的跑道
 
@@ -68,6 +72,7 @@ public abstract class Creature implements Runnable {
 
     public Creature() {
         imageView = new ImageView();
+        powerImageView = new ImageView();
         name = getClass().getSimpleName();
         loadImage(name + ".png");
         loadCardImage(name + "Card.png");
@@ -89,6 +94,14 @@ public abstract class Creature implements Runnable {
     protected void loadCardImage(String imageName) {
         URL url = getClass().getClassLoader().getResource(imageName);
         cardImage = new Image(url.toString()); // TODO 改掉
+    }
+
+    protected void loadPowerImage() {
+        URL url = getClass().getClassLoader().getResource("power"+power+".png");
+        powerImage = new Image(url.toString());
+        powerImageView.setImage(powerImage);
+        powerImageView.setFitWidth(50);
+        powerImageView.setPreserveRatio(true);
     }
 
     public void flipImage() {
@@ -129,6 +142,10 @@ public abstract class Creature implements Runnable {
         imageView.setImage(image);
         imageView.setLayoutX(posX);
         imageView.setLayoutY(posY);
+
+        powerImageView.setImage(powerImage);
+        powerImageView.setLayoutX(posX);
+        powerImageView.setLayoutY(posY - 10);
     }
 
     public void freeze(long ms) {
@@ -225,15 +242,16 @@ public abstract class Creature implements Runnable {
                         enemyPower = enemyPower + c.getPower();
                     }
 
-                    System.out.println("belongToMe: " + belongToMe + ", myPower: " + myPower + ", enemyPower: "
+                    /*System.out.println("belongToMe: " + belongToMe + ", myPower: " + myPower + ", enemyPower: "
                             + enemyPower + ", 连着的兄弟有 " + myHeadCreatures.size() + " 个，敌人兄弟有 "
                             + enemyHeadCreatures.size() + " 个");
+                            */
 
                     // 力量相等，速度都归0
                     if (myPower == enemyPower) {
                         myHeadCreatures.forEach(c -> c.setMoveSpeed(0));
                         enemyHeadCreatures.forEach(c -> c.setMoveSpeed(0));
-                        System.out.println("力量一样，我的当前速度 " + moveSpeed);
+                        //System.out.println("力量一样，我的当前速度 " + moveSpeed);
                     } else if (myPower > enemyPower) {
                         // 我方力量大，压迫对面
                         myHeadCreatures.forEach(c -> c.setMoveSpeed(c.getDefaultMoveSpeed()));
@@ -244,11 +262,11 @@ public abstract class Creature implements Runnable {
                                 myHeadCreatures.get(i).move();
                             }
                         }
-                        System.out.println("我方力量大，我的当前速度 " + moveSpeed);
+                        //System.out.println("我方力量大，我的当前速度 " + moveSpeed);
                     } else {
                         myHeadCreatures.forEach(c -> c.setMoveSpeed(-1 * c.getDefaultMoveSpeed()));
                         enemyHeadCreatures.forEach(c -> c.setMoveSpeed(c.getDefaultMoveSpeed()));
-                        System.out.println("我方力量小，我的当前速度 " + moveSpeed);
+                        //System.out.println("我方力量小，我的当前速度 " + moveSpeed);
                     }
                     move();
                 }
@@ -307,6 +325,7 @@ public abstract class Creature implements Runnable {
             @Override
             public void run() {
                 pane.getChildren().add(imageView);
+                pane.getChildren().add(powerImageView);
             }
         });
         //pane.getChildren().add(imageView);
@@ -314,15 +333,16 @@ public abstract class Creature implements Runnable {
     }
 
     public void removeFromPane(Pane pane) {
-        System.out.println("removeFromPane begin");
+        //System.out.println("removeFromPane begin");
         Platform.runLater(new Runnable(){
             @Override
             public void run() {
                 pane.getChildren().remove(imageView);
+                pane.getChildren().remove(powerImageView);
             }
         });
         //pane.getChildren().remove(imageView);
-        System.out.println("removeFromPane end");
+        //System.out.println("removeFromPane end");
     }
 
     public int getPosX() {

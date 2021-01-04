@@ -79,7 +79,12 @@ public class GameServer implements Runnable {
 
 	public void sendMessage(String msg) {
 		System.out.println("服务器发送：" + msg);
-		out.println(msg);
+		if (out != null) {
+			out.println(msg);
+		}
+		else {
+			System.out.println("服务器发送信息失败，服务器未启动：" + msg);
+		}
 	}
 
 	public void executeMessage(String msg) {
@@ -97,6 +102,27 @@ public class GameServer implements Runnable {
 				}
 				else if (className.equals(Dawa.class.getSimpleName())) {
 					creature = new Dawa();
+				}
+				else if (className.equals(Huowa.class.getSimpleName())) {
+					creature = new Huowa();
+				}
+				else if (className.equals(Shuiwa.class.getSimpleName())) {
+					creature = new Shuiwa();
+				}
+				else if (className.equals(Xiezijing.class.getSimpleName())) {
+					creature = new Xiezijing();
+				}
+				else if (className.equals(Shejing.class.getSimpleName())) {
+					creature = new Shejing();
+				}
+				else if (className.equals(Wugongjing.class.getSimpleName())) {
+					creature = new Wugongjing();
+				}
+				else if (className.equals(Qingwajing.class.getSimpleName())) {
+					creature = new Qingwajing();
+				}
+				else {
+					creature = null;
 				}
 				//TODO 增加更多类型
 					

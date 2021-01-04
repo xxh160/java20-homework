@@ -7,6 +7,12 @@ import java.util.Random;
 import creature.Chuanshanjia;
 import creature.Creature;
 import creature.Dawa;
+import creature.Xiezijing;
+import creature.Huowa;
+import creature.Qingwajing;
+import creature.Shejing;
+import creature.Shuiwa;
+import creature.Wugongjing;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -47,7 +53,7 @@ public abstract class Card {
     public static Card createRandomCard() {
         Random rand = new Random();
         Card card;
-        switch (rand.nextInt(7)) {
+        switch (rand.nextInt(13)) {
             case 0:
                 card = new PropCardFreeze();
                 break;
@@ -64,13 +70,38 @@ public abstract class Card {
                 card = new PropCardKillEnemyHead();
                 break;
             case 5:
-                card = new CreatureCard(new Dawa());
-                break;
             case 6:
-                card = new CreatureCard(new Chuanshanjia());
+                if (MainCanvas.useHuluwa) {
+                    card = new CreatureCard(new Dawa());
+                } else {
+                    card = new CreatureCard(new Xiezijing());
+                }
+                break;
+            case 7:
+            case 8:
+                if (MainCanvas.useHuluwa) {
+                    card = new CreatureCard(new Huowa());
+                }
+                else {
+                    card = new CreatureCard(new Shejing());
+                }
+                break;
+            case 9:
+            case 10:
+                if (MainCanvas.useHuluwa) {
+                    card = new CreatureCard(new Shuiwa());
+                }
+                else {
+                    card = new CreatureCard(new Wugongjing());
+                }
                 break;
             default:
-                card = new PropCardClearRunway();
+                if (MainCanvas.useHuluwa) {
+                    card = new CreatureCard(new Chuanshanjia());
+                }
+                else {
+                    card = new CreatureCard(new Qingwajing());
+                }
                 break;
         }
         return card;

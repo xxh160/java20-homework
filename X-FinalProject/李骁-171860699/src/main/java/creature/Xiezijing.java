@@ -1,8 +1,8 @@
 package creature;
 
-public class Dawa extends Creature {
+public class Xiezijing extends Creature {
 
-    public Dawa() {
+    public Xiezijing() {
         power = 3;
         price = 3;
         loadPowerImage();

@@ -36,17 +36,57 @@ public class GameClient implements Runnable { // Socket客户端
 	}
 
 	public void sendMessage(String msg) {
-		out.println(msg);
+		System.out.println("客户端发送：" + msg);
+		if (out != null) {
+			out.println(msg);
+		}
+		else {
+			System.out.println("客户端发送信息失败，客户端未启动：" + msg);
+		}
 	}
 
 	public void executeMessage(String msg) {
-		System.out.println("客户端处理信息" + msg);
+		System.out.println("客户端处理信息：" + msg);
 		String[] commands = msg.split(",");
 		if (commands.length == 2) {
 			String cmd = commands[0];
 			int n = Integer.parseInt(commands[1]);
-			if (cmd.equals("addEnemyCreature")) {
-				MainCanvas.runwayField.getRunways().get(n).addToEnemyCreatures(new Dawa());
+			if (cmd.startsWith("add")) {
+				String className = cmd.substring(3, cmd.length());
+				System.out.println("添加敌人类型：" + className);
+				Creature creature = null;
+				if (className.equals(Chuanshanjia.class.getSimpleName())) {
+					creature = new Chuanshanjia();
+				}
+				else if (className.equals(Dawa.class.getSimpleName())) {
+					creature = new Dawa();
+				}
+				else if (className.equals(Huowa.class.getSimpleName())) {
+					creature = new Huowa();
+				}
+				else if (className.equals(Shuiwa.class.getSimpleName())) {
+					creature = new Shuiwa();
+				}
+				else if (className.equals(Xiezijing.class.getSimpleName())) {
+					creature = new Xiezijing();
+				}
+				else if (className.equals(Shejing.class.getSimpleName())) {
+					creature = new Shejing();
+				}
+				else if (className.equals(Qingwajing.class.getSimpleName())) {
+					creature = new Qingwajing();
+				}
+				else {
+					creature = null;
+				}
+				//TODO 增加更多类型
+					
+				if (creature != null) {
+					MainCanvas.runwayField.getRunways().get(n).addToEnemyCreatures(creature);
+				}
+				else {
+					System.out.println("添加失败：" + className);
+				}
 			}
 			else if (cmd.equals("clearRunway")) {
 				MainCanvas.runwayField.getRunways().get(n).removeAllCreatures();

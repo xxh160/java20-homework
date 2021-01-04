@@ -1,8 +1,8 @@
 package creature;
 
-public class Chuanshanjia extends Creature {
+public class Qingwajing extends Creature {
 
-    public Chuanshanjia() {
+    public Qingwajing() {
         power = 1;
         price = 1;
         loadPowerImage();
