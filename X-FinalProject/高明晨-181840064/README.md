@@ -37,13 +37,16 @@
 
 即可生成target目录，文件的打包结果为target中的hwx-1.0.0.jar。  
 由于pom.xml中已经利用额外的插件实现了打包结果的hwx-1.0.0.jar可以直接运行。  
+程序初始界面：  
 ![pic2.png](https://raw.githubusercontent.com/waterflowing/picture/main/pic2.png)  
 在运行的初始窗口中选择“作为服务器启动”，在额外启动两个该程序选择“作为客户端启动”，作为客户端启动时还需要输入服务器IP地址，默认为本地主机IP地址。当服务器检测到有两个客户端与之连接时，游戏开始，阵营为服务器随机分配。  
+游戏初始界面：  
 ![pic1.png](https://raw.githubusercontent.com/waterflowing/picture/main/pic1.png)
 
 ### 存档记录与加载
 服务器运行时会在当前目录自动生成当前战局的存档日志，存档日志名称形如“year_month_day_hour_minute_second.log”,例如"2021_01_03_22_25_09.log"。  
-在运行的初始窗口中选择“加载存档日志”，选择存档日志即可加载已有日志。其中src/main/resource/log中包含了一个提供的存档文件"存档.log"。
+在运行的初始窗口中选择“加载存档日志”，选择存档日志即可加载已有日志。其中src/main/resource/log中包含了一个提供的存档文件"存档.log"。    
+存档加载截图：
 ![pic3.png](https://raw.githubusercontent.com/waterflowing/picture/main/pic3.png)  
 
 ---
@@ -85,42 +88,87 @@ Character类实现了一个人物抽象基类，包含了人物的属性和对�
                 new Bullet(this, 100, bulletSpeed, Screen.gridToRightBulletPixel(grid), bulletRadius * 2, bulletColor));
     }
 }
-此外Character中还抽象出了hit(自己的子弹击中敌人)，和hurt(敌人的子弹击中自己)这两个方法，以供有特殊属性的人物使用，例如六娃的20%闪避，将会重载hurt。  
+此外Character中还抽象出了hit(自己的子弹击中敌人)，和hurt(敌人的子弹击中自己)这两个方法，以供有特殊属性的人物使用，例如六娃的20%闪避，将会重载hurt。 
+
+    public void hit(Character dest, int damage) {
+        //deal hit dest
+    }
+    public void hurt(Character src, int damage) { 
+        //deal hurt from src
+    }
 #### game.model.Bullet
-Bullet类实现了Runnable接口，线程行为为会每隔固定的时间向前运动，并检查是否击中敌人或到达屏幕边界。如果击中，则调用自己的hit和敌人的hurt函数。  
+Bullet类保存有伤害源src、伤害damage和其它一些和子弹有关的属性。  
+Bullet类还实现了Runnable接口，线程行为为会每隔固定的时间向前运动，并检查是否击中敌人或到达屏幕边界。如果击中，则调用自己的hit和敌人的hurt函数。 
+
+
+    public void hit(Character dest) {
+        src.hit(dest, damage);
+        dest.hurt(src, damage);
+    }
+
 从而Character中的普通攻击或特殊技能都会生成相应的Bullet提交线程池运行。
 
 #### game.view.CharacterView/BulletView/SceneView
-CharacterView/BulletView/SceneView的行为均是根据自己对应的Character/Bullet/全局信息，生成对应的图像。
+CharacterView中保存有对应Character的引用和其对应的图形。需要绘制时，CharacterView会从自己的引用的Character获得其坐标、HP、MP属性，调整人物图形到其坐标和绘制HP红条和MP蓝条。  
+BulletView与CharacterView类似，保有对应Bullet的引用，绘制时从该引用处得到子弹的坐标、颜色信息进行显示。  
+SceneView是用于服务器和客户端进行交互时传输场景信息，该类保有全局图像信息，包括所有人物、子弹的坐标、所有人物的血量，根据这些信息就可以绘制出战场图像。
 
 #### tool.connection.Message
-封装了服务器和客户端之间通信的所有信息类型
+封装了服务器和客户端之间通信的消息。可以通过DataInputStream读取和DataOutputStream写入。
 
 #### server.Server/ServerHandler/ServerInputHandler/ServerSendMessage
 Server会监听直到获得两个客户端，分别生成ServerHandler线程,每个ServerHandler会生成一个ServerInputHandler用来接收客户发送的指令并计算战场情况。当游戏开始时ServerHandler会每隔一段时间(20ms)将战场情况转换为图像发送给客户端。  
-ServerSendMessage为抽象出来的一个发送消息的线程类。
+ServerSendMessage为抽象出来的一个发送消息的线程类，需要发送消息时即创建该线程发送消息。
 
 #### client.Client/ClientInputHandler/ClientSendMessage
 Client会连接服务器并生成ClientInputHandler线程，ClientInputHandler会将从服务器端发送收到的战场图像显示出来。  
 此外Client还会将本地的键盘操作发送给服务器进行计算。
-ClientSendMessage为抽象出来的一个发送消息的线程类。
+ClientSendMessage为抽象出来的一个发送消息的线程类，需要发送消息时即创建该线程发送消息。。
 
 #### tool.logReader/logWriter
-logReader和logWriter抽象出了读写日志的操作。
+logReader和logWriter抽象出了读写日志的操作。  
+每条日志由时间、操作对象标识、操作指令三个信息构成。  
+服务器在游戏开始后会在当前目录创建一个日志文件，当服务器收到一个指令时，会向日志中写入时间、操作对象表示和操作指令。
 
 #### server.LoadLog
-此类与Server操作相似，不过不从Client端接收操作，而是从日志中读取操作，不将图像发送给Client而是直接显示出来。
+此类与Server操作相似，不过不从Client端接收操作，而是从日志中读取操作，不将图像发送给Client而是直接显示出来。  
+具体而言从日志中读取每一个条目后执行该操作，并调用Thread.Sleep阻塞相邻条目之间的时间差，用此模拟重放操作。 核心步骤如下 ：
+
+    while ((entry = login.read()) != null) {
+        try {
+            Thread.sleep(entry.time - lastTime);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        lastTime = entry.time;
+        exec(entry);
+    }
 
 
 ### 测试
 测试部分写了一些tool模块中的类测试，包括对Point、Grid、Pixel这些类的操作测试，Screen中Grid和Pixel互相转换测试，以及logReader和logWriter的操作。
 
 ---
+## 总结反思  
+项目中有做的好的地方，也有做的不足的地方，总结如下。
+### 做的好的地方
+* 人物和技能设计的多样性、趣味性
+* 模块和类划分非常有层次性、组织性
+* MVC范式思想的采用，减少了模块间的耦合程度
+* 充分运用了面向对象的封装、继承、多态的思想，集中体现在Character模块中，Character类封装了人物操作的行为，具体人物继承Character，实现了每个人物的特性，而在计算时都通过Character类型调用实现多态。
+* 类、方法、变量的命名都能做到见名知意
+
+* 有的并发细节处理的很好，比如要获得两把锁时，采用了先获得一把锁再尝试获得另一把锁，若未成功则立刻解除第一把锁，从而避免了死锁的情形
+### 做的不足的地方
+* 虽然大体上采用了MVC范式，但是还是没能完全消除耦合，甚至还用了很多全局变量(BattleGround.java)来控制战场总体信息
+* 架构设计之前没有完全考虑周全，很多人物技能操作存在随机性，但是存档还原是逐操作的，因此如果技能存在随机性，则不一定能完美还原。解决的方法是可以在存档中记录随机种子，所有随机性数该种子生成。但是发现这一点过晚，如果改变需要动大架构。因此技能中使用了固定随机种子，即这些技能的行为其实每局游戏都是确定的。
+* 并发处理还不够熟练
+---
 ## 心得体会
-以上主要还是从一个比较抽象的层面描述项目实现内容的，其实代码实现部分有巨多细节要注意的地方，不经过亲自动手编写、调试是很难感受的到。现将一些较难编写调试的地方说明如下：
+以上主要还是从一个比较抽象的层面描述项目实现内容的，其实代码实现部分有巨多细节要注意的地方，不经过亲自动手编写、调试是很难感受的到。现将一些心得体会说明如下：
 
 * 并发编程是非常大的坑，这花费了我调试时间的最大一部分。甚至有些你认为线程安全的地方恰恰没有线程安全，如java提供的如Collections.synchronizedSet()获得的集合照样可能发送并发错误(遍历时删除)。加锁是最稳的方法。
-* 架构设计的抽象和解耦合非常重要，这是复杂设计时根本上影响效率的地方，本项目得益于MVC的将模型、图形和控制分离的思想，也受累于如LoadLog,ServerHandler等耦合非常深的部分。事先能准确高效的设计好架构是非常重要的。
+* 架构设计的抽象和解耦合非常重要，这是复杂设计时根本上影响效率的地方，本项目得益于MVC的将模型、图形和控制分离的思想，也受累于如LoadLog,ServerHandler等耦合非常深的部分。以及快完成时，才发现加载存档的方法和人物技能的随机性有冲突，草草打了个补丁。由此可见事先能准确高效的设计好架构是非常重要的。
 
 
 
