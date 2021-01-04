@@ -276,3 +276,7 @@
 
 ***
 
+### 其他说明
+
+* 战斗过程记录文件位于src/playback/record.txt中
+* 若README.md的图片无法查看，请查看**README.pdf**
