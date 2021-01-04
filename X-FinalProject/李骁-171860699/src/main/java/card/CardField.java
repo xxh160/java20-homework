@@ -46,8 +46,8 @@ public class CardField implements Runnable {
         cards = new LinkedList<Card>();
         this.root = root;
         moneyText = new Text("金钱数：" + money);
-        moneyText.setLayoutX(posX);
-        moneyText.setLayoutY(posY - 20);
+        moneyText.setLayoutX(posX - 120);
+        moneyText.setLayoutY(posY + 20);
         moneyText.setFont(new Font("Bold", 20));
         //moneytext设置D牌
         //不是control类型无法设置事件
@@ -59,11 +59,12 @@ public class CardField implements Runnable {
 
 
         //初始化控制器按钮 TODO 换个控制器
-        controller = new Button("D牌，" + freshCost + "块");
-        controller.setLayoutX(40);
-        controller.setLayoutY(400);
-        controller.setPrefWidth(100);
-        controller.setPrefHeight(40);
+        controller = new Button("刷新手牌(" + freshCost + "块)\n快捷键(D)");
+        controller.setFont(new Font("Bold", 15));
+        controller.setLayoutX(posX - 130);
+        controller.setLayoutY(posY + 50);
+        controller.setPrefWidth(120);
+        controller.setPrefHeight(50);
         //controller.setVisible(false);
         controller.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

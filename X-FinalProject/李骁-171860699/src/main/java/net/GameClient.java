@@ -73,6 +73,9 @@ public class GameClient implements Runnable { // Socket客户端
 				else if (className.equals(Shejing.class.getSimpleName())) {
 					creature = new Shejing();
 				}
+				else if (className.equals(Wugongjing.class.getSimpleName())) {
+					creature = new Wugongjing();
+				}
 				else if (className.equals(Qingwajing.class.getSimpleName())) {
 					creature = new Qingwajing();
 				}
@@ -82,6 +85,7 @@ public class GameClient implements Runnable { // Socket客户端
 				//TODO 增加更多类型
 					
 				if (creature != null) {
+					MainCanvas.recorder.recordOperation("enemy", "add"+className, n); //记录
 					MainCanvas.runwayField.getRunways().get(n).addToEnemyCreatures(creature);
 				}
 				else {
@@ -89,15 +93,19 @@ public class GameClient implements Runnable { // Socket客户端
 				}
 			}
 			else if (cmd.equals("clearRunway")) {
+				MainCanvas.recorder.recordOperation("enemy", cmd, n);
 				MainCanvas.runwayField.getRunways().get(n).removeAllCreatures();
 			}
 			else if (cmd.equals("freezeRunway")) {
+				MainCanvas.recorder.recordOperation("enemy", cmd, n);
 				MainCanvas.runwayField.getRunways().get(n).freezeMyCreatures();
 			}
 			else if (cmd.equals("costAddN")) {
+				//MainCanvas.recorder.recordOperation("enemy", cmd, n);//无
 				MainCanvas.cardField.cardsCostPlusN(n);
 			}
-			else if (cmd.equals("killMyHead")) {
+			else if (cmd.equals("killHead")) {
+				MainCanvas.recorder.recordOperation("enemy", cmd, n);
 				MainCanvas.runwayField.getRunways().get(n).killMyHead();
 			}
 			else {
@@ -127,6 +135,7 @@ public class GameClient implements Runnable { // Socket客户端
 			System.out.println("服务器信息：" + in.readLine());
 			System.out.println("服务器信息：" + in.readLine());
 			System.out.println("请输入>");
+			MainCanvas.recorder.start(); //记录器启动
 			inFromUser = new BufferedReader(new InputStreamReader(System.in)); // 用户输入
 		} catch (SecurityException e) {
 			System.out.println("连接服务器出现安全问题！" + e.getMessage());

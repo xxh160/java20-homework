@@ -13,6 +13,7 @@ public class PropCardKillEnemyHead extends DraggableCard {
     protected void cardAction() {
         //TODO 给对方发包
         runway.killEnemyHead();
-        MainCanvas.sendMessage("killMyHead," + runway.getId());
+        MainCanvas.sendMessage("killHead," + runway.getId());
+        MainCanvas.recorder.recordOperation("enemy", "killHead", runway.getId());
     }
 }

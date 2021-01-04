@@ -15,10 +15,12 @@ public class CreatureCard extends DraggableCard {
 
     @Override
     protected void cardAction() {
-        //添加我方生物，告诉敌方
+        //添加我方生物
         runway.addToMyCreatures(creature);
-        //TODO 改统一的发包
+        //发包给敌方
         MainCanvas.sendMessage("add" + creature.getName() + "," + runway.getId());
+        //添加记录
+        MainCanvas.recorder.recordOperation("i", "add"+creature.getName(), runway.getId());
     }
 
     @Override

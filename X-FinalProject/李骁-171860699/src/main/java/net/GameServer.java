@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javafx.application.Platform;
-
+import record.Recorder;
 import creature.*;
 import view.MainCanvas;
 
@@ -44,6 +44,8 @@ public class GameServer implements Runnable {
 			out = new PrintWriter(socketAccept.getOutputStream(), true); // 获得写往客户端的(数据输出流),true表示自动刷新
 			out.println("服务器端连接成功。。。。");
 			out.println("输入exit断开与服务器的连接");
+			System.out.println("客户端已连上");
+			MainCanvas.recorder.start(); //启动记录器
 
 			
 		} catch (IOException e) {
@@ -127,6 +129,7 @@ public class GameServer implements Runnable {
 				//TODO 增加更多类型
 					
 				if (creature != null) {
+					MainCanvas.recorder.recordOperation("enemy", "add"+className, n); //记录
 					MainCanvas.runwayField.getRunways().get(n).addToEnemyCreatures(creature);
 				}
 				else {
@@ -134,15 +137,19 @@ public class GameServer implements Runnable {
 				}
 			}
 			else if (cmd.equals("clearRunway")) {
+				MainCanvas.recorder.recordOperation("enemy", cmd, n);
 				MainCanvas.runwayField.getRunways().get(n).removeAllCreatures();
 			}
 			else if (cmd.equals("freezeRunway")) {
+				MainCanvas.recorder.recordOperation("enemy", cmd, n);
 				MainCanvas.runwayField.getRunways().get(n).freezeMyCreatures();
 			}
 			else if (cmd.equals("costAddN")) {
+				//MainCanvas.recorder.recordOperation("enemy", cmd, n);//无
 				MainCanvas.cardField.cardsCostPlusN(n);
 			}
-			else if (cmd.equals("killMyHead")) {
+			else if (cmd.equals("killHead")) {
+				MainCanvas.recorder.recordOperation("enemy", cmd, n);
 				MainCanvas.runwayField.getRunways().get(n).killMyHead();
 			}
 			else {

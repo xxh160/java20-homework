@@ -14,5 +14,6 @@ public class PropCardFreeze extends DraggableCard {
         //TODO 发包给对面
         runway.freezeEnemyCreatures();
         MainCanvas.sendMessage("freezeRunway," + runway.getId());
+        MainCanvas.recorder.recordOperation("enemy", "freezeRunway", runway.getId());
     }
 }
