@@ -1,12 +1,15 @@
+[submodule "X-FinalProject/潘昱光-191250109-侯为栋-191250045"]
+	path = X-FinalProject/潘昱光-191250109-侯为栋-191250045
+	url = https://github.com/cn-zheshi/Calabash-VS-Monster
+[submodule "X-FinalProject/林昊-171860673"]
+	path = X-FinalProject/林昊-171860673
+	url = https://github.com/LaJiOJ/CalabashKidVSMonsters
 [submodule "X-FinalProject/黄云鹏-181860036"]
 	path = X-FinalProject/黄云鹏-181860036
 	url = https://github.com/Strivin0311/JavaFinalProject
 [submodule "X-FinalProject/李骁-171860699"]
 	path = X-FinalProject/李骁-171860699
 	url = https://github.com/oxygen-hunter/HuluwaGame
-[submodule "X-FinalProject/潘昱光-191250109_侯为栋-191250045"]
-	path = X-FinalProject/潘昱光-191250109_侯为栋-191250045
-	url = https://github.com/cn-zheshi/Calabash-VS-Monster
 [submodule "X-FinalProject/王一-171860523"]
 	path = X-FinalProject/王一-171860523
 	url = https://github.com/WrongMalik/java-final-project.git
@@ -22,12 +25,6 @@
 [submodule "X-FinalProject/贡辰-181860025王逸-181860101"]
 	path = X-FinalProject/贡辰-181860025王逸-181860101
 	url = https://github.com/Uradouby/Xhulu
-[submodule "X-FinalProject/林群-191250085"]
-	path = X-FinalProject/林群-191250085
-	url = https://github.com//Caserta-012/Finalwork
-[submodule "X-FinalProject/刘晗桐-171180526"]
-	path = X-FinalProject/刘晗桐-171180526
-	url = https://gitee.com/hantongliu/JavaFinalProject.git
 [submodule "X-FinalProject/李思勉-171860524"]
 	path = X-FinalProject/李思勉-171860524
 	url = https://github.com/LDawns/Under-HuLuWa
@@ -58,9 +55,18 @@
 [submodule "X-FinalProject/钱正轩-171860687"]
 	path = X-FinalProject/钱正轩-171860687
 	url = https://github.com/i1123581321/HuLuBattle
+[submodule "X-FinalProject/王一之-171860550-韩畅-171860551"]
+	path = X-FinalProject/王一之-171860550-韩畅-171860551
+	url = https://github.com/polarstormx/java-final.git
 [submodule "X-FinalProject/宋超群-171860642-李舟俊潇-181860051"]
 	path = X-FinalProject/宋超群-171860642-李舟俊潇-181860051
 	url = https://github.com/Mr-Nan05/CalabashBrothers
 [submodule "X-FinalProject/符嗣仟-181860021-谢靓静-181860112"]
 	path = X-FinalProject/符嗣仟-181860021-谢靓静-181860112
 	url = https://github.com/Jillian-Xie/java_final_project
+[submodule "X-FinalProject/林群-191250085"]
+	path = X-FinalProject/林群-191250085
+	url = https://github.com/Caserta-012/Finalwork
+[submodule "X-FinalProject/刘晗桐-171180526"]
+	path = X-FinalProject/刘晗桐-171180526
+	url = https://gitee.com/hantongliu/JavaFinalProject
