@@ -52,6 +52,9 @@
 [submodule "X-FinalProject/华顺鹏-171860626"]
 	path = X-FinalProject/华顺鹏-171860626
 	url = https://github.com/4happiness/JavaFinalProject.git
+[submodule "hw"]
+	path = X-FinalProject/朱俊俊-181860153
+	url = https://github.com/181860153/huluwa
 [submodule "X-FinalProject/钱正轩-171860687"]
 	path = X-FinalProject/钱正轩-171860687
 	url = https://github.com/i1123581321/HuLuBattle
